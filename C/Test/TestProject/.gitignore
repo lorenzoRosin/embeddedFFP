@@ -1,0 +1,5 @@
+# ignore 
+Debug/*
+Release/*
+*.dep
+*.wsdt
