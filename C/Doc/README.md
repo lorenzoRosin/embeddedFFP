@@ -1,2 +1,2 @@
-# eCU
-Collection of some basic utils for embedded code dev
+# eFFP
+A Fail safe communiation protocol
