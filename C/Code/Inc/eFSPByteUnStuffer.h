@@ -35,7 +35,8 @@ typedef struct
     bool_t   needEof;
 }e_eFSP_BUStuffCtx;
 
-
+typedef e_eFSP_Res (*cb_crc32_seed) ( const uint32_t seed, const uint8_t dataS[], const uint32_t dataSLen,
+                                     uint32_t* const crc32SVal );
 
 /***********************************************************************************************************************
  * GLOBAL PROTOTYPES

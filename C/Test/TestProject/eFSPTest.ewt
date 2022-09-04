@@ -2856,21 +2856,6 @@
                 <name>$PROJ_DIR$\..\..\Code\Inc\eFSPByteUnStuffer.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\Code\Inc\eFSPCircularQueue.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\Code\Inc\eFSPCrc.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\Code\Inc\eFSPCrcDigest.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\Code\Inc\eFSPDataPack.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\Code\Inc\eFSPDataUnPack.h</name>
-            </file>
-            <file>
                 <name>$PROJ_DIR$\..\..\Code\Inc\eFSPStandardType.h</name>
             </file>
             <file>
@@ -2885,21 +2870,45 @@
             <file>
                 <name>$PROJ_DIR$\..\..\Code\Src\eFSPByteUnStuffer.c</name>
             </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\Code\Src\eFSPCircularQueue.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\Code\Src\eFSPCrc.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\Code\Src\eFSPCrcDigest.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\Code\Src\eFSPDataPack.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\Code\Src\eFSPDataUnPack.c</name>
-            </file>
+        </group>
+    </group>
+    <group>
+        <name>ExtLib</name>
+        <group>
+            <name>embeddedCU</name>
+            <group>
+                <name>Inc</name>
+                <file>
+                    <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUByteStuffer.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUByteUnStuffer.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUDataPack.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUDataUnPack.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUType.h</name>
+                </file>
+            </group>
+            <group>
+                <name>Src</name>
+                <file>
+                    <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUByteStuffer.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUByteUnStuffer.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUDataPack.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUDataUnPack.c</name>
+                </file>
+            </group>
         </group>
     </group>
     <group>
@@ -2913,25 +2922,7 @@
                 <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPByteUnStufferTest.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPCircularQueueTest.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPCrcDigestTest.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPCrcTest.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPDataPackTest.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPDataPackUnPackTest.h</name>
-            </file>
-            <file>
                 <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPDataStuffUnStuffTest.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPDataUnPackTest.h</name>
             </file>
         </group>
         <group>
@@ -2943,25 +2934,7 @@
                 <name>$PROJ_DIR$\..\TestFunction\Src\eFSPByteUnStufferTest.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\TestFunction\Src\eFSPCircularQueueTest.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\TestFunction\Src\eFSPCrcDigestTest.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\TestFunction\Src\eFSPCrcTest.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\TestFunction\Src\eFSPDataPackTest.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\TestFunction\Src\eFSPDataPackUnPackTest.c</name>
-            </file>
-            <file>
                 <name>$PROJ_DIR$\..\TestFunction\Src\eFSPDataStuffUnStuffTest.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\TestFunction\Src\eFSPDataUnPackTest.c</name>
             </file>
         </group>
         <file>

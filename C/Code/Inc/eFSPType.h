@@ -3,8 +3,8 @@
  *
  */
 
-#ifndef ECU_TYPE_H
-#define ECU_TYPE_H
+#ifndef EFSP_TYPE_H
+#define EFSP_TYPE_H
 
 
 
@@ -26,11 +26,11 @@ extern "C" {
  **********************************************************************************************************************/
 typedef enum
 {
-    ECU_RES_OK = 0,
-    ECU_RES_BADPARAM,
-    ECU_RES_BADPOINTER,
-    ECU_RES_OUTOFMEM,
-    ECU_RES_NOINITLIB,
+    EFSP_RES_OK = 0,
+    EFSP_RES_BADPARAM,
+    EFSP_RES_BADPOINTER,
+    EFSP_RES_OUTOFMEM,
+    EFSP_RES_NOINITLIB,
 }e_eFSP_Res;
 
 
@@ -41,4 +41,4 @@ typedef enum
 
 
 
-#endif /* ECU_TYPE_H */
+#endif /* EFSP_TYPE_H */

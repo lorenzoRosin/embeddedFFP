@@ -3,8 +3,8 @@
  *
  */
 
-#ifndef ECU_STANDARDTYPE_H
-#define ECU_STANDARDTYPE_H
+#ifndef EFSP_STANDARDTYPE_H
+#define EFSP_STANDARDTYPE_H
 
 
 
@@ -49,4 +49,4 @@ extern "C" {
 
 
 
-#endif /* ECU_STANDARDTYPE_H */
+#endif /* EFSP_STANDARDTYPE_H */
