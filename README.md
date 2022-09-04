@@ -1,2 +1,2 @@
-# embeddedFFP
+# embeddedFSP
 embedded fail safe protocol
