@@ -1,12 +1,12 @@
-#include "eCUCrcTest.h"
-#include "eCUCrcDigestTest.h"
-#include "eCUCircularQueueTest.h"
-#include "eCUDataPackTest.h"
-#include "eCUDataUnPackTest.h"
-#include "eCUDataPackUnPackTest.h"
-#include "eCUByteStufferTest.h"
-#include "eCUByteUnStufferTest.h"
-#include "eCUDataStuffUnStuffTest.h"
+#include "eFSPCrcTest.h"
+#include "eFSPCrcDigestTest.h"
+#include "eFSPCircularQueueTest.h"
+#include "eFSPDataPackTest.h"
+#include "eFSPDataUnPackTest.h"
+#include "eFSPDataPackUnPackTest.h"
+#include "eFSPByteStufferTest.h"
+#include "eFSPByteUnStufferTest.h"
+#include "eFSPDataStuffUnStuffTest.h"
 int main(void);
 
 
