@@ -1,0 +1,3 @@
+[submodule "C/ExtLib/embeddedCU"]
+	path = C/ExtLib/embeddedCU
+	url = git@github.com:lorenzoRosin/embeddedCU.git
