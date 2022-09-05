@@ -2161,10 +2161,10 @@
         <group>
             <name>Inc</name>
             <file>
-                <name>$PROJ_DIR$\..\..\Code\Inc\eFSPByteStuffer.h</name>
+                <name>$PROJ_DIR$\..\..\Code\Inc\eFSPByteUnStuffer.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\Code\Inc\eFSPByteUnStuffer.h</name>
+                <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgEncoder.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\Code\Inc\eFSPStandardType.h</name>
@@ -2176,10 +2176,10 @@
         <group>
             <name>Src</name>
             <file>
-                <name>$PROJ_DIR$\..\..\Code\Src\eFSPByteStuffer.c</name>
+                <name>$PROJ_DIR$\..\..\Code\Src\eFSPByteUnStuffer.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\Code\Src\eFSPByteUnStuffer.c</name>
+                <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgEncoder.c</name>
             </file>
         </group>
     </group>
