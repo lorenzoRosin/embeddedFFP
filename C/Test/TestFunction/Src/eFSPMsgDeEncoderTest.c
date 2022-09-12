@@ -1,5 +1,5 @@
 /**
- * @file eFSPMsgReceiverTest.c
+ * @file eFSPMsgDeEncoderTest.c
  *
  */
 
@@ -8,7 +8,7 @@
 /***********************************************************************************************************************
  *      INCLUDES
  **********************************************************************************************************************/
-#include "eFSPMsgReceiverTest.h"
+#include "eFSPMsgDeEncoderTest.h"
 #include <stdio.h>
 
 
@@ -16,20 +16,20 @@
 /***********************************************************************************************************************
  *   PRIVATE FUNCTION DECLARATION
  **********************************************************************************************************************/
-static void msgReceiverTestCommon(void);
+static void msgDeEncoderTestCommon(void);
 
 
 
 /***********************************************************************************************************************
  *   GLOBAL FUNCTIONS
  **********************************************************************************************************************/
-void msgReceiverTest(void)
+void msgDeEncoderTest(void)
 {
-	(void)printf("\n\nMESSAGE RECEIVER TEST START \n\n");
+	(void)printf("\n\nMESSAGE DECODER ENCODER TEST START \n\n");
 
-    msgReceiverTestCommon();
+    msgDeEncoderTestCommon();
 
-    (void)printf("\n\nMESSAGE RECEIVER TEST END \n\n");
+    (void)printf("\n\nMESSAGE DECODER ENCODER TEST END \n\n");
 }
 
 
@@ -37,7 +37,7 @@ void msgReceiverTest(void)
 /***********************************************************************************************************************
  *   PRIVATE FUNCTION
  **********************************************************************************************************************/
-void msgReceiverTestCommon(void)
+void msgDeEncoderTestCommon(void)
 {
 
 }

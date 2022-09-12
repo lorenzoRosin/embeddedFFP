@@ -1,10 +1,10 @@
 /**
- * @file eFSPByteUnStufferTest.h
+ * @file eFSPMsgTransmitterTest.h
  *
  */
 
-#ifndef ECUBYTEUNSTUFFERTEST_H
-#define ECUBYTEUNSTUFFERTEST_H
+#ifndef EFSPMSGTRANSMITTERTEST_H
+#define EFSPMSGTRANSMITTERTEST_H
 
 
 
@@ -18,7 +18,7 @@ extern "C" {
  *      INCLUDES
  **********************************************************************************************************************/
 #include "eFSPType.h"
-#include "eFSPByteUnStuffer.h"
+#include "eFSPMsgTransmitter.h"
 
 
 
@@ -26,9 +26,9 @@ extern "C" {
  * GLOBAL PROTOTYPES
  **********************************************************************************************************************/
 /**
- * Test the eFSPCrc module
+ * Test the transmitter module
  */
-void byteUnStufferTest(void);
+void msgTransmitterTest(void);
 
 
 
@@ -38,4 +38,4 @@ void byteUnStufferTest(void);
 
 
 
-#endif /* ECUBYTEUNSTUFFERTEST_H */
+#endif /* EFSPMSGTRANSMITTERTEST_H */

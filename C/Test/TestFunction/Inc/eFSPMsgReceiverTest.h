@@ -1,10 +1,10 @@
 /**
- * @file eFSPDataStuffUnStuffTest.h
+ * @file eFSPMsgReceiverTest.h
  *
  */
 
-#ifndef ECUDATASTUFFUNSTUFFTEST_H
-#define ECUDATASTUFFUNSTUFFTEST_H
+#ifndef EFSPMSGRECEIVERTEST_H
+#define EFSPMSGRECEIVERTEST_H
 
 
 
@@ -18,8 +18,7 @@ extern "C" {
  *      INCLUDES
  **********************************************************************************************************************/
 #include "eFSPType.h"
-#include "eFSPByteUnStufferTest.h"
-#include "eFSPByteStuffer.h"
+#include "eFSPMsgReceiver.h"
 
 
 
@@ -27,9 +26,9 @@ extern "C" {
  * GLOBAL PROTOTYPES
  **********************************************************************************************************************/
 /**
- * Test the data stuff and unstuff
+ * Test the message receiver module
  */
-void dataStuffUnStuffTest(void);
+void msgReceiverTest(void);
 
 
 
@@ -39,4 +38,4 @@ void dataStuffUnStuffTest(void);
 
 
 
-#endif /* ECUDATASTUFFUNSTUFFTEST_H */
+#endif /* EFSPMSGRECEIVERTEST_H */

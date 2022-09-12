@@ -2161,10 +2161,16 @@
         <group>
             <name>Inc</name>
             <file>
-                <name>$PROJ_DIR$\..\..\Code\Inc\eFSPByteUnStuffer.h</name>
+                <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgDecoder.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgEncoder.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgReceiver.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgTransmitter.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\Code\Inc\eFSPStandardType.h</name>
@@ -2176,10 +2182,16 @@
         <group>
             <name>Src</name>
             <file>
-                <name>$PROJ_DIR$\..\..\Code\Src\eFSPByteUnStuffer.c</name>
+                <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgDecoder.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgEncoder.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgReceiver.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgTransmitter.c</name>
             </file>
         </group>
     </group>
@@ -2227,25 +2239,43 @@
         <group>
             <name>Inc</name>
             <file>
-                <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPByteStufferTest.h</name>
+                <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPMsgDecoderTest.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPByteUnStufferTest.h</name>
+                <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPMsgDeEncoderTest.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPDataStuffUnStuffTest.h</name>
+                <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPMsgEncoderTest.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPMsgReceiverTest.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPMsgRxTransmitterTest.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPMsgTransmitterTest.h</name>
             </file>
         </group>
         <group>
             <name>Src</name>
             <file>
-                <name>$PROJ_DIR$\..\TestFunction\Src\eFSPByteStufferTest.c</name>
+                <name>$PROJ_DIR$\..\TestFunction\Src\eFSPMsgDecoderTest.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\TestFunction\Src\eFSPByteUnStufferTest.c</name>
+                <name>$PROJ_DIR$\..\TestFunction\Src\eFSPMsgDeEncoderTest.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\TestFunction\Src\eFSPDataStuffUnStuffTest.c</name>
+                <name>$PROJ_DIR$\..\TestFunction\Src\eFSPMsgEncoderTest.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\TestFunction\Src\eFSPMsgReceiverTest.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\TestFunction\Src\eFSPMsgRxTransmitterTest.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\TestFunction\Src\eFSPMsgTransmitterTest.c</name>
             </file>
         </group>
         <file>

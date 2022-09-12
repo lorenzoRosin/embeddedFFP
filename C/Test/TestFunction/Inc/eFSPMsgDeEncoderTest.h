@@ -1,10 +1,10 @@
 /**
- * @file eFSPMsgDecoderTest.h
+ * @file eFSPMsgDeEncoderTest.h
  *
  */
 
-#ifndef EFSPMSGDECODERTEST_H
-#define EFSPMSGDECODERTEST_H
+#ifndef EFSPMSGDEENCODERTEST_H
+#define EFSPMSGDEENCODERTEST_H
 
 
 
@@ -18,6 +18,7 @@ extern "C" {
  *      INCLUDES
  **********************************************************************************************************************/
 #include "eFSPType.h"
+#include "eFSPMsgEncoder.h"
 #include "eFSPMsgDecoder.h"
 
 
@@ -26,9 +27,9 @@ extern "C" {
  * GLOBAL PROTOTYPES
  **********************************************************************************************************************/
 /**
- * Test the Message decoder module
+ * Test the message encoder decoder module
  */
-void msgDecoderTest(void);
+void msgDeEncoderTest(void);
 
 
 
@@ -38,4 +39,4 @@ void msgDecoderTest(void);
 
 
 
-#endif /* EFSPMSGDECODERTEST_H */
+#endif /* EFSPMSGDEENCODERTEST_H */

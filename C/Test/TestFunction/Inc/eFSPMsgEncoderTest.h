@@ -1,10 +1,10 @@
 /**
- * @file eFSPDataStuffUnStuffTest.h
+ * @file eFSPMsgEncoderTest.h
  *
  */
 
-#ifndef ECUDATASTUFFUNSTUFFTEST_H
-#define ECUDATASTUFFUNSTUFFTEST_H
+#ifndef EFSPMSGENCODERTEST_H
+#define EFSPMSGENCODERTEST_H
 
 
 
@@ -18,8 +18,7 @@ extern "C" {
  *      INCLUDES
  **********************************************************************************************************************/
 #include "eFSPType.h"
-#include "eFSPByteUnStufferTest.h"
-#include "eFSPByteStuffer.h"
+#include "eFSPMsgEncoder.h"
 
 
 
@@ -27,9 +26,9 @@ extern "C" {
  * GLOBAL PROTOTYPES
  **********************************************************************************************************************/
 /**
- * Test the data stuff and unstuff
+ * Test the message encoder module
  */
-void dataStuffUnStuffTest(void);
+void msgEncoderTest(void);
 
 
 
@@ -39,4 +38,4 @@ void dataStuffUnStuffTest(void);
 
 
 
-#endif /* ECUDATASTUFFUNSTUFFTEST_H */
+#endif /* EFSPMSGENCODERTEST_H */

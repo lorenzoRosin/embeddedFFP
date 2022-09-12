@@ -1,5 +1,5 @@
 /**
- * @file eFSPMsgReceiverTest.c
+ * @file eFSPMsgRxTransmitterTest.c
  *
  */
 
@@ -8,7 +8,7 @@
 /***********************************************************************************************************************
  *      INCLUDES
  **********************************************************************************************************************/
-#include "eFSPMsgReceiverTest.h"
+#include "eFSPMsgRxTransmitterTest.h"
 #include <stdio.h>
 
 
@@ -16,20 +16,20 @@
 /***********************************************************************************************************************
  *   PRIVATE FUNCTION DECLARATION
  **********************************************************************************************************************/
-static void msgReceiverTestCommon(void);
+static void msgRxTransmitterTestCommon(void);
 
 
 
 /***********************************************************************************************************************
  *   GLOBAL FUNCTIONS
  **********************************************************************************************************************/
-void msgReceiverTest(void)
+void msgRxTransmitterTest(void)
 {
-	(void)printf("\n\nMESSAGE RECEIVER TEST START \n\n");
+	(void)printf("\n\nMESSAGE RECEIVER TRANSMITTER TEST START \n\n");
 
-    msgReceiverTestCommon();
+    msgRxTransmitterTestCommon();
 
-    (void)printf("\n\nMESSAGE RECEIVER TEST END \n\n");
+    (void)printf("\n\nMESSAGE RECEIVER TRANSMITTER TEST END \n\n");
 }
 
 
@@ -37,7 +37,7 @@ void msgReceiverTest(void)
 /***********************************************************************************************************************
  *   PRIVATE FUNCTION
  **********************************************************************************************************************/
-void msgReceiverTestCommon(void)
+void msgRxTransmitterTestCommon(void)
 {
 
 }

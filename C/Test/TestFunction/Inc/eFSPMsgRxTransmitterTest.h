@@ -1,10 +1,10 @@
 /**
- * @file eFSPMsgDecoderTest.h
+ * @file eFSPMsgRxTransmitterTest.h
  *
  */
 
-#ifndef EFSPMSGDECODERTEST_H
-#define EFSPMSGDECODERTEST_H
+#ifndef EFSPMSGRXTRANSMITTERTEST_H
+#define EFSPMSGRXTRANSMITTERTEST_H
 
 
 
@@ -18,7 +18,8 @@ extern "C" {
  *      INCLUDES
  **********************************************************************************************************************/
 #include "eFSPType.h"
-#include "eFSPMsgDecoder.h"
+#include "eFSPMsgTransmitter.h"
+#include "eFSPMsgReceiver.h"
 
 
 
@@ -26,9 +27,9 @@ extern "C" {
  * GLOBAL PROTOTYPES
  **********************************************************************************************************************/
 /**
- * Test the Message decoder module
+ * Test the receiver transmitter module
  */
-void msgDecoderTest(void);
+void msgRxTransmitterTest(void);
 
 
 
@@ -38,4 +39,4 @@ void msgDecoderTest(void);
 
 
 
-#endif /* EFSPMSGDECODERTEST_H */
+#endif /* EFSPMSGRXTRANSMITTERTEST_H */
