@@ -21,20 +21,6 @@ extern "C" {
 
 
 
-/***********************************************************************************************************************
- *      TYPEDEFS
- **********************************************************************************************************************/
-typedef enum
-{
-    EFSP_RES_OK = 0,
-    EFSP_RES_BADPARAM,
-    EFSP_RES_BADPOINTER,
-    EFSP_RES_OUTOFMEM,
-    EFSP_RES_NOINITLIB,
-}e_eFSP_Res;
-
-
-
 #ifdef __cplusplus
 } /* extern "C" */
 #endif
