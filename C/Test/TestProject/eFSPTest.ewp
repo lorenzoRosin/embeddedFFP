@@ -2214,6 +2214,9 @@
                     <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUDataUnPack.h</name>
                 </file>
                 <file>
+                    <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUStandardType.h</name>
+                </file>
+                <file>
                     <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUType.h</name>
                 </file>
             </group>

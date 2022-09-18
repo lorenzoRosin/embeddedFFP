@@ -24,7 +24,7 @@ extern "C" {
 /***********************************************************************************************************************
  *      TYPEDEFS
  **********************************************************************************************************************/
- 
+
 /* Call back to a function that will calculate the CRC for this modules
  * the cntx parameter is a custom pointer that can be used by the creator of this CRC callback, and will not be used
  * by the MSG DECODER module */
@@ -68,7 +68,7 @@ typedef struct
  *		   MSGD_RES_BADPARAM in case of an invalid parameter
  *         MSGD_RES_OK operation ended correctly
  */
-e_eFSP_MsgD_Res msgDecoderInitCtx(s_eFSP_MsgDCtx* const ctx, uint8_t* const memArea, const uint32_t memAreaSize, 
+e_eFSP_MsgD_Res msgDecoderInitCtx(s_eFSP_MsgDCtx* const ctx, uint8_t* const memArea, const uint32_t memAreaSize,
 								 cb_crc32_msgd cbCrcP, void* const clbCtx);
 
 /**
@@ -117,7 +117,7 @@ e_eFSP_MsgD_Res msgDecoderGetPayloadDataLocation(s_eFSP_MsgDCtx* const ctx, uint
 e_eFSP_MsgD_Res msgDecoderGetNMinBeforeFrameRest(s_eFSP_MsgDCtx* const ctx, uint32_t* const retrivedLen);
 
 /**
- * Insert encoded chunk chunk of data 
+ * Insert encoded chunk chunk of data
  * @param  ctx data decoder context
  * @param  encArea Pointer to the encoded Data that we will decode
  * @param  encLen data to decode size
