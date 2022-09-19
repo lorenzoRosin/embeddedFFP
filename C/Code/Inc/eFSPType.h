@@ -21,6 +21,15 @@ extern "C" {
 
 
 
+/***********************************************************************************************************************
+ *      DEFINES
+ **********************************************************************************************************************/
+#define EFSP_MSGEN_HEADERSIZE                               									  ( ( uint32_t ) 0x08u )
+#define EFSP_MIN_MSGEN_PAYLOAD                               									  ( ( uint32_t ) 0x01u )
+#define EFSP_MIN_MSGEN_BUFFLEN                       ( ( uint32_t ) ( EFSP_MSGEN_HEADERSIZE + EFSP_MIN_MSGEN_PAYLOAD ) )
+
+
+
 #ifdef __cplusplus
 } /* extern "C" */
 #endif

@@ -45,11 +45,11 @@ typedef enum
     MSGE_RES_MESSAGEENDED,
     MSGE_RES_NOINITLIB,
     MSGE_RES_NOINITMESSAGE,
+	MSGE_RES_CRCCLBKERROR,
 }e_eFSP_MsgE_Res;
 
 typedef struct
 {
-    bool_t          isInit;
     e_eCU_BStuffCtx byteStufferCtnx;
     cb_crc32_msge   cbCrcPointer;
     void*           cbCrcCtx;
@@ -88,6 +88,7 @@ e_eFSP_MsgE_Res msgEncoderInitCtx(s_eFSP_MsgECtx* const ctx, const uint8_t* memA
  *		        MSGE_RES_BADPARAM       - In case of an invalid parameter passed to the function
  *		        MSGE_RES_NOINITLIB      - Need to init the data encoder context before taking some action
  *		        MSGE_RES_CORRUPTCTX     - In case of an corrupted context
+ *				MSGE_RES_CRCCLBKERROR   - The crc callback function returned an error
  *              MSGE_RES_OK             - Operation ended correctly
  */
 e_eFSP_MsgE_Res msgEncoderStartNewMessage(s_eFSP_MsgECtx* const ctx, const uint32_t  messageLen);
@@ -129,14 +130,14 @@ e_eFSP_MsgE_Res msgEncoderRestartCurrentMessage(s_eFSP_MsgECtx* const ctx);
  *
  * @return      MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
  *		        MSGE_RES_NOINITLIB      - Need to init the data encoder context before taking some action
- *		        MSGE_RES_NOINITMESSAGE  - Need to start a message before restarting it
+ *		        MSGE_RES_NOINITMESSAGE  - Need to start a message before taking some action
  *		        MSGE_RES_CORRUPTCTX     - In case of an corrupted context
  *              MSGE_RES_OK             - Operation ended correctly
  */
 e_eFSP_MsgE_Res msgEncoderGetRemToRetrive(s_eFSP_MsgECtx* const ctx, uint32_t* const retrivedLen);
 
 /**
- * @brief       Retrive encoded data chunk. The raw data copied in the buffer retrived using the function
+ * @brief       Retrive encoded data chunk. The raw data copied in the buffer by using the function
  *              msgEncoderGetPayloadLocation will be encoded and retrived by this function.
  *
  * @param[in]   ctx         - Message Encoder context
@@ -147,11 +148,11 @@ e_eFSP_MsgE_Res msgEncoderGetRemToRetrive(s_eFSP_MsgECtx* const ctx, uint32_t* c
  * @return      MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
  *		        MSGE_RES_NOINITLIB      - Need to init the data encoder context before taking some action
  *		        MSGE_RES_BADPARAM       - In case of an invalid parameter passed to the function
- *		        MSGE_RES_NOINITMESSAGE  - Need to start a message before restarting it
+ *		        MSGE_RES_NOINITMESSAGE  - Need to start a message before taking some action
  *		        MSGE_RES_CORRUPTCTX     - In case of an corrupted context
  *              MSGE_RES_MESSAGEENDED   - No more data that we can elaborate, restart or start a new msg to proceed.
  *                                        This means that we have finished encoding the current message.
- *              MSGE_RES_OK             - Operation ended correctly
+ *              MSGE_RES_OK             - Operation ended correctly, message is not still fully encoded 
  */
 e_eFSP_MsgE_Res msgEncoderRetriveEChunk(s_eFSP_MsgECtx* const ctx, uint8_t* const encodeDest,
 									   const uint32_t maxDestLen, uint32_t* const filledLen);
