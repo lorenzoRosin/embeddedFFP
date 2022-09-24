@@ -50,8 +50,8 @@ typedef enum
 
 typedef struct
 {
-    e_eCU_BStuffCtx byteStufferCtnx;
-    cb_crc32_msge   cbCrcPointer;
+    s_eCU_BStuffCtx byteStufferCtnx;
+    cb_crc32_msge   cbCrcPtr;
     void*           cbCrcCtx;
 }s_eFSP_MsgECtx;
 
@@ -73,7 +73,7 @@ typedef struct
  *		        MSGE_RES_BADPARAM       - In case of an invalid parameter passed to the function
  *              MSGE_RES_OK             - Operation ended correctly
  */
-e_eFSP_MsgE_Res msgEncoderInitCtx(s_eFSP_MsgECtx* const ctx, const uint8_t* memArea, const uint32_t memAreaSize,
+e_eFSP_MsgE_Res msgEncoderInitCtx(s_eFSP_MsgECtx* const ctx, uint8_t* const memArea, const uint32_t memAreaSize,
 								  cb_crc32_msge cbCrcP, void* const clbCtx);
 
 /**
@@ -91,7 +91,7 @@ e_eFSP_MsgE_Res msgEncoderInitCtx(s_eFSP_MsgECtx* const ctx, const uint8_t* memA
  *				MSGE_RES_CRCCLBKERROR   - The crc callback function returned an error
  *              MSGE_RES_OK             - Operation ended correctly
  */
-e_eFSP_MsgE_Res msgEncoderStartNewMessage(s_eFSP_MsgECtx* const ctx, const uint32_t  messageLen);
+e_eFSP_MsgE_Res msgEncoderStartNewMessage(s_eFSP_MsgECtx* const ctx, const uint32_t messageLen);
 
 /**
  * @brief       Retrive the pointer of the buffer that the user can use to insert data payload that need to be encoded
@@ -152,7 +152,7 @@ e_eFSP_MsgE_Res msgEncoderGetRemToRetrive(s_eFSP_MsgECtx* const ctx, uint32_t* c
  *		        MSGE_RES_CORRUPTCTX     - In case of an corrupted context
  *              MSGE_RES_MESSAGEENDED   - No more data that we can elaborate, restart or start a new msg to proceed.
  *                                        This means that we have finished encoding the current message.
- *              MSGE_RES_OK             - Operation ended correctly, message is not still fully encoded 
+ *              MSGE_RES_OK             - Operation ended correctly, message is not still fully encoded
  */
 e_eFSP_MsgE_Res msgEncoderRetriveEChunk(s_eFSP_MsgECtx* const ctx, uint8_t* const encodeDest,
 									   const uint32_t maxDestLen, uint32_t* const filledLen);

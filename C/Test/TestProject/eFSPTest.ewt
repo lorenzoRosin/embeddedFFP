@@ -2897,6 +2897,9 @@
                     <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUByteUnStuffer.h</name>
                 </file>
                 <file>
+                    <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUCrc.h</name>
+                </file>
+                <file>
                     <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUDataPack.h</name>
                 </file>
                 <file>
@@ -2916,6 +2919,9 @@
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUByteUnStuffer.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUCrc.c</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUDataPack.c</name>
