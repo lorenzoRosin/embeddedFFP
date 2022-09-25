@@ -15,10 +15,6 @@
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
-                    <name>FPU64</name>
-                    <state>1</state>
-                </option>
-                <option>
                     <name>BrowseInfoPath</name>
                     <state>Debug\BrowseInfo</state>
                 </option>
@@ -44,15 +40,15 @@
                 </option>
                 <option>
                     <name>Input description</name>
-                    <state>Full formatting, without multibyte support.</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>Output description</name>
-                    <state>Full formatting, without multibyte support.</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>GOutputBinary</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>OGCoreOrChip</name>
@@ -70,15 +66,15 @@
                 </option>
                 <option>
                     <name>RTDescription</name>
-                    <state>To be used with a compact configuration of the C/C++14 runtime library. No locale interface, C locale, no file descriptor support, no multibytes in printf and scanf, and no hex floats in strtod.</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>9.30.1.50052</state>
+                    <state>7.50.2.0</state>
                 </option>
                 <option>
                     <name>OGChipSelectEditMenu</name>
-                    <state>Default	None</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>GenLowLevelInterface</name>
@@ -98,7 +94,7 @@
                 </option>
                 <option>
                     <name>RTConfigPath2</name>
-                    <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
@@ -124,7 +120,7 @@
                 </option>
                 <option>
                     <name>GFPUDeviceSlave</name>
-                    <state>Default	None</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>FPU2</name>
@@ -242,23 +238,23 @@
                 </option>
                 <option>
                     <name>CCListCFile</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>CCListCMnemonics</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>CCListCMessages</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>CCListAssFile</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>CCListAssSource</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>CCEnableRemarks</name>
@@ -327,7 +323,7 @@
                 </option>
                 <option>
                     <name>CCCompilerRuntimeInfo</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>IFpuProcessor</name>
@@ -335,7 +331,7 @@
                 </option>
                 <option>
                     <name>OutputFile</name>
-                    <state>$FILE_BNAME$.o</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>CCLibConfigHeader</name>
@@ -347,8 +343,7 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
-                    <state>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc</state>
-                    <state>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -364,7 +359,7 @@
                 </option>
                 <option>
                     <name>CCOptLevel</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CCOptStrategy</name>
@@ -373,7 +368,7 @@
                 </option>
                 <option>
                     <name>CCOptLevelSlave</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CCPosIndRopi</name>
@@ -592,7 +587,7 @@
                 </option>
                 <option>
                     <name>AOutputFile</name>
-                    <state>$FILE_BNAME$.o</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>ALimitErrorsCheck</name>
@@ -664,7 +659,7 @@
             <data>
                 <extensions></extensions>
                 <cmdline></cmdline>
-                <hasPrio>1</hasPrio>
+                <hasPrio>0</hasPrio>
                 <buildSequence>inputOutputBased</buildSequence>
             </data>
         </settings>
@@ -757,7 +752,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$TOOLKIT_DIR$\config\generic_cortex.icf</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -817,7 +812,7 @@
                 </option>
                 <option>
                     <name>IlinkProgramEntryLabel</name>
-                    <state>__iar_program_start</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>DoFill</name>
@@ -990,7 +985,7 @@
                 </option>
                 <option>
                     <name>IlinkTrustzoneImportLibraryOut</name>
-                    <state>embeddedCUProject_import_lib.o</state>
+                    <state>###Unitialized###</state>
                 </option>
                 <option>
                     <name>OILinkExtraOption</name>
@@ -1067,14 +1062,9 @@
                 </option>
                 <option>
                     <name>IarchiveOutput</name>
-                    <state>C:\Project\embeddedFSP\C\Test\embeddedCUProject\Debug\Exe\embeddedCUProject.a</state>
+                    <state>###Unitialized###</state>
                 </option>
             </data>
-        </settings>
-        <settings>
-            <name>Coder</name>
-            <archiveVersion>0</archiveVersion>
-            <data />
         </settings>
     </configuration>
     <configuration>
@@ -1090,10 +1080,6 @@
                 <version>35</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
-                <option>
-                    <name>FPU64</name>
-                    <state>1</state>
-                </option>
                 <option>
                     <name>BrowseInfoPath</name>
                     <state>Release\BrowseInfo</state>
@@ -1120,15 +1106,15 @@
                 </option>
                 <option>
                     <name>Input description</name>
-                    <state>Full formatting, without multibyte support.</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>Output description</name>
-                    <state>Full formatting, without multibyte support.</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>GOutputBinary</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>OGCoreOrChip</name>
@@ -1146,15 +1132,15 @@
                 </option>
                 <option>
                     <name>RTDescription</name>
-                    <state>To be used with a compact configuration of the C/C++14 runtime library. No locale interface, C locale, no file descriptor support, no multibytes in printf and scanf, and no hex floats in strtod.</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>9.30.1.50052</state>
+                    <state>7.50.2.0</state>
                 </option>
                 <option>
                     <name>OGChipSelectEditMenu</name>
-                    <state>Default	None</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>GenLowLevelInterface</name>
@@ -1174,7 +1160,7 @@
                 </option>
                 <option>
                     <name>RTConfigPath2</name>
-                    <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
@@ -1200,7 +1186,7 @@
                 </option>
                 <option>
                     <name>GFPUDeviceSlave</name>
-                    <state>Default	None</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>FPU2</name>
@@ -1318,23 +1304,23 @@
                 </option>
                 <option>
                     <name>CCListCFile</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>CCListCMnemonics</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>CCListCMessages</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>CCListAssFile</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>CCListAssSource</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>CCEnableRemarks</name>
@@ -1363,11 +1349,11 @@
                 <option>
                     <name>CCAllowList</name>
                     <version>1</version>
-                    <state>00000000</state>
+                    <state>11111110</state>
                 </option>
                 <option>
                     <name>CCDebugInfo</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>IEndianMode</name>
@@ -1403,7 +1389,7 @@
                 </option>
                 <option>
                     <name>CCCompilerRuntimeInfo</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>IFpuProcessor</name>
@@ -1411,7 +1397,7 @@
                 </option>
                 <option>
                     <name>OutputFile</name>
-                    <state>$FILE_BNAME$.o</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>CCLibConfigHeader</name>
@@ -1423,8 +1409,7 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
-                    <state>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc</state>
-                    <state>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -1440,7 +1425,7 @@
                 </option>
                 <option>
                     <name>CCOptLevel</name>
-                    <state>0</state>
+                    <state>3</state>
                 </option>
                 <option>
                     <name>CCOptStrategy</name>
@@ -1449,7 +1434,7 @@
                 </option>
                 <option>
                     <name>CCOptLevelSlave</name>
-                    <state>0</state>
+                    <state>3</state>
                 </option>
                 <option>
                     <name>CCPosIndRopi</name>
@@ -1584,7 +1569,7 @@
                 </option>
                 <option>
                     <name>ADebug</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>AltRegisterNames</name>
@@ -1668,7 +1653,7 @@
                 </option>
                 <option>
                     <name>AOutputFile</name>
-                    <state>$FILE_BNAME$.o</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>ALimitErrorsCheck</name>
@@ -1740,7 +1725,7 @@
             <data>
                 <extensions></extensions>
                 <cmdline></cmdline>
-                <hasPrio>1</hasPrio>
+                <hasPrio>0</hasPrio>
                 <buildSequence>inputOutputBased</buildSequence>
             </data>
         </settings>
@@ -2143,77 +2128,12 @@
                 </option>
                 <option>
                     <name>IarchiveOutput</name>
-                    <state>C:\Project\embeddedFSP\C\Test\embeddedCUProject\Release\Exe\embeddedCUProject.a</state>
+                    <state>###Unitialized###</state>
                 </option>
             </data>
         </settings>
-        <settings>
-            <name>Coder</name>
-            <archiveVersion>0</archiveVersion>
-            <data />
-        </settings>
     </configuration>
-    <group>
-        <name>embeddedCU</name>
-        <group>
-            <name>Inc</name>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUByteStuffer.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUByteStuffer_prv.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUByteUnStuffer.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUByteUnStuffer_prv.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUCircularQueue.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUCrc.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUCrcDigest.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUDataPack.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUDataUnPack.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUStandardType.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUType.h</name>
-            </file>
-        </group>
-        <group>
-            <name>Src</name>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUByteStuffer.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUByteUnStuffer.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUCircularQueue.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUCrc.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUCrcDigest.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUDataPack.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUDataUnPack.c</name>
-            </file>
-        </group>
-    </group>
+    <file>
+        <name>$PROJ_DIR$\main.c</name>
+    </file>
 </project>
