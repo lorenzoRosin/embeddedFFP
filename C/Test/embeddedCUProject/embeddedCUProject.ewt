@@ -2853,10 +2853,28 @@
                 <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUByteStuffer.h</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUByteStuffer_prv.h</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUByteUnStuffer.h</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUByteUnStuffer_prv.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUCircularQueue.h</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUCrc.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUCrcDigest.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUDataPack.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUDataUnPack.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUStandardType.h</name>
@@ -2874,7 +2892,19 @@
                 <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUByteUnStuffer.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUCircularQueue.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUCrc.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUCrcDigest.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUDataPack.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUDataUnPack.c</name>
             </file>
         </group>
     </group>

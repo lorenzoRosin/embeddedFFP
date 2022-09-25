@@ -351,7 +351,6 @@
                     <state>$PROJ_DIR$\..\..\Code\Src</state>
                     <state>$PROJ_DIR$\..\TestFunction\Inc</state>
                     <state>$PROJ_DIR$\..\TestFunction\Src</state>
-                    <state>$PROJ_DIR$\..\embeddedCUProject\Debug\Exe</state>
                     <state>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc</state>
                 </option>
                 <option>
@@ -668,7 +667,7 @@
             <data>
                 <extensions></extensions>
                 <cmdline></cmdline>
-                <hasPrio>0</hasPrio>
+                <hasPrio>1</hasPrio>
                 <buildSequence>inputOutputBased</buildSequence>
             </data>
         </settings>
@@ -2192,27 +2191,6 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgTransmitter.c</name>
-            </file>
-        </group>
-    </group>
-    <group>
-        <name>ExtLib</name>
-        <group>
-            <name>LibHeaderEmbeddedCU</name>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUByteStuffer.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUByteUnStuffer.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUCrc.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUStandardType.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUType.h</name>
             </file>
         </group>
     </group>

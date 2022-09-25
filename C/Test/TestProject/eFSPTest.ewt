@@ -2885,27 +2885,6 @@
         </group>
     </group>
     <group>
-        <name>ExtLib</name>
-        <group>
-            <name>LibHeaderEmbeddedCU</name>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUByteStuffer.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUByteUnStuffer.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUCrc.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUStandardType.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUType.h</name>
-            </file>
-        </group>
-    </group>
-    <group>
         <name>Test</name>
         <group>
             <name>Inc</name>
