@@ -2887,49 +2887,22 @@
     <group>
         <name>ExtLib</name>
         <group>
-            <name>embeddedCU</name>
-            <group>
-                <name>Inc</name>
-                <file>
-                    <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUByteStuffer.h</name>
-                </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUByteUnStuffer.h</name>
-                </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUCrc.h</name>
-                </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUDataPack.h</name>
-                </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUDataUnPack.h</name>
-                </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUStandardType.h</name>
-                </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUType.h</name>
-                </file>
-            </group>
-            <group>
-                <name>Src</name>
-                <file>
-                    <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUByteStuffer.c</name>
-                </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUByteUnStuffer.c</name>
-                </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUCrc.c</name>
-                </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUDataPack.c</name>
-                </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUDataUnPack.c</name>
-                </file>
-            </group>
+            <name>LibHeaderEmbeddedCU</name>
+            <file>
+                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUByteStuffer.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUByteUnStuffer.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUCrc.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUStandardType.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUType.h</name>
+            </file>
         </group>
     </group>
     <group>

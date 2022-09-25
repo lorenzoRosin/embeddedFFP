@@ -3,6 +3,9 @@
     <project>
         <path>$WS_DIR$\eFSPTest.ewp</path>
     </project>
+    <project>
+        <path>$WS_DIR$\..\embeddedCUProject\embeddedCUProject.ewp</path>
+    </project>
     <batchBuild>
         <batchDefinition>
             <name>DEBUG</name>

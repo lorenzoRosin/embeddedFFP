@@ -15,8 +15,16 @@
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
+                    <name>FPU64</name>
+                    <state>1</state>
+                </option>
+                <option>
                     <name>BrowseInfoPath</name>
                     <state>Debug\BrowseInfo</state>
+                </option>
+                <option>
+                    <name>OGProductVersion</name>
+                    <state>9.30.1.0</state>
                 </option>
                 <option>
                     <name>ExePath</name>
@@ -44,7 +52,7 @@
                 </option>
                 <option>
                     <name>GOutputBinary</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>OGCoreOrChip</name>
@@ -62,11 +70,7 @@
                 </option>
                 <option>
                     <name>RTDescription</name>
-                    <state>A compact configuration of the C/C++14 runtime library. No locale interface, C locale, no file descriptor support, no multibytes in printf and scanf, and no hex floats in strtod.</state>
-                </option>
-                <option>
-                    <name>OGProductVersion</name>
-                    <state>5.10.0.159</state>
+                    <state>To be used with a compact configuration of the C/C++14 runtime library. No locale interface, C locale, no file descriptor support, no multibytes in printf and scanf, and no hex floats in strtod.</state>
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
@@ -207,10 +211,6 @@
                     <name>PointerAuthentication</name>
                     <state>0</state>
                 </option>
-                <option>
-                    <name>FPU64</name>
-                    <state>1</state>
-                </option>
             </data>
         </settings>
         <settings>
@@ -242,23 +242,23 @@
                 </option>
                 <option>
                     <name>CCListCFile</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CCListCMnemonics</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CCListCMessages</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CCListAssFile</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CCListAssSource</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CCEnableRemarks</name>
@@ -327,7 +327,7 @@
                 </option>
                 <option>
                     <name>CCCompilerRuntimeInfo</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>IFpuProcessor</name>
@@ -347,12 +347,8 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
-                    <state>$PROJ_DIR$\..\..\Code\Inc</state>
-                    <state>$PROJ_DIR$\..\..\Code\Src</state>
-                    <state>$PROJ_DIR$\..\TestFunction\Inc</state>
-                    <state>$PROJ_DIR$\..\TestFunction\Src</state>
-                    <state>$PROJ_DIR$\..\embeddedCUProject\Debug\Exe</state>
                     <state>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc</state>
+                    <state>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -650,7 +646,7 @@
                 </option>
                 <option>
                     <name>OOCOutputFile</name>
-                    <state>eFSPTest.srec</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>OOCCommandLineProducer</name>
@@ -668,7 +664,7 @@
             <data>
                 <extensions></extensions>
                 <cmdline></cmdline>
-                <hasPrio>0</hasPrio>
+                <hasPrio>224</hasPrio>
                 <buildSequence>inputOutputBased</buildSequence>
             </data>
         </settings>
@@ -809,7 +805,7 @@
                 </option>
                 <option>
                     <name>IlinkAdditionalLibs</name>
-                    <state>C:\Project\embeddedFSP\C\Test\embeddedCUProject\Debug\Exe\embeddedCUProject.a</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>IlinkOverrideProgramEntryLabel</name>
@@ -994,7 +990,7 @@
                 </option>
                 <option>
                     <name>IlinkTrustzoneImportLibraryOut</name>
-                    <state>eFSPTest_import_lib.o</state>
+                    <state>embeddedCUProject_import_lib.o</state>
                 </option>
                 <option>
                     <name>OILinkExtraOption</name>
@@ -1071,7 +1067,7 @@
                 </option>
                 <option>
                     <name>IarchiveOutput</name>
-                    <state>###Unitialized###</state>
+                    <state>C:\Project\embeddedFSP\C\Test\embeddedCUProject\Debug\Exe\embeddedCUProject.a</state>
                 </option>
             </data>
         </settings>
@@ -1095,8 +1091,16 @@
                 <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
                 <option>
+                    <name>FPU64</name>
+                    <state>1</state>
+                </option>
+                <option>
                     <name>BrowseInfoPath</name>
                     <state>Release\BrowseInfo</state>
+                </option>
+                <option>
+                    <name>OGProductVersion</name>
+                    <state>9.30.1.0</state>
                 </option>
                 <option>
                     <name>ExePath</name>
@@ -1116,15 +1120,15 @@
                 </option>
                 <option>
                     <name>Input description</name>
-                    <state></state>
+                    <state>Full formatting, without multibyte support.</state>
                 </option>
                 <option>
                     <name>Output description</name>
-                    <state></state>
+                    <state>Full formatting, without multibyte support.</state>
                 </option>
                 <option>
                     <name>GOutputBinary</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>OGCoreOrChip</name>
@@ -1142,19 +1146,15 @@
                 </option>
                 <option>
                     <name>RTDescription</name>
-                    <state></state>
-                </option>
-                <option>
-                    <name>OGProductVersion</name>
-                    <state>5.10.0.159</state>
+                    <state>To be used with a compact configuration of the C/C++14 runtime library. No locale interface, C locale, no file descriptor support, no multibytes in printf and scanf, and no hex floats in strtod.</state>
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>7.50.2.0</state>
+                    <state>9.30.1.50052</state>
                 </option>
                 <option>
                     <name>OGChipSelectEditMenu</name>
-                    <state></state>
+                    <state>Default	None</state>
                 </option>
                 <option>
                     <name>GenLowLevelInterface</name>
@@ -1174,7 +1174,7 @@
                 </option>
                 <option>
                     <name>RTConfigPath2</name>
-                    <state></state>
+                    <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
@@ -1200,7 +1200,7 @@
                 </option>
                 <option>
                     <name>GFPUDeviceSlave</name>
-                    <state></state>
+                    <state>Default	None</state>
                 </option>
                 <option>
                     <name>FPU2</name>
@@ -1287,10 +1287,6 @@
                     <name>PointerAuthentication</name>
                     <state>0</state>
                 </option>
-                <option>
-                    <name>FPU64</name>
-                    <state>1</state>
-                </option>
             </data>
         </settings>
         <settings>
@@ -1322,23 +1318,23 @@
                 </option>
                 <option>
                     <name>CCListCFile</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CCListCMnemonics</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CCListCMessages</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CCListAssFile</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CCListAssSource</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CCEnableRemarks</name>
@@ -1367,11 +1363,11 @@
                 <option>
                     <name>CCAllowList</name>
                     <version>1</version>
-                    <state>11111110</state>
+                    <state>00000000</state>
                 </option>
                 <option>
                     <name>CCDebugInfo</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>IEndianMode</name>
@@ -1407,7 +1403,7 @@
                 </option>
                 <option>
                     <name>CCCompilerRuntimeInfo</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>IFpuProcessor</name>
@@ -1415,7 +1411,7 @@
                 </option>
                 <option>
                     <name>OutputFile</name>
-                    <state></state>
+                    <state>$FILE_BNAME$.o</state>
                 </option>
                 <option>
                     <name>CCLibConfigHeader</name>
@@ -1427,7 +1423,8 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
-                    <state></state>
+                    <state>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc</state>
+                    <state>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -1443,7 +1440,7 @@
                 </option>
                 <option>
                     <name>CCOptLevel</name>
-                    <state>3</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>CCOptStrategy</name>
@@ -1452,7 +1449,7 @@
                 </option>
                 <option>
                     <name>CCOptLevelSlave</name>
-                    <state>3</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>CCPosIndRopi</name>
@@ -1587,7 +1584,7 @@
                 </option>
                 <option>
                     <name>ADebug</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>AltRegisterNames</name>
@@ -1671,7 +1668,7 @@
                 </option>
                 <option>
                     <name>AOutputFile</name>
-                    <state></state>
+                    <state>$FILE_BNAME$.o</state>
                 </option>
                 <option>
                     <name>ALimitErrorsCheck</name>
@@ -1743,7 +1740,7 @@
             <data>
                 <extensions></extensions>
                 <cmdline></cmdline>
-                <hasPrio>0</hasPrio>
+                <hasPrio>224</hasPrio>
                 <buildSequence>inputOutputBased</buildSequence>
             </data>
         </settings>
@@ -2146,7 +2143,7 @@
                 </option>
                 <option>
                     <name>IarchiveOutput</name>
-                    <state>###Unitialized###</state>
+                    <state>C:\Project\embeddedFSP\C\Test\embeddedCUProject\Release\Exe\embeddedCUProject.a</state>
                 </option>
             </data>
         </settings>
@@ -2157,48 +2154,9 @@
         </settings>
     </configuration>
     <group>
-        <name>eFSP</name>
+        <name>embeddedCU</name>
         <group>
             <name>Inc</name>
-            <file>
-                <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgDecoder.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgEncoder.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgReceiver.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgTransmitter.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\Code\Inc\eFSPStandardType.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\Code\Inc\eFSPType.h</name>
-            </file>
-        </group>
-        <group>
-            <name>Src</name>
-            <file>
-                <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgDecoder.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgEncoder.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgReceiver.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgTransmitter.c</name>
-            </file>
-        </group>
-    </group>
-    <group>
-        <name>ExtLib</name>
-        <group>
-            <name>LibHeaderEmbeddedCU</name>
             <file>
                 <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUByteStuffer.h</name>
             </file>
@@ -2215,53 +2173,17 @@
                 <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Inc\eCUType.h</name>
             </file>
         </group>
-    </group>
-    <group>
-        <name>Test</name>
-        <group>
-            <name>Inc</name>
-            <file>
-                <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPMsgDecoderTest.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPMsgDeEncoderTest.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPMsgEncoderTest.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPMsgReceiverTest.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPMsgRxTransmitterTest.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPMsgTransmitterTest.h</name>
-            </file>
-        </group>
         <group>
             <name>Src</name>
             <file>
-                <name>$PROJ_DIR$\..\TestFunction\Src\eFSPMsgDecoderTest.c</name>
+                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUByteStuffer.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\TestFunction\Src\eFSPMsgDeEncoderTest.c</name>
+                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUByteUnStuffer.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\TestFunction\Src\eFSPMsgEncoderTest.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\TestFunction\Src\eFSPMsgReceiverTest.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\TestFunction\Src\eFSPMsgRxTransmitterTest.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\TestFunction\Src\eFSPMsgTransmitterTest.c</name>
+                <name>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Code\Src\eCUCrc.c</name>
             </file>
         </group>
-        <file>
-            <name>$PROJ_DIR$\main.c</name>
-        </file>
     </group>
 </project>
