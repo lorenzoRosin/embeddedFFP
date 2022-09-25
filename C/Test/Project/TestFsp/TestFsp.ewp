@@ -808,6 +808,7 @@
                 <option>
                     <name>IlinkAdditionalLibs</name>
                     <state>$PROJ_DIR$\..\LibFsp\Library\Exe\LibFsp.a</state>
+                    <state>$PROJ_DIR$\..\LibEcu\Library\Exe\LibEcu.a</state>
                 </option>
                 <option>
                     <name>IlinkOverrideProgramEntryLabel</name>
