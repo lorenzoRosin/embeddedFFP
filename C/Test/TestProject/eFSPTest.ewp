@@ -667,7 +667,7 @@
             <data>
                 <extensions></extensions>
                 <cmdline></cmdline>
-                <hasPrio>1</hasPrio>
+                <hasPrio>176</hasPrio>
                 <buildSequence>inputOutputBased</buildSequence>
             </data>
         </settings>
@@ -2161,15 +2161,24 @@
             <name>Inc</name>
             <file>
                 <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgDecoder.h</name>
+                <excluded>
+                    <configuration>Debug</configuration>
+                </excluded>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgEncoder.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgReceiver.h</name>
+                <excluded>
+                    <configuration>Debug</configuration>
+                </excluded>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgTransmitter.h</name>
+                <excluded>
+                    <configuration>Debug</configuration>
+                </excluded>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\Code\Inc\eFSPStandardType.h</name>
@@ -2182,15 +2191,24 @@
             <name>Src</name>
             <file>
                 <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgDecoder.c</name>
+                <excluded>
+                    <configuration>Debug</configuration>
+                </excluded>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgEncoder.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgReceiver.c</name>
+                <excluded>
+                    <configuration>Debug</configuration>
+                </excluded>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgTransmitter.c</name>
+                <excluded>
+                    <configuration>Debug</configuration>
+                </excluded>
             </file>
         </group>
     </group>
@@ -2200,42 +2218,72 @@
             <name>Inc</name>
             <file>
                 <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPMsgDecoderTest.h</name>
+                <excluded>
+                    <configuration>Debug</configuration>
+                </excluded>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPMsgDeEncoderTest.h</name>
+                <excluded>
+                    <configuration>Debug</configuration>
+                </excluded>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPMsgEncoderTest.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPMsgReceiverTest.h</name>
+                <excluded>
+                    <configuration>Debug</configuration>
+                </excluded>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPMsgRxTransmitterTest.h</name>
+                <excluded>
+                    <configuration>Debug</configuration>
+                </excluded>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\TestFunction\Inc\eFSPMsgTransmitterTest.h</name>
+                <excluded>
+                    <configuration>Debug</configuration>
+                </excluded>
             </file>
         </group>
         <group>
             <name>Src</name>
             <file>
                 <name>$PROJ_DIR$\..\TestFunction\Src\eFSPMsgDecoderTest.c</name>
+                <excluded>
+                    <configuration>Debug</configuration>
+                </excluded>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\TestFunction\Src\eFSPMsgDeEncoderTest.c</name>
+                <excluded>
+                    <configuration>Debug</configuration>
+                </excluded>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\TestFunction\Src\eFSPMsgEncoderTest.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\TestFunction\Src\eFSPMsgReceiverTest.c</name>
+                <excluded>
+                    <configuration>Debug</configuration>
+                </excluded>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\TestFunction\Src\eFSPMsgRxTransmitterTest.c</name>
+                <excluded>
+                    <configuration>Debug</configuration>
+                </excluded>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\TestFunction\Src\eFSPMsgTransmitterTest.c</name>
+                <excluded>
+                    <configuration>Debug</configuration>
+                </excluded>
             </file>
         </group>
         <file>
