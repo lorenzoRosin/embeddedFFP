@@ -82,7 +82,7 @@ e_eFSP_MsgE_Res msgEncoderInitCtx(s_eFSP_MsgECtx* const ctx, uint8_t* const memA
  *              in order to know how get the data pointer )
  *
  * @param[in]   ctx         - Message Encoder context
- * @param[in]   messageLen  - lenght of the raw data present in the frame that we need to encode
+ * @param[in]   messageLen  - lenght of the raw payload present in the frame that we need to encode
  *
  * @return      MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
  *		        MSGE_RES_BADPARAM       - In case of an invalid parameter passed to the function
@@ -155,7 +155,7 @@ e_eFSP_MsgE_Res msgEncoderGetRemToRetrive(s_eFSP_MsgECtx* const ctx, uint32_t* c
  *              MSGE_RES_OK             - Operation ended correctly, message is not still fully encoded
  */
 e_eFSP_MsgE_Res msgEncoderRetriveEChunk(s_eFSP_MsgECtx* const ctx, uint8_t* const encodeDest,
-									   const uint32_t maxDestLen, uint32_t* const filledLen);
+									    const uint32_t maxDestLen, uint32_t* const filledLen);
 
 #ifdef __cplusplus
 } /* extern "C" */

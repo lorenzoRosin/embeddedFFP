@@ -39,7 +39,7 @@ e_eFSP_MsgE_Res msgEncoderInitCtx(s_eFSP_MsgECtx* const ctx, uint8_t* const memA
 	}
 	else
 	{
-        /* Check data validity */
+        /* Check data validity, we need some len to store the data */
         if( memAreaSize < EFSP_MIN_MSGEN_BUFFLEN )
         {
             result = MSGE_RES_BADPARAM;
@@ -82,8 +82,8 @@ e_eFSP_MsgE_Res msgEncoderStartNewMessage(s_eFSP_MsgECtx* const ctx, const uint3
 	}
 	else
 	{
-        /* Check param validity */
-        if( messageLen <= 0u )
+        /* Check param validity, need at least 1 byte of paylaod */
+        if( ( messageLen <= 0u ) || ( messageLen > (0xFFFFFFFFu - EFSP_MIN_MSGEN_BUFFLEN ) ))
         {
             result = MSGE_RES_BADPARAM;
         }
@@ -271,7 +271,7 @@ e_eFSP_MsgE_Res msgEncoderGetRemToRetrive(s_eFSP_MsgECtx* const ctx, uint32_t* c
 }
 
 e_eFSP_MsgE_Res msgEncoderRetriveEChunk(s_eFSP_MsgECtx* const ctx, uint8_t* const encodeDest,
-									   const uint32_t maxDestLen, uint32_t* const filledLen)
+									    const uint32_t maxDestLen, uint32_t* const filledLen)
 {
 	/* Local variable */
 	e_eFSP_MsgE_Res result;
@@ -372,6 +372,7 @@ e_eFSP_MsgE_Res convertReturnFromBstfToMSGE(e_eCU_dBStf_Res returnedEvent)
 
 		default:
 		{
+            /* Impossible end here */
 			result = MSGE_RES_BADPARAM;
             break;
 		}
