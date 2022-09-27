@@ -35,7 +35,8 @@ static void msgEncoderTestBadInit(void);
 static void msgEncoderTestBadIniMsg(void);
 static void msgEncoderTestBadParamEntr(void);
 static void msgEncoderTestBadParamStatus(void);
-
+static void msgEncoderTestBadClBck(void);
+static void msgEncoderTestMsgEnd(void);
 
 
 /***********************************************************************************************************************
@@ -50,6 +51,8 @@ void msgEncoderTest(void)
     msgEncoderTestBadIniMsg();
     msgEncoderTestBadParamEntr();
     msgEncoderTestBadParamStatus();
+    msgEncoderTestBadClBck();
+    msgEncoderTestMsgEnd();
 
     (void)printf("\n\nMESSAGE ENCODER TEST END \n\n");
 }
@@ -565,13 +568,90 @@ void msgEncoderTestBadParamStatus(void)
     {
         (void)printf("msgEncoderTestBadParamStatus 10 -- FAIL \n");
     }
-
-
 }
 
+void msgEncoderTestBadClBck(void)
+{
+    /* Local variable */
+    s_eFSP_MsgECtx ctx;
+    uint8_t  memArea[10u];
+    cb_crc32_msge cbCrcPTest = &c32SAdaptEr;
+    s_eCU_crcAdapterCtx ctxAdapterCrc;
+    uint32_t var32;
+    uint8_t* dataP;
 
+    /* Set value */
+    (void)memset(memArea, 0, sizeof(memArea));
 
+    /* Function */
+    if( MSGE_RES_OK == msgEncoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    {
+        (void)printf("msgEncoderTestBadClBck 1  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgEncoderTestBadClBck 1  -- FAIL \n");
+    }
 
+    if( MSGE_RES_CRCCLBKERROR == msgEncoderStartNewMessage(&ctx, 2u) )
+    {
+        if( CRC_RES_BADPOINTER == ctxAdapterCrc.lastError )
+        {
+            (void)printf("msgEncoderTestBadClBck 2  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgEncoderTestBadClBck 2  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgEncoderTestBadClBck 2  -- FAIL \n");
+    }
+}
+
+void msgEncoderTestMsgEnd(void)
+{
+    /* Local variable */
+    s_eFSP_MsgECtx ctx;
+    uint8_t  memArea[12u];
+    cb_crc32_msge cbCrcPTest = &c32SAdapt;
+    s_eCU_crcAdapterCtx ctxAdapterCrc;
+    uint32_t var32;
+    uint8_t* dataP;
+
+    /* Set value */
+    (void)memset(memArea, 0, sizeof(memArea));
+
+    /* Function */
+    if( MSGE_RES_OK == msgEncoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    {
+        (void)printf("msgEncoderTestMsgEnd 1  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgEncoderTestMsgEnd 1  -- FAIL \n");
+    }
+
+    if( MSGE_RES_OK == msgEncoderStartNewMessage(&ctx, 2u) )
+    {
+        (void)printf("msgEncoderTestMsgEnd 2  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgEncoderTestMsgEnd 2  -- FAIL \n");
+    }
+
+    if( MSGE_RES_OK == msgEncoderStartNewMessage(&ctx, 2u) )
+    {
+        (void)printf("msgEncoderTestMsgEnd 3  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgEncoderTestMsgEnd 3  -- FAIL \n");
+    }
+
+}
 
 
 
