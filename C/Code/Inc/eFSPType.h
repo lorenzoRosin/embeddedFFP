@@ -28,7 +28,9 @@ extern "C" {
 #define EFSP_MIN_MSGEN_PAYLOAD                               									  ( ( uint32_t ) 0x01u )
 #define EFSP_MIN_MSGEN_BUFFLEN                       ( ( uint32_t ) ( EFSP_MSGEN_HEADERSIZE + EFSP_MIN_MSGEN_PAYLOAD ) )
 
-
+#define EFSP_MSGDE_HEADERSIZE                               									  ( ( uint32_t ) 0x08u )
+#define EFSP_MIN_MSGDE_PAYLOAD                               									  ( ( uint32_t ) 0x01u )
+#define EFSP_MIN_MSGDE_BUFFLEN                       ( ( uint32_t ) ( EFSP_MSGDE_HEADERSIZE + EFSP_MIN_MSGDE_PAYLOAD ) )
 
 #ifdef __cplusplus
 } /* extern "C" */

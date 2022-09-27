@@ -62,9 +62,9 @@ typedef struct
  **********************************************************************************************************************/
 /**
  * @brief       Initialize the data decoder context
- * 
+ *
  * @param[in]   ctx         - Msg decoder context
- * @param[in]   memArea     - Pointer to a memory area that we will use to save decoded data 
+ * @param[in]   memArea     - Pointer to a memory area that we will use to save decoded data
  * @param[in]   memAreaSize - Dimension in byte of the memory area
  * @param[in]   cbCrcP      - Pointer to a CRC 32 seed callback function
  * @param[in]   clbCtx      - Custom context passed to the callback function
@@ -89,13 +89,13 @@ e_eFSP_MsgD_Res msgDecoderInitCtx(s_eFSP_MsgDCtx* const ctx, uint8_t* const memA
 e_eFSP_MsgD_Res msgDecoderStartNewMsg(s_eFSP_MsgDCtx* const ctx);
 
 /**
- * @brief       Retrive the pointer to the stored decoded data payload ( NO HEADER ), and the data size of the frame. 
- *              Keep in mind that the message parsing could be ongoing, and if an error in the frame occour the 
+ * @brief       Retrive the pointer to the stored decoded data payload ( NO HEADER ), and the data size of the frame.
+ *              Keep in mind that the message parsing could be ongoing, and if an error in the frame occour the
  *              retrivedLen could be setted to 0 again. We will retrive only payload size and no CRC + LEN header
  *
  * @param[in]   ctx         - Msg decoder context
  * @param[out]  dataP       - Pointer to a Pointer pointing to the decoded data payload ( NO CRC NO DATA SIZE )
- * @param[out]  retrivedLen - Pointer to a uint32_t variable where the size of the decoded data will be placed (raw 
+ * @param[out]  retrivedLen - Pointer to a uint32_t variable where the size of the decoded data will be placed (raw
  *                            paylod data len )
  *
  * @return      MSGD_RES_BADPOINTER   	- In case of bad pointer passed to the function
@@ -106,11 +106,11 @@ e_eFSP_MsgD_Res msgDecoderStartNewMsg(s_eFSP_MsgDCtx* const ctx);
 e_eFSP_MsgD_Res msgDecoderGetDecodedData(s_eFSP_MsgDCtx* const ctx, uint8_t** dataP, uint32_t* const retrivedLen);
 
 /**
- * @brief       Retrive the size of encoded data payload frame. Keep in mind that the message parsing could be ongoing, 
+ * @brief       Retrive the size of encoded data payload frame. Keep in mind that the message parsing could be ongoing,
  *              and if an error in the frame occour the retrivedLen could be setted to 0 again
  *
  * @param[in]   ctx         - Msg decoder context
- * @param[out]  retrivedLen - Pointer to a uint32_t variable where the size of the decoded data will be placed (raw 
+ * @param[out]  retrivedLen - Pointer to a uint32_t variable where the size of the decoded data will be placed (raw
  *                            paylod data len, no header size )
  *
  * @return      MSGD_RES_BADPOINTER   	- In case of bad pointer passed to the function
@@ -159,7 +159,7 @@ e_eFSP_MsgD_Res msgDecoderIsAFullMsgUnstuff(s_eFSP_MsgDCtx* const ctx, bool_t* c
  *              MSGD_RES_OK           	- Operation ended correctly. The chunk is parsed correclty but the frame is not
  *                                        finished yet
  */
-e_eFSP_MsgD_Res bUStufferInsStufChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* encArea, const uint32_t encLen,
+e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* encArea, const uint32_t encLen,
                                       uint32_t* const consumedEncData, uint32_t* errSofRec);
 
 #ifdef __cplusplus

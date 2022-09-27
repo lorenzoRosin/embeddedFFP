@@ -11,7 +11,7 @@
  *      INCLUDES
  **********************************************************************************************************************/
 #include "eFSPMsgDecoder.h"
-
+#include "eCUCrc.h"
 
 
 /***********************************************************************************************************************
@@ -42,7 +42,7 @@ e_eFSP_MsgD_Res msgDecoderInitCtx(s_eFSP_MsgDCtx* const ctx, uint8_t* const memA
         /* Check data validity, we need some len to store the data */
         if( memAreaSize < EFSP_MIN_MSGDE_BUFFLEN )
         {
-            result = MSGE_RES_BADPARAM;
+            result = MSGD_RES_BADPARAM;
         }
         else
         {
@@ -131,8 +131,8 @@ e_eFSP_MsgD_Res msgDecoderGetDecodedData(s_eFSP_MsgDCtx* const ctx, uint8_t** da
                     *dataP = &dataPP[8u];
                     *retrivedLen = dataSizeP - EFSP_MSGDE_HEADERSIZE;
                 }
-				
-				result = MSGE_RES_OK;
+
+				result = MSGD_RES_OK;
 			}
 		}
 	}
@@ -179,8 +179,8 @@ e_eFSP_MsgD_Res msgDecoderGetDecodedLen(s_eFSP_MsgDCtx* const ctx, uint32_t* con
                     /* Return reference of only the raw payload */
                     *retrivedLen = dataSizeP - EFSP_MSGDE_HEADERSIZE;
                 }
-				
-				result = MSGE_RES_OK;
+
+				result = MSGD_RES_OK;
 			}
 		}
 	}
@@ -217,7 +217,7 @@ e_eFSP_MsgD_Res msgDecoderIsAFullMsgUnstuff(s_eFSP_MsgDCtx* const ctx, bool_t* c
 	return result;
 }
 
-e_eFSP_MsgD_Res bUStufferInsStufChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* encArea, const uint32_t encLen,
+e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* encArea, const uint32_t encLen,
                                       uint32_t* const consumedEncData, uint32_t* errSofRec)
 {
 	/* Local variable */
@@ -247,7 +247,7 @@ e_eFSP_MsgD_Res bUStufferInsStufChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 		{
 			resultByStuff = bUStufferInsStufChunk(&ctx->byteUStufferCtnx, encArea, encLen, consumedEncData, errSofRec);
 			result = convertReturnFromBstfToMSGE(resultByStuff);
-			
+
 			if( MSGD_RES_FRAMEENDED == result)
 			{
 				/* Ok the frame is complete, need to check iv we have data size, data crc, crc rigth value */
@@ -255,7 +255,7 @@ e_eFSP_MsgD_Res bUStufferInsStufChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 				dataPP = NULL;
 				resultByStuff = bUStufferGetUnstufData(&ctx->byteUStufferCtnx, &dataPP, &dataSizeP);
 				result = convertReturnFromBstfToMSGE(resultByStuff);
-	
+
 				if( MSGD_RES_OK == result )
 				{
 					/* Do we have enough data?  */
@@ -263,7 +263,7 @@ e_eFSP_MsgD_Res bUStufferInsStufChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 					{
 						/* Too small frame, discharge */
 						*errSofRec = *errSofRec + 1u;
-						
+
 						/* Restart */
 						resultByStuff = bUStufferStartNewFrame(&ctx->byteUStufferCtnx);
 						result = convertReturnFromBstfToMSGD(resultByStuff);
@@ -273,7 +273,7 @@ e_eFSP_MsgD_Res bUStufferInsStufChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 						/* Enough data! Is data len in frame coherent?  */
 						dLenInMsg = 0u;
 						tempS = 0;
-						
+
 						/* Estrapolate data len in Little Endian */
                         tempS = (uint32_t) dataPP[0x04u];
                         dLenInMsg |= ( tempS & 0x000000FFu );
@@ -283,14 +283,14 @@ e_eFSP_MsgD_Res bUStufferInsStufChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
                         dLenInMsg |= ( tempS & 0x00FF0000u );
                         tempS =  (uint32_t) ( ( (uint32_t) dataPP[0x07u] ) << 24u  );
                         dLenInMsg |= ( tempS & 0xFF000000u );
-						
+
 						if( ( dataSizeP - EFSP_MIN_MSGDE_BUFFLEN ) == dLenInMsg)
 						{
 							/* Data len is coherent! Is crc rigth? */
 							crcInMsg = 0u;
 							crcExp = 0u;
 							tempS = 0;
-							
+
 							/* Estrapolate CRC in Little Endian */
 							tempS = (uint32_t) dataPP[0x00u];
 							crcInMsg |= ( tempS & 0x000000FFu );
@@ -300,11 +300,11 @@ e_eFSP_MsgD_Res bUStufferInsStufChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 							crcInMsg |= ( tempS & 0x00FF0000u );
 							tempS =  (uint32_t) ( ( (uint32_t) dataPP[0x03u] ) << 24u  );
 							crcInMsg |= ( tempS & 0xFF000000u );
-							
+
 							/* Calculate CRC */
-							crcRes = (*(ctx->cbCrcPtr))( ctx->cbCrcCtx, ECU_CRC_BASE_SEED, &dataPP[4u], dLenInMsg + 4u, 
+							crcRes = (*(ctx->cbCrcPtr))( ctx->cbCrcCtx, ECU_CRC_BASE_SEED, &dataPP[4u], dLenInMsg + 4u,
 														 &crcExp );
-	
+
 							if( true == crcRes )
 							{
 								if( crcInMsg == crcExp )
@@ -315,7 +315,7 @@ e_eFSP_MsgD_Res bUStufferInsStufChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 								{
 									/* Data Crc is wrong, discharge */
 									*errSofRec = *errSofRec + 1u;
-									
+
 									/* Restart */
 									resultByStuff = bUStufferStartNewFrame(&ctx->byteUStufferCtnx);
 									result = convertReturnFromBstfToMSGD(resultByStuff);
@@ -323,21 +323,21 @@ e_eFSP_MsgD_Res bUStufferInsStufChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 							}
 							else
 							{
-								result = MSGE_RES_CRCCLBKERROR;
-							}							
+								result = MSGD_RES_CRCCLBKERROR;
+							}
 						}
 						else
 						{
 							/* Data len is wrong, discharge */
 							*errSofRec = *errSofRec + 1u;
-							
+
 							/* Restart */
 							resultByStuff = bUStufferStartNewFrame(&ctx->byteUStufferCtnx);
 							result = convertReturnFromBstfToMSGD(resultByStuff);
 						}
 					}
-					
-					result = MSGE_RES_OK;
+
+					result = MSGD_RES_OK;
 				}
 			}
 		}
@@ -368,7 +368,7 @@ bool_t isMsgDecStatusStillCoherent(const s_eFSP_MsgDCtx* ctx)
 
 e_eFSP_MsgD_Res convertReturnFromBstfToMSGD(e_eCU_dBUStf_Res returnedEvent)
 {
-	e_eFSP_MsgE_Res result;
+	e_eFSP_MsgD_Res result;
 
 	switch( returnedEvent )
 	{
@@ -413,11 +413,11 @@ e_eFSP_MsgD_Res convertReturnFromBstfToMSGD(e_eCU_dBUStf_Res returnedEvent)
 			result = MSGD_RES_NOINITLIB;
             break;
 		}
-		
+
 		default:
 		{
             /* Impossible end here */
-			result = MSGE_RES_BADPARAM;
+			result = MSGD_RES_BADPARAM;
             break;
 		}
 	}
