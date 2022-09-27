@@ -1,7 +1,12 @@
 /**
- * @file eFSPMsgDecoder.h
+ * @file       eFSPMsgDecoder.h
  *
- */
+ * @brief      Message encoder utils
+ *
+ * @author     Lorenzo Rosin
+ *
+ **********************************************************************************************************************/
+
 
 #ifndef EFSPMSGDECODER_H
 #define EFSPMSGDECODER_H
@@ -18,6 +23,7 @@ extern "C" {
  *      INCLUDES
  **********************************************************************************************************************/
 #include "eFSPType.h"
+#include "eCUByteUnStuffer.h"
 
 
 
@@ -39,17 +45,14 @@ typedef enum
     MSGD_RES_OUTOFMEM,
 	MSGD_RES_FRAMEENDED,
     MSGD_RES_NOINITLIB,
+	MSGD_RES_CRCCLBKERROR,
 }e_eFSP_MsgD_Res;
 
 typedef struct
 {
-    bool_t   isInit;
-	uint8_t* memArea;
-	uint32_t memAreaSize;
-	uint32_t memAreaCntr;
-    bool_t   precedentWasEsc;
-    bool_t   needSof;
-    bool_t   needEof;
+    s_eCU_BUStuffCtx byteUStufferCtnx;
+    cb_crc32_msgd    cbCrcPtr;
+    void*            cbCrcCtx;
 }s_eFSP_MsgDCtx;
 
 
@@ -58,83 +61,106 @@ typedef struct
  * GLOBAL PROTOTYPES
  **********************************************************************************************************************/
 /**
- * Initialize the data decoder context
- * @param  ctx data decoder context
- * @param  memArea Pointer to a memory area that we will use to save udecoded data payload
- * @param  memAreaSize Dimension in byte of the memory area
- * @param cbCrcP Pointer to a CRC 32 seed callback function
- * @param clbCtx Custom context passed to the callback function
- * @return MSGD_RES_BADPOINTER in case of bad pointer
- *		   MSGD_RES_BADPARAM in case of an invalid parameter
- *         MSGD_RES_OK operation ended correctly
+ * @brief       Initialize the data decoder context
+ * 
+ * @param[in]   ctx         - Msg decoder context
+ * @param[in]   memArea     - Pointer to a memory area that we will use to save decoded data 
+ * @param[in]   memAreaSize - Dimension in byte of the memory area
+ * @param[in]   cbCrcP      - Pointer to a CRC 32 seed callback function
+ * @param[in]   clbCtx      - Custom context passed to the callback function
+ *
+ * @return      MSGD_RES_BADPOINTER     - In case of bad pointer passed to the function
+ *		        MSGD_RES_BADPARAM       - In case of an invalid parameter passed to the function
+ *              MSGD_RES_OK             - Operation ended correctly
  */
 e_eFSP_MsgD_Res msgDecoderInitCtx(s_eFSP_MsgDCtx* const ctx, uint8_t* const memArea, const uint32_t memAreaSize,
 								 cb_crc32_msgd cbCrcP, void* const clbCtx);
 
 /**
- * Reset data Decoder and restart from memory start
- * @param  ctx data decoder context
- * @return MSGD_RES_BADPOINTER in case of bad pointer
- *		   MSGD_RES_NOINITLIB need to init context before taking some action
- *         MSGD_RES_OK operation ended correctly
+ * @brief       Start receiving a new message, loosing the previous stored decoded msg frame
+ *
+ * @param[in]   ctx         - Msg decoder context
+ *
+ * @return      MSGD_RES_BADPOINTER   	- In case of bad pointer passed to the function
+ *		        MSGD_RES_NOINITLIB    	- Need to init context before taking some action
+ *		        MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
+ *              MSGD_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MsgD_Res msgDecoderReset(s_eFSP_MsgDCtx* const ctx);
+e_eFSP_MsgD_Res msgDecoderStartNewMsg(s_eFSP_MsgDCtx* const ctx);
 
 /**
- * Retrive how many raw byte of pyaload we have decoded
- * @param  ctx data decoder context
- * @param  retrivedLen Pointer to a memory area were we will store size of the encoded raw data of payload
- * @return MSGD_RES_BADPOINTER in case of bad pointer
- *		   MSGD_RES_NOINITLIB need to init context before taking some action
- *		   MSGD_RES_CORRUPTCTX in case of an corrupted context
- *         MSGD_RES_OK operation ended correctly
+ * @brief       Retrive the pointer to the stored decoded data payload ( NO HEADER ), and the data size of the frame. 
+ *              Keep in mind that the message parsing could be ongoing, and if an error in the frame occour the 
+ *              retrivedLen could be setted to 0 again. We will retrive only payload size and no CRC + LEN header
+ *
+ * @param[in]   ctx         - Msg decoder context
+ * @param[out]  dataP       - Pointer to a Pointer pointing to the decoded data payload ( NO CRC NO DATA SIZE )
+ * @param[out]  retrivedLen - Pointer to a uint32_t variable where the size of the decoded data will be placed (raw 
+ *                            paylod data len )
+ *
+ * @return      MSGD_RES_BADPOINTER   	- In case of bad pointer passed to the function
+ *		        MSGD_RES_NOINITLIB    	- Need to init context before taking some action
+ *		        MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
+ *              MSGD_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MsgD_Res msgDecoderGetNDecoded(s_eFSP_MsgDCtx* const ctx, uint32_t* const retrivedLen);
-
+e_eFSP_MsgD_Res msgDecoderGetDecodedData(s_eFSP_MsgDCtx* const ctx, uint8_t** dataP, uint32_t* const retrivedLen);
 
 /**
- * Retrive how many raw byte of pyaload we have decoded
- * @param  ctx data decoder context
- * @param  retrivedLen Pointer to a memory area were we will store size of the encoded raw data of payload
- * @return MSGD_RES_BADPOINTER in case of bad pointer
- *		   MSGD_RES_NOINITLIB need to init context before taking some action
- *		   MSGD_RES_CORRUPTCTX in case of an corrupted context
- *         MSGD_RES_OK operation ended correctly
+ * @brief       Retrive the size of encoded data payload frame. Keep in mind that the message parsing could be ongoing, 
+ *              and if an error in the frame occour the retrivedLen could be setted to 0 again
+ *
+ * @param[in]   ctx         - Msg decoder context
+ * @param[out]  retrivedLen - Pointer to a uint32_t variable where the size of the decoded data will be placed (raw 
+ *                            paylod data len, no header size )
+ *
+ * @return      MSGD_RES_BADPOINTER   	- In case of bad pointer passed to the function
+ *		        MSGD_RES_NOINITLIB    	- Need to init context before taking some action
+ *		        MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
+ *              MSGD_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MsgD_Res msgDecoderGetPayloadDataLocation(s_eFSP_MsgDCtx* const ctx, uint8_t** const payloadLocation);
-
-
-/**
- * Retrive the minimum amount of Encoded data we can insert witouth starting a new frame parsing
- * @param  ctx data decoder context
- * @param  retrivedLen Pointer to a memory area were we will store size the minimum amount of encoded data we can
- *         insert before the frame end
- * @return MSGD_RES_BADPOINTER in case of bad pointer
- *		   MSGD_RES_NOINITLIB need to init context before taking some action
- *		   MSGD_RES_CORRUPTCTX in case of an corrupted context
- *         MSGD_RES_OK operation ended correctly
- */
-e_eFSP_MsgD_Res msgDecoderGetNMinBeforeFrameRest(s_eFSP_MsgDCtx* const ctx, uint32_t* const retrivedLen);
+e_eFSP_MsgD_Res msgDecoderGetDecodedLen(s_eFSP_MsgDCtx* const ctx, uint32_t* const retrivedLen);
 
 /**
- * Insert encoded chunk chunk of data
- * @param  ctx data decoder context
- * @param  encArea Pointer to the encoded Data that we will decode
- * @param  encLen data to decode size
- * @param  consumedStuffData Pointer to an uint32_t were we will store how many stuffed data byte were analyzed
- *         and that dosent need to be inserted in this function anymore
- * @param  errSofRec Pointer to an uint32_t were we will store how many protocol error were detected. Even with
- *         some error detected, the protocol will continue parsing data discharging error
- * @return DBUSTF_RES_BADPOINTER in case of bad pointer
- *		   DBUSTF_RES_NOINITLIB need to init context before taking some action
- *		   DBUSTF_RES_BADPARAM in case of an invalid parameter or state
- *		   DBUSTF_RES_CORRUPTCTX in case of an corrupted context
- *         DBUSTF_RES_OUTOFMEM Can not unstuff data, initial mem pointer was too small
- *		   DBUSTF_RES_FRAMEENDED Frame ended, restart context in order to parse a new frame
- *         DBUSTF_RES_OK operation ended correctly
+ * @brief       Check if the current message is finished or if we need to decode some more data to have the full frame
+ *
+ * @param[in]   ctx         - Msg decoder context
+ * @param[out]  isMsgDec 	- Pointer to a bool_t variable where we will store if the message parsing is ongoing
+ *
+ * @return      MSGD_RES_BADPOINTER   	- In case of bad pointer passed to the function
+ *		        MSGD_RES_NOINITLIB    	- Need to init context before taking some action
+ *		        MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
+ *              MSGD_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MsgD_Res msgDecoderInsertDChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* encArea, const uint32_t encLen,
-									   uint32_t* const consumedStuffData, uint32_t* errSofRec);
+e_eFSP_MsgD_Res msgDecoderIsAFullMsgUnstuff(s_eFSP_MsgDCtx* const ctx, bool_t* const isMsgDec);
+
+/**
+ * @brief       Insert the encoded data chunk that the alg will decode byte per byte
+ *
+ * @param[in]   ctx         	 - Msg decoder context
+ * @param[in]   encArea     	 - Pointer to the encoded Data that we will decode
+ * @param[in]   encLen      	 - Size of the encArea
+ * @param[out]  consumedEncData  - Pointer to an uint32_t were we will store how many encoded data byte has been
+ *                                 analized. keep in mind that unalized data were not decoded and will need to be
+ *                                 reparsed
+ * @param[out]  errSofRec        - Pointer to an uint32_t were we will store how many protocol error were detected.
+ *                                 Even with some error detected, the protocol will continue parsing data discharging
+ *                                 error.
+ *
+ * @return      MSGD_RES_BADPOINTER   	- In case of bad pointer passed to the function
+ *		        MSGD_RES_NOINITLIB    	- Need to init context before taking some action
+ *		        MSGD_RES_BADPARAM     	- In case of an invalid parameter passed to the function
+ *		        MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
+ *              MSGD_RES_OUTOFMEM     	- Can not unstuff data, initial mem pointer was too small. The only way to
+ *                                        resolve the issue is increasing the size of the memory area passed to init
+ *		        MSGD_RES_FRAMEENDED   	- Frame ended, restart context in order to parse a new frame. Every other call
+ *                                        to this function will not have effect until we call bUStufferStartNewFrame.
+ *                                        In this situation bear in mind that some data could be left out the parsing.
+ *				MSGE_RES_CRCCLBKERROR   - The crc callback returned an error when the encoder where verifing CRC
+ *              MSGD_RES_OK           	- Operation ended correctly. The chunk is parsed correclty but the frame is not
+ *                                        finished yet
+ */
+e_eFSP_MsgD_Res bUStufferInsStufChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* encArea, const uint32_t encLen,
+                                      uint32_t* const consumedEncData, uint32_t* errSofRec);
 
 #ifdef __cplusplus
 } /* extern "C" */
