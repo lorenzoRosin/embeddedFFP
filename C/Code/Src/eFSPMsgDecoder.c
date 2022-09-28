@@ -19,6 +19,7 @@
  **********************************************************************************************************************/
 static bool_t isMsgDecStatusStillCoherent(const s_eFSP_MsgDCtx* ctx);
 static e_eFSP_MsgD_Res convertReturnFromBstfToMSGD(e_eCU_dBUStf_Res returnedEvent);
+static e_eFSP_MsgD_Res isMsgCorrect(s_eCU_BUStuffCtx* ctx, bool_t* isCorrect, cb_crc32_msgd cbCrcPtr, void* cbCrcCtx);
 static uint32_t composeU32LE(uint8_t v1, uint8_t v2, uint8_t v3, uint8_t v4);
 
 
@@ -238,12 +239,7 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 	/* Local variable */
 	e_eFSP_MsgD_Res result;
 	e_eCU_dBUStf_Res resultByStuff;
-	uint32_t dataSizeP;
-	uint8_t* dataPP;
-	uint32_t dLenInMsg;
-	uint32_t crcInMsg;
-	uint32_t crcExp;
-	bool_t crcRes;
+    bool_t isMCorrect;
 
 	/* Check pointer validity */
 	if( ( NULL == ctx ) || ( NULL == encArea ) || ( NULL == consumedEncData ) || ( NULL == errSofRec ) )
@@ -259,82 +255,40 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 		}
 		else
 		{
-			resultByStuff = bUStufferInsStufChunk(&ctx->byteUStufferCtnx, encArea, encLen, consumedEncData, errSofRec);
-			result = convertReturnFromBstfToMSGD(resultByStuff);
+            *consumedEncData = 0u;
+            while( (*consumedEncData < encLen ))
+            {
+                resultByStuff = bUStufferInsStufChunk(&ctx->byteUStufferCtnx, encArea, encLen, consumedEncData, errSofRec);
+                result = convertReturnFromBstfToMSGD(resultByStuff);
 
-			if( MSGD_RES_FRAMEENDED == result)
-			{
-				/* Ok the frame is complete, need to check if we have data size, data crc, crc rigth value */
-				dataSizeP = 0u;
-				dataPP = NULL;
-				resultByStuff = bUStufferGetUnstufData(&ctx->byteUStufferCtnx, &dataPP, &dataSizeP);
-				result = convertReturnFromBstfToMSGD(resultByStuff);
+                if( MSGD_RES_FRAMEENDED == result)
+                {
+                    /* Verify msg integrity */
+                    result = isMsgCorrect(&ctx->byteUStufferCtnx, &isMCorrect, ctx->cbCrcPtr, ctx->cbCrcCtx);
 
-				if( MSGD_RES_OK == result )
-				{
-					/* Do we have enough data?  */
-					if( dataSizeP < EFSP_MIN_MSGDE_BUFFLEN )
-					{
-						/* Too small frame, discharge */
-						*errSofRec = *errSofRec + 1u;
+                    if( MSGD_RES_OK == result )
+                    {
+                        /* no strange error */
+                        if( true == isMCorrect )
+                        {
 
-						/* Restart */
-						resultByStuff = bUStufferStartNewFrame(&ctx->byteUStufferCtnx);
-						result = convertReturnFromBstfToMSGD(resultByStuff);
-					}
-					else
-					{
-						/* Enough data! Is data len in frame coherent?  */
-						dLenInMsg = composeU32LE(dataPP[0x04u], dataPP[0x05u], dataPP[0x06u], dataPP[0x07u]);
+                        }
+                        else
+                        {
+                            /* Too small frame, discharge */
+                            *errSofRec = *errSofRec + 1u;
 
-						if( ( dataSizeP - EFSP_MSGDE_HEADERSIZE ) == dLenInMsg)
-						{
-							/* Data len is coherent! Is crc rigth? */
-							crcInMsg = 0u;
-							crcExp = 0u;
-
-							/* Estrapolate CRC in Little Endian */
-                            crcInMsg = composeU32LE(dataPP[0x00u], dataPP[0x01u], dataPP[0x02u], dataPP[0x03u]);
-
-							/* Calculate CRC */
-							crcRes = (*(ctx->cbCrcPtr))( ctx->cbCrcCtx, ECU_CRC_BASE_SEED, &dataPP[4u], dLenInMsg + 4u,
-														 &crcExp );
-
-							if( true == crcRes )
-							{
-								if( crcInMsg == crcExp )
-								{
-									/* All ok */
-								}
-								else
-								{
-									/* Data Crc is wrong, discharge */
-									*errSofRec = *errSofRec + 1u;
-
-									/* Restart */
-									resultByStuff = bUStufferStartNewFrame(&ctx->byteUStufferCtnx);
-									result = convertReturnFromBstfToMSGD(resultByStuff);
-								}
-							}
-							else
-							{
-								result = MSGD_RES_CRCCLBKERROR;
-							}
-						}
-						else
-						{
-							/* Data len is wrong, discharge */
-							*errSofRec = *errSofRec + 1u;
-
-							/* Restart */
-							resultByStuff = bUStufferStartNewFrame(&ctx->byteUStufferCtnx);
-							result = convertReturnFromBstfToMSGD(resultByStuff);
-						}
-					}
-
-					result = MSGD_RES_OK;
-				}
-			}
+                            /* Restart */
+                            resultByStuff = bUStufferStartNewFrame(&ctx->byteUStufferCtnx);
+                            result = convertReturnFromBstfToMSGD(resultByStuff);
+                        }
+                    }
+                    else
+                    {
+                        /* Something went wrong urg */
+                    }
+                }
+            }
 		}
 	}
 
@@ -423,6 +377,91 @@ e_eFSP_MsgD_Res convertReturnFromBstfToMSGD(e_eCU_dBUStf_Res returnedEvent)
 
 	return result;
 }
+
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_disable = "MISRAC2004-17.4_b"
+    /* Suppressed for code clarity */
+#endif
+
+e_eFSP_MsgD_Res isMsgCorrect(s_eCU_BUStuffCtx* ctx, bool_t* isCorrect, cb_crc32_msgd cbCrcPtr, void* cbCrcCtx)
+{
+    e_eFSP_MsgD_Res result;
+    e_eCU_dBUStf_Res byteUnstuffRes;
+    uint32_t dLenInMsg;
+	uint32_t crcInMsg;
+	uint32_t crcExp;
+	uint32_t dataSizeP;
+    bool_t crcRes;
+	uint8_t* dataPP;
+
+    /* Ok the frame is complete, need to check if we have data size, data crc, crc rigth value */
+
+    /* Init value */
+    dataSizeP = 0u;
+    dataPP = NULL;
+
+    /* Get unstuffed data */
+    byteUnstuffRes = bUStufferGetUnstufData(ctx, &dataPP, &dataSizeP);
+    result = convertReturnFromBstfToMSGD(byteUnstuffRes);
+
+    if( MSGD_RES_OK == result )
+    {
+        /* Do we have enough data?  */
+        if( dataSizeP < EFSP_MIN_MSGDE_BUFFLEN )
+        {
+            /* Too small frame, discharge */
+            *isCorrect = false;
+        }
+        else
+        {
+            /* Enough data! Is data len in frame coherent?  */
+            dLenInMsg = composeU32LE(dataPP[0x04u], dataPP[0x05u], dataPP[0x06u], dataPP[0x07u]);
+
+            if( ( dataSizeP - EFSP_MSGDE_HEADERSIZE ) == dLenInMsg)
+            {
+                /* Data len is coherent! Is crc rigth? */
+                crcInMsg = 0u;
+                crcExp = 0u;
+
+                /* Estrapolate CRC in Little Endian */
+                crcInMsg = composeU32LE(dataPP[0x00u], dataPP[0x01u], dataPP[0x02u], dataPP[0x03u]);
+
+                /* Calculate CRC */
+                crcRes = (*(cbCrcPtr))( cbCrcCtx, ECU_CRC_BASE_SEED, &dataPP[4u], dLenInMsg + 4u,  &crcExp );
+
+                if( true == crcRes )
+                {
+                    if( crcInMsg == crcExp )
+                    {
+                        /* All ok */
+                    }
+                    else
+                    {
+                        /* Data Crc is wrong, discharge */
+                        *isCorrect = false;
+                    }
+                }
+                else
+                {
+                    result = MSGD_RES_CRCCLBKERROR;
+                }
+            }
+            else
+            {
+                /* Data len is wrong, discharge */
+                *isCorrect = false;
+            }
+        }
+
+        result = MSGD_RES_OK;
+    }
+
+    return result;
+}
+
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_restore = "MISRAC2004-17.4_b"
+#endif
 
 uint32_t composeU32LE(uint8_t v1, uint8_t v2, uint8_t v3, uint8_t v4)
 {
