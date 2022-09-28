@@ -74,6 +74,7 @@ e_eFSP_MsgE_Res msgEncoderStartNewMessage(s_eFSP_MsgECtx* const ctx, const uint3
     uint32_t cR32;
     bool_t crcRes;
     uint32_t nByteToSf;
+	uint32_t nBToCrc;
 
 	/* Check pointer validity */
 	if( NULL == ctx )
@@ -83,7 +84,7 @@ e_eFSP_MsgE_Res msgEncoderStartNewMessage(s_eFSP_MsgECtx* const ctx, const uint3
 	else
 	{
         /* Check param validity, need at least 1 byte of paylaod */
-        if( ( messageLen <= 0u ) || ( messageLen > (0xFFFFFFFFu - EFSP_MIN_MSGEN_BUFFLEN ) ))
+        if( ( messageLen <= 0u ) || ( messageLen > ( 0xFFFFFFFFu - EFSP_MSGEN_HEADERSIZE ) ) )
         {
             result = MSGE_RES_BADPARAM;
         }
@@ -111,34 +112,43 @@ e_eFSP_MsgE_Res msgEncoderStartNewMessage(s_eFSP_MsgECtx* const ctx, const uint3
                     }
                     else
                     {
-                        /* we have now the memory reference  */
-                        /* Insert in the buffer the updated message size, in Little Endian */
-                        dataP[0x04u] = (uint8_t) ( ( messageLen        ) & 0x000000FFu );
-                        dataP[0x05u] = (uint8_t) ( ( messageLen >> 8u  ) & 0x000000FFu );
-                        dataP[0x06u] = (uint8_t) ( ( messageLen >> 16u ) & 0x000000FFu );
-                        dataP[0x07u] = (uint8_t) ( ( messageLen >> 24u ) & 0x000000FFu );
-
-                        /* Calculate the CRC of data payload and messageLen */
-                        crcRes = (*(ctx->cbCrcPtr))( ctx->cbCrcCtx, ECU_CRC_BASE_SEED, &dataP[4u], messageLen + 4u, &cR32 );
-
-                        if( true == crcRes )
-                        {
-                            /* Insert in the buffer the CRC32, in Little Endian */
-                            dataP[0x00u] = (uint8_t) ( ( cR32        ) & 0x000000FFu );
-                            dataP[0x01u] = (uint8_t) ( ( cR32 >> 8u  ) & 0x000000FFu );
-                            dataP[0x02u] = (uint8_t) ( ( cR32 >> 16u ) & 0x000000FFu );
-                            dataP[0x03u] = (uint8_t) ( ( cR32 >> 24u ) & 0x000000FFu );
-
-                            /* the message frame is ready, need to start the bytestuffer with size of crc + size of len
-                            * + real number of data */
-                            nByteToSf = ( EFSP_MSGEN_HEADERSIZE + messageLen );
-                            resultByStuff = bStufferStartNewFrame(&ctx->byteStufferCtnx, nByteToSf);
-                            result = convertReturnFromBstfToMSGE(resultByStuff);
-                        }
-                        else
-                        {
-                            result = MSGE_RES_CRCCLBKERROR;
-                        }
+						if( ( messageLen + EFSP_MSGEN_HEADERSIZE ) > maxDataSize )
+						{	
+							/* Data payload can not be greater that max payload size */
+							result = MSGE_RES_BADPARAM;
+						}
+						else
+						{
+							/* we have now the memory reference  */
+							/* Insert in the buffer the updated message size, in Little Endian */
+							dataP[0x04u] = (uint8_t) ( ( messageLen        ) & 0x000000FFu );
+							dataP[0x05u] = (uint8_t) ( ( messageLen >> 8u  ) & 0x000000FFu );
+							dataP[0x06u] = (uint8_t) ( ( messageLen >> 16u ) & 0x000000FFu );
+							dataP[0x07u] = (uint8_t) ( ( messageLen >> 24u ) & 0x000000FFu );
+	
+							/* Calculate the CRC of data payload and messageLen */
+							nBToCrc = messageLen + 4u;
+							crcRes = (*(ctx->cbCrcPtr))( ctx->cbCrcCtx, ECU_CRC_BASE_SEED, &dataP[4u], nBToCrc, &cR32 );
+	
+							if( true == crcRes )
+							{
+								/* Insert in the buffer the CRC32, in Little Endian */
+								dataP[0x00u] = (uint8_t) ( ( cR32        ) & 0x000000FFu );
+								dataP[0x01u] = (uint8_t) ( ( cR32 >> 8u  ) & 0x000000FFu );
+								dataP[0x02u] = (uint8_t) ( ( cR32 >> 16u ) & 0x000000FFu );
+								dataP[0x03u] = (uint8_t) ( ( cR32 >> 24u ) & 0x000000FFu );
+	
+								/* the message frame is ready, need to start the bytestuffer with size of crc + size 
+								* of len + real number of data */
+								nByteToSf = ( EFSP_MSGEN_HEADERSIZE + messageLen );
+								resultByStuff = bStufferStartNewFrame(&ctx->byteStufferCtnx, nByteToSf);
+								result = convertReturnFromBstfToMSGE(resultByStuff);
+							}
+							else
+							{
+								result = MSGE_RES_CRCCLBKERROR;
+							}
+						}
                     }
 				}
             }
@@ -147,7 +157,6 @@ e_eFSP_MsgE_Res msgEncoderStartNewMessage(s_eFSP_MsgECtx* const ctx, const uint3
 
 	return result;
 }
-
 
 #ifdef __IAR_SYSTEMS_ICC__
     #pragma cstat_disable = "MEM-stack-param", "MISRAC2004-17.6_d", "MISRAC2012-Rule-1.3_s", "MISRAC2012-Rule-18.6_d", \
@@ -201,7 +210,6 @@ e_eFSP_MsgE_Res msgEncoderGetPayloadLocation(s_eFSP_MsgECtx* const ctx, uint8_t*
 
 	return result;
 }
-
 
 #ifdef __IAR_SYSTEMS_ICC__
     #pragma cstat_restore = "MEM-stack-param", "MISRAC2004-17.6_d", "MISRAC2012-Rule-1.3_s", "MISRAC2012-Rule-18.6_d", \
@@ -373,7 +381,7 @@ e_eFSP_MsgE_Res convertReturnFromBstfToMSGE(e_eCU_dBStf_Res returnedEvent)
 		default:
 		{
             /* Impossible end here */
-			result = MSGE_RES_BADPARAM;
+			result = MSGE_RES_CORRUPTCTX;
             break;
 		}
 	}

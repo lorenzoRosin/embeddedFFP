@@ -65,7 +65,7 @@ typedef struct
  *
  * @param[in]   ctx         - Message Encoder context
  * @param[in]   memArea     - Pointer to a memory area that we will use encode message
- * @param[in]   memAreaSize - Dimension in byte of the memory area
+ * @param[in]   memAreaSize - Dimension in byte of the memArea
  * @param[in]   cbCrcP      - Pointer to a CRC 32 seed callback function
  * @param[in]   clbCtx      - Custom context passed to the callback function
  *
@@ -82,7 +82,7 @@ e_eFSP_MsgE_Res msgEncoderInitCtx(s_eFSP_MsgECtx* const ctx, uint8_t* const memA
  *              in order to know how get the data pointer )
  *
  * @param[in]   ctx         - Message Encoder context
- * @param[in]   messageLen  - lenght of the raw payload present in the frame that we need to encode
+ * @param[in]   messageLen  - lenght of the raw payload present in the frame that we need to encode ( no header )
  *
  * @return      MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
  *		        MSGE_RES_BADPARAM       - In case of an invalid parameter passed to the function
@@ -109,7 +109,7 @@ e_eFSP_MsgE_Res msgEncoderStartNewMessage(s_eFSP_MsgECtx* const ctx, const uint3
 e_eFSP_MsgE_Res msgEncoderGetPayloadLocation(s_eFSP_MsgECtx* const ctx, uint8_t** dataP, uint32_t* const maxDataSize);
 
 /**
- * @brief       Restart to encode the already passed/the current frame
+ * @brief       Restart to encode the already passed payload/the current frame
  *
  * @param[in]   ctx         - Message Encoder context
  *
@@ -138,7 +138,7 @@ e_eFSP_MsgE_Res msgEncoderGetRemToRetrive(s_eFSP_MsgECtx* const ctx, uint32_t* c
 
 /**
  * @brief       Retrive encoded data chunk. The raw data copied in the buffer by using the function
- *              msgEncoderGetPayloadLocation will be encoded and retrived by this function.
+ *              msgEncoderGetPayloadLocation will be encoded (header and byte stuffing) and retrived by this function.
  *
  * @param[in]   ctx         - Message Encoder context
  * @param[in]   encodeDest  - Pointer to the destination area of encoded data

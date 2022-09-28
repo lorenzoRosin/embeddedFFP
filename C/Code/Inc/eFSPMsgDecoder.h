@@ -7,7 +7,6 @@
  *
  **********************************************************************************************************************/
 
-
 #ifndef EFSPMSGDECODER_H
 #define EFSPMSGDECODER_H
 
@@ -36,6 +35,7 @@ extern "C" {
  * by the MSG DECODER module */
 typedef bool_t (*cb_crc32_msgd) ( void* cntx, const uint32_t seed, const uint8_t dataS[], const uint32_t dataSLen,
                                   uint32_t* const crc32SVal );
+								  
 typedef enum
 {
     MSGD_RES_OK = 0,
@@ -107,7 +107,8 @@ e_eFSP_MsgD_Res msgDecoderGetDecodedData(s_eFSP_MsgDCtx* const ctx, uint8_t** da
 
 /**
  * @brief       Retrive the size of encoded data payload frame. Keep in mind that the message parsing could be ongoing,
- *              and if an error in the frame occour the retrivedLen could be setted to 0 again
+ *              and if an error in the frame occour the retrivedLen could be setted to 0 again. We will retrive only 
+ * 				payload size and no CRC + LEN header
  *
  * @param[in]   ctx         - Msg decoder context
  * @param[out]  retrivedLen - Pointer to a uint32_t variable where the size of the decoded data will be placed (raw
@@ -150,12 +151,12 @@ e_eFSP_MsgD_Res msgDecoderIsAFullMsgUnstuff(s_eFSP_MsgDCtx* const ctx, bool_t* c
  *		        MSGD_RES_NOINITLIB    	- Need to init context before taking some action
  *		        MSGD_RES_BADPARAM     	- In case of an invalid parameter passed to the function
  *		        MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
- *              MSGD_RES_OUTOFMEM     	- Can not unstuff data, initial mem pointer was too small. The only way to
+ *              MSGD_RES_OUTOFMEM     	- Can not decode data, initial mem pointer was too small. The only way to
  *                                        resolve the issue is increasing the size of the memory area passed to init
  *		        MSGD_RES_FRAMEENDED   	- Frame ended, restart context in order to parse a new frame. Every other call
- *                                        to this function will not have effect until we call bUStufferStartNewFrame.
+ *                                        to this function will not have effect until we call msgDecoderStartNewMsg.
  *                                        In this situation bear in mind that some data could be left out the parsing.
- *				MSGE_RES_CRCCLBKERROR   - The crc callback returned an error when the encoder where verifing CRC
+ *				MSGE_RES_CRCCLBKERROR   - The crc callback returned an error when the decoder where verifing CRC
  *              MSGD_RES_OK           	- Operation ended correctly. The chunk is parsed correclty but the frame is not
  *                                        finished yet
  */

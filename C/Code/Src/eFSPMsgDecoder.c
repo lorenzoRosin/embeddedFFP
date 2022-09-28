@@ -193,7 +193,6 @@ e_eFSP_MsgD_Res msgDecoderIsAFullMsgUnstuff(s_eFSP_MsgDCtx* const ctx, bool_t* c
 	/* Local variable */
 	e_eFSP_MsgD_Res result;
 	e_eCU_dBUStf_Res resultByStuff;
-	uint32_t dataSizeP;
 
 	/* Check pointer validity */
 	if( ( NULL == ctx ) || ( NULL == isMsgDec ) )
@@ -250,7 +249,7 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 
 			if( MSGD_RES_FRAMEENDED == result)
 			{
-				/* Ok the frame is complete, need to check iv we have data size, data crc, crc rigth value */
+				/* Ok the frame is complete, need to check if we have data size, data crc, crc rigth value */
 				dataSizeP = 0u;
 				dataPP = NULL;
 				resultByStuff = bUStufferGetUnstufData(&ctx->byteUStufferCtnx, &dataPP, &dataSizeP);
@@ -275,7 +274,7 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 						tempS = 0;
 
 						/* Estrapolate data len in Little Endian */
-                        tempS = (uint32_t) dataPP[0x04u];
+                        tempS =                 (uint32_t) dataPP[0x04u];
                         dLenInMsg |= ( tempS & 0x000000FFu );
                         tempS =  (uint32_t) ( ( (uint32_t) dataPP[0x05u] ) << 8u  );
                         dLenInMsg |= ( tempS & 0x0000FF00u );
@@ -284,7 +283,7 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
                         tempS =  (uint32_t) ( ( (uint32_t) dataPP[0x07u] ) << 24u  );
                         dLenInMsg |= ( tempS & 0xFF000000u );
 
-						if( ( dataSizeP - EFSP_MIN_MSGDE_BUFFLEN ) == dLenInMsg)
+						if( ( dataSizeP - EFSP_MSGDE_HEADERSIZE ) == dLenInMsg)
 						{
 							/* Data len is coherent! Is crc rigth? */
 							crcInMsg = 0u;
@@ -345,6 +344,8 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 
 	return result;
 }
+
+
 
 /***********************************************************************************************************************
  *  PRIVATE FUNCTION
@@ -417,7 +418,7 @@ e_eFSP_MsgD_Res convertReturnFromBstfToMSGD(e_eCU_dBUStf_Res returnedEvent)
 		default:
 		{
             /* Impossible end here */
-			result = MSGD_RES_BADPARAM;
+			result = MSGD_RES_CORRUPTCTX;
             break;
 		}
 	}
