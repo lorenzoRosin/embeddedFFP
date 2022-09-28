@@ -19,7 +19,7 @@
  **********************************************************************************************************************/
 static bool_t isMsgDecStatusStillCoherent(const s_eFSP_MsgDCtx* ctx);
 static e_eFSP_MsgD_Res convertReturnFromBstfToMSGD(e_eCU_dBUStf_Res returnedEvent);
-
+static uint32_t composeU32LE(uint8_t v1, uint8_t v2, uint8_t v3, uint8_t v4);
 
 
 /***********************************************************************************************************************
@@ -243,7 +243,6 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 	uint32_t dLenInMsg;
 	uint32_t crcInMsg;
 	uint32_t crcExp;
-	uint32_t tempS;
 	bool_t crcRes;
 
 	/* Check pointer validity */
@@ -286,17 +285,7 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 					else
 					{
 						/* Enough data! Is data len in frame coherent?  */
-						dLenInMsg = 0u;
-
-						/* Estrapolate data len in Little Endian */
-                        tempS =                 (uint32_t) dataPP[0x04u];
-                        dLenInMsg |= ( tempS & 0x000000FFu );
-                        tempS =  (uint32_t) ( ( (uint32_t) dataPP[0x05u] ) << 8u  );
-                        dLenInMsg |= ( tempS & 0x0000FF00u );
-                        tempS =  (uint32_t) ( ( (uint32_t) dataPP[0x06u] ) << 16u  );
-                        dLenInMsg |= ( tempS & 0x00FF0000u );
-                        tempS =  (uint32_t) ( ( (uint32_t) dataPP[0x07u] ) << 24u  );
-                        dLenInMsg |= ( tempS & 0xFF000000u );
+						dLenInMsg = composeU32LE(dataPP[0x04u], dataPP[0x05u], dataPP[0x06u], dataPP[0x07u]);
 
 						if( ( dataSizeP - EFSP_MSGDE_HEADERSIZE ) == dLenInMsg)
 						{
@@ -305,14 +294,7 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 							crcExp = 0u;
 
 							/* Estrapolate CRC in Little Endian */
-							tempS = (uint32_t) dataPP[0x00u];
-							crcInMsg |= ( tempS & 0x000000FFu );
-							tempS =  (uint32_t) ( ( (uint32_t) dataPP[0x01u] ) << 8u  );
-							crcInMsg |= ( tempS & 0x0000FF00u );
-							tempS =  (uint32_t) ( ( (uint32_t) dataPP[0x02u] ) << 16u  );
-							crcInMsg |= ( tempS & 0x00FF0000u );
-							tempS =  (uint32_t) ( ( (uint32_t) dataPP[0x03u] ) << 24u  );
-							crcInMsg |= ( tempS & 0xFF000000u );
+                            crcInMsg = composeU32LE(dataPP[0x00u], dataPP[0x01u], dataPP[0x02u], dataPP[0x03u]);
 
 							/* Calculate CRC */
 							crcRes = (*(ctx->cbCrcPtr))( ctx->cbCrcCtx, ECU_CRC_BASE_SEED, &dataPP[4u], dLenInMsg + 4u,
@@ -440,4 +422,25 @@ e_eFSP_MsgD_Res convertReturnFromBstfToMSGD(e_eCU_dBUStf_Res returnedEvent)
 	}
 
 	return result;
+}
+
+uint32_t composeU32LE(uint8_t v1, uint8_t v2, uint8_t v3, uint8_t v4)
+{
+    uint32_t tempS;
+    uint32_t result;
+
+    /* Init var */
+    result = 0u;
+
+    /* Calculate */
+    tempS =                 (uint32_t) v1;
+    result |= ( tempS & 0x000000FFu );
+    tempS =  (uint32_t) ( ( (uint32_t) v2 ) << 8u  );
+    result |= ( tempS & 0x0000FF00u );
+    tempS =  (uint32_t) ( ( (uint32_t) v3 ) << 16u  );
+    result |= ( tempS & 0x00FF0000u );
+    tempS =  (uint32_t) ( ( (uint32_t) v4 ) << 24u  );
+    result |= ( tempS & 0xFF000000u );
+
+    return result;
 }
