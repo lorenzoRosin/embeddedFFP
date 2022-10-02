@@ -240,9 +240,15 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 	e_eFSP_MsgD_Res result;
 	e_eCU_dBUStf_Res resultByStuff;
     bool_t isMCorrect;
-    uint8_t *currentArea;
+    const uint8_t *currentArea;
     uint32_t currentEncLen;
     uint32_t currentCosumed;
+    uint32_t totalCosumed;
+    uint32_t currentErrSofRec;
+    uint32_t totalErrSofRec;
+
+
+    bool_t needToParseRemainingData;
 
 	/* Check pointer validity */
 	if( ( NULL == ctx ) || ( NULL == encArea ) || ( NULL == consumedEncData ) || ( NULL == errSofRec ) )
@@ -258,17 +264,50 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 		}
 		else
 		{
+            /* Init return value before while */
+            *consumedEncData = 0u;
+            *errSofRec = 0u;
+
+            needToParseRemainingData = false;
+
             /* Init var before while */
-            result = MSGD_RES_OK;
             currentArea = encArea;
             currentEncLen = encLen;
-            currentCosumed = 0u;
+            totalCosumed = 0u;
+            totalErrSofRec = 0u;
 
-
-            while( ( currentCosumed < encLen ) && ( MSGD_RES_OK == result ) )
+            /* Elaborate */
+            do
             {
-                resultByStuff = bUStufferInsStufChunk(&ctx->byteUStufferCtnx, currentArea, currentEncLen, &currentCosumed, errSofRec);
+                /* Init partial coutner  */
+                currentCosumed = 0u;
+                currentErrSofRec = 0u;
+
+                /* Insert data */
+                resultByStuff = bUStufferInsStufChunk(&ctx->byteUStufferCtnx, currentArea, currentEncLen, &currentCosumed, &currentErrSofRec);
                 result = convertReturnFromBstfToMSGD(resultByStuff);
+
+                /* update total counter */
+                if( totalErrSofRec < ( 0xFFFFFFFFu - currentErrSofRec ) )
+                {
+                    totalErrSofRec += currentErrSofRec;
+                }
+                else
+                {
+                    totalErrSofRec = 0xFFFFFFFFu;
+                    result = MSGD_RES_OUTOFMEM;
+                }
+
+                /* update total counter */
+                if( totalCosumed < ( 0xFFFFFFFFu - currentCosumed ) )
+                {
+                    totalCosumed += currentCosumed;
+                }
+                else
+                {
+                    totalCosumed = 0xFFFFFFFFu;
+                    result = MSGD_RES_OUTOFMEM;
+                }
 
                 if( MSGD_RES_FRAMEENDED == result)
                 {
@@ -277,27 +316,32 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 
                     if( MSGD_RES_OK == result )
                     {
-                        /* no strange error */
-                        if( true == isMCorrect )
+                        /* no strange error found, check message correctness */
+                        if( true != isMCorrect )
                         {
-
-                        }
-                        else
-                        {
-                            /* Too small frame, discharge */
-                            *errSofRec = *errSofRec + 1u;
-
-                            /* Restart */
+                            /* Too small frame or bad cr found, discharge and continue parse data if present */
                             resultByStuff = bUStufferStartNewFrame(&ctx->byteUStufferCtnx);
                             result = convertReturnFromBstfToMSGD(resultByStuff);
+
+                            /* retrigger and update counter if we have some space */
+                            if( totalCosumed < encLen )
+                            {
+                                /* retrigger */
+                                needToParseRemainingData = true;
+
+                                /* Update pointer */
+                                currentArea = &encArea[totalCosumed];
+                                currentEncLen = encLen - totalCosumed;
+                            }
                         }
                     }
-                    else
-                    {
-                        /* Something went wrong urg */
-                    }
                 }
-            }
+
+            }while( true == needToParseRemainingData );
+
+            /* Update return variable */
+            *consumedEncData = totalCosumed;
+            *errSofRec = totalErrSofRec;
 		}
 	}
 
