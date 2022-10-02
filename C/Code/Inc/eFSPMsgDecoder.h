@@ -35,7 +35,7 @@ extern "C" {
  * by the MSG DECODER module */
 typedef bool_t (*cb_crc32_msgd) ( void* cntx, const uint32_t seed, const uint8_t dataS[], const uint32_t dataSLen,
                                   uint32_t* const crc32SVal );
-								  
+
 typedef enum
 {
     MSGD_RES_OK = 0,
@@ -107,7 +107,7 @@ e_eFSP_MsgD_Res msgDecoderGetDecodedData(s_eFSP_MsgDCtx* const ctx, uint8_t** da
 
 /**
  * @brief       Retrive the size of encoded data payload frame. Keep in mind that the message parsing could be ongoing,
- *              and if an error in the frame occour the retrivedLen could be setted to 0 again. We will retrive only 
+ *              and if an error in the frame occour the retrivedLen could be setted to 0 again. We will retrive only
  * 				payload size and no CRC + LEN header
  *
  * @param[in]   ctx         - Msg decoder context
@@ -133,6 +133,21 @@ e_eFSP_MsgD_Res msgDecoderGetDecodedLen(s_eFSP_MsgDCtx* const ctx, uint32_t* con
  *              MSGD_RES_OK           	- Operation ended correctly
  */
 e_eFSP_MsgD_Res msgDecoderIsAFullMsgUnstuff(s_eFSP_MsgDCtx* const ctx, bool_t* const isMsgDec);
+
+/**
+ * @brief       Return the most efficient numbers of data that needs to be passed to msgDecoderInsEncChunk in the next
+ *              function call in order to speedup operation
+ *
+ * @param[in]   ctx             - Msg decoder context
+ * @param[out]  mostEffPayload  - Pointer to an uint32_t were we will store the most efficient numbers of data len
+ *                                that we could parse in msgDecoderInsEncChunk
+ *
+ * @return      MSGD_RES_BADPOINTER   	- In case of bad pointer passed to the function
+ *		        MSGD_RES_NOINITLIB    	- Need to init context before taking some action
+ *		        MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
+ *              MSGD_RES_OK           	- Operation ended correctly
+ */
+e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* const mostEffPayload);
 
 /**
  * @brief       Insert the encoded data chunk that the alg will decode byte per byte

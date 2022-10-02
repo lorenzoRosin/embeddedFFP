@@ -233,6 +233,35 @@ e_eFSP_MsgD_Res msgDecoderIsAFullMsgUnstuff(s_eFSP_MsgDCtx* const ctx, bool_t* c
 	return result;
 }
 
+e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* const mostEffPayload)
+{
+	/* Local variable */
+	e_eFSP_MsgD_Res result;
+	e_eCU_dBUStf_Res resultByStuff;
+
+	/* Check pointer validity */
+	if( ( NULL == ctx ) || ( NULL == mostEffPayload ) )
+	{
+		result = MSGD_RES_BADPOINTER;
+	}
+	else
+	{
+		/* Check internal status validity */
+		if( false == isMsgDecStatusStillCoherent(ctx) )
+		{
+			result = MSGD_RES_CORRUPTCTX;
+		}
+		else
+		{
+            *mostEffPayload = 0u;
+			resultByStuff = bUStufferIsAFullFrameUnstuff(&ctx->byteUStufferCtnx, isMsgDec);
+			result = convertReturnFromBstfToMSGD(resultByStuff);
+		}
+	}
+
+	return result;
+}
+
 e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* encArea, const uint32_t encLen,
                                       uint32_t* const consumedEncData, uint32_t* errSofRec)
 {
