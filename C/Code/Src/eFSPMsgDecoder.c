@@ -312,6 +312,7 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 {
 	/* Local variable */
 	e_eFSP_MsgD_Res result;
+    e_eFSP_MsgD_Res resultMsgCorrect;
 	e_eCU_dBUStf_Res resultByStuff;
     bool_t isMCorrect;
     const uint8_t *currentArea;
@@ -320,8 +321,6 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
     uint32_t totalCosumed;
     uint32_t currentErrSofRec;
     uint32_t totalErrSofRec;
-
-
     bool_t needToParseRemainingData;
 
 	/* Check pointer validity */
@@ -383,31 +382,53 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
                     result = MSGD_RES_OUTOFMEM;
                 }
 
-                if( MSGD_RES_FRAMEENDED == result)
+                if( MSGD_RES_FRAMEENDED == result )
                 {
                     /* Verify msg integrity */
-                    result = isMsgCorrect(&ctx->byteUStufferCtnx, &isMCorrect, ctx->cbCrcPtr, ctx->cbCrcCtx);
+                    resultMsgCorrect = isMsgCorrect(&ctx->byteUStufferCtnx, &isMCorrect, ctx->cbCrcPtr, ctx->cbCrcCtx);
 
-                    if( MSGD_RES_OK == result )
+                    if( MSGD_RES_OK == resultMsgCorrect )
                     {
                         /* no strange error found, check message correctness */
                         if( true != isMCorrect )
                         {
                             /* Too small frame or bad cr found, discharge and continue parse data if present */
-                            resultByStuff = bUStufferStartNewFrame(&ctx->byteUStufferCtnx);
-                            result = convertReturnFromBstfToMSGD(resultByStuff);
-
-                            /* retrigger and update counter if we have some space */
-                            if( totalCosumed < encLen )
+                            /* Increase error counter if frame is wrong */
+                            if( totalErrSofRec < ( 0xFFFFFFFFu - currentErrSofRec ) )
                             {
-                                /* retrigger */
-                                needToParseRemainingData = true;
+                                totalErrSofRec += currentErrSofRec;
+                            }
+                            else
+                            {
+                                totalErrSofRec = 0xFFFFFFFFu;
+                                result = MSGD_RES_OUTOFMEM;
+                            }
 
-                                /* Update pointer */
-                                currentArea = &encArea[totalCosumed];
-                                currentEncLen = encLen - totalCosumed;
+                            if( MSGD_RES_OK == result )
+                            {
+                                resultByStuff = bUStufferStartNewFrame(&ctx->byteUStufferCtnx);
+                                result = convertReturnFromBstfToMSGD(resultByStuff);
+
+                                if( MSGD_RES_OK == result )
+                                {
+                                    /* retrigger and update counter if we have some space */
+                                    if( totalCosumed < encLen )
+                                    {
+                                        /* retrigger */
+                                        needToParseRemainingData = true;
+
+                                        /* Update pointer */
+                                        currentArea = &encArea[totalCosumed];
+                                        currentEncLen = encLen - totalCosumed;
+                                    }
+                                }
                             }
                         }
+                    }
+                    else
+                    {
+                        /* Some error */
+                        result = resultMsgCorrect;
                     }
                 }
 
