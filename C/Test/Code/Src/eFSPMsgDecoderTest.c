@@ -16,7 +16,14 @@
 /***********************************************************************************************************************
  *   PRIVATE FUNCTION DECLARATION
  **********************************************************************************************************************/
-static void msgDecoderTestCommon(void);
+static void msgDecoderTestBadPointer(void);
+static void msgDecoderTestBadInit(void);
+static void msgDecoderTestBadParamEntr(void);
+static void msgDecoderTestBadParamStatus(void);
+static void msgDecoderTestOutOfMem();
+static void msgDecoderTestBadClBck(void);
+static void msgDecoderTestMsgEnd(void);
+static void msgDecoderTestGeneral(void);
 
 
 
@@ -27,7 +34,14 @@ void msgDecoderTest(void)
 {
 	(void)printf("\n\nMESSAGE DECODER TEST START \n\n");
 
-    msgDecoderTestCommon();
+    msgDecoderTestBadPointer();
+    msgDecoderTestBadInit();
+    msgDecoderTestBadParamEntr();
+    msgDecoderTestBadParamStatus();
+    msgDecoderTestBadClBck();
+    msgDecoderTestOutOfMem();
+    msgDecoderTestMsgEnd();
+    msgDecoderTestGeneral();
 
     (void)printf("\n\nMESSAGE DECODER TEST END \n\n");
 }
@@ -37,7 +51,51 @@ void msgDecoderTest(void)
 /***********************************************************************************************************************
  *   PRIVATE FUNCTION
  **********************************************************************************************************************/
-void msgDecoderTestCommon(void)
+void msgDecoderTestBadPointer(void)
 {
 
+
 }
+
+void msgDecoderTestBadInit(void)
+{
+
+
+}
+
+void msgDecoderTestBadParamEntr(void)
+{
+
+
+}
+
+void msgDecoderTestBadParamStatus(void)
+{
+
+
+}
+
+void msgDecoderTestOutOfMem(void)
+{
+
+
+}
+
+void msgDecoderTestBadClBck(void)
+{
+
+
+}
+
+void msgDecoderTestMsgEnd(void)
+{
+
+
+}
+
+void msgDecoderTestGeneral(void)
+{
+
+
+}
+

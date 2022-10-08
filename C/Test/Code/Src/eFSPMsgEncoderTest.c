@@ -37,6 +37,7 @@ static void msgEncoderTestBadParamEntr(void);
 static void msgEncoderTestBadParamStatus(void);
 static void msgEncoderTestBadClBck(void);
 static void msgEncoderTestMsgEnd(void);
+static void msgEncoderTestGeneral(void);
 
 
 /***********************************************************************************************************************
@@ -53,6 +54,7 @@ void msgEncoderTest(void)
     msgEncoderTestBadParamStatus();
     msgEncoderTestBadClBck();
     msgEncoderTestMsgEnd();
+    msgEncoderTestGeneral();
 
     (void)printf("\n\nMESSAGE ENCODER TEST END \n\n");
 }
@@ -653,6 +655,46 @@ void msgEncoderTestMsgEnd(void)
 
 }
 
+void msgEncoderTestGeneral(void)
+{
+    /* Local variable */
+    s_eFSP_MsgECtx ctx;
+    uint8_t  memArea[12u];
+    cb_crc32_msge cbCrcPTest = &c32SAdapt;
+    s_eCU_crcAdapterCtx ctxAdapterCrc;
+    uint32_t var32;
+    uint8_t* dataP;
 
+    /* Set value */
+    (void)memset(memArea, 0, sizeof(memArea));
+
+    /* Function */
+    if( MSGE_RES_OK == msgEncoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    {
+        (void)printf("msgEncoderTestGeneral 1  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral 1  -- FAIL \n");
+    }
+
+    if( MSGE_RES_OK == msgEncoderStartNewMessage(&ctx, 2u) )
+    {
+        (void)printf("msgEncoderTestGeneral 2  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral 2  -- FAIL \n");
+    }
+
+    if( MSGE_RES_OK == msgEncoderStartNewMessage(&ctx, 2u) )
+    {
+        (void)printf("msgEncoderTestGeneral 3  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral 3  -- FAIL \n");
+    }
+}
 
 
