@@ -129,13 +129,13 @@ e_eFSP_MsgD_Res msgDecoderGetDecodedData(s_eFSP_MsgDCtx* const ctx, uint8_t** da
                 if( dataSizeP < EFSP_MIN_MSGDE_BUFFLEN )
                 {
 					/* No memory free */
-					*dataP = &dataPP[8u];
+					*dataP = &dataPP[EFSP_MSGDE_HEADERSIZE];
                     *retrivedLen = 0u;
                 }
                 else
                 {
                     /* Return reference of only the raw payload */
-                    *dataP = &dataPP[8u];
+                    *dataP = &dataPP[EFSP_MSGDE_HEADERSIZE];
                     *retrivedLen = dataSizeP - EFSP_MSGDE_HEADERSIZE;
                 }
 
@@ -279,12 +279,12 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
                         /* Do we have enough data?  */
                         if( dataSizeP < EFSP_MSGDE_HEADERSIZE )
                         {
-                            /* Too small frame, discharge */
+                            /* Need to receive all the eder before estimating data size */
                             *mostEffPayload = EFSP_MSGDE_HEADERSIZE - dataSizeP;
                         }
                         else
                         {
-                            /* Enough data! Is data len in frame coherent?  */
+                            /* Enough data! Start remaining data estimation */
                             dLenInMsg = composeU32LE(dataPP[0x04u], dataPP[0x05u], dataPP[0x06u], dataPP[0x07u]);
 
                             if( ( dataSizeP - EFSP_MSGDE_HEADERSIZE ) < dLenInMsg)
