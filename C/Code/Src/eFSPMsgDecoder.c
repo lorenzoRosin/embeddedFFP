@@ -238,6 +238,10 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
 	/* Local variable */
 	e_eFSP_MsgD_Res result;
 	e_eCU_dBUStf_Res resultByStuff;
+    bool_t isFullUnstuffed;
+	uint32_t dataSizeP;
+	uint8_t* dataPP;
+    uint32_t dLenInMsg;
 
 	/* Check pointer validity */
 	if( ( NULL == ctx ) || ( NULL == mostEffPayload ) )
@@ -253,9 +257,50 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
 		}
 		else
 		{
-            *mostEffPayload = 0u;
-			resultByStuff = bUStufferIsAFullFrameUnstuff(&ctx->byteUStufferCtnx, isMsgDec);
+			resultByStuff = bUStufferIsAFullFrameUnstuff(&ctx->byteUStufferCtnx, &isFullUnstuffed);
 			result = convertReturnFromBstfToMSGD(resultByStuff);
+
+            if( MSGD_RES_OK == result )
+            {
+                if( true == isFullUnstuffed )
+                {
+                    /* Full unstuffed, done */
+                    *mostEffPayload = 0u;
+
+                }
+                else
+                {
+                    /* How many byte are decoded? */
+                    resultByStuff = bUStufferGetUnstufData(&ctx->byteUStufferCtnx, &dataPP, &dataSizeP);
+                    result = convertReturnFromBstfToMSGD(resultByStuff);
+
+                    if( MSGD_RES_OK == result )
+                    {
+                        /* Do we have enough data?  */
+                        if( dataSizeP < EFSP_MSGDE_HEADERSIZE )
+                        {
+                            /* Too small frame, discharge */
+                            *mostEffPayload = EFSP_MSGDE_HEADERSIZE - dataSizeP;
+                        }
+                        else
+                        {
+                            /* Enough data! Is data len in frame coherent?  */
+                            dLenInMsg = composeU32LE(dataPP[0x04u], dataPP[0x05u], dataPP[0x06u], dataPP[0x07u]);
+
+                            if( ( dataSizeP - EFSP_MSGDE_HEADERSIZE ) < dLenInMsg)
+                            {
+                                *mostEffPayload = dLenInMsg - ( dataSizeP - EFSP_MSGDE_HEADERSIZE );
+                            }
+                            else
+                            {
+                                /* No more data but frame not ended, probably we are waiting EOF os some ESC
+                                 * character */
+                                *mostEffPayload  = 1u;
+                            }
+                        }
+                    }
+                }
+            }
 		}
 	}
 
