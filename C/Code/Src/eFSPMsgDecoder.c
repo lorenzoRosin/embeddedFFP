@@ -125,17 +125,18 @@ e_eFSP_MsgD_Res msgDecoderGetDecodedData(s_eFSP_MsgDCtx* const ctx, uint8_t** da
 
 			if( MSGD_RES_OK == result )
 			{
+                /* Starting point is always the same */
+                *dataP = &dataPP[EFSP_MSGDE_HEADERSIZE];
+
 				/* Removed HADER from data ( CRC + DATA LEN ) */
                 if( dataSizeP < EFSP_MIN_MSGDE_BUFFLEN )
                 {
 					/* No memory free */
-					*dataP = &dataPP[EFSP_MSGDE_HEADERSIZE];
                     *retrivedLen = 0u;
                 }
                 else
                 {
                     /* Return reference of only the raw payload */
-                    *dataP = &dataPP[EFSP_MSGDE_HEADERSIZE];
                     *retrivedLen = dataSizeP - EFSP_MSGDE_HEADERSIZE;
                 }
 
