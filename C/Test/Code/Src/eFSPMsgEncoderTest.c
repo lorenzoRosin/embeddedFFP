@@ -286,7 +286,7 @@ void msgEncoderTestBadInit(void)
     ctx.byteStufferCtnx.isInit = false;
 
     /* Function */
-    if( MSGE_RES_NOINITLIB == msgEncoderStartNewMessage(&ctx, 10u) )
+    if( MSGE_RES_NOINITLIB == msgEncoderStartNewMessage(&ctx, 1u) )
     {
         (void)printf("msgEncoderTestBadInit 1  -- OK \n");
     }
@@ -401,7 +401,7 @@ void msgEncoderTestBadParamEntr(void)
     (void)memset(memArea, 0, sizeof(memArea));
 
     /* Function */
-    if( MSGE_RES_BADPARAM == msgEncoderInitCtx(&ctx, memArea, EFSP_MIN_MSGEN_BUFFLEN + 1u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGE_RES_BADPARAM == msgEncoderInitCtx(&ctx, memArea, EFSP_MIN_MSGEN_BUFFLEN - 1u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgEncoderTestBadParamEntr 1  -- OK \n");
     }
@@ -435,6 +435,15 @@ void msgEncoderTestBadParamEntr(void)
     else
     {
         (void)printf("msgEncoderTestBadParamEntr 4  -- FAIL \n");
+    }
+
+    if( DBSTF_RES_BADPARAM == msgEncoderStartNewMessage(&ctx, (3u) ) )
+    {
+        (void)printf("msgEncoderTestBadParamEntr 5  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgEncoderTestBadParamEntr 5  -- FAIL \n");
     }
 }
 
@@ -570,6 +579,46 @@ void msgEncoderTestBadParamStatus(void)
     {
         (void)printf("msgEncoderTestBadParamStatus 10 -- FAIL \n");
     }
+
+    /* Function */
+    if( MSGE_RES_OK == msgEncoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    {
+        (void)printf("msgEncoderTestBadParamStatus 11 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgEncoderTestBadParamStatus 11 -- FAIL \n");
+    }
+
+    ctx.byteStufferCtnx.memAreaSize = 7u;
+    if( MSGE_RES_CORRUPTCTX == msgEncoderStartNewMessage(&ctx, 2u) )
+    {
+        (void)printf("msgEncoderTestBadParamStatus 12 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgEncoderTestBadParamStatus 12 -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGE_RES_OK == msgEncoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    {
+        (void)printf("msgEncoderTestBadParamStatus 13 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgEncoderTestBadParamStatus 13 -- FAIL \n");
+    }
+
+    ctx.byteStufferCtnx.memAreaSize = 7u;
+    if( MSGE_RES_CORRUPTCTX == msgEncoderGetPayloadLocation(&ctx, &dataP, &var32) )
+    {
+        (void)printf("msgEncoderTestBadParamStatus 14 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgEncoderTestBadParamStatus 14 -- FAIL \n");
+    }
 }
 
 void msgEncoderTestBadClBck(void)
@@ -616,7 +665,8 @@ void msgEncoderTestMsgEnd(void)
 {
     /* Local variable */
     s_eFSP_MsgECtx ctx;
-    uint8_t  memArea[12u];
+    uint8_t  memArea[12u] = {0u};
+    uint8_t  msgA[24u] = {0u};
     cb_crc32_msge cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
@@ -635,16 +685,28 @@ void msgEncoderTestMsgEnd(void)
         (void)printf("msgEncoderTestMsgEnd 1  -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == msgEncoderStartNewMessage(&ctx, 2u) )
+    if( MSGE_RES_OK == msgEncoderGetPayloadLocation(&ctx, &dataP, &var32) )
     {
-        (void)printf("msgEncoderTestMsgEnd 2  -- OK \n");
+        if( 4u == var32 )
+        {
+            (void)printf("msgEncoderTestMsgEnd 2  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgEncoderTestMsgEnd 2  -- FAIL \n");
+        }
     }
     else
     {
         (void)printf("msgEncoderTestMsgEnd 2  -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == msgEncoderStartNewMessage(&ctx, 2u) )
+    dataP[0u] = 1u;
+    dataP[1u] = 2u;
+    dataP[2u] = 3u;
+    dataP[3u] = 4u;
+
+    if( MSGE_RES_OK == msgEncoderStartNewMessage(&ctx, 4u) )
     {
         (void)printf("msgEncoderTestMsgEnd 3  -- OK \n");
     }
@@ -653,7 +715,62 @@ void msgEncoderTestMsgEnd(void)
         (void)printf("msgEncoderTestMsgEnd 3  -- FAIL \n");
     }
 
+    /* Parse all the message */
+    if( MSGE_RES_MESSAGEENDED == msgEncoderRetriveEChunk(&ctx, msgA, sizeof(msgA), &var32) )
+    {
+        if( 14u == var32 )
+        {
+            if( (0x70u == msgA[1u]) && (0x3Fu == msgA[2u]) && (0x71u == msgA[3u]) && (0xBDu == msgA[4u]) )
+            {
+                if( (4u == msgA[5u]) && (0u == msgA[6u]) && (0u == msgA[7u]) && (0u == msgA[8u]) )
+                {
+                    if( (1u == msgA[9u]) && (2u == msgA[10u]) && (3u == msgA[11u]) && (4u == msgA[12u]) )
+                    {
+                        (void)printf("msgEncoderTestMsgEnd 4  -- OK \n");
+                    }
+                    else
+                    {
+                        (void)printf("msgEncoderTestMsgEnd 4  -- FAIL \n");
+                    }
+                }
+                else
+                {
+                    (void)printf("msgEncoderTestMsgEnd 4  -- FAIL \n");
+                }
+            }
+            else
+            {
+                (void)printf("msgEncoderTestMsgEnd 4  -- FAIL \n");
+            }
+        }
+        else
+        {
+            (void)printf("msgEncoderTestMsgEnd 4  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgEncoderTestMsgEnd 4  -- FAIL \n");
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void msgEncoderTestGeneral(void)
 {
