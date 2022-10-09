@@ -79,7 +79,7 @@ e_eFSP_MsgE_Res msgEncoderInitCtx(s_eFSP_MsgECtx* const ctx, uint8_t* const memA
 /**
  * @brief       Start to encode a new msg given the dimension of raw payload it self. This function suppouse that
  *              data payload that need to be encoded were already copied in memory.( see msgEncoderGetPayloadLocation
- *              in order to know how get the data pointer )
+ *              in order to know how get the data pointer, and copy the data )
  *
  * @param[in]   ctx         - Message Encoder context
  * @param[in]   messageLen  - lenght of the raw payload present in the frame that we need to encode ( no header )
