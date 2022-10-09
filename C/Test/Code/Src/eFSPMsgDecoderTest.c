@@ -384,8 +384,44 @@ void msgDecoderTestBadInit(void)
 
 void msgDecoderTestBadParamEntr(void)
 {
+    /* Local variable */
+    s_eFSP_MsgDCtx ctx;
+    uint8_t  memArea[5u];
+    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    s_eCU_crcAdapterCtx ctxAdapterCrc;
+    uint32_t var32;
+    uint8_t* dataP;
+    bool_t isMsgDec;
 
+    /* Function */
+    if( MSGD_RES_BADPARAM == msgDecoderInitCtx(&ctx, memArea, 8u, cbCrcPTest, &ctxAdapterCrc) )
+    {
+        (void)printf("msgDecoderTestBadParamEntr 1  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgDecoderTestBadParamEntr 1  -- FAIL \n");
+    }
 
+    /* Function */
+    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    {
+        (void)printf("msgDecoderTestBadParamEntr 2  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgDecoderTestBadParamEntr 2  -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGD_RES_BADPARAM == msgDecoderInsEncChunk(&ctx, memArea, 0u, &var32, &var32) )
+    {
+        (void)printf("msgDecoderTestBadParamEntr 3  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgDecoderTestBadParamEntr 3  -- FAIL \n");
+    }
 }
 
 void msgDecoderTestBadParamStatus(void)
