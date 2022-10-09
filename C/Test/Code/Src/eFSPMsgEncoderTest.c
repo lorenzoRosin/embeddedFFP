@@ -754,24 +754,6 @@ void msgEncoderTestMsgEnd(void)
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void msgEncoderTestGeneral(void)
 {
     /* Local variable */
