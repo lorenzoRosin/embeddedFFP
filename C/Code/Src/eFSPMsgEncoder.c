@@ -113,7 +113,7 @@ e_eFSP_MsgE_Res msgEncoderStartNewMessage(s_eFSP_MsgECtx* const ctx, const uint3
                     else
                     {
 						if( ( messageLen + EFSP_MSGEN_HEADERSIZE ) > maxDataSize )
-						{	
+						{
 							/* Data payload can not be greater that max payload size */
 							result = MSGE_RES_BADPARAM;
 						}
@@ -125,11 +125,11 @@ e_eFSP_MsgE_Res msgEncoderStartNewMessage(s_eFSP_MsgECtx* const ctx, const uint3
 							dataP[0x05u] = (uint8_t) ( ( messageLen >> 8u  ) & 0x000000FFu );
 							dataP[0x06u] = (uint8_t) ( ( messageLen >> 16u ) & 0x000000FFu );
 							dataP[0x07u] = (uint8_t) ( ( messageLen >> 24u ) & 0x000000FFu );
-	
+
 							/* Calculate the CRC of data payload and messageLen */
 							nBToCrc = messageLen + 4u;
 							crcRes = (*(ctx->cbCrcPtr))( ctx->cbCrcCtx, ECU_CRC_BASE_SEED, &dataP[4u], nBToCrc, &cR32 );
-	
+
 							if( true == crcRes )
 							{
 								/* Insert in the buffer the CRC32, in Little Endian */
@@ -137,8 +137,8 @@ e_eFSP_MsgE_Res msgEncoderStartNewMessage(s_eFSP_MsgECtx* const ctx, const uint3
 								dataP[0x01u] = (uint8_t) ( ( cR32 >> 8u  ) & 0x000000FFu );
 								dataP[0x02u] = (uint8_t) ( ( cR32 >> 16u ) & 0x000000FFu );
 								dataP[0x03u] = (uint8_t) ( ( cR32 >> 24u ) & 0x000000FFu );
-	
-								/* the message frame is ready, need to start the bytestuffer with size of crc + size 
+
+								/* the message frame is ready, need to start the bytestuffer with size of crc + size
 								* of len + real number of data */
 								nByteToSf = ( EFSP_MSGEN_HEADERSIZE + messageLen );
 								resultByStuff = bStufferStartNewFrame(&ctx->byteStufferCtnx, nByteToSf);
@@ -201,7 +201,7 @@ e_eFSP_MsgE_Res msgEncoderGetPayloadLocation(s_eFSP_MsgECtx* const ctx, uint8_t*
                 else
                 {
                     /* Return reference of only the raw payload */
-                    *dataP = &dataPP[8u];
+                    *dataP = &dataPP[EFSP_MSGEN_HEADERSIZE];
                     *maxDataSize = maxDataSizeP - EFSP_MSGEN_HEADERSIZE;
                 }
 			}
