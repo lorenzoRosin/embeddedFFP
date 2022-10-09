@@ -257,6 +257,7 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
 		}
 		else
 		{
+            isFullUnstuffed = false;
 			resultByStuff = bUStufferIsAFullFrameUnstuff(&ctx->byteUStufferCtnx, &isFullUnstuffed);
 			result = convertReturnFromBstfToMSGD(resultByStuff);
 
@@ -271,6 +272,8 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
                 else
                 {
                     /* How many byte are decoded? */
+                    dataSizeP = 0u;
+                    dataPP = NULL;
                     resultByStuff = bUStufferGetUnstufData(&ctx->byteUStufferCtnx, &dataPP, &dataSizeP);
                     result = convertReturnFromBstfToMSGD(resultByStuff);
 
@@ -404,7 +407,7 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
                                 result = MSGD_RES_OUTOFMEM;
                             }
 
-                            if( MSGD_RES_OK == result )
+                            if( MSGD_RES_FRAMEENDED == result )
                             {
                                 resultByStuff = bUStufferStartNewFrame(&ctx->byteUStufferCtnx);
                                 result = convertReturnFromBstfToMSGD(resultByStuff);
@@ -527,7 +530,7 @@ e_eFSP_MsgD_Res convertReturnFromBstfToMSGD(e_eCU_dBUStf_Res returnedEvent)
 }
 
 #ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_disable = "MISRAC2004-17.4_b"
+    #pragma cstat_disable = "MISRAC2004-17.4_b", "MISRAC2012-Rule-8.13"
     /* Suppressed for code clarity */
 #endif
 
@@ -614,7 +617,7 @@ e_eFSP_MsgD_Res isMsgCorrect(s_eCU_BUStuffCtx* ctx, bool_t* isCorrect, cb_crc32_
 }
 
 #ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MISRAC2004-17.4_b"
+    #pragma cstat_restore = "MISRAC2004-17.4_b", "MISRAC2012-Rule-8.13"
 #endif
 
 uint32_t composeU32LE(uint8_t v1, uint8_t v2, uint8_t v3, uint8_t v4)
