@@ -716,7 +716,7 @@ static e_eFSP_MsgD_Res isMsgCoherent(s_eCU_BUStuffCtx* ctx, bool_t* isCoherent)
                 /* Enough data! Is data len in frame coherent?  */
                 dLenInMsg = composeU32LE(dataPP[0x04u], dataPP[0x05u], dataPP[0x06u], dataPP[0x07u]);
 
-                if( ( dataSizeP - EFSP_MSGDE_HEADERSIZE ) <= dLenInMsg)
+                if( ( dataSizeP - EFSP_MSGDE_HEADERSIZE ) <= dLenInMsg )
                 {
                     /* Data len is coherent! */
                     *isCoherent = true;
