@@ -167,7 +167,12 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
  *		        MSGD_RES_BADPARAM     	- In case of an invalid parameter passed to the function
  *		        MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
  *              MSGD_RES_OUTOFMEM     	- Can not decode data, initial mem pointer was too small. The only way to
- *                                        resolve the issue is increasing the size of the memory area passed to init
+ *                                        resolve the issue is increasing the size of the memory area passed to init.
+ *                                        Keep in mind that if there are multiple and frequent error in data tx or rx
+ *                                        we could end in this situation when data size in frame is corrupted and
+ *                                        interpreted higher that it should be and EOF + SOF of the next frame are lost.
+ *                                        So this status could be due to a transmissione error, but it's not possible
+ *                                        to know the reason of the error without storing all the data and checking CRC.
  *		        MSGD_RES_FRAMEENDED   	- Frame ended, restart context in order to parse a new frame. Every other call
  *                                        to this function will not have effect until we call msgDecoderStartNewMsg.
  *                                        In this situation bear in mind that some data could be left out the parsing.

@@ -20,6 +20,7 @@
 static bool_t isMsgDecStatusStillCoherent(const s_eFSP_MsgDCtx* ctx);
 static e_eFSP_MsgD_Res convertReturnFromBstfToMSGD(e_eCU_dBUStf_Res returnedEvent);
 static e_eFSP_MsgD_Res isMsgCorrect(s_eCU_BUStuffCtx* ctx, bool_t* isCorrect, cb_crc32_msgd cbCrcPtr, void* cbCrcCtx);
+static e_eFSP_MsgD_Res isMsgCoherent(s_eCU_BUStuffCtx* ctx, bool_t* isCoherent);
 static uint32_t composeU32LE(uint8_t v1, uint8_t v2, uint8_t v3, uint8_t v4);
 
 
@@ -283,7 +284,7 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
                         /* Do we have enough data?  */
                         if( dataSizeP < EFSP_MSGDE_HEADERSIZE )
                         {
-                            /* Need to receive all the eder before estimating data size */
+                            /* Need to receive all the header before estimating data size */
                             *mostEffPayload = EFSP_MSGDE_HEADERSIZE - dataSizeP;
                         }
                         else
@@ -291,15 +292,16 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
                             /* Enough data! Start remaining data estimation */
                             dLenInMsg = composeU32LE(dataPP[0x04u], dataPP[0x05u], dataPP[0x06u], dataPP[0x07u]);
 
-                            if( ( dataSizeP - EFSP_MSGDE_HEADERSIZE ) < dLenInMsg)
+                            if( ( dataSizeP - EFSP_MSGDE_HEADERSIZE ) <= dLenInMsg)
                             {
-                                *mostEffPayload = dLenInMsg - ( dataSizeP - EFSP_MSGDE_HEADERSIZE );
+                                /* Wait remaining data + EOF */
+                                *mostEffPayload = dLenInMsg - ( dataSizeP - EFSP_MSGDE_HEADERSIZE ) + 1u;
                             }
                             else
                             {
-                                /* No more data but frame not ended, probably we are waiting EOF os some ESC
-                                 * character */
-                                *mostEffPayload  = 1u;
+                                /* We have more data than expected, but it's impossible because msgDecoderInsEncChunk
+                                 * is able to prevent this kind of situation */
+                                result = MSGD_RES_CORRUPTCTX;
                             }
                         }
                     }
@@ -317,8 +319,10 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 	/* Local variable */
 	e_eFSP_MsgD_Res result;
     e_eFSP_MsgD_Res resultMsgCorrect;
+    e_eFSP_MsgD_Res resultMsgCoherent;
 	e_eCU_dBUStf_Res resultByStuff;
     bool_t isMCorrect;
+    bool_t isMCoherent;
     const uint8_t *currentArea;
     uint32_t currentEncLen;
     uint32_t currentCosumed;
@@ -398,9 +402,9 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
                         {
                             /* Too small frame or bad cr found, discharge and continue parse data if present */
                             /* Increase error counter if frame is wrong */
-                            if( totalErrSofRec < ( 0xFFFFFFFFu - currentErrSofRec ) )
+                            if( totalErrSofRec < 0xFFFFFFFFu )
                             {
-                                totalErrSofRec += currentErrSofRec;
+                                totalErrSofRec += 1u;
                             }
                             else
                             {
@@ -433,6 +437,54 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
                     {
                         /* Some error */
                         result = resultMsgCorrect;
+                    }
+                }
+                else if( MSGD_RES_OK == result )
+                {
+                    /* Still parsing but we can check if data len is coherent */
+                    resultMsgCoherent = isMsgCoherent(&ctx->byteUStufferCtnx, &isMCoherent);
+
+                    if( MSGD_RES_OK == resultMsgCoherent )
+                    {
+                        /* no strange error found, check message correctness */
+                        if( true != isMCoherent )
+                        {
+                            /* Message not ended but something abount message length is not coherent */
+                            if( totalErrSofRec < 0xFFFFFFFFu )
+                            {
+                                totalErrSofRec += 1u;
+                            }
+                            else
+                            {
+                                totalErrSofRec = 0xFFFFFFFFu;
+                                result = MSGD_RES_OUTOFMEM;
+                            }
+
+                            if( MSGD_RES_OK == result )
+                            {
+                                resultByStuff = bUStufferStartNewFrame(&ctx->byteUStufferCtnx);
+                                result = convertReturnFromBstfToMSGD(resultByStuff);
+
+                                if( MSGD_RES_OK == result )
+                                {
+                                    /* retrigger and update counter if we have some space */
+                                    if( totalCosumed < encLen )
+                                    {
+                                        /* retrigger */
+                                        needToParseRemainingData = true;
+
+                                        /* Update pointer */
+                                        currentArea = &encArea[totalCosumed];
+                                        currentEncLen = encLen - totalCosumed;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        /* Some error */
+                        result = resultMsgCoherent;
                     }
                 }
 
@@ -620,6 +672,66 @@ e_eFSP_MsgD_Res isMsgCorrect(s_eCU_BUStuffCtx* ctx, bool_t* isCorrect, cb_crc32_
 #ifdef __IAR_SYSTEMS_ICC__
     #pragma cstat_restore = "MISRAC2004-17.4_b", "MISRAC2012-Rule-8.13"
 #endif
+
+static e_eFSP_MsgD_Res isMsgCoherent(s_eCU_BUStuffCtx* ctx, bool_t* isCoherent)
+{
+    /* Need to check coherence of the message during message receiving, how? Check if data len reported by payload
+     * is lower than data payload received, if greater something is wrong  */
+    e_eFSP_MsgD_Res result;
+    e_eCU_dBUStf_Res byteUnstuffRes;
+    uint32_t dLenInMsg;
+	uint32_t crcInMsg;
+	uint32_t crcExp;
+	uint32_t dataSizeP;
+    bool_t crcRes;
+	uint8_t* dataPP;
+
+    /* Check NULL */
+    if( ( NULL == ctx ) || ( NULL == isCoherent) )
+    {
+        result = MSGD_RES_BADPOINTER;
+    }
+    else
+    {
+        /* Check how much payload is received */
+
+        /* Init value */
+        dataSizeP = 0u;
+        dataPP = NULL;
+
+        /* Get unstuffed data */
+        byteUnstuffRes = bUStufferGetUnstufData(ctx, &dataPP, &dataSizeP);
+        result = convertReturnFromBstfToMSGD(byteUnstuffRes);
+
+        if( MSGD_RES_OK == result )
+        {
+            /* Do we have enough data?  */
+            if( dataSizeP < EFSP_MSGDE_HEADERSIZE )
+            {
+                /* Not enoght data to make a check */
+                *isCoherent = true;
+            }
+            else
+            {
+                /* Enough data! Is data len in frame coherent?  */
+                dLenInMsg = composeU32LE(dataPP[0x04u], dataPP[0x05u], dataPP[0x06u], dataPP[0x07u]);
+
+                if( ( dataSizeP - EFSP_MSGDE_HEADERSIZE ) <= dLenInMsg)
+                {
+                    /* Data len is coherent! */
+                    *isCoherent = true;
+                }
+                else
+                {
+                    /* Data len is wrong, discharge */
+                    *isCoherent = false;
+                }
+            }
+        }
+    }
+
+    return result;
+}
 
 uint32_t composeU32LE(uint8_t v1, uint8_t v2, uint8_t v3, uint8_t v4)
 {
