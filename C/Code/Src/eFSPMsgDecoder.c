@@ -318,25 +318,33 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
 }
 
 e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* encArea, const uint32_t encLen,
-                                      uint32_t* const consumedEncData, uint32_t* errSofRec)
+                                      uint32_t* const consumedEncData, uint32_t* errEncRec)
 {
-	/* Local variable */
+	/* Local return  */
 	e_eFSP_MsgD_Res result;
     e_eFSP_MsgD_Res resultMsgCorrect;
     e_eFSP_MsgD_Res resultMsgCoherent;
 	e_eCU_dBUStf_Res resultByStuff;
+
+    /* Local coherence */
     bool_t isMCorrect;
     bool_t isMCoherent;
-    const uint8_t *currentArea;
-    uint32_t currentEncLen;
-    uint32_t currentCosumed;
+
+    /* Current loop var */
+    const uint8_t *cArea;
+    uint32_t cEncLen;
+    uint32_t cCosumed;
+    uint32_t cErrSofRec;
+
+    /* Total counter */
     uint32_t totalCosumed;
-    uint32_t currentErrSofRec;
     uint32_t totalErrSofRec;
+
+    /* Redo loop var */
     bool_t needToParseRemainingData;
 
 	/* Check pointer validity */
-	if( ( NULL == ctx ) || ( NULL == encArea ) || ( NULL == consumedEncData ) || ( NULL == errSofRec ) )
+	if( ( NULL == ctx ) || ( NULL == encArea ) || ( NULL == consumedEncData ) || ( NULL == errEncRec ) )
 	{
 		result = MSGD_RES_BADPOINTER;
 	}
@@ -351,31 +359,34 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 		{
             /* Init return value before while */
             *consumedEncData = 0u;
-            *errSofRec = 0u;
+            *errEncRec = 0u;
 
-            needToParseRemainingData = false;
+            /* init current var */
+            cArea = encArea;
+            cEncLen = encLen;
 
-            /* Init var before while */
-            currentArea = encArea;
-            currentEncLen = encLen;
+            /* Init total counter */
             totalCosumed = 0u;
             totalErrSofRec = 0u;
 
             /* Elaborate */
             do
             {
+                /* Actualy no need to redo the elaboration */
+                needToParseRemainingData = false;
+
                 /* Init partial coutner  */
-                currentCosumed = 0u;
-                currentErrSofRec = 0u;
+                cCosumed = 0u;
+                cErrSofRec = 0u;
 
                 /* Insert data */
-                resultByStuff = bUStufferInsStufChunk(&ctx->byteUStufferCtnx, currentArea, currentEncLen, &currentCosumed, &currentErrSofRec);
+                resultByStuff = bUStufferInsStufChunk(&ctx->byteUStufferCtnx, cArea, cEncLen, &cCosumed, &cErrSofRec);
                 result = convertReturnFromBstfToMSGD(resultByStuff);
 
                 /* update total counter */
-                if( totalErrSofRec < ( 0xFFFFFFFFu - currentErrSofRec ) )
+                if( totalErrSofRec < ( 0xFFFFFFFFu - cErrSofRec ) )
                 {
-                    totalErrSofRec += currentErrSofRec;
+                    totalErrSofRec += cErrSofRec;
                 }
                 else
                 {
@@ -384,9 +395,9 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
                 }
 
                 /* update total counter */
-                if( totalCosumed < ( 0xFFFFFFFFu - currentCosumed ) )
+                if( totalCosumed < ( 0xFFFFFFFFu - cCosumed ) )
                 {
-                    totalCosumed += currentCosumed;
+                    totalCosumed += cCosumed;
                 }
                 else
                 {
@@ -430,8 +441,8 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
                                         needToParseRemainingData = true;
 
                                         /* Update pointer */
-                                        currentArea = &encArea[totalCosumed];
-                                        currentEncLen = encLen - totalCosumed;
+                                        cArea = &encArea[totalCosumed];
+                                        cEncLen = encLen - totalCosumed;
                                     }
                                 }
                             }
@@ -453,7 +464,7 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
                         /* no strange error found, check message correctness */
                         if( true != isMCoherent )
                         {
-                            /* Message not ended but something abount message length is not coherent */
+                            /* Message not ended but something about message length is not coherent */
                             if( totalErrSofRec < 0xFFFFFFFFu )
                             {
                                 totalErrSofRec += 1u;
@@ -478,8 +489,8 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
                                         needToParseRemainingData = true;
 
                                         /* Update pointer */
-                                        currentArea = &encArea[totalCosumed];
-                                        currentEncLen = encLen - totalCosumed;
+                                        cArea = &encArea[totalCosumed];
+                                        cEncLen = encLen - totalCosumed;
                                     }
                                 }
                             }
@@ -496,7 +507,7 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 
             /* Update return variable */
             *consumedEncData = totalCosumed;
-            *errSofRec = totalErrSofRec;
+            *errEncRec = totalErrSofRec;
 		}
 	}
 
