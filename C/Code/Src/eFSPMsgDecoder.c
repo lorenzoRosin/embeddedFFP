@@ -241,7 +241,8 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
 	e_eFSP_MsgD_Res result;
 	e_eCU_dBUStf_Res resultByStuff;
     bool_t isFullUnstuffed;
-	uint32_t dataSizeP;
+	uint32_t dataSizePay;
+    uint32_t dataSizeRaw;
 	uint8_t* dataPP;
     uint32_t dLenInMsg;
 
@@ -269,33 +270,36 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
                 {
                     /* Full unstuffed, done */
                     *mostEffPayload = 0u;
-
                 }
                 else
                 {
                     /* How many byte are decoded? */
-                    dataSizeP = 0u;
+                    dataSizeRaw = 0u;
                     dataPP = NULL;
-                    resultByStuff = bUStufferGetUnstufData(&ctx->byteUStufferCtnx, &dataPP, &dataSizeP);
+                    resultByStuff = bUStufferGetUnstufData(&ctx->byteUStufferCtnx, &dataPP, &dataSizeRaw);
                     result = convertReturnFromBstfToMSGD(resultByStuff);
 
                     if( MSGD_RES_OK == result )
                     {
                         /* Do we have enough data?  */
-                        if( dataSizeP < EFSP_MSGDE_HEADERSIZE )
+                        if( dataSizeRaw < EFSP_MSGDE_HEADERSIZE )
                         {
                             /* Need to receive all the header before estimating data size */
-                            *mostEffPayload = EFSP_MSGDE_HEADERSIZE - dataSizeP;
+                            *mostEffPayload = EFSP_MSGDE_HEADERSIZE - dataSizeRaw;
                         }
                         else
                         {
                             /* Enough data! Start remaining data estimation */
                             dLenInMsg = composeU32LE(dataPP[0x04u], dataPP[0x05u], dataPP[0x06u], dataPP[0x07u]);
 
-                            if( ( dataSizeP - EFSP_MSGDE_HEADERSIZE ) <= dLenInMsg)
+                            /* How much payload we have */
+                            dataSizePay = dataSizeRaw - EFSP_MSGDE_HEADERSIZE;
+
+                            /* A correct frame payload must have less lenght than the size reported in frame header */
+                            if( dataSizePay <= dLenInMsg)
                             {
                                 /* Wait remaining data + EOF */
-                                *mostEffPayload = dLenInMsg - ( dataSizeP - EFSP_MSGDE_HEADERSIZE ) + 1u;
+                                *mostEffPayload = dLenInMsg - dataSizePay + 1u;
                             }
                             else
                             {
