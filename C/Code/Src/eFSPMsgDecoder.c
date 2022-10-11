@@ -241,6 +241,7 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
 	e_eFSP_MsgD_Res result;
 	e_eCU_dBUStf_Res resultByStuff;
     bool_t isFullUnstuffed;
+    uint32_t dataSizeRemaings;
 	uint32_t dataSizePay;
     uint32_t dataSizeRaw;
 	uint8_t* dataPP;
@@ -298,8 +299,17 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
                             /* A correct frame payload must have less lenght than the size reported in frame header */
                             if( dataSizePay <= dLenInMsg)
                             {
+                                dataSizeRemaings = dLenInMsg - dataSizePay;
+
                                 /* Wait remaining data + EOF */
-                                *mostEffPayload = dLenInMsg - dataSizePay + 1u;
+                                if( dataSizeRemaings < 0xFFFFFFFFu )
+                                {
+                                    *mostEffPayload = dataSizeRemaings + 1u;
+                                }
+                                else
+                                {
+                                    *mostEffPayload = dataSizeRemaings;
+                                }
                             }
                             else
                             {
@@ -502,6 +512,10 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
                         result = resultMsgCoherent;
                     }
                 }
+                else
+                {
+                    /* Some error in unstuffer process, return it */
+                }
 
             }while( true == needToParseRemainingData );
 
@@ -643,7 +657,7 @@ e_eFSP_MsgD_Res isMsgCorrect(s_eCU_BUStuffCtx* ctx, bool_t* isCorrect, cb_crc32_
                 /* Enough data! Is data len in frame coherent?  */
                 dLenInMsg = composeU32LE(dataPP[0x04u], dataPP[0x05u], dataPP[0x06u], dataPP[0x07u]);
 
-                if( ( dataSizeP - EFSP_MSGDE_HEADERSIZE ) == dLenInMsg)
+                if( ( dataSizeP - EFSP_MSGDE_HEADERSIZE ) == dLenInMsg )
                 {
                     /* Data len is coherent! Is crc rigth? */
                     crcExp = 0u;
@@ -684,10 +698,6 @@ e_eFSP_MsgD_Res isMsgCorrect(s_eCU_BUStuffCtx* ctx, bool_t* isCorrect, cb_crc32_
     return result;
 }
 
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MISRAC2004-17.4_b", "MISRAC2012-Rule-8.13"
-#endif
-
 static e_eFSP_MsgD_Res isMsgCoherent(s_eCU_BUStuffCtx* ctx, bool_t* isCoherent)
 {
     /* Need to check coherence of the message during message receiving, how? Check if data len reported by payload
@@ -695,10 +705,7 @@ static e_eFSP_MsgD_Res isMsgCoherent(s_eCU_BUStuffCtx* ctx, bool_t* isCoherent)
     e_eFSP_MsgD_Res result;
     e_eCU_dBUStf_Res byteUnstuffRes;
     uint32_t dLenInMsg;
-	uint32_t crcInMsg;
-	uint32_t crcExp;
 	uint32_t dataSizeP;
-    bool_t crcRes;
 	uint8_t* dataPP;
 
     /* Check NULL */
@@ -747,6 +754,10 @@ static e_eFSP_MsgD_Res isMsgCoherent(s_eCU_BUStuffCtx* ctx, bool_t* isCoherent)
 
     return result;
 }
+
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_restore = "MISRAC2004-17.4_b", "MISRAC2012-Rule-8.13"
+#endif
 
 uint32_t composeU32LE(uint8_t v1, uint8_t v2, uint8_t v3, uint8_t v4)
 {
