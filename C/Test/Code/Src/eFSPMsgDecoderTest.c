@@ -318,9 +318,14 @@ void msgDecoderTestBadInit(void)
     uint32_t var32;
     uint8_t* dataP;
     bool_t isMsgDec;
+    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    s_eCU_crcAdapterCtx ctxAdapterCrc;
 
     /* Function */
     ctx.byteUStufferCtnx.isInit = false;
+    ctx.cbCrcCtx = &ctxAdapterCrc;
+    ctx.cbCrcPtr = cbCrcPTest;
+
     if( MSGD_RES_NOINITLIB == msgDecoderStartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestBadInit 1  -- OK \n");
