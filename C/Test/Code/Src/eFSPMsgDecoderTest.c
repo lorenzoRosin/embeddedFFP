@@ -607,8 +607,6 @@ void msgDecoderTestBadClBck(void)
     cb_crc32_msgd cbCrcPTest = &c32SAdaptEr;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
-    uint8_t* dataP;
-    bool_t isMsgDec;
 
     /* Function */
     if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
@@ -657,8 +655,6 @@ void msgDecoderTestMsgEnd(void)
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
-    uint8_t* dataP;
-    bool_t isMsgDec;
 
     /* Function */
     if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
@@ -700,8 +696,6 @@ void msgDecoderTestOutOfMem(void)
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
-    uint8_t* dataP;
-    bool_t isMsgDec;
 
     /* Function */
     if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
@@ -737,7 +731,208 @@ void msgDecoderTestOutOfMem(void)
 
 void msgDecoderTestGeneral(void)
 {
+    /* Local variable */
+    s_eFSP_MsgDCtx ctx;
+    uint8_t  memArea[40u];
+    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    s_eCU_crcAdapterCtx ctxAdapterCrc;
+    uint32_t consumed;
+    uint32_t errorFound;
+    uint32_t mostEfficient;
+    uint32_t payLoadLen;
+    uint8_t* payLoadLoc;
+    bool_t isMsgDec;
 
+    /* Function */
+    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    {
+        (void)printf("msgDecoderTestGeneral 1  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgDecoderTestGeneral 1  -- FAIL \n");
+    }
 
+    if( MSGD_RES_OK == msgDecoderStartNewMsg(&ctx) )
+    {
+        (void)printf("msgDecoderTestGeneral 2  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgDecoderTestGeneral 2  -- FAIL \n");
+    }
+
+    if( MSGD_RES_OK == msgDecoderGetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    {
+        if( 0x00u == payLoadLen )
+        {
+            (void)printf("msgDecoderTestGeneral 3  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgDecoderTestGeneral 3  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgDecoderTestGeneral 3  -- FAIL \n");
+    }
+
+    if( MSGD_RES_OK == msgDecoderGetDecodedLen(&ctx, &payLoadLen) )
+    {
+        if( 0x00u == payLoadLen )
+        {
+            (void)printf("msgDecoderTestGeneral 4  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgDecoderTestGeneral 4  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgDecoderTestGeneral 4  -- FAIL \n");
+    }
+
+    if( MSGD_RES_OK == msgDecoderIsAFullMsgUnstuff(&ctx, &isMsgDec) )
+    {
+        if( false == isMsgDec )
+        {
+            (void)printf("msgDecoderTestGeneral 5  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgDecoderTestGeneral 5  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgDecoderTestGeneral 5  -- FAIL \n");
+    }
+
+    if( MSGD_RES_OK == msgDecoderGetMostEffDatLen(&ctx, &mostEfficient) )
+    {
+        if( 8u == mostEfficient )
+        {
+            (void)printf("msgDecoderTestGeneral 6  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgDecoderTestGeneral 6  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgDecoderTestGeneral 6  -- FAIL \n");
+    }
+
+    /* Remove */
+    uint8_t testData[] = {ECU_SOF, 0x80u, 0xE4u, 0xB1u, 0x84u, 0x02, 0x00u, 0x00u, 0x00u, ECU_ESC, (uint8_t)(~ECU_SOF),
+                          ECU_ESC, (uint8_t)(~ECU_EOF), ECU_EOF};
+
+    if( MSGD_RES_FRAMEENDED == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
+    {
+        if( ( 14u == consumed ) && ( 0u == errorFound) )
+        {
+            (void)printf("msgDecoderTestGeneral 7  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgDecoderTestGeneral 7  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgDecoderTestGeneral 7  -- FAIL \n");
+    }
+
+    if( MSGD_RES_OK == msgDecoderGetMostEffDatLen(&ctx, &mostEfficient) )
+    {
+        if( 0u == mostEfficient )
+        {
+            (void)printf("msgDecoderTestGeneral 8  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgDecoderTestGeneral 8  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgDecoderTestGeneral 8  -- FAIL \n");
+    }
+
+    if( MSGD_RES_OK == msgDecoderIsAFullMsgUnstuff(&ctx, &isMsgDec) )
+    {
+        if( true == isMsgDec )
+        {
+            (void)printf("msgDecoderTestGeneral 9  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgDecoderTestGeneral 9  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgDecoderTestGeneral 9  -- FAIL \n");
+    }
+
+    if( MSGD_RES_OK == msgDecoderGetDecodedLen(&ctx, &payLoadLen) )
+    {
+        if( 0x02u == payLoadLen )
+        {
+            (void)printf("msgDecoderTestGeneral 10 -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgDecoderTestGeneral 10 -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgDecoderTestGeneral 10 -- FAIL \n");
+    }
+
+    if( MSGD_RES_OK == msgDecoderGetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    {
+        if( 0x02u == payLoadLen )
+        {
+            (void)printf("msgDecoderTestGeneral 11 -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgDecoderTestGeneral 11 -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgDecoderTestGeneral 11 -- FAIL \n");
+    }
+
+    if( ( ECU_SOF == payLoadLoc[0u] ) && ( ECU_EOF == payLoadLoc[1u] ) )
+    {
+        (void)printf("msgDecoderTestGeneral 12 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgDecoderTestGeneral 12 -- FAIL \n");
+    }
+
+    if( MSGD_RES_FRAMEENDED == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
+    {
+        if( 0u == consumed )
+        {
+            (void)printf("msgDecoderTestGeneral 13 -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgDecoderTestGeneral 13 -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgDecoderTestGeneral 13 -- FAIL \n");
+    }
 }
 
