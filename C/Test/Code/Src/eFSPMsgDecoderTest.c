@@ -694,8 +694,45 @@ void msgDecoderTestMsgEnd(void)
 
 void msgDecoderTestOutOfMem(void)
 {
-    // MSGD_RES_OUTOFMEM
+    /* Local variable */
+    s_eFSP_MsgDCtx ctx;
+    uint8_t  memArea[9u];
+    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    s_eCU_crcAdapterCtx ctxAdapterCrc;
+    uint32_t var32;
+    uint8_t* dataP;
+    bool_t isMsgDec;
 
+    /* Function */
+    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    {
+        (void)printf("msgDecoderTestOutOfMem 1  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgDecoderTestOutOfMem 1  -- FAIL \n");
+    }
+
+    if( MSGD_RES_OK == msgDecoderStartNewMsg(&ctx) )
+    {
+        (void)printf("msgDecoderTestOutOfMem 2  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgDecoderTestOutOfMem 2  -- FAIL \n");
+    }
+
+    /* Decode */
+    uint8_t testData[] = {ECU_SOF, 0xE9u, 0x7Au, 0xF2u, 0xDAu, 0x02, 0x00u, 0x00u, 0x00u, 0x01, 0x01, ECU_EOF};
+
+    if( MSGD_RES_OUTOFMEM == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &var32, &var32) )
+    {
+        (void)printf("msgDecoderTestOutOfMem 3  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgDecoderTestOutOfMem 3  -- FAIL \n");
+    }
 }
 
 void msgDecoderTestGeneral(void)
