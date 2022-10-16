@@ -601,14 +601,95 @@ void msgDecoderTestBadParamStatus(void)
 
 void msgDecoderTestBadClBck(void)
 {
-    // MSGD_RES_CRCCLBKERROR
+    /* Local variable */
+    s_eFSP_MsgDCtx ctx;
+    uint8_t  memArea[10u];
+    cb_crc32_msgd cbCrcPTest = &c32SAdaptEr;
+    s_eCU_crcAdapterCtx ctxAdapterCrc;
+    uint32_t var32;
+    uint8_t* dataP;
+    bool_t isMsgDec;
 
+    /* Function */
+    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    {
+        (void)printf("msgDecoderTestBadClBck 1  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgDecoderTestBadClBck 1  -- FAIL \n");
+    }
+
+    if( MSGD_RES_OK == msgDecoderStartNewMsg(&ctx) )
+    {
+        (void)printf("msgDecoderTestBadClBck 2  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgDecoderTestBadClBck 2  -- FAIL \n");
+    }
+
+    /* Decode */
+    uint8_t testData[] = {ECU_SOF, 0x00u, 0x00u, 0x00u, 0x00u, 0x01, 0x00u, 0x00u, 0x00u, 0x01, ECU_EOF};
+
+    if( MSGD_RES_CRCCLBKERROR == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &var32, &var32) )
+    {
+        if( CRC_RES_BADPOINTER == ctxAdapterCrc.lastError )
+        {
+            (void)printf("msgDecoderTestBadClBck 3  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgDecoderTestBadClBck 3  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgDecoderTestBadClBck 3  -- FAIL \n");
+    }
 }
 
 void msgDecoderTestMsgEnd(void)
 {
-    // MSGD_RES_FRAMEENDED
+    /* Local variable */
+    s_eFSP_MsgDCtx ctx;
+    uint8_t  memArea[10u];
+    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    s_eCU_crcAdapterCtx ctxAdapterCrc;
+    uint32_t var32;
+    uint8_t* dataP;
+    bool_t isMsgDec;
 
+    /* Function */
+    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    {
+        (void)printf("msgDecoderTestMsgEnd 1  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgDecoderTestMsgEnd 1  -- FAIL \n");
+    }
+
+    if( MSGD_RES_OK == msgDecoderStartNewMsg(&ctx) )
+    {
+        (void)printf("msgDecoderTestMsgEnd 2  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgDecoderTestMsgEnd 2  -- FAIL \n");
+    }
+
+    /* Decode */
+    uint8_t testData[] = {ECU_SOF, 0xA6u, 0xC1u, 0xDCu, 0x0Au, 0x01, 0x00u, 0x00u, 0x00u, 0x01, ECU_EOF};
+
+    if( MSGD_RES_FRAMEENDED == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &var32, &var32) )
+    {
+        (void)printf("msgDecoderTestMsgEnd 3  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgDecoderTestMsgEnd 3  -- FAIL \n");
+    }
 }
 
 void msgDecoderTestOutOfMem(void)

@@ -11,7 +11,7 @@ int main(void);
 int main(void)
 {
     /* Start testing */
-    msgEncoderTest();
+    //msgEncoderTest();
     msgDecoderTest();
     // msgDeEncoderTest();
     // msgReceiverTest();
