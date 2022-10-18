@@ -1456,6 +1456,17 @@ void msgDecoderTestCorernerMulti(void)
     {
         (void)printf("msgDecoderTestCorernerMulti 31 -- FAIL \n");
     }
+
+    if( ( ECU_SOF == payLoadLoc[0u] ) && ( ECU_EOF == payLoadLoc[1u] ) && ( 0x01 == payLoadLoc[2u] ) &&
+        ( 0x02 == payLoadLoc[3u] ) && ( 0x03 == payLoadLoc[4u] ) && ( 0x04 == payLoadLoc[5u] ) &&
+        ( 0x05 == payLoadLoc[6u] ) )
+    {
+        (void)printf("msgDecoderTestCorernerMulti 32 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgDecoderTestCorernerMulti 32 -- FAIL \n");
+    }
 }
 
 void msgDecoderTestErrorAndContinue(void)
