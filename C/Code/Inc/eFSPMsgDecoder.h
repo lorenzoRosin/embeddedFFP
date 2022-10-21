@@ -43,7 +43,7 @@ typedef enum
     MSGD_RES_BADPOINTER,
 	MSGD_RES_CORRUPTCTX,
     MSGD_RES_OUTOFMEM,
-	MSGD_RES_FRAMEENDED,
+	MSGD_RES_MESSAGEENDED,
     MSGD_RES_NOINITLIB,
 	MSGD_RES_CRCCLBKERROR,
 }e_eFSP_MsgD_Res;
@@ -173,7 +173,7 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
  *                                        interpreted higher that it should be and EOF + SOF of the next frame are lost.
  *                                        So this status could be due to a transmissione error, but it's not possible
  *                                        to know the reason of the error without storing all the data and checking CRC.
- *		        MSGD_RES_FRAMEENDED   	- Frame ended, restart context in order to parse a new frame. Every other call
+ *		        MSGD_RES_MESSAGEENDED  	- Frame ended, restart context in order to parse a new frame. Every other call
  *                                        to this function will not have effect until we call msgDecoderStartNewMsg.
  *                                        In this situation bear in mind that some data could be left out the parsing.
  *				MSGE_RES_CRCCLBKERROR   - The crc callback returned an error when the decoder where verifing CRC

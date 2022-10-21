@@ -415,7 +415,7 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
                     result = MSGD_RES_OUTOFMEM;
                 }
 
-                if( MSGD_RES_FRAMEENDED == result )
+                if( MSGD_RES_MESSAGEENDED == result )
                 {
                     /* Verify msg integrity */
                     resultMsgCorrect = isMsgCorrect(&ctx->byteUStufferCtnx, &isMCorrect, ctx->cbCrcPtr, ctx->cbCrcCtx);
@@ -437,7 +437,7 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
                                 result = MSGD_RES_OUTOFMEM;
                             }
 
-                            if( MSGD_RES_FRAMEENDED == result )
+                            if( MSGD_RES_MESSAGEENDED == result )
                             {
                                 resultByStuff = bUStufferStartNewFrame(&ctx->byteUStufferCtnx);
                                 result = convertReturnFromBstfToMSGD(resultByStuff);
@@ -590,7 +590,7 @@ e_eFSP_MsgD_Res convertReturnFromBstfToMSGD(e_eCU_dBUStf_Res returnedEvent)
 
 		case DBUSTF_RES_FRAMEENDED:
 		{
-			result = MSGD_RES_FRAMEENDED;
+			result = MSGD_RES_MESSAGEENDED;
             break;
 		}
 

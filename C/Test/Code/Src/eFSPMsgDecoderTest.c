@@ -690,7 +690,7 @@ void msgDecoderTestMsgEnd(void)
     /* Decode */
     uint8_t testData[] = {ECU_SOF, 0xA6u, 0xC1u, 0xDCu, 0x0Au, 0x01, 0x00u, 0x00u, 0x00u, 0x01, ECU_EOF};
 
-    if( MSGD_RES_FRAMEENDED == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &var32, &var32) )
+    if( MSGD_RES_MESSAGEENDED == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &var32, &var32) )
     {
         (void)printf("msgDecoderTestMsgEnd 3  -- OK \n");
     }
@@ -842,7 +842,7 @@ void msgDecoderTestGeneral(void)
     uint8_t testData[] = {ECU_SOF, 0x80u, 0xE4u, 0xB1u, 0x84u, 0x02, 0x00u, 0x00u, 0x00u, ECU_ESC, (uint8_t)(~ECU_SOF),
                           ECU_ESC, (uint8_t)(~ECU_EOF), ECU_EOF};
 
-    if( MSGD_RES_FRAMEENDED == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
+    if( MSGD_RES_MESSAGEENDED == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
     {
         if( ( 14u == consumed ) && ( 0u == errorFound) )
         {
@@ -931,7 +931,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 12 -- FAIL \n");
     }
 
-    if( MSGD_RES_FRAMEENDED == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
+    if( MSGD_RES_MESSAGEENDED == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
     {
         if( 0u == consumed )
         {
@@ -1377,7 +1377,7 @@ void msgDecoderTestCorernerMulti(void)
 
     consumed = 0u;
     errorFound = 0u;
-    if( MSGD_RES_FRAMEENDED == msgDecoderInsEncChunk(&ctx, &testData[16u], 4u, &consumed, &errorFound) )
+    if( MSGD_RES_MESSAGEENDED == msgDecoderInsEncChunk(&ctx, &testData[16u], 4u, &consumed, &errorFound) )
     {
         if( ( 3u == consumed ) && ( 0u == errorFound) )
         {
@@ -1570,7 +1570,7 @@ void msgDecoderTestErrorAndContinue(void)
     uint8_t testData[] = { ECU_SOF, ECU_SOF, 0x80u, 0xE4u, 0xB1u, 0x84u, 0x02, 0x00u, 0x00u, 0x00u, ECU_ESC,
                            (uint8_t)(~ECU_SOF), ECU_ESC, (uint8_t)(~ECU_EOF), ECU_EOF};
 
-    if( MSGD_RES_FRAMEENDED == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
+    if( MSGD_RES_MESSAGEENDED == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
     {
         if( ( 15u == consumed ) && ( 1u == errorFound) )
         {
@@ -1659,7 +1659,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 12 -- FAIL \n");
     }
 
-    if( MSGD_RES_FRAMEENDED == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
+    if( MSGD_RES_MESSAGEENDED == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
     {
         if( 0u == consumed )
         {
@@ -1969,7 +1969,7 @@ void msgDecoderTestErrorAndContinueEx(void)
     uint8_t testData[] = { ECU_SOF, 0x00u, 0x00u, 0x00u, 0x00u, 0x02, 0x00u, 0x00u, 0x00u, 0x01, 0x02, ECU_EOF,
                            ECU_SOF, 0x30u, 0x5Cu, 0xB1u, 0xD7u, 0x02, 0x00u, 0x00u, 0x00u, 0x01, 0x02, ECU_EOF};
 
-    if( MSGD_RES_FRAMEENDED == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
+    if( MSGD_RES_MESSAGEENDED == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
     {
         if( ( 24u == consumed ) && ( 1u == errorFound) )
         {
@@ -2058,7 +2058,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 12 -- FAIL \n");
     }
 
-    if( MSGD_RES_FRAMEENDED == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
+    if( MSGD_RES_MESSAGEENDED == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
     {
         if( 0u == consumed )
         {
