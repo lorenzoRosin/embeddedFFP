@@ -17,7 +17,7 @@
 /***********************************************************************************************************************
  *  PRIVATE STATIC FUNCTION DECLARATION
  **********************************************************************************************************************/
-static bool_t isMsgTransStatusStillCoherent(const s_eFSP_MsgECtx* ctx);
+static bool_t isMsgTransStatusStillCoherent(const s_eFSP_MsgTxCtx* ctx);
 static e_eFSP_MsgTx_Res convertReturnFromMSGEToMSGTX(e_eFSP_MsgE_Res returnedEvent);
 
 
@@ -79,12 +79,6 @@ e_eFSP_MsgTx_Res msgTransmStartNewMessage(s_eFSP_MsgTxCtx* const ctx, const uint
 	/* Local variable */
 	e_eFSP_MsgTx_Res result;
 	e_eFSP_MsgE_Res resultMsgE;
-	uint8_t* dataP;
-	uint32_t maxDataSize;
-    uint32_t cR32;
-    bool_t crcRes;
-    uint32_t nByteToSf;
-	uint32_t nBToCrc;
 
 	/* Check pointer validity */
 	if( NULL == ctx )
@@ -122,87 +116,34 @@ e_eFSP_MsgTx_Res msgTransmStartNewMessage(s_eFSP_MsgTxCtx* const ctx, const uint
 	return result;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/***********************************************************************************************************************
- *   GLOBAL FUNCTIONS
- **********************************************************************************************************************/
 e_eFSP_MsgTx_Res msgTransmGetPayloadLocation(s_eFSP_MsgTxCtx* const ctx, uint8_t** dataP, uint32_t* const maxDataSize)
 {
 	/* Local variable */
 	e_eFSP_MsgTx_Res result;
 	e_eFSP_MsgE_Res resultMsgE;
-	uint8_t* dataPP;
-	uint32_t maxDataSizeP;
 
 	/* Check pointer validity */
 	if( ( NULL == ctx ) || ( NULL == dataP ) || ( NULL == maxDataSize ) )
 	{
-		result = MSGE_RES_BADPOINTER;
+		result = MSGTTX_RES_BADPOINTER;
 	}
 	else
 	{
 		/* Check internal status validity */
 		if( false == isMsgTransStatusStillCoherent(ctx) )
 		{
-			result = MSGE_RES_CORRUPTCTX;
+			result = MSGTTX_RES_CORRUPTCTX;
 		}
 		else
 		{
 			/* Get memory reference of CRC+LEN+DATA, so we can calculate reference of only data payload */
-            maxDataSizeP = 0u;
-            dataPP = NULL;
-			resultMsgE = bStufferGetUnStufDataLocation(&ctx->byteStufferCtnx, &dataPP, &maxDataSizeP);
+			resultMsgE = msgEncoderGetPayloadLocation(&ctx->msgEncoderCtnx, dataP, maxDataSize);
 			result = convertReturnFromMSGEToMSGTX(resultMsgE);
-
-			if( MSGE_RES_OK == result )
-			{
-                if( maxDataSizeP < EFSP_MIN_MSGEN_BUFFLEN )
-                {
-                    result = MSGE_RES_CORRUPTCTX;
-                }
-                else
-                {
-                    /* Return reference of only the raw payload */
-                    *dataP = &dataPP[EFSP_MSGEN_HEADERSIZE];
-                    *maxDataSize = maxDataSizeP - EFSP_MSGEN_HEADERSIZE;
-                }
-			}
 		}
 	}
 
 	return result;
 }
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MEM-stack-param", "MISRAC2004-17.6_d", "MISRAC2012-Rule-1.3_s", "MISRAC2012-Rule-18.6_d", \
-                            "CERT-DCL30-C_e"
-#endif
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MISRAC2004-17.4_b"
-#endif
 
 e_eFSP_MsgTx_Res msgTransmRestartCurrentMessage(s_eFSP_MsgTxCtx* const ctx)
 {
@@ -213,19 +154,19 @@ e_eFSP_MsgTx_Res msgTransmRestartCurrentMessage(s_eFSP_MsgTxCtx* const ctx)
 	/* Check pointer validity */
 	if( NULL == ctx )
 	{
-		result = MSGE_RES_BADPOINTER;
+		result = MSGTTX_RES_BADPOINTER;
 	}
 	else
 	{
 		/* Check internal status validity */
 		if( false == isMsgTransStatusStillCoherent(ctx) )
 		{
-			result = MSGE_RES_CORRUPTCTX;
+			result = MSGTTX_RES_CORRUPTCTX;
 		}
 		else
 		{
 			/* Restart only the byte stuffer */
-			resultMsgE = bStufferRestartCurrentFrame(&ctx->byteStufferCtnx);
+			resultMsgE = msgEncoderRestartCurrentMessage(&ctx->msgEncoderCtnx);
 			result = convertReturnFromMSGEToMSGTX(resultMsgE);
 		}
 	}
@@ -239,46 +180,118 @@ e_eFSP_MsgTx_Res msgTransmSendChunk(s_eFSP_MsgTxCtx* const ctx)
 	e_eFSP_MsgTx_Res result;
 	e_eFSP_MsgE_Res resultMsgE;
 
+    /* Local variable of data to send */
+    uint32_t remainingTimeMs;
+    uint32_t sendFramTimeTotal;
+    uint32_t sendFramTimeSingle;
+    uint8_t *cDataToSendP;
+    uint32_t cDataToSendLen;
+    uint32_t cDataSendedSingle;
+
+
 	/* Check pointer validity */
-	if( ( NULL == ctx )  || ( NULL == encodeDest ) || ( NULL == filledLen ) )
+	if( NULL == ctx )
 	{
-		result = MSGE_RES_BADPOINTER;
+		result = MSGTTX_RES_BADPOINTER;
 	}
 	else
 	{
 		/* Check internal status validity */
 		if( false == isMsgTransStatusStillCoherent(ctx) )
 		{
-			result = MSGE_RES_CORRUPTCTX;
+			result = MSGTTX_RES_CORRUPTCTX;
 		}
 		else
 		{
-			/* Get memory reference */
-			resultMsgE = bStufferRetriStufChunk(&ctx->byteStufferCtnx, encodeDest, maxDestLen, filledLen);
-			result = convertReturnFromMSGEToMSGTX(resultMsgE);
+            /* Init time frame counter */
+            sendFramTimeTotal = 0u;
+            result = MSGTTX_RES_OK;
+
+            /* wait end */
+            while( ( ctx->timeCounterMs < ctx->frameTimeoutMs ) && ( sendFramTimeTotal < ctx->timePerSendMs ) &&
+                   ( result == MSGTTX_RES_OK ) )
+            {
+                /* Refresh remaining time */
+                remainingTimeMs = ctx->frameTimeoutMs - ctx->timeCounterMs;
+
+                if( ( ctx->timePerSendMs - sendFramTimeTotal ) < remainingTimeMs)
+                {
+                    remainingTimeMs = ctx->timePerSendMs - sendFramTimeTotal;
+                }
+
+                /* Is data present in send buffer? */
+                cDataToSendLen = ctx->sendBuffFill - ctx->sendBuffCntr;
+
+                if( cDataToSendLen > 0u )
+                {
+                    /* Can send data */
+                    if( true == (*ctx->cbTxP)(ctx->cbTxCtx, cDataToSendP, cDataToSendLen, &cDataSendedSingle, remainingTimeMs, &sendFramTimeSingle) )
+                    {
+                        /* Data sended! update timeout and counter */
+                    }
+                    else
+                    {
+                        /* Error sending data */
+                        result = MSGTTX_RES_TXCLBKERROR;
+                    }
+                }
+                else
+                {
+                    /* Is data present in message encoder buffer? */
+
+                    /* Data present -> extraxt */
+                    /* Data non present -> we are done */
+                }
+
+            }
+
+            /* Check for timeout */
+            if( ( ctx->timeCounterMs < ctx->frameTimeoutMs ) && ( sendFramTimeTotal < ctx->timePerSendMs ) )
+            {
+                if( ( MSGTTX_RES_OK == result ) || ( MSGTTX_RES_MESSAGESENDED == result ) )
+                {
+                    /* Frame can go in timeout when we are not finished (RES_OK) or when all the message is sended
+                     * ( RES_MESSAGESENDED ) */
+                    result = MSGTTX_RES_MESSAGETIMEOUT;
+                }
+            }
 		}
 	}
 
 	return result;
 }
 
-
-
 /***********************************************************************************************************************
  *  PRIVATE FUNCTION
  **********************************************************************************************************************/
-bool_t isMsgTransStatusStillCoherent(const s_eFSP_MsgECtx* ctx)
+bool_t isMsgTransStatusStillCoherent(const s_eFSP_MsgTxCtx* ctx)
 {
     bool_t result;
 
 	/* Check context validity */
-	if( ( NULL == ctx->cbCrcPtr ) || ( NULL == ctx->cbCrcCtx ) )
+	if( ( NULL == ctx->sendBuff ) || ( NULL == ctx->cbTxP ) || ( NULL == ctx->cbTxCtx ) )
 	{
 		result = false;
 	}
 	else
 	{
-		result = true;
+        if( ( ctx->sendBuffSize < 1u ) || ( ctx->sendBuffFill > ctx->sendBuffSize )  ||
+            ( ctx->sendBuffCntr > ctx->sendBuffFill ) )
+        {
+            if( ( ctx->timePerSendMs > ctx->frameTimeoutMs ) || ( ctx->frameTimeoutMs <= 0u ) ||
+                ( ctx->timePerSendMs <= 0u ) )
+            {
+                result = false;
+            }
+            else
+            {
+                result = true;
+            }
+        }
+        else
+        {
+            result = true;
+        }
 	}
 
     return result;
@@ -290,52 +303,58 @@ e_eFSP_MsgTx_Res convertReturnFromMSGEToMSGTX(e_eFSP_MsgE_Res returnedEvent)
 
 	switch( returnedEvent )
 	{
-		case DBSTF_RES_OK:
+		case MSGE_RES_OK:
 		{
-			result = MSGE_RES_OK;
+			result = MSGTTX_RES_OK;
             break;
 		}
 
-		case DBSTF_RES_BADPARAM:
+		case MSGE_RES_BADPARAM:
 		{
-			result = MSGE_RES_BADPARAM;
+			result = MSGTTX_RES_BADPARAM;
             break;
 		}
 
-		case DBSTF_RES_BADPOINTER:
+		case MSGE_RES_BADPOINTER:
 		{
-			result = MSGE_RES_BADPOINTER;
+			result = MSGTTX_RES_BADPOINTER;
             break;
 		}
 
-		case DBSTF_RES_CORRUPTCTX:
+		case MSGE_RES_CORRUPTCTX:
 		{
-			result = MSGE_RES_CORRUPTCTX;
+			result = MSGTTX_RES_CORRUPTCTX;
             break;
 		}
 
-		case DBSTF_RES_FRAMEENDED:
+		case MSGE_RES_MESSAGEENDED:
 		{
-			result = MSGE_RES_MESSAGEENDED;
+			result = MSGTTX_RES_MESSAGESENDED;
             break;
 		}
 
-		case DBSTF_RES_NOINITLIB:
+		case MSGE_RES_NOINITLIB:
 		{
-			result = MSGE_RES_NOINITLIB;
+			result = MSGTTX_RES_NOINITLIB;
             break;
 		}
 
-		case DBSTF_RES_NOINITFRAME :
+		case MSGE_RES_NOINITMESSAGE :
 		{
-			result = MSGE_RES_NOINITMESSAGE;
+			result = MSGTTX_RES_NOINITMESSAGE;
+            break;
+		}
+
+		case MSGE_RES_CRCCLBKERROR :
+		{
+			result = MSGTTX_RES_CRCCLBKERROR;
             break;
 		}
 
 		default:
 		{
             /* Impossible end here */
-			result = MSGE_RES_CORRUPTCTX;
+			result = MSGTTX_RES_CORRUPTCTX;
             break;
 		}
 	}
