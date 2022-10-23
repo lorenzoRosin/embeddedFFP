@@ -1,7 +1,11 @@
 /**
- * @file eFSPMsgTransmitter.h
+ * @file       eFSPMsgTransmitter.h
  *
- */
+ * @brief      Message transmitter utils
+ *
+ * @author     Lorenzo Rosin
+ *
+ **********************************************************************************************************************/
 
 #ifndef EFSPMSGTRANSMITTER_H
 #define EFSPMSGTRANSMITTER_H
@@ -55,6 +59,7 @@ typedef struct
     uint32_t        sendBuffFill;
     cb_tx_msge      cbTxP;
     void*           cbTxCtx;
+    uint32_t        timeCounterMs;
     uint32_t        frameTimeoutMs;
     uint32_t        timePerSendMs;
 }s_eFSP_MsgTxCtx;
@@ -122,7 +127,7 @@ e_eFSP_MsgTx_Res msgTransmStartNewMessage(s_eFSP_MsgTxCtx* const ctx, const uint
 e_eFSP_MsgTx_Res msgTransmGetPayloadLocation(s_eFSP_MsgTxCtx* const ctx, uint8_t** dataP, uint32_t* const maxDataSize);
 
 /**
- * @brief       Restart to encode the already passed payload/the current frame
+ * @brief       Restart to encode and send the already passed payload/the current frame
  *
  * @param[in]   ctx         - Message Transmitter context
  *
@@ -135,23 +140,22 @@ e_eFSP_MsgTx_Res msgTransmGetPayloadLocation(s_eFSP_MsgTxCtx* const ctx, uint8_t
 e_eFSP_MsgTx_Res msgTransmRestartCurrentMessage(s_eFSP_MsgTxCtx* const ctx);
 
 /**
- * @brief       Retrive encoded data chunk. The raw data copied in the buffer by using the function
- *              msgTransmGetPayloadLocation will be encoded (header and byte stuffing) and retrived by this function.
+ * @brief       Send encoded data chunk. The raw data copied in the buffer by using the function
+ *              msgTransmGetPayloadLocation will be encoded (header and byte stuffing) and sended by this function.
+ *              The whole message can be sended calling multiple times this function. Eache time this function will
+ *              try to send all the data that can be send in "timePerSendMs" variable.
  *
  * @param[in]   ctx         - Message Transmitter context
- * @param[in]   encodeDest  - Pointer to the destination area of encoded data
- * @param[in]   maxDestLen  - Max fillable size of the destination area
- * @param[out]  filledLen   - Pointer to an uint32_t were we will store the amount of encoded data
  *
  * @return      MSGTTX_RES_BADPOINTER     - In case of bad pointer passed to the function
  *		        MSGTTX_RES_NOINITLIB      - Need to init the data encoder context before taking some action
  *		        MSGTTX_RES_BADPARAM       - In case of an invalid parameter passed to the function
  *		        MSGTTX_RES_NOINITMESSAGE  - Need to start a message before taking some action
  *		        MSGTTX_RES_CORRUPTCTX     - In case of an corrupted context
- *              MSGTTX_RES_MESSAGESENDED  - No more data that we can elaborate, restart or start a new msg to proceed.
- *                                          This means that we have finished encoding the current message.
- *              MSGTTX_RES_MESSAGETIMEOUT -
- *              MSGTTX_RES_TXCLBKERROR    -
+ *              MSGTTX_RES_MESSAGESENDED  - No more data that we can send, restart or start a new msg to proceed.
+ *                                          This means that we have finished sending the current message.
+ *              MSGTTX_RES_MESSAGETIMEOUT - The message is not sended event after "frameTimeoutMs". Restart to continue.
+ *              MSGTTX_RES_TXCLBKERROR    - Some error reported by the user send function. Restart to continue.
  *              MSGTTX_RES_OK             - Operation ended correctly, message is not still fully encoded
  */
 e_eFSP_MsgTx_Res msgTransmSendChunk(s_eFSP_MsgTxCtx* const ctx);
