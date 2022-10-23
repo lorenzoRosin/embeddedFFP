@@ -52,6 +52,7 @@ typedef struct
 	uint8_t*        sendBuff;
 	uint32_t        sendBuffSize;
 	uint32_t        sendBuffCntr;
+    uint32_t        sendBuffFill;
     cb_tx_msge      cbTxP;
     void*           cbTxCtx;
     uint32_t        frameTimeoutMs;
@@ -86,17 +87,74 @@ typedef struct
  *		        MSGTTX_RES_BADPARAM     - In case of an invalid parameter passed to the function
  *              MSGTTX_RES_OK           - Operation ended correctly
  */
-e_eFSP_MsgTx_Res msgTransmitterInitCtx(s_eFSP_MsgTxCtx* const ctx, const s_eFSP_MsgTxInitData* initData);
+e_eFSP_MsgTx_Res msgTransmInitCtx(s_eFSP_MsgTxCtx* const ctx, const s_eFSP_MsgTxInitData* initData);
 
+/**
+ * @brief       Start to encode a new msg given the dimension of raw payload it self. This function suppouse that
+ *              data payload that need to be encoded were already copied in memory.( see msgTransmGetPayloadLocation
+ *              in order to know how get the data pointer, and copy the data )
+ *
+ * @param[in]   ctx         - Message Transmitter context
+ * @param[in]   messageLen  - lenght of the raw payload present in the frame that we need to encode ( no header )
+ *
+ * @return      MSGTTX_RES_BADPOINTER     - In case of bad pointer passed to the function
+ *		        MSGTTX_RES_BADPARAM       - In case of an invalid parameter passed to the function
+ *		        MSGTTX_RES_NOINITLIB      - Need to init the data encoder context before taking some action
+ *		        MSGTTX_RES_CORRUPTCTX     - In case of an corrupted context
+ *				MSGTTX_RES_CRCCLBKERROR   - The crc callback function returned an error
+ *              MSGTTX_RES_OK             - Operation ended correctly
+ */
+e_eFSP_MsgTx_Res msgTransmStartNewMessage(s_eFSP_MsgTxCtx* const ctx, const uint32_t messageLen);
 
+/**
+ * @brief       Retrive the pointer of the buffer that the user can use to insert data payload that need to be encoded
+ *
+ * @param[in]   ctx         - Message Transmitter context
+ * @param[out]  dataP       - Pointer to a Pointer where the raw data needs to be copied before starting a message
+ * @param[out]  maxDataSize - Pointer to a uint32_t variable where the max number of data that can be copied in dataP
+ *                            will be placed
+ *
+ * @return      MSGTTX_RES_BADPOINTER     - In case of bad pointer passed to the function
+ *		        MSGTTX_RES_NOINITLIB      - Need to init the data encoder context before taking some action
+ *		        MSGTTX_RES_CORRUPTCTX     - In case of an corrupted context
+ *              MSGTTX_RES_OK             - Operation ended correctly
+ */
+e_eFSP_MsgTx_Res msgTransmGetPayloadLocation(s_eFSP_MsgTxCtx* const ctx, uint8_t** dataP, uint32_t* const maxDataSize);
 
+/**
+ * @brief       Restart to encode the already passed payload/the current frame
+ *
+ * @param[in]   ctx         - Message Transmitter context
+ *
+ * @return      MSGTTX_RES_BADPOINTER     - In case of bad pointer passed to the function
+ *		        MSGTTX_RES_NOINITLIB      - Need to init the data encoder context before taking some action
+ *		        MSGTTX_RES_NOINITMESSAGE  - Need to start a message before restarting it
+ *		        MSGTTX_RES_CORRUPTCTX     - In case of an corrupted context
+ *              MSGTTX_RES_OK             - Operation ended correctly
+ */
+e_eFSP_MsgTx_Res msgTransmRestartCurrentMessage(s_eFSP_MsgTxCtx* const ctx);
 
-
-
-
-
-
-
+/**
+ * @brief       Retrive encoded data chunk. The raw data copied in the buffer by using the function
+ *              msgTransmGetPayloadLocation will be encoded (header and byte stuffing) and retrived by this function.
+ *
+ * @param[in]   ctx         - Message Transmitter context
+ * @param[in]   encodeDest  - Pointer to the destination area of encoded data
+ * @param[in]   maxDestLen  - Max fillable size of the destination area
+ * @param[out]  filledLen   - Pointer to an uint32_t were we will store the amount of encoded data
+ *
+ * @return      MSGTTX_RES_BADPOINTER     - In case of bad pointer passed to the function
+ *		        MSGTTX_RES_NOINITLIB      - Need to init the data encoder context before taking some action
+ *		        MSGTTX_RES_BADPARAM       - In case of an invalid parameter passed to the function
+ *		        MSGTTX_RES_NOINITMESSAGE  - Need to start a message before taking some action
+ *		        MSGTTX_RES_CORRUPTCTX     - In case of an corrupted context
+ *              MSGTTX_RES_MESSAGESENDED  - No more data that we can elaborate, restart or start a new msg to proceed.
+ *                                          This means that we have finished encoding the current message.
+ *              MSGTTX_RES_MESSAGETIMEOUT -
+ *              MSGTTX_RES_TXCLBKERROR    -
+ *              MSGTTX_RES_OK             - Operation ended correctly, message is not still fully encoded
+ */
+e_eFSP_MsgTx_Res msgTransmSendChunk(s_eFSP_MsgTxCtx* const ctx);
 
 
 
