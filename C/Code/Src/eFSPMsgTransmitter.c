@@ -47,7 +47,8 @@ e_eFSP_MsgTx_Res msgTransmInitCtx(s_eFSP_MsgTxCtx* const ctx, const s_eFSP_MsgTx
         else
         {
             /* Check data validity, we need some len to store the data */
-            if( ( initData->i_sendBuffAreaSize < 1u ) || ( initData->i_frameTimeoutMs < initData->i_timePerSendMs ) )
+            if( ( initData->i_sendBuffAreaSize < 1u ) || ( initData->i_frameTimeoutMs < 1u ) ||
+                ( initData->i_timePerSendMs < 1u ) || ( initData->i_timePerSendMs > initData->i_frameTimeoutMs ) )
             {
                 result = MSGTTX_RES_BADPARAM;
             }
@@ -65,7 +66,8 @@ e_eFSP_MsgTx_Res msgTransmInitCtx(s_eFSP_MsgTxCtx* const ctx, const s_eFSP_MsgTx
                 ctx->timePerSendMs = initData->i_timePerSendMs;
 
                 /* initialize internal bytestuffer */
-                resultMsgE =  msgEncoderInitCtx(&ctx->msgEncoderCtnx, initData->i_memArea, initData->i_memAreaSize, initData->i_cbCrcP, initData->i_cbCrcCtx);
+                resultMsgE =  msgEncoderInitCtx(&ctx->msgEncoderCtnx, initData->i_memArea, initData->i_memAreaSize,
+                                                initData->i_cbCrcP, initData->i_cbCrcCtx);
                 result = convertReturnFromMSGEToMSGTX(resultMsgE);
             }
         }
@@ -165,6 +167,11 @@ e_eFSP_MsgTx_Res msgTransmRestartCurrentMessage(s_eFSP_MsgTxCtx* const ctx)
 		}
 		else
 		{
+            /* Reset internal variable */
+            ctx->sendBuffCntr = 0u;
+            ctx->sendBuffFill = 0u;
+            ctx->timeCounterMs = 0u;
+
 			/* Restart only the byte stuffer */
 			resultMsgE = msgEncoderRestartCurrentMessage(&ctx->msgEncoderCtnx);
 			result = convertReturnFromMSGEToMSGTX(resultMsgE);
@@ -268,18 +275,24 @@ bool_t isMsgTransStatusStillCoherent(const s_eFSP_MsgTxCtx* ctx)
 {
     bool_t result;
 
-	/* Check context validity */
+	/* Check pointer validity */
 	if( ( NULL == ctx->sendBuff ) || ( NULL == ctx->cbTxP ) || ( NULL == ctx->cbTxCtx ) )
 	{
 		result = false;
 	}
 	else
 	{
+        /* Check send buffer validity */
         if( ( ctx->sendBuffSize < 1u ) || ( ctx->sendBuffFill > ctx->sendBuffSize )  ||
             ( ctx->sendBuffCntr > ctx->sendBuffFill ) )
         {
-            if( ( ctx->timePerSendMs > ctx->frameTimeoutMs ) || ( ctx->frameTimeoutMs <= 0u ) ||
-                ( ctx->timePerSendMs <= 0u ) )
+            return false;
+        }
+        else
+        {
+            /* Check timings validity */
+            if( ( ctx->frameTimeoutMs < 1u ) || ( ctx->timePerSendMs < 1u ) ||
+                ( ctx->timePerSendMs > ctx->frameTimeoutMs ) )
             {
                 result = false;
             }
@@ -287,10 +300,6 @@ bool_t isMsgTransStatusStillCoherent(const s_eFSP_MsgTxCtx* ctx)
             {
                 result = true;
             }
-        }
-        else
-        {
-            result = true;
         }
 	}
 
