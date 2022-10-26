@@ -191,7 +191,7 @@ e_eFSP_MsgTx_Res msgTransmSendChunk(s_eFSP_MsgTxCtx* const ctx)
     uint32_t remainingTimeMs;
     uint32_t sendFramTimeTotal;
     uint32_t sendFramTimeSingle;
-    uint8_t *cDataToSendP;
+    const uint8_t *cDataToSendP;
     uint32_t cDataToSendLen;
     uint32_t cDataSendedSingle;
 
@@ -212,6 +212,7 @@ e_eFSP_MsgTx_Res msgTransmSendChunk(s_eFSP_MsgTxCtx* const ctx)
 		{
             /* Init time frame counter */
             sendFramTimeTotal = 0u;
+            sendFramTimeSingle = 0u;
             result = MSGTTX_RES_OK;
 
             /* wait end */
@@ -231,10 +232,24 @@ e_eFSP_MsgTx_Res msgTransmSendChunk(s_eFSP_MsgTxCtx* const ctx)
 
                 if( cDataToSendLen > 0u )
                 {
-                    /* Can send data */
+                    /* Get data to send */
+                    cDataToSendP = &ctx->sendBuff[ctx->sendBuffCntr];
+
+                    /* Can send data from send buffer */
                     if( true == (*ctx->cbTxP)(ctx->cbTxCtx, cDataToSendP, cDataToSendLen, &cDataSendedSingle, remainingTimeMs, &sendFramTimeSingle) )
                     {
-                        /* Data sended! update timeout and counter */
+                        /* Check for some strangeness */
+                        if( cDataSendedSingle > cDataToSendLen)
+                        {
+                            result = MSGTTX_RES_CORRUPTCTX;
+                        }
+
+                        /* Update sended counter */
+                        ctx->sendBuffCntr = ctx->sendBuffCntr + cDataSendedSingle;
+
+                        /* Update timings */
+                        sendFramTimeTotal = sendFramTimeTotal + sendFramTimeSingle;
+                        ctx->timeCounterMs = ctx->timeCounterMs + sendFramTimeSingle;
                     }
                     else
                     {
@@ -245,15 +260,17 @@ e_eFSP_MsgTx_Res msgTransmSendChunk(s_eFSP_MsgTxCtx* const ctx)
                 else
                 {
                     /* Is data present in message encoder buffer? */
+                    resultMsgE = msgEncoderRetriveEChunk(&ctx->msgEncoderCtnx, ctx->sendBuff, ctx->sendBuffSize, &ctx->sendBuffFill);
+                    result = convertReturnFromMSGEToMSGTX(resultMsgE);
 
-                    /* Data present -> extraxt */
-                    /* Data non present -> we are done */
+                    /* Reset counter */
+                    ctx->sendBuffCntr = 0u;
                 }
 
             }
 
             /* Check for timeout */
-            if( ( ctx->timeCounterMs < ctx->frameTimeoutMs ) && ( sendFramTimeTotal < ctx->timePerSendMs ) )
+            if( ctx->timeCounterMs < ctx->frameTimeoutMs )
             {
                 if( ( MSGTTX_RES_OK == result ) || ( MSGTTX_RES_MESSAGESENDED == result ) )
                 {
@@ -286,7 +303,7 @@ bool_t isMsgTransStatusStillCoherent(const s_eFSP_MsgTxCtx* ctx)
         if( ( ctx->sendBuffSize < 1u ) || ( ctx->sendBuffFill > ctx->sendBuffSize )  ||
             ( ctx->sendBuffCntr > ctx->sendBuffFill ) )
         {
-            return false;
+            result =  false;
         }
         else
         {
