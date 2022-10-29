@@ -181,6 +181,11 @@ e_eFSP_MsgTx_Res msgTransmRestartCurrentMessage(s_eFSP_MsgTxCtx* const ctx)
 	return result;
 }
 
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_disable = "MISRAC2004-17.4_b"
+    /* Suppressed for code clarity */
+#endif
+
 e_eFSP_MsgTx_Res msgTransmSendChunk(s_eFSP_MsgTxCtx* const ctx)
 {
 	/* Local variable */
@@ -222,7 +227,7 @@ e_eFSP_MsgTx_Res msgTransmSendChunk(s_eFSP_MsgTxCtx* const ctx)
                 /* Refresh remaining time */
                 remainingTimeMs = ctx->frameTimeoutMs - ctx->timeCounterMs;
 
-                if( ( ctx->timePerSendMs - sendFramTimeTotal ) < remainingTimeMs)
+                if( ( ctx->timePerSendMs - sendFramTimeTotal ) < remainingTimeMs )
                 {
                     remainingTimeMs = ctx->timePerSendMs - sendFramTimeTotal;
                 }
@@ -270,7 +275,7 @@ e_eFSP_MsgTx_Res msgTransmSendChunk(s_eFSP_MsgTxCtx* const ctx)
             }
 
             /* Check for timeout */
-            if( ctx->timeCounterMs < ctx->frameTimeoutMs )
+            if( ctx->timeCounterMs >= ctx->frameTimeoutMs )
             {
                 if( ( MSGTTX_RES_OK == result ) || ( MSGTTX_RES_MESSAGESENDED == result ) )
                 {
@@ -284,6 +289,10 @@ e_eFSP_MsgTx_Res msgTransmSendChunk(s_eFSP_MsgTxCtx* const ctx)
 
 	return result;
 }
+
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_restore = "MISRAC2004-17.4_b"
+#endif
 
 /***********************************************************************************************************************
  *  PRIVATE FUNCTION
