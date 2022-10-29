@@ -33,7 +33,7 @@ e_eFSP_MsgD_Res msgDecoderInitCtx(s_eFSP_MsgDCtx* const ctx, uint8_t* const memA
 {
 	/* Local variable */
 	e_eFSP_MsgD_Res result;
-	e_eCU_dBUStf_Res resultByStuff;
+	e_eCU_dBUStf_Res resByStuff;
 
 	/* Check pointer validity */
 	if( ( NULL == ctx ) || ( NULL == memArea ) || ( NULL == cbCrcP ) || ( NULL == clbCtx ) )
@@ -54,8 +54,8 @@ e_eFSP_MsgD_Res msgDecoderInitCtx(s_eFSP_MsgDCtx* const ctx, uint8_t* const memA
             ctx->cbCrcCtx = clbCtx;
 
 			/* initialize internal bytestuffer */
-			resultByStuff =  bUStufferInitCtx(&ctx->byteUStufferCtnx, memArea, memAreaSize);
-			result = convertReturnFromBstfToMSGD(resultByStuff);
+			resByStuff =  bUStufferInitCtx(&ctx->byteUStufferCtnx, memArea, memAreaSize);
+			result = convertReturnFromBstfToMSGD(resByStuff);
         }
 	}
 
@@ -66,7 +66,7 @@ e_eFSP_MsgD_Res msgDecoderStartNewMsg(s_eFSP_MsgDCtx* const ctx)
 {
 	/* Local variable */
 	e_eFSP_MsgD_Res result;
-	e_eCU_dBUStf_Res resultByStuff;
+	e_eCU_dBUStf_Res resByStuff;
 
 	/* Check pointer validity */
 	if( NULL == ctx )
@@ -83,8 +83,8 @@ e_eFSP_MsgD_Res msgDecoderStartNewMsg(s_eFSP_MsgDCtx* const ctx)
 		else
 		{
 			/* Update index */
-			resultByStuff = bUStufferStartNewFrame(&ctx->byteUStufferCtnx);
-			result = convertReturnFromBstfToMSGD(resultByStuff);
+			resByStuff = bUStufferStartNewFrame(&ctx->byteUStufferCtnx);
+			result = convertReturnFromBstfToMSGD(resByStuff);
 		}
 	}
 
@@ -101,7 +101,7 @@ e_eFSP_MsgD_Res msgDecoderGetDecodedData(s_eFSP_MsgDCtx* const ctx, uint8_t** da
 {
 	/* Local variable */
 	e_eFSP_MsgD_Res result;
-	e_eCU_dBUStf_Res resultByStuff;
+	e_eCU_dBUStf_Res resByStuff;
 	uint8_t* dataPP;
 	uint32_t dataSizeP;
 
@@ -122,8 +122,8 @@ e_eFSP_MsgD_Res msgDecoderGetDecodedData(s_eFSP_MsgDCtx* const ctx, uint8_t** da
 			/* Get memory reference of CRC+LEN+DATA, so we can calculate reference of only data payload */
             dataSizeP = 0u;
             dataPP = NULL;
-			resultByStuff = bUStufferGetUnstufData(&ctx->byteUStufferCtnx, &dataPP, &dataSizeP);
-			result = convertReturnFromBstfToMSGD(resultByStuff);
+			resByStuff = bUStufferGetUnstufData(&ctx->byteUStufferCtnx, &dataPP, &dataSizeP);
+			result = convertReturnFromBstfToMSGD(resByStuff);
 
 			if( MSGD_RES_OK == result )
 			{
@@ -159,7 +159,7 @@ e_eFSP_MsgD_Res msgDecoderGetDecodedLen(s_eFSP_MsgDCtx* const ctx, uint32_t* con
 {
 	/* Local variable */
 	e_eFSP_MsgD_Res result;
-	e_eCU_dBUStf_Res resultByStuff;
+	e_eCU_dBUStf_Res resByStuff;
 	uint32_t dataSizeP;
 
 	/* Check pointer validity */
@@ -178,8 +178,8 @@ e_eFSP_MsgD_Res msgDecoderGetDecodedLen(s_eFSP_MsgDCtx* const ctx, uint32_t* con
 		{
 			/* Get memory reference of CRC+LEN+DATA, so we can calculate reference of only data payload */
             dataSizeP = 0u;
-			resultByStuff = bUStufferGetUnstufLen(&ctx->byteUStufferCtnx, &dataSizeP);
-			result = convertReturnFromBstfToMSGD(resultByStuff);
+			resByStuff = bUStufferGetUnstufLen(&ctx->byteUStufferCtnx, &dataSizeP);
+			result = convertReturnFromBstfToMSGD(resByStuff);
 
 			if( MSGD_RES_OK == result )
 			{
@@ -212,7 +212,7 @@ e_eFSP_MsgD_Res msgDecoderIsAFullMsgUnstuff(s_eFSP_MsgDCtx* const ctx, bool_t* c
 {
 	/* Local variable */
 	e_eFSP_MsgD_Res result;
-	e_eCU_dBUStf_Res resultByStuff;
+	e_eCU_dBUStf_Res resByStuff;
 
 	/* Check pointer validity */
 	if( ( NULL == ctx ) || ( NULL == isMsgDec ) )
@@ -228,8 +228,8 @@ e_eFSP_MsgD_Res msgDecoderIsAFullMsgUnstuff(s_eFSP_MsgDCtx* const ctx, bool_t* c
 		}
 		else
 		{
-			resultByStuff = bUStufferIsAFullFrameUnstuff(&ctx->byteUStufferCtnx, isMsgDec);
-			result = convertReturnFromBstfToMSGD(resultByStuff);
+			resByStuff = bUStufferIsAFullFrameUnstuff(&ctx->byteUStufferCtnx, isMsgDec);
+			result = convertReturnFromBstfToMSGD(resByStuff);
 		}
 	}
 
@@ -240,7 +240,7 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
 {
 	/* Local variable */
 	e_eFSP_MsgD_Res result;
-	e_eCU_dBUStf_Res resultByStuff;
+	e_eCU_dBUStf_Res resByStuff;
     bool_t isFullUnstuffed;
     uint32_t dataSizeRemaings;
 	uint32_t dataSizePay;
@@ -263,8 +263,8 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
 		else
 		{
             isFullUnstuffed = false;
-			resultByStuff = bUStufferIsAFullFrameUnstuff(&ctx->byteUStufferCtnx, &isFullUnstuffed);
-			result = convertReturnFromBstfToMSGD(resultByStuff);
+			resByStuff = bUStufferIsAFullFrameUnstuff(&ctx->byteUStufferCtnx, &isFullUnstuffed);
+			result = convertReturnFromBstfToMSGD(resByStuff);
 
             if( MSGD_RES_OK == result )
             {
@@ -278,8 +278,8 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
                     /* How many byte are decoded? */
                     dataSizeRaw = 0u;
                     dataPP = NULL;
-                    resultByStuff = bUStufferGetUnstufData(&ctx->byteUStufferCtnx, &dataPP, &dataSizeRaw);
-                    result = convertReturnFromBstfToMSGD(resultByStuff);
+                    resByStuff = bUStufferGetUnstufData(&ctx->byteUStufferCtnx, &dataPP, &dataSizeRaw);
+                    result = convertReturnFromBstfToMSGD(resByStuff);
 
                     if( MSGD_RES_OK == result )
                     {
@@ -333,9 +333,9 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 {
 	/* Local return  */
 	e_eFSP_MsgD_Res result;
-    e_eFSP_MsgD_Res resultMsgCorrect;
+    e_eFSP_MsgD_Res resMsgCorrect;
     e_eFSP_MsgD_Res resultMsgCoherent;
-	e_eCU_dBUStf_Res resultByStuff;
+	e_eCU_dBUStf_Res resByStuff;
 
     /* Local coherence */
     bool_t isMCorrect;
@@ -345,7 +345,7 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
     const uint8_t *cArea;
     uint32_t cEncLen;
     uint32_t cCosumed;
-    uint32_t cErrSofRec;
+    uint32_t cErrRec;
 
     /* Total counter */
     uint32_t totalCosumed;
@@ -388,16 +388,16 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
                     {
                         /* Init partial coutner  */
                         cCosumed = 0u;
-                        cErrSofRec = 0u;
+                        cErrRec = 0u;
 
                         /* Insert data */
-                        resultByStuff = bUStufferInsStufChunk(&ctx->byteUStufferCtnx, cArea, cEncLen, &cCosumed, &cErrSofRec);
-                        result = convertReturnFromBstfToMSGD(resultByStuff);
+                        resByStuff = bUStufferInsStufChunk(&ctx->byteUStufferCtnx, cArea, cEncLen, &cCosumed, &cErrRec);
+                        result = convertReturnFromBstfToMSGD(resByStuff);
 
                         /* update total counter */
-                        if( totalErrSofRec < ( 0xFFFFFFFFu - cErrSofRec ) )
+                        if( totalErrSofRec < ( 0xFFFFFFFFu - cErrRec ) )
                         {
-                            totalErrSofRec += cErrSofRec;
+                            totalErrSofRec += cErrRec;
                         }
                         else
                         {
@@ -438,9 +438,9 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
                     case MSGD_PRV_MSG_END_CHECK:
                     {
                         /* Verify msg integrity */
-                        resultMsgCorrect = isMsgCorrect(&ctx->byteUStufferCtnx, &isMCorrect, ctx->cbCrcPtr, ctx->cbCrcCtx);
+                        resMsgCorrect = isMsgCorrect(&ctx->byteUStufferCtnx, &isMCorrect, ctx->cbCrcPtr, ctx->cbCrcCtx);
 
-                        if( MSGD_RES_OK == resultMsgCorrect )
+                        if( MSGD_RES_OK == resMsgCorrect )
                         {
                             /* no strange error found, check message correctness */
                             if( true != isMCorrect )
@@ -459,8 +459,8 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 
                                 if( MSGD_RES_MESSAGEENDED == result )
                                 {
-                                    resultByStuff = bUStufferStartNewFrame(&ctx->byteUStufferCtnx);
-                                    result = convertReturnFromBstfToMSGD(resultByStuff);
+                                    resByStuff = bUStufferStartNewFrame(&ctx->byteUStufferCtnx);
+                                    result = convertReturnFromBstfToMSGD(resByStuff);
 
                                     if( MSGD_RES_OK == result )
                                     {
@@ -501,7 +501,7 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
                         else
                         {
                             /* Some error */
-                            result = resultMsgCorrect;
+                            result = resMsgCorrect;
                             insertEncState = MSGD_PRV_ELABDONE;
                         }
 
@@ -531,8 +531,8 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 
                                 if( MSGD_RES_OK == result )
                                 {
-                                    resultByStuff = bUStufferStartNewFrame(&ctx->byteUStufferCtnx);
-                                    result = convertReturnFromBstfToMSGD(resultByStuff);
+                                    resByStuff = bUStufferStartNewFrame(&ctx->byteUStufferCtnx);
+                                    result = convertReturnFromBstfToMSGD(resByStuff);
 
                                     if( MSGD_RES_OK == result )
                                     {

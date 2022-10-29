@@ -1096,6 +1096,9 @@
             <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPMsgTransmitter.h</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPMsgTransmitter_Priv.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPStandardType.h</name>
         </file>
         <file>
