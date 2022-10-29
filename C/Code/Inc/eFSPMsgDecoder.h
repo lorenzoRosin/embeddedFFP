@@ -1,7 +1,7 @@
 /**
  * @file       eFSPMsgDecoder.h
  *
- * @brief      Message encoder utils
+ * @brief      Message decoder utils
  *
  * @author     Lorenzo Rosin
  *

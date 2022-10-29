@@ -1429,6 +1429,9 @@
             <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPMsgDecoder.h</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPMsgDecoder_Priv.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPMsgEncoder.h</name>
         </file>
         <file>

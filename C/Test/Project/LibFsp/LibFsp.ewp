@@ -665,7 +665,7 @@
             <data>
                 <extensions></extensions>
                 <cmdline></cmdline>
-                <hasPrio>32</hasPrio>
+                <hasPrio>1</hasPrio>
                 <buildSequence>inputOutputBased</buildSequence>
             </data>
         </settings>
@@ -1082,6 +1082,9 @@
         <name>Inc</name>
         <file>
             <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPMsgDecoder.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPMsgDecoder_Priv.h</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPMsgEncoder.h</name>

@@ -1,0 +1,50 @@
+/**
+ * @file       eFSPMsgDecoder_Priv.h
+ *
+ * @brief      Message decoder utils private header
+ *
+ * @author     Lorenzo Rosin
+ *
+ **********************************************************************************************************************/
+
+#ifndef EFSPMSGDECODER_PRIV_H
+#define EFSPMSGDECODER_PRIV_H
+
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+
+/***********************************************************************************************************************
+ *      INCLUDES
+ **********************************************************************************************************************/
+#include "eFSPType.h"
+#include "eCUByteUnStuffer.h"
+
+
+
+/***********************************************************************************************************************
+ *      TYPEDEFS
+ **********************************************************************************************************************/
+typedef enum
+{
+    MSGD_PRV_INSERTCHUNK = 0,
+    MSGD_PRV_MSG_END_CHECK,
+    MSGD_PRV_MSG_OK_CHECK,
+    MSGD_PRV_ELABDONE,
+    MSGD_PRV_OUTOFMEM,
+    MSGD_PRV_PARSEERROR,
+}e_eFSP_MsgD_Priv_state;
+
+
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
+
+
+
+#endif /* EFSPMSGDECODER_PRIV_H */
