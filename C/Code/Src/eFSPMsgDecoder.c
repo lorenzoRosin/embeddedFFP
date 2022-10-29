@@ -11,6 +11,7 @@
  *      INCLUDES
  **********************************************************************************************************************/
 #include "eFSPMsgDecoder.h"
+#include "eFSPMsgDecoder_Priv.h"
 #include "eCUCrc.h"
 
 
@@ -351,7 +352,7 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
     uint32_t totalErrSofRec;
 
     /* Redo loop var */
-    bool_t needToParseRemainingData;
+    e_eFSP_MsgD_Priv_state insertEncState;
 
 	/* Check pointer validity */
 	if( ( NULL == ctx ) || ( NULL == encArea ) || ( NULL == consumedEncData ) || ( NULL == errEncRec ) )
@@ -367,10 +368,6 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 		}
 		else
 		{
-            /* Init return value before while */
-            *consumedEncData = 0u;
-            *errEncRec = 0u;
-
             /* init current var */
             cArea = encArea;
             cEncLen = encLen;
@@ -380,144 +377,216 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
             totalErrSofRec = 0u;
 
             /* Elaborate */
-            do
+            insertEncState = MSGD_PRV_INSERTCHUNK;
+            result = MSGD_RES_OK;
+
+            while( insertEncState != MSGD_PRV_ELABDONE )
             {
-                /* Actualy no need to redo the elaboration */
-                needToParseRemainingData = false;
-
-                /* Init partial coutner  */
-                cCosumed = 0u;
-                cErrSofRec = 0u;
-
-                /* Insert data */
-                resultByStuff = bUStufferInsStufChunk(&ctx->byteUStufferCtnx, cArea, cEncLen, &cCosumed, &cErrSofRec);
-                result = convertReturnFromBstfToMSGD(resultByStuff);
-
-                /* update total counter */
-                if( totalErrSofRec < ( 0xFFFFFFFFu - cErrSofRec ) )
+                switch( insertEncState )
                 {
-                    totalErrSofRec += cErrSofRec;
-                }
-                else
-                {
-                    totalErrSofRec = 0xFFFFFFFFu;
-                    result = MSGD_RES_OUTOFMEM;
-                }
-
-                /* update total counter */
-                if( totalCosumed < ( 0xFFFFFFFFu - cCosumed ) )
-                {
-                    totalCosumed += cCosumed;
-                }
-                else
-                {
-                    totalCosumed = 0xFFFFFFFFu;
-                    result = MSGD_RES_OUTOFMEM;
-                }
-
-                if( MSGD_RES_MESSAGEENDED == result )
-                {
-                    /* Verify msg integrity */
-                    resultMsgCorrect = isMsgCorrect(&ctx->byteUStufferCtnx, &isMCorrect, ctx->cbCrcPtr, ctx->cbCrcCtx);
-
-                    if( MSGD_RES_OK == resultMsgCorrect )
+                    case MSGD_PRV_INSERTCHUNK:
                     {
-                        /* no strange error found, check message correctness */
-                        if( true != isMCorrect )
+                        /* Init partial coutner  */
+                        cCosumed = 0u;
+                        cErrSofRec = 0u;
+
+                        /* Insert data */
+                        resultByStuff = bUStufferInsStufChunk(&ctx->byteUStufferCtnx, cArea, cEncLen, &cCosumed, &cErrSofRec);
+                        result = convertReturnFromBstfToMSGD(resultByStuff);
+
+                        /* update total counter */
+                        if( totalErrSofRec < ( 0xFFFFFFFFu - cErrSofRec ) )
                         {
-                            /* Too small frame or bad cr found, discharge and continue parse data if present */
-                            /* Increase error counter if frame is wrong */
-                            if( totalErrSofRec < 0xFFFFFFFFu )
+                            totalErrSofRec += cErrSofRec;
+                        }
+                        else
+                        {
+                            totalErrSofRec = 0xFFFFFFFFu;
+                            result = MSGD_RES_OUTOFMEM;
+                        }
+
+                        /* update total counter */
+                        if( totalCosumed < ( 0xFFFFFFFFu - cCosumed ) )
+                        {
+                            totalCosumed += cCosumed;
+                        }
+                        else
+                        {
+                            totalCosumed = 0xFFFFFFFFu;
+                            result = MSGD_RES_OUTOFMEM;
+                        }
+
+                        if( MSGD_RES_MESSAGEENDED == result )
+                        {
+                            /* Check if ended correclty */
+                            insertEncState = MSGD_PRV_MSG_END_CHECK;
+                        }
+                        else if( MSGD_RES_OK == result )
+                        {
+                            /* Check if okied correclty */
+                            insertEncState = MSGD_PRV_MSG_OK_CHECK;
+                        }
+                        else
+                        {
+                            /* Some error in unstuffer process, return it */
+                            insertEncState = MSGD_PRV_ELABDONE;
+                        }
+
+                        break;
+                    }
+
+                    case MSGD_PRV_MSG_END_CHECK:
+                    {
+                        /* Verify msg integrity */
+                        resultMsgCorrect = isMsgCorrect(&ctx->byteUStufferCtnx, &isMCorrect, ctx->cbCrcPtr, ctx->cbCrcCtx);
+
+                        if( MSGD_RES_OK == resultMsgCorrect )
+                        {
+                            /* no strange error found, check message correctness */
+                            if( true != isMCorrect )
                             {
-                                totalErrSofRec += 1u;
+                                /* Too small frame or bad cr found, discharge and continue parse data if present */
+                                /* Increase error counter if frame is wrong */
+                                if( totalErrSofRec < 0xFFFFFFFFu )
+                                {
+                                    totalErrSofRec += 1u;
+                                }
+                                else
+                                {
+                                    totalErrSofRec = 0xFFFFFFFFu;
+                                    result = MSGD_RES_OUTOFMEM;
+                                }
+
+                                if( MSGD_RES_MESSAGEENDED == result )
+                                {
+                                    resultByStuff = bUStufferStartNewFrame(&ctx->byteUStufferCtnx);
+                                    result = convertReturnFromBstfToMSGD(resultByStuff);
+
+                                    if( MSGD_RES_OK == result )
+                                    {
+                                        /* retrigger and update counter if we have some space */
+                                        if( totalCosumed < encLen )
+                                        {
+                                            /* retrigger */
+                                            insertEncState = MSGD_PRV_INSERTCHUNK;
+
+                                            /* Update pointer */
+                                            cArea = &encArea[totalCosumed];
+                                            cEncLen = encLen - totalCosumed;
+                                        }
+                                        else
+                                        {
+                                            /* No more data */
+                                            insertEncState = MSGD_PRV_ELABDONE;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        /* Error */
+                                        insertEncState = MSGD_PRV_ELABDONE;
+                                    }
+                                }
+                                else
+                                {
+                                    /* Error */
+                                    insertEncState = MSGD_PRV_ELABDONE;
+                                }
                             }
                             else
                             {
-                                totalErrSofRec = 0xFFFFFFFFu;
-                                result = MSGD_RES_OUTOFMEM;
+                                /* Correct message */
+                                insertEncState = MSGD_PRV_ELABDONE;
                             }
+                        }
+                        else
+                        {
+                            /* Some error */
+                            result = resultMsgCorrect;
+                            insertEncState = MSGD_PRV_ELABDONE;
+                        }
 
-                            if( MSGD_RES_MESSAGEENDED == result )
+                        break;
+                    }
+
+                    case MSGD_PRV_MSG_OK_CHECK:
+                    {
+                        /* Still parsing but we can check if data len is coherent */
+                        resultMsgCoherent = isMsgCoherent(&ctx->byteUStufferCtnx, &isMCoherent);
+
+                        if( MSGD_RES_OK == resultMsgCoherent )
+                        {
+                            /* no strange error found, check message correctness */
+                            if( true != isMCoherent )
                             {
-                                resultByStuff = bUStufferStartNewFrame(&ctx->byteUStufferCtnx);
-                                result = convertReturnFromBstfToMSGD(resultByStuff);
+                                /* Message not ended but something about message length is not coherent */
+                                if( totalErrSofRec < 0xFFFFFFFFu )
+                                {
+                                    totalErrSofRec += 1u;
+                                }
+                                else
+                                {
+                                    totalErrSofRec = 0xFFFFFFFFu;
+                                    result = MSGD_RES_OUTOFMEM;
+                                }
 
                                 if( MSGD_RES_OK == result )
                                 {
-                                    /* retrigger and update counter if we have some space */
-                                    if( totalCosumed < encLen )
-                                    {
-                                        /* retrigger */
-                                        needToParseRemainingData = true;
+                                    resultByStuff = bUStufferStartNewFrame(&ctx->byteUStufferCtnx);
+                                    result = convertReturnFromBstfToMSGD(resultByStuff);
 
-                                        /* Update pointer */
-                                        cArea = &encArea[totalCosumed];
-                                        cEncLen = encLen - totalCosumed;
+                                    if( MSGD_RES_OK == result )
+                                    {
+                                        /* retrigger and update counter if we have some space */
+                                        if( totalCosumed < encLen )
+                                        {
+                                            /* retrigger */
+                                            insertEncState = MSGD_PRV_INSERTCHUNK;
+
+                                            /* Update pointer */
+                                            cArea = &encArea[totalCosumed];
+                                            cEncLen = encLen - totalCosumed;
+                                        }
+                                        else
+                                        {
+                                            /* No more data to elab */
+                                            insertEncState = MSGD_PRV_ELABDONE;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        insertEncState = MSGD_PRV_ELABDONE;
                                     }
                                 }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        /* Some error */
-                        result = resultMsgCorrect;
-                    }
-                }
-                else if( MSGD_RES_OK == result )
-                {
-                    /* Still parsing but we can check if data len is coherent */
-                    resultMsgCoherent = isMsgCoherent(&ctx->byteUStufferCtnx, &isMCoherent);
-
-                    if( MSGD_RES_OK == resultMsgCoherent )
-                    {
-                        /* no strange error found, check message correctness */
-                        if( true != isMCoherent )
-                        {
-                            /* Message not ended but something about message length is not coherent */
-                            if( totalErrSofRec < 0xFFFFFFFFu )
-                            {
-                                totalErrSofRec += 1u;
+                                else
+                                {
+                                    /* Some error */
+                                    insertEncState = MSGD_PRV_ELABDONE;
+                                }
                             }
                             else
                             {
-                                totalErrSofRec = 0xFFFFFFFFu;
-                                result = MSGD_RES_OUTOFMEM;
-                            }
-
-                            if( MSGD_RES_OK == result )
-                            {
-                                resultByStuff = bUStufferStartNewFrame(&ctx->byteUStufferCtnx);
-                                result = convertReturnFromBstfToMSGD(resultByStuff);
-
-                                if( MSGD_RES_OK == result )
-                                {
-                                    /* retrigger and update counter if we have some space */
-                                    if( totalCosumed < encLen )
-                                    {
-                                        /* retrigger */
-                                        needToParseRemainingData = true;
-
-                                        /* Update pointer */
-                                        cArea = &encArea[totalCosumed];
-                                        cEncLen = encLen - totalCosumed;
-                                    }
-                                }
+                                /* Message is correct but not ended, can return */
+                                insertEncState = MSGD_PRV_ELABDONE;
                             }
                         }
+                        else
+                        {
+                            /* Some error */
+                            result = resultMsgCoherent;
+                            insertEncState = MSGD_PRV_ELABDONE;
+                        }
+                        break;
                     }
-                    else
-                    {
-                        /* Some error */
-                        result = resultMsgCoherent;
-                    }
-                }
-                else
-                {
-                    /* Some error in unstuffer process, return it */
-                }
 
-            }while( true == needToParseRemainingData );
+                    default:
+                    {
+                        /* Impossible end here */
+                        insertEncState = MSGD_PRV_ELABDONE;
+                        result = MSGD_RES_CORRUPTCTX;
+                        break;
+                    }
+                }
+            }
 
             /* Update return variable */
             *consumedEncData = totalCosumed;

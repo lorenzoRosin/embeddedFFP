@@ -12,9 +12,9 @@ int main(void);
 int main(void)
 {
     /* Start testing */
-    //msgEncoderTest();
-    //msgDecoderTest();
-    //msgDeEncoderTest();
+    // msgEncoderTest();
+    // msgDecoderTest();
+    // msgDeEncoderTest();
     msgTransmitterTest();
     // msgReceiverTest();
     // msgRxTransmitterTest();
