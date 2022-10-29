@@ -62,20 +62,23 @@ typedef struct
     uint32_t        timeCounterMs;
     uint32_t        frameTimeoutMs;
     uint32_t        timePerRecMs;
+    bool_t          needWaitFrameStart;
+    bool_t          waitingFrameStart;
 }s_eFSP_MsgRxCtx;
 
 typedef struct
 {
     uint8_t*        i_memArea;
     uint32_t        i_memAreaSize;
-    uint8_t*        i_sendBuffArea;
-    uint32_t        i_sendBuffAreaSize;
+    uint8_t*        i_receiveBuffArea;
+    uint32_t        i_receiveBuffAreaSize;
     cb_crc32_msgd   i_cbCrcP;
     void*           i_cbCrcCrx;
     cb_rx_msge      i_cbRxP;
     void*           i_cbRxCtx;
     uint32_t        i_frameTimeoutMs;
     uint32_t        i_timePerRecMs;
+    bool_t          i_needWaitFrameStart;
 }s_eFSP_MsgRxInitData;
 
 
@@ -129,14 +132,6 @@ e_eFSP_MsgRx_Res msgReceiverGetDecodedData(s_eFSP_MsgRxCtx* const ctx, uint8_t**
  * @brief       Receive encoded chunk that the alg will decode byte per byte
  *
  * @param[in]   ctx         	 - Msg receiver context
- * @param[in]   encArea     	 - Pointer to the encoded Data that we will decode
- * @param[in]   encLen      	 - Size of the encArea
- * @param[out]  consumedEncData  - Pointer to an uint32_t were we will store how many encoded data byte has been
- *                                 analized. keep in mind that unalized data were not decoded and will need to be
- *                                 reparsed
- * @param[out]  errSofRec        - Pointer to an uint32_t were we will store how many protocol error were detected.
- *                                 Even with some error detected, the protocol will continue parsing data discharging
- *                                 error.
  *
  * @return  MSGTRX_RES_BADPOINTER   	- In case of bad pointer passed to the function
  *		    MSGTRX_RES_NOINITLIB    	- Need to init context before taking some action
@@ -158,8 +153,7 @@ e_eFSP_MsgRx_Res msgReceiverGetDecodedData(s_eFSP_MsgRxCtx* const ctx, uint8_t**
  *          MSGTRX_RES_OK           	- Operation ended correctly. The chunk is parsed correclty but the frame is not
  *                                        finished yet
  */
-e_eFSP_MsgRx_Res msgReceiverInsEncChunk(s_eFSP_MsgRxCtx* const ctx, const uint8_t* encArea, const uint32_t encLen,
-                                      uint32_t* const consumedEncData, uint32_t* errSofRec);
+e_eFSP_MsgRx_Res msgReceiverReceiveChunk(s_eFSP_MsgRxCtx* const ctx);
 #ifdef __cplusplus
 } /* extern "C" */
 #endif
