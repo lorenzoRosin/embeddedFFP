@@ -154,7 +154,7 @@ e_eFSP_MsgTx_Res msgTransmRestartCurrentMessage(s_eFSP_MsgTxCtx* const ctx);
  *		        MSGTTX_RES_CORRUPTCTX     - In case of an corrupted context
  *              MSGTTX_RES_MESSAGESENDED  - No more data that we can send, restart or start a new msg to proceed.
  *                                          This means that we have finished sending the current message.
- *              MSGTTX_RES_MESSAGETIMEOUT - The message is not sended event after "frameTimeoutMs". Restart to continue.
+ *              MSGTTX_RES_MESSAGETIMEOUT - The message is not sended before "frameTimeoutMs". Restart to continue.
  *              MSGTTX_RES_TXCLBKERROR    - Some error reported by the user send function. Restart to continue.
  *              MSGTTX_RES_OK             - Operation ended correctly, message is not still fully encoded
  */
