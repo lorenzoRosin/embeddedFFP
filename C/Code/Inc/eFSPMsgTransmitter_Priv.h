@@ -31,10 +31,10 @@ extern "C" {
  **********************************************************************************************************************/
 typedef enum
 {
-    MSGD_PRV_INSERTCHUNK = 0,
-    MSGD_PRV_MSG_END_CHECK,
-    MSGD_PRV_MSG_OK_CHECK,
-    MSGD_PRV_ELABDONE
+    MSGTX_PRV_CHECKIFBUFFERTX = 0,
+    MSGTX_PRV_SEND_BUFF,
+    MSGTX_PRV_CHECK_RETRIVECHUNK,
+    MSGTX_PRV_ELABDONE
 }e_eFSP_Trnsmt_Priv_state;
 
 

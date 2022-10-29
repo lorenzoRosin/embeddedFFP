@@ -193,6 +193,7 @@ e_eFSP_MsgTx_Res msgTransmSendChunk(s_eFSP_MsgTxCtx* const ctx)
 	e_eFSP_MsgE_Res resultMsgE;
 
     /* Local variable of data to send */
+    e_eFSP_Trnsmt_Priv_state stateM;
     uint32_t remainingTimeMs;
     uint32_t sendFramTimeTotal;
     uint32_t sendFramTimeSingle;
@@ -219,59 +220,121 @@ e_eFSP_MsgTx_Res msgTransmSendChunk(s_eFSP_MsgTxCtx* const ctx)
             sendFramTimeTotal = 0u;
             sendFramTimeSingle = 0u;
             result = MSGTTX_RES_OK;
+            stateM = MSGTX_PRV_CHECKIFBUFFERTX;
 
-            /* wait end */
+            /* wait end elaboration or end for timeout */
             while( ( ctx->timeCounterMs < ctx->frameTimeoutMs ) && ( sendFramTimeTotal < ctx->timePerSendMs ) &&
-                   ( result == MSGTTX_RES_OK ) )
+                   ( stateM != MSGTX_PRV_ELABDONE ) )
             {
-                /* Refresh remaining time */
-                remainingTimeMs = ctx->frameTimeoutMs - ctx->timeCounterMs;
-
-                if( ( ctx->timePerSendMs - sendFramTimeTotal ) < remainingTimeMs )
+                switch( stateM )
                 {
-                    remainingTimeMs = ctx->timePerSendMs - sendFramTimeTotal;
-                }
-
-                /* Is data present in send buffer? */
-                cDataToSendLen = ctx->sendBuffFill - ctx->sendBuffCntr;
-
-                if( cDataToSendLen > 0u )
-                {
-                    /* Get data to send */
-                    cDataToSendP = &ctx->sendBuff[ctx->sendBuffCntr];
-
-                    /* Can send data from send buffer */
-                    if( true == (*ctx->cbTxP)(ctx->cbTxCtx, cDataToSendP, cDataToSendLen, &cDataSendedSingle, remainingTimeMs, &sendFramTimeSingle) )
+                    case MSGTX_PRV_CHECKIFBUFFERTX:
                     {
-                        /* Check for some strangeness */
-                        if( cDataSendedSingle > cDataToSendLen)
+                        /* Is data present in send buffer? */
+                        cDataToSendLen = ctx->sendBuffFill - ctx->sendBuffCntr;
+
+                        if( cDataToSendLen > 0u )
                         {
-                            result = MSGTTX_RES_CORRUPTCTX;
+                            /* Can send data in msg buffer */
+                            stateM = MSGTX_PRV_SEND_BUFF;
+                        }
+                        else
+                        {
+                            /* No data in msg buffer */
+                            stateM = MSGTX_PRV_CHECK_RETRIVECHUNK;
+                        }
+                        break;
+                    }
+
+                    case MSGTX_PRV_SEND_BUFF:
+                    {
+                        /* Refresh remaining time */
+                        remainingTimeMs = ctx->frameTimeoutMs - ctx->timeCounterMs;
+
+                        if( ( ctx->timePerSendMs - sendFramTimeTotal ) < remainingTimeMs )
+                        {
+                            remainingTimeMs = ctx->timePerSendMs - sendFramTimeTotal;
                         }
 
-                        /* Update sended counter */
-                        ctx->sendBuffCntr = ctx->sendBuffCntr + cDataSendedSingle;
+                        /* Get data to send */
+                        cDataToSendP = &ctx->sendBuff[ctx->sendBuffCntr];
+                        cDataToSendLen = ctx->sendBuffFill - ctx->sendBuffCntr;
 
-                        /* Update timings */
-                        sendFramTimeTotal = sendFramTimeTotal + sendFramTimeSingle;
-                        ctx->timeCounterMs = ctx->timeCounterMs + sendFramTimeSingle;
+                        /* Can send data from send buffer */
+                        if( true == (*ctx->cbTxP)(ctx->cbTxCtx, cDataToSendP, cDataToSendLen, &cDataSendedSingle, remainingTimeMs, &sendFramTimeSingle) )
+                        {
+                            /* Check for some strangeness */
+                            if( cDataSendedSingle > cDataToSendLen)
+                            {
+                                result = MSGTTX_RES_CORRUPTCTX;
+                                stateM = MSGTX_PRV_ELABDONE;
+                            }
+                            else
+                            {
+                                /* Update sended counter */
+                                ctx->sendBuffCntr += cDataSendedSingle;
+
+                                /* Update timings */
+                                sendFramTimeTotal += sendFramTimeSingle;
+                                ctx->timeCounterMs += sendFramTimeSingle;
+
+                                /* Go next state */
+                                stateM = MSGTX_PRV_CHECKIFBUFFERTX;
+                            }
+                        }
+                        else
+                        {
+                            /* Error sending data */
+                            result = MSGTTX_RES_TXCLBKERROR;
+                            stateM = MSGTX_PRV_ELABDONE;
+                        }
+                        break;
                     }
-                    else
+
+                    case MSGTX_PRV_CHECK_RETRIVECHUNK:
                     {
-                        /* Error sending data */
-                        result = MSGTTX_RES_TXCLBKERROR;
+                        /* Reset counter */
+                        ctx->sendBuffCntr = 0u;
+
+                        /* Is data present in message encoder buffer? */
+                        resultMsgE = msgEncoderRetriveEChunk(&ctx->msgEncoderCtnx, ctx->sendBuff, ctx->sendBuffSize, &ctx->sendBuffFill);
+                        result = convertReturnFromMSGEToMSGTX(resultMsgE);
+
+                        if( MSGTTX_RES_OK == result )
+                        {
+                            /* Retrived some data to send */
+                            stateM = MSGTX_PRV_CHECKIFBUFFERTX;
+                        }
+                        else if( MSGTTX_RES_MESSAGESENDED == result )
+                        {
+                            if( 0u == ctx->sendBuffFill )
+                            {
+                                /* More data to send  */
+                                stateM = MSGTX_PRV_ELABDONE;
+                            }
+                            else
+                            {
+                                /* No more data to retrive */
+                                stateM = MSGTX_PRV_ELABDONE;
+                            }
+                        }
+                        else
+                        {
+                            /* Some error */
+                            stateM = MSGTX_PRV_ELABDONE;
+                        }
+
+                        break;
+                    }
+
+                    default:
+                    {
+                        /* Impossible end here */
+                        stateM = MSGTX_PRV_ELABDONE;
+                        result = MSGTTX_RES_CORRUPTCTX;
+                        break;
                     }
                 }
-                else
-                {
-                    /* Is data present in message encoder buffer? */
-                    resultMsgE = msgEncoderRetriveEChunk(&ctx->msgEncoderCtnx, ctx->sendBuff, ctx->sendBuffSize, &ctx->sendBuffFill);
-                    result = convertReturnFromMSGEToMSGTX(resultMsgE);
-
-                    /* Reset counter */
-                    ctx->sendBuffCntr = 0u;
-                }
-
             }
 
             /* Check for timeout */
