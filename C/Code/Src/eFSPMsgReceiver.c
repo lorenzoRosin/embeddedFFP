@@ -11,7 +11,7 @@
  *      INCLUDES
  **********************************************************************************************************************/
 #include "eFSPMsgReceiver.h"
-//#include "eFSPMsgReceiver_Priv.h"
+#include "eFSPMsgReceiver_Priv.h"
 
 
 /***********************************************************************************************************************
@@ -65,11 +65,11 @@ e_eFSP_MsgRx_Res msgReceiverInitCtx(s_eFSP_MsgRxCtx* const ctx, const s_eFSP_Msg
                 ctx->frameTimeoutMs = initData->i_frameTimeoutMs;
                 ctx->timePerRecMs = initData->i_timePerRecMs;
                 ctx->needWaitFrameStart = initData->i_needWaitFrameStart;
-                ctx->waitingFrameStart = initData->true;
+                ctx->waitingFrameStart = true;
 
                 /* initialize internal bytestuffer */
                 resultMsgE =  msgDecoderInitCtx(&ctx->msgDecoderCtnx, initData->i_memArea, initData->i_memAreaSize,
-                                                initData->i_cbCrcP, initData->i_cbCrcCtx);
+                                                initData->i_cbCrcP, initData->i_cbCrcCrx);
                 result = convertReturnFromMSGDToMSGRX(resultMsgE);
             }
         }
@@ -78,7 +78,7 @@ e_eFSP_MsgRx_Res msgReceiverInitCtx(s_eFSP_MsgRxCtx* const ctx, const s_eFSP_Msg
 	return result;
 }
 
-e_eFSP_MsgRx_Res msgTransmStartNewMessage(s_eFSP_MsgRxCtx* const ctx, const uint32_t messageLen)
+e_eFSP_MsgRx_Res msgReceiverStartNewMsg(s_eFSP_MsgRxCtx* const ctx)
 {
 	/* Local variable */
 	e_eFSP_MsgRx_Res result;
@@ -91,43 +91,35 @@ e_eFSP_MsgRx_Res msgTransmStartNewMessage(s_eFSP_MsgRxCtx* const ctx, const uint
 	}
 	else
 	{
-        /* Check param validity, need at least 1 byte of paylaod */
-        if( messageLen <= 0u )
+        /* Check internal status validity */
+        if( false == isMsgReceStatusStillCoherent(ctx) )
         {
-            result = MSGTRX_RES_BADPARAM;
+            result = MSGTRX_RES_CORRUPTCTX;
         }
-		else
-		{
-            /* Check internal status validity */
-            if( false == isMsgReceStatusStillCoherent(ctx) )
-            {
-                result = MSGTRX_RES_CORRUPTCTX;
-            }
-            else
-            {
-                /* Reset internal variable */
-                ctx->rxBuffCntr = 0u;
-                ctx->rxBuffFill = 0u;
-                ctx->timeCounterMs = 0u;
+        else
+        {
+            /* Reset internal variable */
+            ctx->rxBuffCntr = 0u;
+            ctx->rxBuffFill = 0u;
+            ctx->timeCounterMs = 0u;
 
-                /* Init message encoder */
-                resultMsgE = msgEncoderStartNewMessage(&ctx->msgDecoderCtnx, messageLen);
-                result = convertReturnFromMSGDToMSGRX(resultMsgE);
-            }
-		}
+            /* Init message encoder */
+            resultMsgE = msgDecoderStartNewMsg(&ctx->msgDecoderCtnx);
+            result = convertReturnFromMSGDToMSGRX(resultMsgE);
+        }
 	}
 
 	return result;
 }
 
-e_eFSP_MsgRx_Res msgTransmGetPayloadLocation(s_eFSP_MsgRxCtx* const ctx, uint8_t** dataP, uint32_t* const maxDataSize)
+e_eFSP_MsgRx_Res msgReceiverGetDecodedData(s_eFSP_MsgRxCtx* const ctx, uint8_t** dataP, uint32_t* const retrivedLen)
 {
 	/* Local variable */
 	e_eFSP_MsgRx_Res result;
 	e_eFSP_MsgD_Res resultMsgE;
 
 	/* Check pointer validity */
-	if( ( NULL == ctx ) || ( NULL == dataP ) || ( NULL == maxDataSize ) )
+	if( ( NULL == ctx ) || ( NULL == dataP ) || ( NULL == retrivedLen ) )
 	{
 		result = MSGTRX_RES_BADPOINTER;
 	}
@@ -141,7 +133,7 @@ e_eFSP_MsgRx_Res msgTransmGetPayloadLocation(s_eFSP_MsgRxCtx* const ctx, uint8_t
 		else
 		{
 			/* Get memory reference of CRC+LEN+DATA, so we can calculate reference of only data payload */
-			resultMsgE = msgEncoderGetPayloadLocation(&ctx->msgDecoderCtnx, dataP, maxDataSize);
+			resultMsgE = msgDecoderGetDecodedData(&ctx->msgDecoderCtnx, dataP, retrivedLen);
 			result = convertReturnFromMSGDToMSGRX(resultMsgE);
 		}
 	}
@@ -149,48 +141,14 @@ e_eFSP_MsgRx_Res msgTransmGetPayloadLocation(s_eFSP_MsgRxCtx* const ctx, uint8_t
 	return result;
 }
 
-e_eFSP_MsgRx_Res msgTransmRestartCurrentMessage(s_eFSP_MsgRxCtx* const ctx)
-{
-	/* Local variable */
-	e_eFSP_MsgRx_Res result;
-	e_eFSP_MsgD_Res resultMsgE;
-
-	/* Check pointer validity */
-	if( NULL == ctx )
-	{
-		result = MSGTRX_RES_BADPOINTER;
-	}
-	else
-	{
-		/* Check internal status validity */
-		if( false == isMsgReceStatusStillCoherent(ctx) )
-		{
-			result = MSGTRX_RES_CORRUPTCTX;
-		}
-		else
-		{
-            /* Reset internal variable */
-            ctx->rxBuffCntr = 0u;
-            ctx->rxBuffFill = 0u;
-            ctx->timeCounterMs = 0u;
-
-			/* Restart only the byte stuffer */
-			resultMsgE = msgEncoderRestartCurrentMessage(&ctx->msgDecoderCtnx);
-			result = convertReturnFromMSGDToMSGRX(resultMsgE);
-		}
-	}
-
-	return result;
-}
-
-e_eFSP_MsgRx_Res msgTransmSendChunk(s_eFSP_MsgRxCtx* const ctx)
+e_eFSP_MsgRx_Res msgReceiverReceiveChunk(s_eFSP_MsgRxCtx* const ctx)
 {
 	/* Local variable */
 	e_eFSP_MsgRx_Res result;
 	e_eFSP_MsgD_Res resultMsgE;
 
     /* Local variable of data to send */
-    e_eFSP_Trnsmt_Priv_state stateM;
+    e_eFSP_rece_Priv_state stateM;
     uint32_t remainingTimeMs;
     uint32_t sendFramTimeTotal;
     uint32_t sendFramTimeSingle;
@@ -217,15 +175,15 @@ e_eFSP_MsgRx_Res msgTransmSendChunk(s_eFSP_MsgRxCtx* const ctx)
             sendFramTimeTotal = 0u;
             sendFramTimeSingle = 0u;
             result = MSGTRX_RES_OK;
-            stateM = MSGTX_PRV_CHECKIFBUFFERTX;
+            stateM = MSGRX_PRV_CHECKIFBUFFERTX;
 
             /* wait end elaboration or end for timeout */
             while( ( ctx->timeCounterMs < ctx->frameTimeoutMs ) && ( sendFramTimeTotal < ctx->timePerRecMs ) &&
-                   ( stateM != MSGTX_PRV_ELABDONE ) )
+                   ( stateM != MSGRX_PRV_ELABDONE ) )
             {
                 switch( stateM )
                 {
-                    case MSGTX_PRV_CHECKIFBUFFERTX:
+                    case MSGRX_PRV_CHECKIFBUFFERTX:
                     {
                         /* Is data present in send buffer? */
                         cDataToSendLen = ctx->rxBuffFill - ctx->rxBuffCntr;
@@ -233,17 +191,17 @@ e_eFSP_MsgRx_Res msgTransmSendChunk(s_eFSP_MsgRxCtx* const ctx)
                         if( cDataToSendLen > 0u )
                         {
                             /* Can send data in msg buffer */
-                            stateM = MSGTX_PRV_SEND_BUFF;
+                            stateM = MSGRX_PRV_SEND_BUFF;
                         }
                         else
                         {
                             /* No data in msg buffer */
-                            stateM = MSGTX_PRV_CHECK_RETRIVECHUNK;
+                            stateM = MSGRX_PRV_CHECK_RETRIVECHUNK;
                         }
                         break;
                     }
 
-                    case MSGTX_PRV_SEND_BUFF:
+                    case MSGRX_PRV_SEND_BUFF:
                     {
                         /* Refresh remaining time */
                         remainingTimeMs = ctx->frameTimeoutMs - ctx->timeCounterMs;
@@ -264,7 +222,7 @@ e_eFSP_MsgRx_Res msgTransmSendChunk(s_eFSP_MsgRxCtx* const ctx)
                             if( cDataSendedSingle > cDataToSendLen)
                             {
                                 result = MSGTRX_RES_CORRUPTCTX;
-                                stateM = MSGTX_PRV_ELABDONE;
+                                stateM = MSGRX_PRV_ELABDONE;
                             }
                             else
                             {
@@ -276,19 +234,19 @@ e_eFSP_MsgRx_Res msgTransmSendChunk(s_eFSP_MsgRxCtx* const ctx)
                                 ctx->timeCounterMs += sendFramTimeSingle;
 
                                 /* Go next state */
-                                stateM = MSGTX_PRV_CHECKIFBUFFERTX;
+                                stateM = MSGRX_PRV_CHECKIFBUFFERTX;
                             }
                         }
                         else
                         {
                             /* Error sending data */
                             result = MSGTRX_RES_TXCLBKERROR;
-                            stateM = MSGTX_PRV_ELABDONE;
+                            stateM = MSGRX_PRV_ELABDONE;
                         }
                         break;
                     }
 
-                    case MSGTX_PRV_CHECK_RETRIVECHUNK:
+                    case MSGRX_PRV_CHECK_RETRIVECHUNK:
                     {
                         /* Reset counter */
                         ctx->rxBuffCntr = 0u;
@@ -300,25 +258,25 @@ e_eFSP_MsgRx_Res msgTransmSendChunk(s_eFSP_MsgRxCtx* const ctx)
                         if( MSGTRX_RES_OK == result )
                         {
                             /* Retrived some data to send */
-                            stateM = MSGTX_PRV_CHECKIFBUFFERTX;
+                            stateM = MSGRX_PRV_CHECKIFBUFFERTX;
                         }
                         else if( MSGTRX_RES_MESSAGESENDED == result )
                         {
                             if( 0u == ctx->rxBuffFill )
                             {
                                 /* More data to send  */
-                                stateM = MSGTX_PRV_ELABDONE;
+                                stateM = MSGRX_PRV_ELABDONE;
                             }
                             else
                             {
                                 /* No more data to retrive */
-                                stateM = MSGTX_PRV_ELABDONE;
+                                stateM = MSGRX_PRV_ELABDONE;
                             }
                         }
                         else
                         {
                             /* Some error */
-                            stateM = MSGTX_PRV_ELABDONE;
+                            stateM = MSGRX_PRV_ELABDONE;
                         }
 
                         break;
@@ -327,7 +285,7 @@ e_eFSP_MsgRx_Res msgTransmSendChunk(s_eFSP_MsgRxCtx* const ctx)
                     default:
                     {
                         /* Impossible end here */
-                        stateM = MSGTX_PRV_ELABDONE;
+                        stateM = MSGRX_PRV_ELABDONE;
                         result = MSGTRX_RES_CORRUPTCTX;
                         break;
                     }

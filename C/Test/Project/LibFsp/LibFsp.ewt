@@ -1438,6 +1438,9 @@
             <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPMsgReceiver.h</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPMsgReceiver_Priv.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPMsgTransmitter.h</name>
         </file>
         <file>
