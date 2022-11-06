@@ -15,6 +15,7 @@
 #include "eCUCrc.h"
 
 
+
 /***********************************************************************************************************************
  *  PRIVATE STATIC FUNCTION DECLARATION
  **********************************************************************************************************************/
@@ -23,6 +24,7 @@ static e_eFSP_MsgD_Res convertReturnFromBstfToMSGD(e_eCU_dBUStf_Res returnedEven
 static e_eFSP_MsgD_Res isMsgCorrect(s_eCU_BUStuffCtx* ctx, bool_t* isCorrect, cb_crc32_msgd cbCrcPtr, void* cbCrcCtx);
 static e_eFSP_MsgD_Res isMsgCoherent(s_eCU_BUStuffCtx* ctx, bool_t* isCoherent);
 static uint32_t composeU32LE(uint8_t v1, uint8_t v2, uint8_t v3, uint8_t v4);
+
 
 
 /***********************************************************************************************************************
@@ -92,7 +94,7 @@ e_eFSP_MsgD_Res msgDecoderStartNewMsg(s_eFSP_MsgDCtx* const ctx)
 }
 
 #ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_disable = "MISRAC2004-17.4_b",  "MEM-stack-param", "MISRAC2004-17.6_d", "MISRAC2012-Rule-1.3_s", \
+    #pragma cstat_disable = "MEM-stack-param", "MISRAC2004-17.6_d", "MISRAC2012-Rule-1.3_s", \
                             "MISRAC2012-Rule-18.6_d", "CERT-DCL30-C_e"
     /* Suppressed for code clarity */
 #endif
@@ -151,7 +153,7 @@ e_eFSP_MsgD_Res msgDecoderGetDecodedData(s_eFSP_MsgDCtx* const ctx, uint8_t** da
 }
 
 #ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MISRAC2004-17.4_b",  "MEM-stack-param", "MISRAC2004-17.6_d", "MISRAC2012-Rule-1.3_s", \
+    #pragma cstat_restore = "MEM-stack-param", "MISRAC2004-17.6_d", "MISRAC2012-Rule-1.3_s", \
                             "MISRAC2012-Rule-18.6_d", "CERT-DCL30-C_e"
 #endif
 
@@ -202,11 +204,6 @@ e_eFSP_MsgD_Res msgDecoderGetDecodedLen(s_eFSP_MsgDCtx* const ctx, uint32_t* con
 
 	return result;
 }
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_disable = "MISRAC2004-17.4_b"
-    /* Suppressed for code clarity */
-#endif
 
 e_eFSP_MsgD_Res msgDecoderIsAFullMsgUnstuff(s_eFSP_MsgDCtx* const ctx, bool_t* const isMsgDec)
 {
@@ -597,9 +594,7 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
 	return result;
 }
 
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MISRAC2004-17.4_b"
-#endif
+
 
 /***********************************************************************************************************************
  *  PRIVATE FUNCTION
@@ -681,7 +676,7 @@ e_eFSP_MsgD_Res convertReturnFromBstfToMSGD(e_eCU_dBUStf_Res returnedEvent)
 }
 
 #ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_disable = "MISRAC2004-17.4_b", "MISRAC2012-Rule-8.13"
+    #pragma cstat_disable = "MISRAC2012-Rule-8.13"
     /* Suppressed for code clarity */
 #endif
 
@@ -825,7 +820,7 @@ static e_eFSP_MsgD_Res isMsgCoherent(s_eCU_BUStuffCtx* ctx, bool_t* isCoherent)
 }
 
 #ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MISRAC2004-17.4_b", "MISRAC2012-Rule-8.13"
+    #pragma cstat_restore = "MISRAC2012-Rule-8.13"
 #endif
 
 uint32_t composeU32LE(uint8_t v1, uint8_t v2, uint8_t v3, uint8_t v4)

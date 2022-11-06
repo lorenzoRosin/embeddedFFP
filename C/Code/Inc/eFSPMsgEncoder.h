@@ -29,7 +29,6 @@ extern "C" {
 /***********************************************************************************************************************
  *      TYPEDEFS
  **********************************************************************************************************************/
-
 /* Call back to a function that will calculate the CRC for this modules
  * the cntx parameter is a custom pointer that can be used by the creator of this CRC callback, and will not be used
  * by the MSG ENCODER module */
@@ -82,7 +81,8 @@ e_eFSP_MsgE_Res msgEncoderInitCtx(s_eFSP_MsgECtx* const ctx, uint8_t* const memA
  *              in order to know how get the data pointer, and copy the data )
  *
  * @param[in]   ctx         - Message Encoder context
- * @param[in]   messageLen  - lenght of the raw payload present in the frame that we need to encode ( no header )
+ * @param[in]   messageLen  - lenght of the raw payload present in the frame that we need to encode ( no header, only
+ *                            raw data )
  *
  * @return      MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
  *		        MSGE_RES_BADPARAM       - In case of an invalid parameter passed to the function
@@ -141,18 +141,24 @@ e_eFSP_MsgE_Res msgEncoderGetRemToRetrive(s_eFSP_MsgECtx* const ctx, uint32_t* c
  *              msgEncoderGetPayloadLocation will be encoded (header and byte stuffing) and retrived by this function.
  *
  * @param[in]   ctx         - Message Encoder context
- * @param[in]   encodeDest  - Pointer to the destination area of encoded data
+ * @param[in]   encodeDest  - Pointer to the destination area of encoded data that will be placed by this function
  * @param[in]   maxDestLen  - Max fillable size of the destination area
- * @param[out]  filledLen   - Pointer to an uint32_t were we will store the amount of encoded data
+ * @param[out]  filledLen   - Pointer to an uint32_t were we will store the number encoded data inserted in encodeDest.
+ *                            Note that if the function return MSGE_RES_OK the value of filledLen will be equals to
+ *                            maxDestLen. The value filledLen infact could be lower than max dest size only if
+ *                            some error is returned or if the frame is ended ( MSGE_RES_MESSAGEENDED )
  *
  * @return      MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
  *		        MSGE_RES_NOINITLIB      - Need to init the data encoder context before taking some action
  *		        MSGE_RES_BADPARAM       - In case of an invalid parameter passed to the function
  *		        MSGE_RES_NOINITMESSAGE  - Need to start a message before taking some action
  *		        MSGE_RES_CORRUPTCTX     - In case of an corrupted context
- *              MSGE_RES_MESSAGEENDED   - No more data that we can elaborate, restart or start a new msg to proceed.
- *                                        This means that we have finished encoding the current message.
- *              MSGE_RES_OK             - Operation ended correctly, message is not still fully encoded
+ *              MSGE_RES_MESSAGEENDED   - No more data that we can elaborate, restart or start a new frame to proceed.
+ *                                        This means that we have finished encoding the current frame. Keep in mind
+ *                                        in this case that the value of filledLen could be lower than maxDestLen.
+ *              MSGE_RES_OK             - Operation ended correctly. This dosent mean that the encoding process is
+ *                                        completed, but we can be sure that filledLen will have the same value of
+ *                                        maxDestLen
  */
 e_eFSP_MsgE_Res msgEncoderRetriveEChunk(s_eFSP_MsgECtx* const ctx, uint8_t* const encodeDest,
 									    const uint32_t maxDestLen, uint32_t* const filledLen);
