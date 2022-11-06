@@ -1093,12 +1093,21 @@
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgReceiverTest.h</name>
+            <excluded>
+                <configuration>Release</configuration>
+            </excluded>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgRxTransmitterTest.h</name>
+            <excluded>
+                <configuration>Release</configuration>
+            </excluded>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgTransmitterTest.h</name>
+            <excluded>
+                <configuration>Release</configuration>
+            </excluded>
         </file>
     </group>
     <group>
@@ -1114,12 +1123,21 @@
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgReceiverTest.c</name>
+            <excluded>
+                <configuration>Release</configuration>
+            </excluded>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgRxTransmitterTest.c</name>
+            <excluded>
+                <configuration>Release</configuration>
+            </excluded>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgTransmitterTest.c</name>
+            <excluded>
+                <configuration>Release</configuration>
+            </excluded>
         </file>
     </group>
     <file>
