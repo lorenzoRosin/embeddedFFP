@@ -728,7 +728,7 @@
                                 <check name="MISRAC2004-17.2" enabled="true" />
                                 <check name="MISRAC2004-17.3" enabled="true" />
                                 <check name="MISRAC2004-17.4_a" enabled="true" />
-                                <check name="MISRAC2004-17.4_b" enabled="true" />
+                                <check name="MISRAC2004-17.4_b" enabled="false" />
                                 <check name="MISRAC2004-17.5" enabled="true" />
                                 <check name="MISRAC2004-17.6_a" enabled="true" />
                                 <check name="MISRAC2004-17.6_b" enabled="true" />
