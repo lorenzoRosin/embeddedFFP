@@ -30,7 +30,7 @@ static uint32_t composeU32LE(uint8_t v1, uint8_t v2, uint8_t v3, uint8_t v4);
 /***********************************************************************************************************************
  *   GLOBAL FUNCTIONS
  **********************************************************************************************************************/
-e_eFSP_MsgD_Res msgDecoderInitCtx(s_eFSP_MsgDCtx* const ctx, uint8_t* const memArea, const uint32_t memAreaSize,
+e_eFSP_MsgD_Res msgDecoderInitCtx(s_eFSP_MsgDCtx* const ctx, uint8_t memArea[], const uint32_t memAreaSize,
 								 cb_crc32_msgd cbCrcP, void* const clbCtx)
 {
 	/* Local variable */
@@ -325,7 +325,7 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
 	return result;
 }
 
-e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* encArea, const uint32_t encLen,
+e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, uint8_t encArea[], const uint32_t encLen,
                                       uint32_t* const consumedEncData, uint32_t* errEncRec)
 {
 	/* Local return  */

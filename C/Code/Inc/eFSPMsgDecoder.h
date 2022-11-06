@@ -73,7 +73,7 @@ typedef struct
  *		        MSGD_RES_BADPARAM       - In case of an invalid parameter passed to the function
  *              MSGD_RES_OK             - Operation ended correctly
  */
-e_eFSP_MsgD_Res msgDecoderInitCtx(s_eFSP_MsgDCtx* const ctx, uint8_t* const memArea, const uint32_t memAreaSize,
+e_eFSP_MsgD_Res msgDecoderInitCtx(s_eFSP_MsgDCtx* const ctx, uint8_t memArea[], const uint32_t memAreaSize,
 								 cb_crc32_msgd cbCrcP, void* const clbCtx);
 
 /**
@@ -180,7 +180,7 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
  *              MSGD_RES_OK           	- Operation ended correctly. The chunk is parsed correclty but the frame is not
  *                                        finished yet
  */
-e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* encArea, const uint32_t encLen,
+e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, uint8_t encArea[], const uint32_t encLen,
                                       uint32_t* const consumedEncData, uint32_t* errSofRec);
 
 #ifdef __cplusplus
