@@ -26,7 +26,11 @@ static e_eFSP_MsgE_Res convertReturnFromBstfToMSGE(e_eCU_dBStf_Res returnedEvent
 /***********************************************************************************************************************
  *   GLOBAL FUNCTIONS
  **********************************************************************************************************************/
-e_eFSP_MsgE_Res msgEncoderInitCtx(s_eFSP_MsgECtx* const ctx, uint8_t* const memArea, const uint32_t memAreaSize,
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_disable = "MISRAC2012-Rule-10.3"
+    /* Suppressed because this warning is not working */
+#endif
+e_eFSP_MsgE_Res msgEncoderInitCtx(s_eFSP_MsgECtx* const ctx, uint8_t memArea[], const uint32_t memAreaSize,
 								  cb_crc32_msge cbCrcP, void* const clbCtx)
 {
 	/* Local variable */
@@ -59,6 +63,10 @@ e_eFSP_MsgE_Res msgEncoderInitCtx(s_eFSP_MsgECtx* const ctx, uint8_t* const memA
 
 	return result;
 }
+
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_restore = "MISRAC2012-Rule-10.3"
+#endif
 
 e_eFSP_MsgE_Res msgEncoderStartNewMessage(s_eFSP_MsgECtx* const ctx, const uint32_t messageLen)
 {
@@ -270,7 +278,12 @@ e_eFSP_MsgE_Res msgEncoderGetRemToRetrive(s_eFSP_MsgECtx* const ctx, uint32_t* c
 	return result;
 }
 
-e_eFSP_MsgE_Res msgEncoderRetriveEChunk(s_eFSP_MsgECtx* const ctx, uint8_t* const encodeDest,
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_disable = "MISRAC2012-Rule-10.3"
+    /* Suppressed because this warning is not working */
+#endif
+
+e_eFSP_MsgE_Res msgEncoderRetriveEChunk(s_eFSP_MsgECtx* const ctx, uint8_t encodeDest[],
 									    const uint32_t maxDestLen, uint32_t* const filledLen)
 {
 	/* Local variable */
@@ -299,6 +312,10 @@ e_eFSP_MsgE_Res msgEncoderRetriveEChunk(s_eFSP_MsgECtx* const ctx, uint8_t* cons
 
 	return result;
 }
+
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_restore = "MISRAC2012-Rule-10.3"
+#endif
 
 
 

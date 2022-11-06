@@ -72,7 +72,7 @@ typedef struct
  *		        MSGE_RES_BADPARAM       - In case of an invalid parameter passed to the function
  *              MSGE_RES_OK             - Operation ended correctly
  */
-e_eFSP_MsgE_Res msgEncoderInitCtx(s_eFSP_MsgECtx* const ctx, uint8_t* const memArea, const uint32_t memAreaSize,
+e_eFSP_MsgE_Res msgEncoderInitCtx(s_eFSP_MsgECtx* const ctx, uint8_t memArea[], const uint32_t memAreaSize,
 								  cb_crc32_msge cbCrcP, void* const clbCtx);
 
 /**
@@ -160,7 +160,7 @@ e_eFSP_MsgE_Res msgEncoderGetRemToRetrive(s_eFSP_MsgECtx* const ctx, uint32_t* c
  *                                        completed, but we can be sure that filledLen will have the same value of
  *                                        maxDestLen
  */
-e_eFSP_MsgE_Res msgEncoderRetriveEChunk(s_eFSP_MsgECtx* const ctx, uint8_t* const encodeDest,
+e_eFSP_MsgE_Res msgEncoderRetriveEChunk(s_eFSP_MsgECtx* const ctx, uint8_t encodeDest[],
 									    const uint32_t maxDestLen, uint32_t* const filledLen);
 
 #ifdef __cplusplus
