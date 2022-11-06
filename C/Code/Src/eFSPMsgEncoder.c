@@ -80,7 +80,7 @@ e_eFSP_MsgE_Res msgEncoderStartNewMessage(s_eFSP_MsgECtx* const ctx, const uint3
 	else
 	{
         /* Check param validity, need at least 1 byte of paylaod */
-        if( ( messageLen <= 0u ) || ( messageLen > ( 0xFFFFFFFFu - EFSP_MSGEN_HEADERSIZE ) ) )
+        if( ( messageLen <= 0u ) || ( messageLen > ( MAX_UINT32VAL - EFSP_MSGEN_HEADERSIZE ) ) )
         {
             result = MSGE_RES_BADPARAM;
         }

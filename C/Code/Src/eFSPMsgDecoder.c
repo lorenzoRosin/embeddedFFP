@@ -300,7 +300,7 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
                                 dataSizeRemaings = dLenInMsg - dataSizePay;
 
                                 /* Wait remaining data + EOF */
-                                if( dataSizeRemaings < 0xFFFFFFFFu )
+                                if( dataSizeRemaings < MAX_UINT32VAL )
                                 {
                                     *mostEffPayload = dataSizeRemaings + 1u;
                                 }
@@ -392,24 +392,24 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
                         result = convertReturnFromBstfToMSGD(resByStuff);
 
                         /* update total counter */
-                        if( totalErrSofRec < ( 0xFFFFFFFFu - cErrRec ) )
+                        if( totalErrSofRec < ( MAX_UINT32VAL - cErrRec ) )
                         {
                             totalErrSofRec += cErrRec;
                         }
                         else
                         {
-                            totalErrSofRec = 0xFFFFFFFFu;
+                            totalErrSofRec = MAX_UINT32VAL;
                             result = MSGD_RES_OUTOFMEM;
                         }
 
                         /* update total counter */
-                        if( totalCosumed < ( 0xFFFFFFFFu - cCosumed ) )
+                        if( totalCosumed < ( MAX_UINT32VAL - cCosumed ) )
                         {
                             totalCosumed += cCosumed;
                         }
                         else
                         {
-                            totalCosumed = 0xFFFFFFFFu;
+                            totalCosumed = MAX_UINT32VAL;
                             result = MSGD_RES_OUTOFMEM;
                         }
 
@@ -444,13 +444,13 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
                             {
                                 /* Too small frame or bad cr found, discharge and continue parse data if present */
                                 /* Increase error counter if frame is wrong */
-                                if( totalErrSofRec < 0xFFFFFFFFu )
+                                if( totalErrSofRec < MAX_UINT32VAL )
                                 {
                                     totalErrSofRec += 1u;
                                 }
                                 else
                                 {
-                                    totalErrSofRec = 0xFFFFFFFFu;
+                                    totalErrSofRec = MAX_UINT32VAL;
                                     result = MSGD_RES_OUTOFMEM;
                                 }
 
@@ -516,13 +516,13 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, const uint8_t* 
                             if( true != isMCoherent )
                             {
                                 /* Message not ended but something about message length is not coherent */
-                                if( totalErrSofRec < 0xFFFFFFFFu )
+                                if( totalErrSofRec < MAX_UINT32VAL )
                                 {
                                     totalErrSofRec += 1u;
                                 }
                                 else
                                 {
-                                    totalErrSofRec = 0xFFFFFFFFu;
+                                    totalErrSofRec = MAX_UINT32VAL;
                                     result = MSGD_RES_OUTOFMEM;
                                 }
 
