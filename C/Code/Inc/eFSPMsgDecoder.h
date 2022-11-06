@@ -122,6 +122,19 @@ e_eFSP_MsgD_Res msgDecoderGetDecodedData(s_eFSP_MsgDCtx* const ctx, uint8_t** da
 e_eFSP_MsgD_Res msgDecoderGetDecodedLen(s_eFSP_MsgDCtx* const ctx, uint32_t* const retrivedLen);
 
 /**
+ * @brief       Retrive if the MsgDecoder is currently waiting for the Start of frame.
+ *
+ * @param[in]   ctx         - Msg decoder context
+ * @param[out]  isMsgDec 	- Pointer to a bool_t variable that will be filled with true if we are waiting SOF
+ *
+ * @return      MSGD_RES_BADPOINTER   	- In case of bad pointer passed to the function
+ *		        MSGD_RES_NOINITLIB    	- Need to init context before taking some action
+ *		        MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
+ *              MSGD_RES_OK           	- Operation ended correctly
+ */
+e_eFSP_MsgD_Res msgDecoderIsWaitingSof(s_eFSP_MsgDCtx* const ctx, bool_t* const isWaitingSof);
+
+/**
  * @brief       Check if the current message is finished or if we need to decode some more data to have the full frame
  *
  * @param[in]   ctx         - Msg decoder context

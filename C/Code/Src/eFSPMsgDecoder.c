@@ -205,6 +205,34 @@ e_eFSP_MsgD_Res msgDecoderGetDecodedLen(s_eFSP_MsgDCtx* const ctx, uint32_t* con
 	return result;
 }
 
+e_eFSP_MsgD_Res msgDecoderIsWaitingSof(s_eFSP_MsgDCtx* const ctx, bool_t* const isWaitingSof)
+{
+	/* Local variable */
+	e_eFSP_MsgD_Res result;
+	e_eCU_dBUStf_Res resByStuff;
+
+	/* Check pointer validity */
+	if( ( NULL == ctx ) || ( NULL == isWaitingSof ) )
+	{
+		result = MSGD_RES_BADPOINTER;
+	}
+	else
+	{
+		/* Check internal status validity */
+		if( false == isMsgDecStatusStillCoherent(ctx) )
+		{
+			result = MSGD_RES_CORRUPTCTX;
+		}
+		else
+		{
+			resByStuff = bUStufferIsWaitingSof(&ctx->byteUStufferCtnx, isWaitingSof);
+			result = convertReturnFromBstfToMSGD(resByStuff);
+		}
+	}
+
+	return result;
+}
+
 e_eFSP_MsgD_Res msgDecoderIsAFullMsgUnstuff(s_eFSP_MsgDCtx* const ctx, bool_t* const isMsgDec)
 {
 	/* Local variable */
