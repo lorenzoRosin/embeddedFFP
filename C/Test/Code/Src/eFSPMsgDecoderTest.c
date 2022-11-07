@@ -242,7 +242,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == msgDecoderIsAFullMsgUnstuff(NULL, &isMsgDec) )
+    if( MSGD_RES_BADPOINTER == msgDecoderIsAFullMsgDecoded(NULL, &isMsgDec) )
     {
         (void)printf("msgDecoderTestBadPointer 11 -- OK \n");
     }
@@ -252,7 +252,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == msgDecoderIsAFullMsgUnstuff(&ctx, NULL) )
+    if( MSGD_RES_BADPOINTER == msgDecoderIsAFullMsgDecoded(&ctx, NULL) )
     {
         (void)printf("msgDecoderTestBadPointer 12 -- OK \n");
     }
@@ -368,7 +368,7 @@ void msgDecoderTestBadInit(void)
     }
 
     /* Function */
-    if( MSGD_RES_NOINITLIB == msgDecoderIsAFullMsgUnstuff(&ctx, &isMsgDec) )
+    if( MSGD_RES_NOINITLIB == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestBadInit 4  -- OK \n");
     }
@@ -560,7 +560,7 @@ void msgDecoderTestBadParamStatus(void)
     }
 
     ctx.cbCrcCtx = NULL;
-    if( MSGD_RES_CORRUPTCTX == msgDecoderIsAFullMsgUnstuff(&ctx, &isMsgDec) )
+    if( MSGD_RES_CORRUPTCTX == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestBadParamStatus 12 -- OK \n");
     }
@@ -806,7 +806,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 4  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgUnstuff(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -874,7 +874,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 8  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgUnstuff(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
@@ -1013,7 +1013,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 4  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgUnstuff(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1081,7 +1081,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 8  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgUnstuff(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1163,7 +1163,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 13 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgUnstuff(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1245,7 +1245,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 18 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgUnstuff(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1327,7 +1327,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 23 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgUnstuff(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1409,7 +1409,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 28 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgUnstuff(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
@@ -1534,7 +1534,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 4  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgUnstuff(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1602,7 +1602,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 8  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgUnstuff(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
@@ -1726,7 +1726,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 17 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgUnstuff(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1794,7 +1794,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 21 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgUnstuff(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1933,7 +1933,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 4  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgUnstuff(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2001,7 +2001,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 8  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgUnstuff(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
@@ -2140,7 +2140,7 @@ void msgDecoderTestErrorTooLong(void)
         (void)printf("msgDecoderTestErrorTooLong 4  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgUnstuff(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2208,7 +2208,7 @@ void msgDecoderTestErrorTooLong(void)
         (void)printf("msgDecoderTestErrorTooLong 8  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgUnstuff(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2338,7 +2338,7 @@ void msgDecoderTestErrorTooShort(void)
         (void)printf("msgDecoderTestErrorTooShort 4  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgUnstuff(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2406,7 +2406,7 @@ void msgDecoderTestErrorTooShort(void)
         (void)printf("msgDecoderTestErrorTooShort 8  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgUnstuff(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2536,7 +2536,7 @@ void msgDecoderTestErrorTooShortExt(void)
         (void)printf("msgDecoderTestErrorTooShortExt 4  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgUnstuff(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2603,7 +2603,7 @@ void msgDecoderTestErrorTooShortExt(void)
         (void)printf("msgDecoderTestErrorTooShortExt 8  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgUnstuff(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {

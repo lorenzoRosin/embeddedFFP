@@ -145,7 +145,7 @@ e_eFSP_MsgD_Res msgDecoderIsWaitingSof(s_eFSP_MsgDCtx* const ctx, bool_t* const 
  *		        MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
  *              MSGD_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MsgD_Res msgDecoderIsAFullMsgUnstuff(s_eFSP_MsgDCtx* const ctx, bool_t* const isMsgDec);
+e_eFSP_MsgD_Res msgDecoderIsAFullMsgDecoded(s_eFSP_MsgDCtx* const ctx, bool_t* const isMsgDec);
 
 /**
  * @brief       Return the most efficient numbers of data that needs to be passed to msgDecoderInsEncChunk in the next

@@ -233,7 +233,7 @@ e_eFSP_MsgD_Res msgDecoderIsWaitingSof(s_eFSP_MsgDCtx* const ctx, bool_t* const 
 	return result;
 }
 
-e_eFSP_MsgD_Res msgDecoderIsAFullMsgUnstuff(s_eFSP_MsgDCtx* const ctx, bool_t* const isMsgDec)
+e_eFSP_MsgD_Res msgDecoderIsAFullMsgDecoded(s_eFSP_MsgDCtx* const ctx, bool_t* const isMsgDec)
 {
 	/* Local variable */
 	e_eFSP_MsgD_Res result;
