@@ -268,6 +268,7 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
 	e_eFSP_MsgD_Res result;
 	e_eCU_dBUStf_Res resByStuff;
     bool_t isFullUnstuffed;
+    bool_t isWaitingSof;
     uint32_t dataSizeRemaings;
 	uint32_t dataSizePay;
     uint32_t dataSizeRaw;
@@ -288,6 +289,7 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
 		}
 		else
 		{
+            /* Check if frame is already ended */
             isFullUnstuffed = false;
 			resByStuff = bUStufferIsAFullFrameUnstuff(&ctx->byteUStufferCtnx, &isFullUnstuffed);
 			result = convertReturnFromBstfToMSGD(resByStuff);
@@ -301,7 +303,7 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
                 }
                 else
                 {
-                    /* How many byte are decoded? */
+                    /* How many byte have decoded? */
                     dataSizeRaw = 0u;
                     dataPP = NULL;
                     resByStuff = bUStufferGetUnstufData(&ctx->byteUStufferCtnx, &dataPP, &dataSizeRaw);
@@ -310,7 +312,27 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
                     if( MSGD_RES_OK == result )
                     {
                         /* Do we have enough data?  */
-                        if( dataSizeRaw < EFSP_MSGDE_HEADERSIZE )
+                        if( 0u == dataSizeRaw )
+                        {
+                            /* No data, are we still waiting SOF? */
+                            resByStuff = bUStufferIsWaitingSof(&ctx->byteUStufferCtnx, &isWaitingSof);
+                            result = convertReturnFromBstfToMSGD(resByStuff);
+
+                            if( MSGD_RES_OK == result )
+                            {
+                                if( true == isWaitingSof )
+                                {
+                                    /* Header + SOF */
+                                    *mostEffPayload = EFSP_MSGDE_HEADERSIZE + 1u;
+                                }
+                                else
+                                {
+                                    /* Header only */
+                                    *mostEffPayload = EFSP_MSGDE_HEADERSIZE;
+                                }
+                            }
+                        }
+                        else if( dataSizeRaw < EFSP_MSGDE_HEADERSIZE )
                         {
                             /* Need to receive all the header before estimating data size */
                             *mostEffPayload = EFSP_MSGDE_HEADERSIZE - dataSizeRaw;
@@ -324,13 +346,16 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
                             dataSizePay = dataSizeRaw - EFSP_MSGDE_HEADERSIZE;
 
                             /* A correct frame payload must have less lenght than the size reported in frame header */
-                            if( dataSizePay <= dLenInMsg)
+                            if( dataSizePay <= dLenInMsg )
                             {
                                 dataSizeRemaings = dLenInMsg - dataSizePay;
 
                                 /* Wait remaining data + EOF */
                                 if( dataSizeRemaings < MAX_UINT32VAL )
                                 {
+                                    /* dataSizeRemaings != 0 -> need data + EOF */
+                                    /* dataSizeRemaings == 0 -> need EOF . Infact we are sure the frame is not ended
+                                     * because we already have called the function bUStufferIsAFullFrameUnstuff */
                                     *mostEffPayload = dataSizeRemaings + 1u;
                                 }
                                 else
