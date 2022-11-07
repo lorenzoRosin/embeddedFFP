@@ -168,12 +168,15 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
  * @param[in]   ctx         	 - Msg decoder context
  * @param[in]   encArea     	 - Pointer to the encoded Data that we will decode
  * @param[in]   encLen      	 - Size of the encArea
- * @param[out]  consumedEncData  - Pointer to an uint32_t were we will store how many encoded data byte has been
+ * @param[out]  consumedEncData  - Pointer to an uint32_t were we will store how many encoded data has been
  *                                 analized. keep in mind that unalized data were not decoded and will need to be
- *                                 reparsed
+ *                                 reparsed. Un parsed data happens when the frame ended earlier
+ *                                 ( MSGD_RES_MESSAGEENDED is returned ) or when some error is returned. When the
+ *                                 function return MSGD_RES_OK consumedStuffData will always be returned has
+ *                                 encLen.
  * @param[out]  errSofRec        - Pointer to an uint32_t were we will store how many protocol error were detected.
  *                                 Even with some error detected, the protocol will continue parsing data discharging
- *                                 error.
+ *                                 error. When an error is found the algoritms will restart searching for the SOF.
  *
  * @return      MSGD_RES_BADPOINTER   	- In case of bad pointer passed to the function
  *		        MSGD_RES_NOINITLIB    	- Need to init context before taking some action
@@ -188,10 +191,12 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
  *                                        to know the reason of the error without storing all the data and checking CRC.
  *		        MSGD_RES_MESSAGEENDED  	- Frame ended, restart context in order to parse a new frame. Every other call
  *                                        to this function will not have effect until we call msgDecoderStartNewMsg.
- *                                        In this situation bear in mind that some data could be left out the parsing.
+ *                                        In this situation bear in mind that some data could be left out the parsing
+ *                                        and so we need to reparse that data after calling msgDecoderStartNewMsg.
  *				MSGE_RES_CRCCLBKERROR   - The crc callback returned an error when the decoder where verifing CRC
  *              MSGD_RES_OK           	- Operation ended correctly. The chunk is parsed correclty but the frame is not
- *                                        finished yet
+ *                                        finished yet. In this situation consumedEncData is always reported with a
+ *                                        value equals to encLen.
  */
 e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, uint8_t encArea[], const uint32_t encLen,
                                       uint32_t* const consumedEncData, uint32_t* errSofRec);
