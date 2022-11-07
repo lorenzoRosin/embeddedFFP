@@ -263,6 +263,7 @@ e_eFSP_MsgD_Res msgDecoderIsAFullMsgDecoded(s_eFSP_MsgDCtx* const ctx, bool_t* c
 
 e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* const mostEffPayload)
 {
+
 	/* Local variable */
 	e_eFSP_MsgD_Res result;
 	e_eCU_dBUStf_Res resByStuff;
