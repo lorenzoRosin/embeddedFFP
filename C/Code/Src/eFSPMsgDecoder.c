@@ -263,17 +263,16 @@ e_eFSP_MsgD_Res msgDecoderIsAFullMsgDecoded(s_eFSP_MsgDCtx* const ctx, bool_t* c
 
 e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* const mostEffPayload)
 {
-
 	/* Local variable */
 	e_eFSP_MsgD_Res result;
 	e_eCU_dBUStf_Res resByStuff;
     bool_t isFullUnstuffed;
     bool_t isWaitingSof;
     uint32_t dataSizeRemaings;
-	uint32_t dataSizePay;
+	uint32_t dPayRxed;
     uint32_t dataSizeRaw;
 	uint8_t* dataPP;
-    uint32_t dLenInMsg;
+    uint32_t dPayToRx;
 
 	/* Check pointer validity */
 	if( ( NULL == ctx ) || ( NULL == mostEffPayload ) )
@@ -303,7 +302,7 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
                 }
                 else
                 {
-                    /* How many byte have decoded? */
+                    /* How many byte do we have decoded? */
                     dataSizeRaw = 0u;
                     dataPP = NULL;
                     resByStuff = bUStufferGetUnstufData(&ctx->byteUStufferCtnx, &dataPP, &dataSizeRaw);
@@ -340,15 +339,15 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
                         else
                         {
                             /* Enough data! Start remaining data estimation */
-                            dLenInMsg = composeU32LE(dataPP[0x04u], dataPP[0x05u], dataPP[0x06u], dataPP[0x07u]);
+                            dPayToRx = composeU32LE(dataPP[0x04u], dataPP[0x05u], dataPP[0x06u], dataPP[0x07u]);
 
                             /* How much payload we have */
-                            dataSizePay = dataSizeRaw - EFSP_MSGDE_HEADERSIZE;
+                            dPayRxed = dataSizeRaw - EFSP_MSGDE_HEADERSIZE;
 
                             /* A correct frame payload must have less lenght than the size reported in frame header */
-                            if( dataSizePay <= dLenInMsg )
+                            if( dPayRxed <= dPayToRx )
                             {
-                                dataSizeRemaings = dLenInMsg - dataSizePay;
+                                dataSizeRemaings = dPayToRx - dPayRxed;
 
                                 /* Wait remaining data + EOF */
                                 if( dataSizeRemaings < MAX_UINT32VAL )
@@ -510,6 +509,7 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, uint8_t encArea
 
                                 if( MSGD_RES_MESSAGEENDED == result )
                                 {
+                                    /* Message ended but something about CRC is not rigth, restart a frame */
                                     resByStuff = bUStufferStartNewFrame(&ctx->byteUStufferCtnx);
                                     result = convertReturnFromBstfToMSGD(resByStuff);
 
@@ -582,6 +582,8 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, uint8_t encArea
 
                                 if( MSGD_RES_OK == result )
                                 {
+                                    /* When a message has some coherence error during the receiving process
+                                     * we can only restart the frame */
                                     resByStuff = bUStufferStartNewFrame(&ctx->byteUStufferCtnx);
                                     result = convertReturnFromBstfToMSGD(resByStuff);
 
@@ -738,7 +740,7 @@ e_eFSP_MsgD_Res isMsgCorrect(s_eCU_BUStuffCtx* ctx, bool_t* isCorrect, cb_crc32_
 {
     e_eFSP_MsgD_Res result;
     e_eCU_dBUStf_Res byteUnstuffRes;
-    uint32_t dLenInMsg;
+    uint32_t dPayToRx;
 	uint32_t crcInMsg;
 	uint32_t crcExp;
 	uint32_t dataSizeP;
@@ -753,7 +755,6 @@ e_eFSP_MsgD_Res isMsgCorrect(s_eCU_BUStuffCtx* ctx, bool_t* isCorrect, cb_crc32_
     else
     {
         /* Ok the frame is complete, need to check if we have data size, data crc, crc rigth value */
-
         /* Init value */
         dataSizeP = 0u;
         dataPP = NULL;
@@ -773,9 +774,9 @@ e_eFSP_MsgD_Res isMsgCorrect(s_eCU_BUStuffCtx* ctx, bool_t* isCorrect, cb_crc32_
             else
             {
                 /* Enough data! Is data len in frame coherent?  */
-                dLenInMsg = composeU32LE(dataPP[0x04u], dataPP[0x05u], dataPP[0x06u], dataPP[0x07u]);
+                dPayToRx = composeU32LE(dataPP[0x04u], dataPP[0x05u], dataPP[0x06u], dataPP[0x07u]);
 
-                if( ( dataSizeP - EFSP_MSGDE_HEADERSIZE ) == dLenInMsg )
+                if( ( dataSizeP - EFSP_MSGDE_HEADERSIZE ) == dPayToRx )
                 {
                     /* Data len is coherent! Is crc rigth? */
                     crcExp = 0u;
@@ -784,7 +785,7 @@ e_eFSP_MsgD_Res isMsgCorrect(s_eCU_BUStuffCtx* ctx, bool_t* isCorrect, cb_crc32_
                     crcInMsg = composeU32LE(dataPP[0x00u], dataPP[0x01u], dataPP[0x02u], dataPP[0x03u]);
 
                     /* Calculate CRC */
-                    crcRes = (*(cbCrcPtr))( cbCrcCtx, ECU_CRC_BASE_SEED, &dataPP[4u], dLenInMsg + 4u,  &crcExp );
+                    crcRes = (*(cbCrcPtr))( cbCrcCtx, ECU_CRC_BASE_SEED, &dataPP[4u], dPayToRx + 4u,  &crcExp );
 
                     if( true == crcRes )
                     {
@@ -822,7 +823,7 @@ static e_eFSP_MsgD_Res isMsgCoherent(s_eCU_BUStuffCtx* ctx, bool_t* isCoherent)
      * is lower than data payload received, if greater something is wrong  */
     e_eFSP_MsgD_Res result;
     e_eCU_dBUStf_Res byteUnstuffRes;
-    uint32_t dLenInMsg;
+    uint32_t dPayToRx;
 	uint32_t dataSizeP;
 	uint8_t* dataPP;
 
@@ -834,7 +835,6 @@ static e_eFSP_MsgD_Res isMsgCoherent(s_eCU_BUStuffCtx* ctx, bool_t* isCoherent)
     else
     {
         /* Check how much payload is received */
-
         /* Init value */
         dataSizeP = 0u;
         dataPP = NULL;
@@ -854,9 +854,9 @@ static e_eFSP_MsgD_Res isMsgCoherent(s_eCU_BUStuffCtx* ctx, bool_t* isCoherent)
             else
             {
                 /* Enough data! Is data len in frame coherent?  */
-                dLenInMsg = composeU32LE(dataPP[0x04u], dataPP[0x05u], dataPP[0x06u], dataPP[0x07u]);
+                dPayToRx = composeU32LE(dataPP[0x04u], dataPP[0x05u], dataPP[0x06u], dataPP[0x07u]);
 
-                if( ( dataSizeP - EFSP_MSGDE_HEADERSIZE ) <= dLenInMsg )
+                if( ( dataSizeP - EFSP_MSGDE_HEADERSIZE ) <= dPayToRx )
                 {
                     /* Data len is coherent! */
                     *isCoherent = true;
