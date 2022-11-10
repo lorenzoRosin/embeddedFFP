@@ -762,7 +762,7 @@
                     <check name="MISRAC2012-Dir-4.7_a" enabled="true" />
                     <check name="MISRAC2012-Dir-4.7_b" enabled="true" />
                     <check name="MISRAC2012-Dir-4.7_c" enabled="true" />
-                    <check name="MISRAC2012-Dir-4.8" enabled="true" />
+                    <check name="MISRAC2012-Dir-4.8" enabled="false" />
                     <check name="MISRAC2012-Dir-4.9" enabled="true" />
                     <check name="MISRAC2012-Dir-4.10" enabled="true" />
                     <check name="MISRAC2012-Dir-4.11_a" enabled="true" />
