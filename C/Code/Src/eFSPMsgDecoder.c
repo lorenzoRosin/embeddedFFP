@@ -19,10 +19,10 @@
 /***********************************************************************************************************************
  *  PRIVATE STATIC FUNCTION DECLARATION
  **********************************************************************************************************************/
-static bool_t isMsgDecStatusStillCoherent(const s_eFSP_MsgDCtx* ctx);
-static e_eFSP_MsgD_Res convertReturnFromBstfToMSGD(s_eCU_BUNSTF_Res returnedEvent);
-static e_eFSP_MsgD_Res isMsgCorrect(s_eCU_BUNSTF_Ctx* ctx, bool_t* isCorrect, cb_crc32_msgd cbCrcPtr, void* cbCrcCtx);
-static e_eFSP_MsgD_Res isMsgCoherent(s_eCU_BUNSTF_Ctx* ctx, bool_t* isCoherent);
+static bool_t isMsgDecStatusStillCoherent(const s_eFSP_MSGD_Ctx* ctx);
+static e_eFSP_MSGD_Res convertReturnFromBstfToMSGD(s_eCU_BUNSTF_Res returnedEvent);
+static e_eFSP_MSGD_Res isMsgCorrect(s_eCU_BUNSTF_Ctx* ctx, bool_t* isCorrect, cb_crc32_msgd cbCrcPtr, void* cbCrcCtx);
+static e_eFSP_MSGD_Res isMsgCoherent(s_eCU_BUNSTF_Ctx* ctx, bool_t* isCoherent);
 static uint32_t composeU32LE(uint8_t v1, uint8_t v2, uint8_t v3, uint8_t v4);
 
 
@@ -36,11 +36,11 @@ static uint32_t composeU32LE(uint8_t v1, uint8_t v2, uint8_t v3, uint8_t v4);
     /* Suppressed for code clarity */
 #endif
 
-e_eFSP_MsgD_Res msgDecoderInitCtx(s_eFSP_MsgDCtx* const ctx, uint8_t memArea[], const uint32_t memAreaSize,
+e_eFSP_MSGD_Res MSGD_InitCtx(s_eFSP_MSGD_Ctx* const ctx, uint8_t memArea[], const uint32_t memAreaSize,
 								 cb_crc32_msgd cbCrcP, void* const clbCtx)
 {
 	/* Local variable */
-	e_eFSP_MsgD_Res result;
+	e_eFSP_MSGD_Res result;
 	s_eCU_BUNSTF_Res resByStuff;
 
 	/* Check pointer validity */
@@ -74,10 +74,10 @@ e_eFSP_MsgD_Res msgDecoderInitCtx(s_eFSP_MsgDCtx* const ctx, uint8_t memArea[], 
     #pragma cstat_restore = "MISRAC2012-Rule-10.3"
 #endif
 
-e_eFSP_MsgD_Res msgDecoderStartNewMsg(s_eFSP_MsgDCtx* const ctx)
+e_eFSP_MSGD_Res MSGD_StartNewMsg(s_eFSP_MSGD_Ctx* const ctx)
 {
 	/* Local variable */
-	e_eFSP_MsgD_Res result;
+	e_eFSP_MSGD_Res result;
 	s_eCU_BUNSTF_Res resByStuff;
 
 	/* Check pointer validity */
@@ -109,10 +109,10 @@ e_eFSP_MsgD_Res msgDecoderStartNewMsg(s_eFSP_MsgDCtx* const ctx)
     /* Suppressed for code clarity */
 #endif
 
-e_eFSP_MsgD_Res msgDecoderGetDecodedData(s_eFSP_MsgDCtx* const ctx, uint8_t** dataP, uint32_t* const retrivedLen)
+e_eFSP_MSGD_Res MSGD_GetDecodedData(s_eFSP_MSGD_Ctx* const ctx, uint8_t** dataP, uint32_t* const retrivedLen)
 {
 	/* Local variable */
-	e_eFSP_MsgD_Res result;
+	e_eFSP_MSGD_Res result;
 	s_eCU_BUNSTF_Res resByStuff;
 	uint8_t* dataPP;
 	uint32_t dataSizeP;
@@ -167,10 +167,10 @@ e_eFSP_MsgD_Res msgDecoderGetDecodedData(s_eFSP_MsgDCtx* const ctx, uint8_t** da
                             "MISRAC2012-Rule-18.6_d", "CERT-DCL30-C_e"
 #endif
 
-e_eFSP_MsgD_Res msgDecoderGetDecodedLen(s_eFSP_MsgDCtx* const ctx, uint32_t* const retrivedLen)
+e_eFSP_MSGD_Res MSGD_GetDecodedLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* const retrivedLen)
 {
 	/* Local variable */
-	e_eFSP_MsgD_Res result;
+	e_eFSP_MSGD_Res result;
 	s_eCU_BUNSTF_Res resByStuff;
 	uint32_t dataSizeP;
 
@@ -215,10 +215,10 @@ e_eFSP_MsgD_Res msgDecoderGetDecodedLen(s_eFSP_MsgDCtx* const ctx, uint32_t* con
 	return result;
 }
 
-e_eFSP_MsgD_Res msgDecoderIsWaitingSof(s_eFSP_MsgDCtx* const ctx, bool_t* const isWaitingSof)
+e_eFSP_MSGD_Res MSGD_IsWaitingSof(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isWaitingSof)
 {
 	/* Local variable */
-	e_eFSP_MsgD_Res result;
+	e_eFSP_MSGD_Res result;
 	s_eCU_BUNSTF_Res resByStuff;
 
 	/* Check pointer validity */
@@ -243,10 +243,10 @@ e_eFSP_MsgD_Res msgDecoderIsWaitingSof(s_eFSP_MsgDCtx* const ctx, bool_t* const 
 	return result;
 }
 
-e_eFSP_MsgD_Res msgDecoderIsAFullMsgDecoded(s_eFSP_MsgDCtx* const ctx, bool_t* const isMsgDec)
+e_eFSP_MSGD_Res MSGD_IsAFullMsgDecoded(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isMsgDec)
 {
 	/* Local variable */
-	e_eFSP_MsgD_Res result;
+	e_eFSP_MSGD_Res result;
 	s_eCU_BUNSTF_Res resByStuff;
 
 	/* Check pointer validity */
@@ -271,10 +271,10 @@ e_eFSP_MsgD_Res msgDecoderIsAFullMsgDecoded(s_eFSP_MsgDCtx* const ctx, bool_t* c
 	return result;
 }
 
-e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* const mostEffPayload)
+e_eFSP_MSGD_Res MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* const mostEffPayload)
 {
 	/* Local variable */
-	e_eFSP_MsgD_Res result;
+	e_eFSP_MSGD_Res result;
 	s_eCU_BUNSTF_Res resByStuff;
     bool_t isFullUnstuffed;
     bool_t isWaitingSof;
@@ -375,7 +375,7 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
                             }
                             else
                             {
-                                /* We have more data than expected, but it's impossible because msgDecoderInsEncChunk
+                                /* We have more data than expected, but it's impossible because MSGD_InsEncChunk
                                  * is able to prevent this kind of situation */
                                 result = MSGD_RES_CORRUPTCTX;
                             }
@@ -394,13 +394,13 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
     /* Suppressed for code clarity */
 #endif
 
-e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, uint8_t encArea[], const uint32_t encLen,
+e_eFSP_MSGD_Res MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const ctx, uint8_t encArea[], const uint32_t encLen,
                                       uint32_t* const consumedEncData, uint32_t* errEncRec)
 {
 	/* Local return  */
-	e_eFSP_MsgD_Res result;
-    e_eFSP_MsgD_Res resMsgCorrect;
-    e_eFSP_MsgD_Res resultMsgCoherent;
+	e_eFSP_MSGD_Res result;
+    e_eFSP_MSGD_Res resMsgCorrect;
+    e_eFSP_MSGD_Res resultMsgCoherent;
 	s_eCU_BUNSTF_Res resByStuff;
 
     /* Local coherence */
@@ -418,7 +418,7 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, uint8_t encArea
     uint32_t totalErrSofRec;
 
     /* Redo loop var */
-    e_eFSP_MsgD_Priv_state insertEncState;
+    e_eFSP_MSGD_Priv_state insertEncState;
 
 	/* Check pointer validity */
 	if( ( NULL == ctx ) || ( NULL == encArea ) || ( NULL == consumedEncData ) || ( NULL == errEncRec ) )
@@ -673,7 +673,7 @@ e_eFSP_MsgD_Res msgDecoderInsEncChunk(s_eFSP_MsgDCtx* const ctx, uint8_t encArea
 /***********************************************************************************************************************
  *  PRIVATE FUNCTION
  **********************************************************************************************************************/
-bool_t isMsgDecStatusStillCoherent(const s_eFSP_MsgDCtx* ctx)
+bool_t isMsgDecStatusStillCoherent(const s_eFSP_MSGD_Ctx* ctx)
 {
     bool_t result;
 
@@ -690,9 +690,9 @@ bool_t isMsgDecStatusStillCoherent(const s_eFSP_MsgDCtx* ctx)
     return result;
 }
 
-e_eFSP_MsgD_Res convertReturnFromBstfToMSGD(s_eCU_BUNSTF_Res returnedEvent)
+e_eFSP_MSGD_Res convertReturnFromBstfToMSGD(s_eCU_BUNSTF_Res returnedEvent)
 {
-	e_eFSP_MsgD_Res result;
+	e_eFSP_MSGD_Res result;
 
 	switch( returnedEvent )
 	{
@@ -754,9 +754,9 @@ e_eFSP_MsgD_Res convertReturnFromBstfToMSGD(s_eCU_BUNSTF_Res returnedEvent)
     /* Suppressed for code clarity */
 #endif
 
-e_eFSP_MsgD_Res isMsgCorrect(s_eCU_BUNSTF_Ctx* ctx, bool_t* isCorrect, cb_crc32_msgd cbCrcPtr, void* cbCrcCtx)
+e_eFSP_MSGD_Res isMsgCorrect(s_eCU_BUNSTF_Ctx* ctx, bool_t* isCorrect, cb_crc32_msgd cbCrcPtr, void* cbCrcCtx)
 {
-    e_eFSP_MsgD_Res result;
+    e_eFSP_MSGD_Res result;
     s_eCU_BUNSTF_Res byteUnstuffRes;
     uint32_t dPayToRx;
 	uint32_t crcInMsg;
@@ -839,11 +839,11 @@ e_eFSP_MsgD_Res isMsgCorrect(s_eCU_BUNSTF_Ctx* ctx, bool_t* isCorrect, cb_crc32_
     #pragma cstat_restore = "MISRAC2012-Rule-8.13"
 #endif
 
-static e_eFSP_MsgD_Res isMsgCoherent(s_eCU_BUNSTF_Ctx* ctx, bool_t* isCoherent)
+static e_eFSP_MSGD_Res isMsgCoherent(s_eCU_BUNSTF_Ctx* ctx, bool_t* isCoherent)
 {
     /* Need to check coherence of the message during message receiving, how? Check if data len reported by payload
      * is lower than data payload received, if greater something is wrong  */
-    e_eFSP_MsgD_Res result;
+    e_eFSP_MSGD_Res result;
     s_eCU_BUNSTF_Res byteUnstuffRes;
     uint32_t dPayToRx;
 	uint32_t dataSizeP;

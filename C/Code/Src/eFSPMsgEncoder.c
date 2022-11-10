@@ -18,8 +18,8 @@
 /***********************************************************************************************************************
  *  PRIVATE STATIC FUNCTION DECLARATION
  **********************************************************************************************************************/
-static bool_t isMsgEncStatusStillCoherent(const s_eFSP_MsgECtx* ctx);
-static e_eFSP_MsgE_Res convertReturnFromBstfToMSGE(e_eCU_BSTF_Res returnedEvent);
+static bool_t isMsgEncStatusStillCoherent(const s_eFSP_MSGE_Ctx* ctx);
+static e_eFSP_MSGE_Res convertReturnFromBstfToMSGE(e_eCU_BSTF_Res returnedEvent);
 
 
 
@@ -30,11 +30,11 @@ static e_eFSP_MsgE_Res convertReturnFromBstfToMSGE(e_eCU_BSTF_Res returnedEvent)
     #pragma cstat_disable = "MISRAC2012-Rule-10.3"
     /* Suppressed because this warning is not working */
 #endif
-e_eFSP_MsgE_Res msgEncoderInitCtx(s_eFSP_MsgECtx* const ctx, uint8_t memArea[], const uint32_t memAreaSize,
+e_eFSP_MSGE_Res MSGE_InitCtx(s_eFSP_MSGE_Ctx* const ctx, uint8_t memArea[], const uint32_t memAreaSize,
 								  cb_crc32_msge cbCrcP, void* const clbCtx)
 {
 	/* Local variable */
-	e_eFSP_MsgE_Res result;
+	e_eFSP_MSGE_Res result;
 	e_eCU_BSTF_Res resultByStuff;
 
 	/* Check pointer validity */
@@ -68,10 +68,10 @@ e_eFSP_MsgE_Res msgEncoderInitCtx(s_eFSP_MsgECtx* const ctx, uint8_t memArea[], 
     #pragma cstat_restore = "MISRAC2012-Rule-10.3"
 #endif
 
-e_eFSP_MsgE_Res msgEncoderStartNewMessage(s_eFSP_MsgECtx* const ctx, const uint32_t messageLen)
+e_eFSP_MSGE_Res MSGE_StartNewMessage(s_eFSP_MSGE_Ctx* const ctx, const uint32_t messageLen)
 {
 	/* Local variable */
-	e_eFSP_MsgE_Res result;
+	e_eFSP_MSGE_Res result;
 	e_eCU_BSTF_Res resultByStuff;
 	uint8_t* dataP;
 	uint32_t maxDataSize;
@@ -168,10 +168,10 @@ e_eFSP_MsgE_Res msgEncoderStartNewMessage(s_eFSP_MsgECtx* const ctx, const uint3
     /* Suppressed for code clarity */
 #endif
 
-e_eFSP_MsgE_Res msgEncoderGetPayloadLocation(s_eFSP_MsgECtx* const ctx, uint8_t** dataP, uint32_t* const maxDataSize)
+e_eFSP_MSGE_Res MSGE_GetPayloadLocation(s_eFSP_MSGE_Ctx* const ctx, uint8_t** dataP, uint32_t* const maxDataSize)
 {
 	/* Local variable */
-	e_eFSP_MsgE_Res result;
+	e_eFSP_MSGE_Res result;
 	e_eCU_BSTF_Res resultByStuff;
 	uint8_t* dataPP;
 	uint32_t maxDataSizeP;
@@ -220,10 +220,10 @@ e_eFSP_MsgE_Res msgEncoderGetPayloadLocation(s_eFSP_MsgECtx* const ctx, uint8_t*
                             "CERT-DCL30-C_e"
 #endif
 
-e_eFSP_MsgE_Res msgEncoderRestartCurrentMessage(s_eFSP_MsgECtx* const ctx)
+e_eFSP_MSGE_Res MSGE_RestartCurrentMessage(s_eFSP_MSGE_Ctx* const ctx)
 {
 	/* Local variable */
-	e_eFSP_MsgE_Res result;
+	e_eFSP_MSGE_Res result;
 	e_eCU_BSTF_Res resultByStuff;
 
 	/* Check pointer validity */
@@ -249,10 +249,10 @@ e_eFSP_MsgE_Res msgEncoderRestartCurrentMessage(s_eFSP_MsgECtx* const ctx)
 	return result;
 }
 
-e_eFSP_MsgE_Res msgEncoderGetRemToRetrive(s_eFSP_MsgECtx* const ctx, uint32_t* const retrivedLen)
+e_eFSP_MSGE_Res MSGE_GetRemToRetrive(s_eFSP_MSGE_Ctx* const ctx, uint32_t* const retrivedLen)
 {
 	/* Local variable */
-	e_eFSP_MsgE_Res result;
+	e_eFSP_MSGE_Res result;
 	e_eCU_BSTF_Res resultByStuff;
 
 	/* Check pointer validity */
@@ -283,11 +283,11 @@ e_eFSP_MsgE_Res msgEncoderGetRemToRetrive(s_eFSP_MsgECtx* const ctx, uint32_t* c
     /* Suppressed because this warning is not working */
 #endif
 
-e_eFSP_MsgE_Res msgEncoderRetriveEChunk(s_eFSP_MsgECtx* const ctx, uint8_t encodeDest[],
+e_eFSP_MSGE_Res MSGE_RetriveEChunk(s_eFSP_MSGE_Ctx* const ctx, uint8_t encodeDest[],
 									    const uint32_t maxDestLen, uint32_t* const filledLen)
 {
 	/* Local variable */
-	e_eFSP_MsgE_Res result;
+	e_eFSP_MSGE_Res result;
 	e_eCU_BSTF_Res resultByStuff;
 
 	/* Check pointer validity */
@@ -322,7 +322,7 @@ e_eFSP_MsgE_Res msgEncoderRetriveEChunk(s_eFSP_MsgECtx* const ctx, uint8_t encod
 /***********************************************************************************************************************
  *  PRIVATE FUNCTION
  **********************************************************************************************************************/
-bool_t isMsgEncStatusStillCoherent(const s_eFSP_MsgECtx* ctx)
+bool_t isMsgEncStatusStillCoherent(const s_eFSP_MSGE_Ctx* ctx)
 {
     bool_t result;
 
@@ -339,9 +339,9 @@ bool_t isMsgEncStatusStillCoherent(const s_eFSP_MsgECtx* ctx)
     return result;
 }
 
-e_eFSP_MsgE_Res convertReturnFromBstfToMSGE(e_eCU_BSTF_Res returnedEvent)
+e_eFSP_MSGE_Res convertReturnFromBstfToMSGE(e_eCU_BSTF_Res returnedEvent)
 {
-	e_eFSP_MsgE_Res result;
+	e_eFSP_MSGE_Res result;
 
 	switch( returnedEvent )
 	{

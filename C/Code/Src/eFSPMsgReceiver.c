@@ -17,24 +17,24 @@
 /***********************************************************************************************************************
  *  PRIVATE STATIC FUNCTION DECLARATION
  **********************************************************************************************************************/
-static bool_t isMsgReceStatusStillCoherent(const s_eFSP_MsgRxCtx* ctx);
-static e_eFSP_MsgRx_Res convertReturnFromMSGDToMSGRX(e_eFSP_MsgD_Res returnedEvent);
+static bool_t isMsgReceStatusStillCoherent(const s_eFSP_MSGRX_Ctx* ctx);
+static e_eFSP_MSGRX_Res convertReturnFromMSGDToMSGRX(e_eFSP_MSGD_Res returnedEvent);
 
 
 
 /***********************************************************************************************************************
  *   GLOBAL FUNCTIONS
  **********************************************************************************************************************/
-e_eFSP_MsgRx_Res msgReceiverInitCtx(s_eFSP_MsgRxCtx* const ctx, const s_eFSP_MsgRxInitData* initData)
+e_eFSP_MSGRX_Res MSGRX_InitCtx(s_eFSP_MSGRX_Ctx* const ctx, const s_eFSP_MSGRX_InitData* initData)
 {
 	/* Local variable */
-	e_eFSP_MsgRx_Res result;
-	e_eFSP_MsgD_Res resultMsgE;
+	e_eFSP_MSGRX_Res result;
+	e_eFSP_MSGD_Res resultMsgE;
 
 	/* Check pointer validity */
 	if( ( NULL == ctx ) || ( NULL == initData ) )
 	{
-		result = MSGTRX_RES_BADPOINTER;
+		result = MSGRX_RES_BADPOINTER;
 	}
 	else
 	{
@@ -42,7 +42,7 @@ e_eFSP_MsgRx_Res msgReceiverInitCtx(s_eFSP_MsgRxCtx* const ctx, const s_eFSP_Msg
         if( ( NULL == initData->i_memArea ) || ( NULL == initData->i_receiveBuffArea ) || ( NULL == initData->i_cbCrcP ) ||
             ( NULL == initData->i_cbCrcCrx ) || ( NULL == initData->i_cbRxP ) || ( NULL == initData->i_cbRxCtx ) )
         {
-            result = MSGTRX_RES_BADPOINTER;
+            result = MSGRX_RES_BADPOINTER;
         }
         else
         {
@@ -50,7 +50,7 @@ e_eFSP_MsgRx_Res msgReceiverInitCtx(s_eFSP_MsgRxCtx* const ctx, const s_eFSP_Msg
             if( ( initData->i_receiveBuffAreaSize < 1u ) || ( initData->i_frameTimeoutMs < 1u ) ||
                 ( initData->i_timePerRecMs < 1u ) || ( initData->i_timePerRecMs > initData->i_frameTimeoutMs ) )
             {
-                result = MSGTRX_RES_BADPARAM;
+                result = MSGRX_RES_BADPARAM;
             }
             else
             {
@@ -68,7 +68,7 @@ e_eFSP_MsgRx_Res msgReceiverInitCtx(s_eFSP_MsgRxCtx* const ctx, const s_eFSP_Msg
                 ctx->waitingFrameStart = true;
 
                 /* initialize internal bytestuffer */
-                resultMsgE =  msgDecoderInitCtx(&ctx->msgDecoderCtnx, initData->i_memArea, initData->i_memAreaSize,
+                resultMsgE =  MSGD_InitCtx(&ctx->msgDecoderCtnx, initData->i_memArea, initData->i_memAreaSize,
                                                 initData->i_cbCrcP, initData->i_cbCrcCrx);
                 result = convertReturnFromMSGDToMSGRX(resultMsgE);
             }
@@ -78,23 +78,23 @@ e_eFSP_MsgRx_Res msgReceiverInitCtx(s_eFSP_MsgRxCtx* const ctx, const s_eFSP_Msg
 	return result;
 }
 
-e_eFSP_MsgRx_Res msgReceiverStartNewMsg(s_eFSP_MsgRxCtx* const ctx)
+e_eFSP_MSGRX_Res MSGRX_StartNewMsg(s_eFSP_MSGRX_Ctx* const ctx)
 {
 	/* Local variable */
-	e_eFSP_MsgRx_Res result;
-	e_eFSP_MsgD_Res resultMsgE;
+	e_eFSP_MSGRX_Res result;
+	e_eFSP_MSGD_Res resultMsgE;
 
 	/* Check pointer validity */
 	if( NULL == ctx )
 	{
-		result = MSGTRX_RES_BADPOINTER;
+		result = MSGRX_RES_BADPOINTER;
 	}
 	else
 	{
         /* Check internal status validity */
         if( false == isMsgReceStatusStillCoherent(ctx) )
         {
-            result = MSGTRX_RES_CORRUPTCTX;
+            result = MSGRX_RES_CORRUPTCTX;
         }
         else
         {
@@ -104,7 +104,7 @@ e_eFSP_MsgRx_Res msgReceiverStartNewMsg(s_eFSP_MsgRxCtx* const ctx)
             ctx->timeCounterMs = 0u;
 
             /* Init message encoder */
-            resultMsgE = msgDecoderStartNewMsg(&ctx->msgDecoderCtnx);
+            resultMsgE = MSGD_StartNewMsg(&ctx->msgDecoderCtnx);
             result = convertReturnFromMSGDToMSGRX(resultMsgE);
         }
 	}
@@ -112,28 +112,28 @@ e_eFSP_MsgRx_Res msgReceiverStartNewMsg(s_eFSP_MsgRxCtx* const ctx)
 	return result;
 }
 
-e_eFSP_MsgRx_Res msgReceiverGetDecodedData(s_eFSP_MsgRxCtx* const ctx, uint8_t** dataP, uint32_t* const retrivedLen)
+e_eFSP_MSGRX_Res MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const ctx, uint8_t** dataP, uint32_t* const retrivedLen)
 {
 	/* Local variable */
-	e_eFSP_MsgRx_Res result;
-	e_eFSP_MsgD_Res resultMsgE;
+	e_eFSP_MSGRX_Res result;
+	e_eFSP_MSGD_Res resultMsgE;
 
 	/* Check pointer validity */
 	if( ( NULL == ctx ) || ( NULL == dataP ) || ( NULL == retrivedLen ) )
 	{
-		result = MSGTRX_RES_BADPOINTER;
+		result = MSGRX_RES_BADPOINTER;
 	}
 	else
 	{
 		/* Check internal status validity */
 		if( false == isMsgReceStatusStillCoherent(ctx) )
 		{
-			result = MSGTRX_RES_CORRUPTCTX;
+			result = MSGRX_RES_CORRUPTCTX;
 		}
 		else
 		{
 			/* Get memory reference of CRC+LEN+DATA, so we can calculate reference of only data payload */
-			resultMsgE = msgDecoderGetDecodedData(&ctx->msgDecoderCtnx, dataP, retrivedLen);
+			resultMsgE = MSGD_GetDecodedData(&ctx->msgDecoderCtnx, dataP, retrivedLen);
 			result = convertReturnFromMSGDToMSGRX(resultMsgE);
 		}
 	}
@@ -141,14 +141,14 @@ e_eFSP_MsgRx_Res msgReceiverGetDecodedData(s_eFSP_MsgRxCtx* const ctx, uint8_t**
 	return result;
 }
 
-e_eFSP_MsgRx_Res msgReceiverReceiveChunk(s_eFSP_MsgRxCtx* const ctx)
+e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
 {
 	/* Local variable */
-	e_eFSP_MsgRx_Res result;
-	e_eFSP_MsgD_Res resultMsgE;
+	e_eFSP_MSGRX_Res result;
+	e_eFSP_MSGD_Res resultMsgE;
 
     /* Local variable of data to send */
-    e_eFSP_rece_Priv_state stateM;
+    e_eFSP_MSGRX_Priv_state stateM;
     uint32_t remainingTimeMs;
     uint32_t sendFramTimeTotal;
     uint32_t sendFramTimeSingle;
@@ -160,21 +160,21 @@ e_eFSP_MsgRx_Res msgReceiverReceiveChunk(s_eFSP_MsgRxCtx* const ctx)
 	/* Check pointer validity */
 	if( NULL == ctx )
 	{
-		result = MSGTRX_RES_BADPOINTER;
+		result = MSGRX_RES_BADPOINTER;
 	}
 	else
 	{
 		/* Check internal status validity */
 		if( false == isMsgReceStatusStillCoherent(ctx) )
 		{
-			result = MSGTRX_RES_CORRUPTCTX;
+			result = MSGRX_RES_CORRUPTCTX;
 		}
 		else
 		{
             /* Init time frame counter */
             sendFramTimeTotal = 0u;
             sendFramTimeSingle = 0u;
-            result = MSGTRX_RES_OK;
+            result = MSGRX_RES_OK;
             stateM = MSGRX_PRV_CHECKIFBUFFERTX;
 
             /* wait end elaboration or end for timeout */
@@ -221,7 +221,7 @@ e_eFSP_MsgRx_Res msgReceiverReceiveChunk(s_eFSP_MsgRxCtx* const ctx)
                             /* Check for some strangeness */
                             if( cDataSendedSingle > cDataToSendLen)
                             {
-                                result = MSGTRX_RES_CORRUPTCTX;
+                                result = MSGRX_RES_CORRUPTCTX;
                                 stateM = MSGRX_PRV_ELABDONE;
                             }
                             else
@@ -240,7 +240,7 @@ e_eFSP_MsgRx_Res msgReceiverReceiveChunk(s_eFSP_MsgRxCtx* const ctx)
                         else
                         {
                             /* Error sending data */
-                            result = MSGTRX_RES_TXCLBKERROR;
+                            result = MSGRX_RES_TXCLBKERROR;
                             stateM = MSGRX_PRV_ELABDONE;
                         }
                         break;
@@ -252,15 +252,15 @@ e_eFSP_MsgRx_Res msgReceiverReceiveChunk(s_eFSP_MsgRxCtx* const ctx)
                         ctx->rxBuffCntr = 0u;
 
                         /* Is data present in message encoder buffer? */
-                        resultMsgE = msgEncoderRetriveEChunk(&ctx->msgDecoderCtnx, ctx->rxBuff, ctx->rxBuffSize, &ctx->rxBuffFill);
+                        resultMsgE = MSGE_RetriveEChunk(&ctx->msgDecoderCtnx, ctx->rxBuff, ctx->rxBuffSize, &ctx->rxBuffFill);
                         result = convertReturnFromMSGDToMSGRX(resultMsgE);
 
-                        if( MSGTRX_RES_OK == result )
+                        if( MSGRX_RES_OK == result )
                         {
                             /* Retrived some data to send */
                             stateM = MSGRX_PRV_CHECKIFBUFFERTX;
                         }
-                        else if( MSGTRX_RES_MESSAGESENDED == result )
+                        else if( MSGRX_RES_MESSAGESENDED == result )
                         {
                             if( 0u == ctx->rxBuffFill )
                             {
@@ -286,7 +286,7 @@ e_eFSP_MsgRx_Res msgReceiverReceiveChunk(s_eFSP_MsgRxCtx* const ctx)
                     {
                         /* Impossible end here */
                         stateM = MSGRX_PRV_ELABDONE;
-                        result = MSGTRX_RES_CORRUPTCTX;
+                        result = MSGRX_RES_CORRUPTCTX;
                         break;
                     }
                 }
@@ -295,11 +295,11 @@ e_eFSP_MsgRx_Res msgReceiverReceiveChunk(s_eFSP_MsgRxCtx* const ctx)
             /* Check for timeout */
             if( ctx->timeCounterMs >= ctx->frameTimeoutMs )
             {
-                if( ( MSGTRX_RES_OK == result ) || ( MSGTRX_RES_MESSAGESENDED == result ) )
+                if( ( MSGRX_RES_OK == result ) || ( MSGRX_RES_MESSAGESENDED == result ) )
                 {
                     /* Frame can go in timeout when we are not finished (RES_OK) or when all the message is sended
                      * ( RES_MESSAGESENDED ) */
-                    result = MSGTRX_RES_MESSAGETIMEOUT;
+                    result = MSGRX_RES_MESSAGETIMEOUT;
                 }
             }
 		}
@@ -313,7 +313,7 @@ e_eFSP_MsgRx_Res msgReceiverReceiveChunk(s_eFSP_MsgRxCtx* const ctx)
 /***********************************************************************************************************************
  *  PRIVATE FUNCTION
  **********************************************************************************************************************/
-bool_t isMsgReceStatusStillCoherent(const s_eFSP_MsgRxCtx* ctx)
+bool_t isMsgReceStatusStillCoherent(const s_eFSP_MSGRX_Ctx* ctx)
 {
     bool_t result;
 
@@ -348,64 +348,64 @@ bool_t isMsgReceStatusStillCoherent(const s_eFSP_MsgRxCtx* ctx)
     return result;
 }
 
-e_eFSP_MsgRx_Res convertReturnFromMSGDToMSGRX(e_eFSP_MsgD_Res returnedEvent)
+e_eFSP_MSGRX_Res convertReturnFromMSGDToMSGRX(e_eFSP_MSGD_Res returnedEvent)
 {
-	e_eFSP_MsgRx_Res result;
+	e_eFSP_MSGRX_Res result;
 
 	switch( returnedEvent )
 	{
 		case MSGD_RES_OK:
 		{
-			result = MSGTRX_RES_OK;
+			result = MSGRX_RES_OK;
             break;
 		}
 
 		case MSGD_RES_BADPARAM:
 		{
-			result = MSGTRX_RES_BADPARAM;
+			result = MSGRX_RES_BADPARAM;
             break;
 		}
 
 		case MSGD_RES_BADPOINTER:
 		{
-			result = MSGTRX_RES_BADPOINTER;
+			result = MSGRX_RES_BADPOINTER;
             break;
 		}
 
 		case MSGD_RES_CORRUPTCTX:
 		{
-			result = MSGTRX_RES_CORRUPTCTX;
+			result = MSGRX_RES_CORRUPTCTX;
             break;
 		}
 
         case MSGD_RES_OUTOFMEM:
         {
-			result = MSGTRX_RES_OUTOFMEM;
+			result = MSGRX_RES_OUTOFMEM;
             break;
         }
 
 		case MSGD_RES_MESSAGEENDED:
 		{
-			result = MSGTRX_RES_MESSAGERECEIVED;
+			result = MSGRX_RES_MESSAGERECEIVED;
             break;
 		}
 
 		case MSGD_RES_NOINITLIB:
 		{
-			result = MSGTRX_RES_NOINITLIB;
+			result = MSGRX_RES_NOINITLIB;
             break;
 		}
 
 		case MSGD_RES_CRCCLBKERROR :
 		{
-			result = MSGTRX_RES_CRCCLBKERROR;
+			result = MSGRX_RES_CRCCLBKERROR;
             break;
 		}
 
 		default:
 		{
             /* Impossible end here */
-			result = MSGTRX_RES_CORRUPTCTX;
+			result = MSGRX_RES_CORRUPTCTX;
             break;
 		}
 	}

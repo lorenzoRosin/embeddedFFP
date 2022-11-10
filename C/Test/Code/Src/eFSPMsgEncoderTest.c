@@ -124,7 +124,7 @@ bool_t c32SAdaptEr(void* cntx, const uint32_t s, const uint8_t d[], const uint32
 void msgEncoderTestBadPointer(void)
 {
     /* Local variable */
-    s_eFSP_MsgECtx ctx;
+    s_eFSP_MSGE_Ctx ctx;
     uint8_t  memArea[5u];
     cb_crc32_msge cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
@@ -132,7 +132,7 @@ void msgEncoderTestBadPointer(void)
     uint8_t* dataP;
 
     /* Function */
-    if( MSGE_RES_BADPOINTER == msgEncoderInitCtx(NULL, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGE_RES_BADPOINTER == MSGE_InitCtx(NULL, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgEncoderTestBadPointer 1  -- OK \n");
     }
@@ -142,7 +142,7 @@ void msgEncoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGE_RES_BADPOINTER == msgEncoderInitCtx(&ctx, NULL, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGE_RES_BADPOINTER == MSGE_InitCtx(&ctx, NULL, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgEncoderTestBadPointer 2  -- OK \n");
     }
@@ -152,7 +152,7 @@ void msgEncoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGE_RES_BADPOINTER == msgEncoderInitCtx(&ctx, memArea, sizeof(memArea), NULL, &ctxAdapterCrc) )
+    if( MSGE_RES_BADPOINTER == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), NULL, &ctxAdapterCrc) )
     {
         (void)printf("msgEncoderTestBadPointer 3  -- OK \n");
     }
@@ -162,7 +162,7 @@ void msgEncoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGE_RES_BADPOINTER == msgEncoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, NULL) )
+    if( MSGE_RES_BADPOINTER == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, NULL) )
     {
         (void)printf("msgEncoderTestBadPointer 4  -- OK \n");
     }
@@ -172,7 +172,7 @@ void msgEncoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGE_RES_BADPOINTER == msgEncoderStartNewMessage(NULL, sizeof(memArea)) )
+    if( MSGE_RES_BADPOINTER == MSGE_StartNewMessage(NULL, sizeof(memArea)) )
     {
         (void)printf("msgEncoderTestBadPointer 5  -- OK \n");
     }
@@ -182,7 +182,7 @@ void msgEncoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGE_RES_BADPOINTER == msgEncoderGetPayloadLocation(NULL, &dataP, &var32) )
+    if( MSGE_RES_BADPOINTER == MSGE_GetPayloadLocation(NULL, &dataP, &var32) )
     {
         (void)printf("msgEncoderTestBadPointer 6  -- OK \n");
     }
@@ -192,7 +192,7 @@ void msgEncoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGE_RES_BADPOINTER == msgEncoderGetPayloadLocation(&ctx, NULL, &var32) )
+    if( MSGE_RES_BADPOINTER == MSGE_GetPayloadLocation(&ctx, NULL, &var32) )
     {
         (void)printf("msgEncoderTestBadPointer 7  -- OK \n");
     }
@@ -202,7 +202,7 @@ void msgEncoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGE_RES_BADPOINTER == msgEncoderGetPayloadLocation(&ctx, &dataP, NULL) )
+    if( MSGE_RES_BADPOINTER == MSGE_GetPayloadLocation(&ctx, &dataP, NULL) )
     {
         (void)printf("msgEncoderTestBadPointer 8  -- OK \n");
     }
@@ -212,7 +212,7 @@ void msgEncoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGE_RES_BADPOINTER == msgEncoderRestartCurrentMessage(NULL) )
+    if( MSGE_RES_BADPOINTER == MSGE_RestartCurrentMessage(NULL) )
     {
         (void)printf("msgEncoderTestBadPointer 9  -- OK \n");
     }
@@ -222,7 +222,7 @@ void msgEncoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGE_RES_BADPOINTER == msgEncoderGetRemToRetrive(NULL, &var32) )
+    if( MSGE_RES_BADPOINTER == MSGE_GetRemToRetrive(NULL, &var32) )
     {
         (void)printf("msgEncoderTestBadPointer 10 -- OK \n");
     }
@@ -232,7 +232,7 @@ void msgEncoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGE_RES_BADPOINTER == msgEncoderGetRemToRetrive(&ctx, NULL) )
+    if( MSGE_RES_BADPOINTER == MSGE_GetRemToRetrive(&ctx, NULL) )
     {
         (void)printf("msgEncoderTestBadPointer 11 -- OK \n");
     }
@@ -242,7 +242,7 @@ void msgEncoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGE_RES_BADPOINTER == msgEncoderRetriveEChunk(NULL, memArea, sizeof(memArea), &var32) )
+    if( MSGE_RES_BADPOINTER == MSGE_RetriveEChunk(NULL, memArea, sizeof(memArea), &var32) )
     {
         (void)printf("msgEncoderTestBadPointer 12 -- OK \n");
     }
@@ -252,7 +252,7 @@ void msgEncoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGE_RES_BADPOINTER == msgEncoderRetriveEChunk(&ctx, NULL, sizeof(memArea), &var32) )
+    if( MSGE_RES_BADPOINTER == MSGE_RetriveEChunk(&ctx, NULL, sizeof(memArea), &var32) )
     {
         (void)printf("msgEncoderTestBadPointer 13 -- OK \n");
     }
@@ -262,7 +262,7 @@ void msgEncoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGE_RES_BADPOINTER == msgEncoderRetriveEChunk(&ctx, memArea, sizeof(memArea), NULL) )
+    if( MSGE_RES_BADPOINTER == MSGE_RetriveEChunk(&ctx, memArea, sizeof(memArea), NULL) )
     {
         (void)printf("msgEncoderTestBadPointer 14 -- OK \n");
     }
@@ -275,7 +275,7 @@ void msgEncoderTestBadPointer(void)
 void msgEncoderTestBadInit(void)
 {
     /* Local variable */
-    s_eFSP_MsgECtx ctx;
+    s_eFSP_MSGE_Ctx ctx;
     uint8_t  memArea[5u];
     uint32_t var32;
     uint8_t* dataP;
@@ -284,7 +284,7 @@ void msgEncoderTestBadInit(void)
     ctx.byteStufferCtnx.isInit = false;
 
     /* Function */
-    if( MSGE_RES_NOINITLIB == msgEncoderStartNewMessage(&ctx, 1u) )
+    if( MSGE_RES_NOINITLIB == MSGE_StartNewMessage(&ctx, 1u) )
     {
         (void)printf("msgEncoderTestBadInit 1  -- OK \n");
     }
@@ -294,7 +294,7 @@ void msgEncoderTestBadInit(void)
     }
 
     /* Function */
-    if( MSGE_RES_NOINITLIB == msgEncoderGetPayloadLocation(&ctx, &dataP, &var32) )
+    if( MSGE_RES_NOINITLIB == MSGE_GetPayloadLocation(&ctx, &dataP, &var32) )
     {
         (void)printf("msgEncoderTestBadInit 2  -- OK \n");
     }
@@ -304,7 +304,7 @@ void msgEncoderTestBadInit(void)
     }
 
     /* Function */
-    if( MSGE_RES_NOINITLIB == msgEncoderRestartCurrentMessage(&ctx) )
+    if( MSGE_RES_NOINITLIB == MSGE_RestartCurrentMessage(&ctx) )
     {
         (void)printf("msgEncoderTestBadInit 3  -- OK \n");
     }
@@ -314,7 +314,7 @@ void msgEncoderTestBadInit(void)
     }
 
     /* Function */
-    if( MSGE_RES_NOINITLIB == msgEncoderGetRemToRetrive(&ctx, &var32) )
+    if( MSGE_RES_NOINITLIB == MSGE_GetRemToRetrive(&ctx, &var32) )
     {
         (void)printf("msgEncoderTestBadInit 4  -- OK \n");
     }
@@ -324,7 +324,7 @@ void msgEncoderTestBadInit(void)
     }
 
     /* Function */
-    if( MSGE_RES_NOINITLIB == msgEncoderRetriveEChunk(&ctx, memArea, sizeof(memArea), &var32) )
+    if( MSGE_RES_NOINITLIB == MSGE_RetriveEChunk(&ctx, memArea, sizeof(memArea), &var32) )
     {
         (void)printf("msgEncoderTestBadInit 5  -- OK \n");
     }
@@ -337,7 +337,7 @@ void msgEncoderTestBadInit(void)
 void msgEncoderTestBadIniMsg(void)
 {
     /* Local variable */
-    s_eFSP_MsgECtx ctx;
+    s_eFSP_MSGE_Ctx ctx;
     uint8_t  memArea[10u];
     cb_crc32_msge cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
@@ -347,7 +347,7 @@ void msgEncoderTestBadIniMsg(void)
     (void)memset(memArea, 0, sizeof(memArea));
 
     /* Function */
-    if( MSGE_RES_OK == msgEncoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgEncoderTestBadIniMsg 1  -- OK \n");
     }
@@ -356,7 +356,7 @@ void msgEncoderTestBadIniMsg(void)
         (void)printf("msgEncoderTestBadIniMsg 1  -- FAIL \n");
     }
 
-    if( MSGE_RES_NOINITMESSAGE == msgEncoderRestartCurrentMessage(&ctx) )
+    if( MSGE_RES_NOINITMESSAGE == MSGE_RestartCurrentMessage(&ctx) )
     {
         (void)printf("msgEncoderTestBadIniMsg 2  -- OK \n");
     }
@@ -365,7 +365,7 @@ void msgEncoderTestBadIniMsg(void)
         (void)printf("msgEncoderTestBadIniMsg 2  -- FAIL \n");
     }
 
-    if( MSGE_RES_NOINITMESSAGE == msgEncoderGetRemToRetrive(&ctx, &var32) )
+    if( MSGE_RES_NOINITMESSAGE == MSGE_GetRemToRetrive(&ctx, &var32) )
     {
         (void)printf("msgEncoderTestBadIniMsg 3  -- OK \n");
     }
@@ -374,7 +374,7 @@ void msgEncoderTestBadIniMsg(void)
         (void)printf("msgEncoderTestBadIniMsg 3  -- FAIL \n");
     }
 
-    if( MSGE_RES_NOINITMESSAGE == msgEncoderRetriveEChunk(&ctx, memArea, sizeof(memArea), &var32) )
+    if( MSGE_RES_NOINITMESSAGE == MSGE_RetriveEChunk(&ctx, memArea, sizeof(memArea), &var32) )
     {
         (void)printf("msgEncoderTestBadIniMsg 4  -- OK \n");
     }
@@ -387,7 +387,7 @@ void msgEncoderTestBadIniMsg(void)
 void msgEncoderTestBadParamEntr(void)
 {
     /* Local variable */
-    s_eFSP_MsgECtx ctx;
+    s_eFSP_MSGE_Ctx ctx;
     uint8_t  memArea[10u];
     cb_crc32_msge cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
@@ -397,7 +397,7 @@ void msgEncoderTestBadParamEntr(void)
     (void)memset(memArea, 0, sizeof(memArea));
 
     /* Function */
-    if( MSGE_RES_BADPARAM == msgEncoderInitCtx(&ctx, memArea, EFSP_MIN_MSGEN_BUFFLEN - 1u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGE_RES_BADPARAM == MSGE_InitCtx(&ctx, memArea, EFSP_MIN_MSGEN_BUFFLEN - 1u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgEncoderTestBadParamEntr 1  -- OK \n");
     }
@@ -406,7 +406,7 @@ void msgEncoderTestBadParamEntr(void)
         (void)printf("msgEncoderTestBadParamEntr 1  -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == msgEncoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgEncoderTestBadParamEntr 2  -- OK \n");
     }
@@ -415,7 +415,7 @@ void msgEncoderTestBadParamEntr(void)
         (void)printf("msgEncoderTestBadParamEntr 2  -- FAIL \n");
     }
 
-    if( MSGE_RES_BADPARAM == msgEncoderStartNewMessage(&ctx, 0u) )
+    if( MSGE_RES_BADPARAM == MSGE_StartNewMessage(&ctx, 0u) )
     {
         (void)printf("msgEncoderTestBadParamEntr 3  -- OK \n");
     }
@@ -424,7 +424,7 @@ void msgEncoderTestBadParamEntr(void)
         (void)printf("msgEncoderTestBadParamEntr 3  -- FAIL \n");
     }
 
-    if( MSGE_RES_BADPARAM == msgEncoderStartNewMessage(&ctx, (0xFFFFFFFFu - EFSP_MIN_MSGEN_BUFFLEN + 1u) ) )
+    if( MSGE_RES_BADPARAM == MSGE_StartNewMessage(&ctx, (0xFFFFFFFFu - EFSP_MIN_MSGEN_BUFFLEN + 1u) ) )
     {
         (void)printf("msgEncoderTestBadParamEntr 4  -- OK \n");
     }
@@ -433,7 +433,7 @@ void msgEncoderTestBadParamEntr(void)
         (void)printf("msgEncoderTestBadParamEntr 4  -- FAIL \n");
     }
 
-    if( MSGE_RES_BADPARAM == msgEncoderStartNewMessage(&ctx, (3u) ) )
+    if( MSGE_RES_BADPARAM == MSGE_StartNewMessage(&ctx, (3u) ) )
     {
         (void)printf("msgEncoderTestBadParamEntr 5  -- OK \n");
     }
@@ -442,7 +442,7 @@ void msgEncoderTestBadParamEntr(void)
         (void)printf("msgEncoderTestBadParamEntr 5  -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == msgEncoderStartNewMessage(&ctx, (2u) ) )
+    if( MSGE_RES_OK == MSGE_StartNewMessage(&ctx, (2u) ) )
     {
         (void)printf("msgEncoderTestBadParamEntr 6  -- OK \n");
     }
@@ -451,7 +451,7 @@ void msgEncoderTestBadParamEntr(void)
         (void)printf("msgEncoderTestBadParamEntr 6  -- FAIL \n");
     }
 
-    if( MSGE_RES_BADPARAM == msgEncoderRetriveEChunk(&ctx, memArea, 0u, &var32) )
+    if( MSGE_RES_BADPARAM == MSGE_RetriveEChunk(&ctx, memArea, 0u, &var32) )
     {
         (void)printf("msgEncoderTestBadParamEntr 7  -- OK \n");
     }
@@ -464,7 +464,7 @@ void msgEncoderTestBadParamEntr(void)
 void msgEncoderTestBadParamStatus(void)
 {
     /* Local variable */
-    s_eFSP_MsgECtx ctx;
+    s_eFSP_MSGE_Ctx ctx;
     uint8_t  memArea[10u];
     cb_crc32_msge cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
@@ -475,7 +475,7 @@ void msgEncoderTestBadParamStatus(void)
     (void)memset(memArea, 0, sizeof(memArea));
 
     /* Function */
-    if( MSGE_RES_OK == msgEncoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgEncoderTestBadParamStatus 1  -- OK \n");
     }
@@ -485,7 +485,7 @@ void msgEncoderTestBadParamStatus(void)
     }
 
     ctx.cbCrcCtx = NULL;
-    if( MSGE_RES_CORRUPTCTX == msgEncoderStartNewMessage(&ctx, 2u) )
+    if( MSGE_RES_CORRUPTCTX == MSGE_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgEncoderTestBadParamStatus 2  -- OK \n");
     }
@@ -495,7 +495,7 @@ void msgEncoderTestBadParamStatus(void)
     }
 
     /* Function */
-    if( MSGE_RES_OK == msgEncoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgEncoderTestBadParamStatus 3  -- OK \n");
     }
@@ -505,7 +505,7 @@ void msgEncoderTestBadParamStatus(void)
     }
 
     ctx.cbCrcPtr = NULL;
-    if( MSGE_RES_CORRUPTCTX == msgEncoderStartNewMessage(&ctx, 2u) )
+    if( MSGE_RES_CORRUPTCTX == MSGE_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgEncoderTestBadParamStatus 4  -- OK \n");
     }
@@ -515,7 +515,7 @@ void msgEncoderTestBadParamStatus(void)
     }
 
     /* Function */
-    if( MSGE_RES_OK == msgEncoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgEncoderTestBadParamStatus 5  -- OK \n");
     }
@@ -525,7 +525,7 @@ void msgEncoderTestBadParamStatus(void)
     }
 
     ctx.cbCrcPtr = NULL;
-    if( MSGE_RES_CORRUPTCTX == msgEncoderGetPayloadLocation(&ctx, &dataP, &var32) )
+    if( MSGE_RES_CORRUPTCTX == MSGE_GetPayloadLocation(&ctx, &dataP, &var32) )
     {
         (void)printf("msgEncoderTestBadParamStatus 6  -- OK \n");
     }
@@ -535,7 +535,7 @@ void msgEncoderTestBadParamStatus(void)
     }
 
     /* Function */
-    if( MSGE_RES_OK == msgEncoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgEncoderTestBadParamStatus 7  -- OK \n");
     }
@@ -545,7 +545,7 @@ void msgEncoderTestBadParamStatus(void)
     }
 
     ctx.cbCrcPtr = NULL;
-    if( MSGE_RES_CORRUPTCTX == msgEncoderRestartCurrentMessage(&ctx) )
+    if( MSGE_RES_CORRUPTCTX == MSGE_RestartCurrentMessage(&ctx) )
     {
         (void)printf("msgEncoderTestBadParamStatus 8  -- OK \n");
     }
@@ -555,7 +555,7 @@ void msgEncoderTestBadParamStatus(void)
     }
 
     /* Function */
-    if( MSGE_RES_OK == msgEncoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgEncoderTestBadParamStatus 9  -- OK \n");
     }
@@ -565,7 +565,7 @@ void msgEncoderTestBadParamStatus(void)
     }
 
     ctx.cbCrcPtr = NULL;
-    if( MSGE_RES_CORRUPTCTX == msgEncoderGetRemToRetrive(&ctx, &var32) )
+    if( MSGE_RES_CORRUPTCTX == MSGE_GetRemToRetrive(&ctx, &var32) )
     {
         (void)printf("msgEncoderTestBadParamStatus 10 -- OK \n");
     }
@@ -575,7 +575,7 @@ void msgEncoderTestBadParamStatus(void)
     }
 
     /* Function */
-    if( MSGE_RES_OK == msgEncoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgEncoderTestBadParamStatus 9  -- OK \n");
     }
@@ -585,7 +585,7 @@ void msgEncoderTestBadParamStatus(void)
     }
 
     ctx.cbCrcPtr = NULL;
-    if( MSGE_RES_CORRUPTCTX == msgEncoderRetriveEChunk(&ctx, memArea, 2u, &var32) )
+    if( MSGE_RES_CORRUPTCTX == MSGE_RetriveEChunk(&ctx, memArea, 2u, &var32) )
     {
         (void)printf("msgEncoderTestBadParamStatus 10 -- OK \n");
     }
@@ -595,7 +595,7 @@ void msgEncoderTestBadParamStatus(void)
     }
 
     /* Function */
-    if( MSGE_RES_OK == msgEncoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgEncoderTestBadParamStatus 11 -- OK \n");
     }
@@ -605,7 +605,7 @@ void msgEncoderTestBadParamStatus(void)
     }
 
     ctx.byteStufferCtnx.memAreaSize = 7u;
-    if( MSGE_RES_CORRUPTCTX == msgEncoderStartNewMessage(&ctx, 2u) )
+    if( MSGE_RES_CORRUPTCTX == MSGE_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgEncoderTestBadParamStatus 12 -- OK \n");
     }
@@ -615,7 +615,7 @@ void msgEncoderTestBadParamStatus(void)
     }
 
     /* Function */
-    if( MSGE_RES_OK == msgEncoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgEncoderTestBadParamStatus 13 -- OK \n");
     }
@@ -625,7 +625,7 @@ void msgEncoderTestBadParamStatus(void)
     }
 
     ctx.byteStufferCtnx.memAreaSize = 7u;
-    if( MSGE_RES_CORRUPTCTX == msgEncoderGetPayloadLocation(&ctx, &dataP, &var32) )
+    if( MSGE_RES_CORRUPTCTX == MSGE_GetPayloadLocation(&ctx, &dataP, &var32) )
     {
         (void)printf("msgEncoderTestBadParamStatus 14 -- OK \n");
     }
@@ -638,7 +638,7 @@ void msgEncoderTestBadParamStatus(void)
 void msgEncoderTestBadClBck(void)
 {
     /* Local variable */
-    s_eFSP_MsgECtx ctx;
+    s_eFSP_MSGE_Ctx ctx;
     uint8_t  memArea[10u];
     cb_crc32_msge cbCrcPTest = &c32SAdaptEr;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
@@ -647,7 +647,7 @@ void msgEncoderTestBadClBck(void)
     (void)memset(memArea, 0, sizeof(memArea));
 
     /* Function */
-    if( MSGE_RES_OK == msgEncoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgEncoderTestBadClBck 1  -- OK \n");
     }
@@ -656,7 +656,7 @@ void msgEncoderTestBadClBck(void)
         (void)printf("msgEncoderTestBadClBck 1  -- FAIL \n");
     }
 
-    if( MSGE_RES_CRCCLBKERROR == msgEncoderStartNewMessage(&ctx, 2u) )
+    if( MSGE_RES_CRCCLBKERROR == MSGE_StartNewMessage(&ctx, 2u) )
     {
         if( CRC_RES_BADPOINTER == ctxAdapterCrc.lastError )
         {
@@ -676,7 +676,7 @@ void msgEncoderTestBadClBck(void)
 void msgEncoderTestMsgEnd(void)
 {
     /* Local variable */
-    s_eFSP_MsgECtx ctx;
+    s_eFSP_MSGE_Ctx ctx;
     uint8_t  memArea[12u] = {0u};
     uint8_t  msgA[24u] = {0u};
     cb_crc32_msge cbCrcPTest = &c32SAdapt;
@@ -688,7 +688,7 @@ void msgEncoderTestMsgEnd(void)
     (void)memset(memArea, 0, sizeof(memArea));
 
     /* Function */
-    if( MSGE_RES_OK == msgEncoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgEncoderTestMsgEnd 1  -- OK \n");
     }
@@ -697,7 +697,7 @@ void msgEncoderTestMsgEnd(void)
         (void)printf("msgEncoderTestMsgEnd 1  -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == msgEncoderGetPayloadLocation(&ctx, &dataP, &var32) )
+    if( MSGE_RES_OK == MSGE_GetPayloadLocation(&ctx, &dataP, &var32) )
     {
         if( 4u == var32 )
         {
@@ -718,7 +718,7 @@ void msgEncoderTestMsgEnd(void)
     dataP[2u] = 3u;
     dataP[3u] = 4u;
 
-    if( MSGE_RES_OK == msgEncoderStartNewMessage(&ctx, 4u) )
+    if( MSGE_RES_OK == MSGE_StartNewMessage(&ctx, 4u) )
     {
         (void)printf("msgEncoderTestMsgEnd 3  -- OK \n");
     }
@@ -728,7 +728,7 @@ void msgEncoderTestMsgEnd(void)
     }
 
     /* Parse all the message */
-    if( MSGE_RES_MESSAGEENDED == msgEncoderRetriveEChunk(&ctx, msgA, sizeof(msgA), &var32) )
+    if( MSGE_RES_MESSAGEENDED == MSGE_RetriveEChunk(&ctx, msgA, sizeof(msgA), &var32) )
     {
         if( 14u == var32 )
         {
@@ -769,7 +769,7 @@ void msgEncoderTestMsgEnd(void)
 void msgEncoderTestGeneral(void)
 {
     /* Local variable */
-    s_eFSP_MsgECtx ctx;
+    s_eFSP_MSGE_Ctx ctx;
     uint8_t  memArea[12u] = {0u};
     cb_crc32_msge cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
@@ -780,7 +780,7 @@ void msgEncoderTestGeneral(void)
     (void)memset(memArea, 0, sizeof(memArea));
 
     /* Function */
-    if( MSGE_RES_OK == msgEncoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgEncoderTestGeneral 1  -- OK \n");
     }
@@ -790,7 +790,7 @@ void msgEncoderTestGeneral(void)
     }
 
     ctx.byteStufferCtnx.memAreaSize = 0u;
-    if( MSGE_RES_CORRUPTCTX == msgEncoderGetPayloadLocation(&ctx, &dataP, &var32) )
+    if( MSGE_RES_CORRUPTCTX == MSGE_GetPayloadLocation(&ctx, &dataP, &var32) )
     {
         (void)printf("msgEncoderTestGeneral 2  -- OK \n");
     }

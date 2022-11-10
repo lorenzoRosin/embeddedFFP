@@ -38,21 +38,21 @@ typedef bool_t (*cb_rx_msge) ( void* cntx, const uint8_t dataReceived[], uint32_
 
 typedef enum
 {
-    MSGTRX_RES_OK = 0,
-    MSGTRX_RES_BADPARAM,
-    MSGTRX_RES_BADPOINTER,
-	MSGTRX_RES_CORRUPTCTX,
-    MSGTRX_RES_OUTOFMEM,
-    MSGTRX_RES_MESSAGERECEIVED,
-    MSGTRX_RES_MESSAGETIMEOUT,
-    MSGTRX_RES_NOINITLIB,
-	MSGTRX_RES_CRCCLBKERROR,
-    MSGTRX_RES_RXCLBKERROR,
-}e_eFSP_MsgRx_Res;
+    MSGRX_RES_OK = 0,
+    MSGRX_RES_BADPARAM,
+    MSGRX_RES_BADPOINTER,
+	MSGRX_RES_CORRUPTCTX,
+    MSGRX_RES_OUTOFMEM,
+    MSGRX_RES_MESSAGERECEIVED,
+    MSGRX_RES_MESSAGETIMEOUT,
+    MSGRX_RES_NOINITLIB,
+	MSGRX_RES_CRCCLBKERROR,
+    MSGRX_RES_RXCLBKERROR,
+}e_eFSP_MSGRX_Res;
 
 typedef struct
 {
-    s_eFSP_MsgDCtx  msgDecoderCtnx;
+    s_eFSP_MSGD_Ctx  msgDecoderCtnx;
 	uint8_t*        rxBuff;
 	uint32_t        rxBuffSize;
 	uint32_t        rxBuffCntr;
@@ -64,7 +64,7 @@ typedef struct
     uint32_t        timePerRecMs;
     bool_t          needWaitFrameStart;
     bool_t          waitingFrameStart;
-}s_eFSP_MsgRxCtx;
+}s_eFSP_MSGRX_Ctx;
 
 typedef struct
 {
@@ -79,7 +79,7 @@ typedef struct
     uint32_t        i_frameTimeoutMs;
     uint32_t        i_timePerRecMs;
     bool_t          i_needWaitFrameStart;
-}s_eFSP_MsgRxInitData;
+}s_eFSP_MSGRX_InitData;
 
 
 
@@ -92,11 +92,11 @@ typedef struct
  * @param[in]   ctx         - Msg receiver context
  * @param[in]   initData    - Init data
  *
- * @return      MSGTRX_RES_BADPOINTER     - In case of bad pointer passed to the function
- *		        MSGTRX_RES_BADPARAM       - In case of an invalid parameter passed to the function
- *              MSGTRX_RES_OK             - Operation ended correctly
+ * @return      MSGRX_RES_BADPOINTER     - In case of bad pointer passed to the function
+ *		        MSGRX_RES_BADPARAM       - In case of an invalid parameter passed to the function
+ *              MSGRX_RES_OK             - Operation ended correctly
  */
-e_eFSP_MsgRx_Res msgReceiverInitCtx(s_eFSP_MsgRxCtx* const ctx, const s_eFSP_MsgRxInitData* initData);
+e_eFSP_MSGRX_Res MSGRX_InitCtx(s_eFSP_MSGRX_Ctx* const ctx, const s_eFSP_MSGRX_InitData* initData);
 
 /**
  * @brief       Start receiving a new message, loosing the previous stored decoded msg frame, but not the data in rx
@@ -104,12 +104,12 @@ e_eFSP_MsgRx_Res msgReceiverInitCtx(s_eFSP_MsgRxCtx* const ctx, const s_eFSP_Msg
  *
  * @param[in]   ctx         - Msg receiver context
  *
- * @return      MSGTRX_RES_BADPOINTER   	- In case of bad pointer passed to the function
- *		        MSGTRX_RES_NOINITLIB    	- Need to init context before taking some action
- *		        MSGTRX_RES_CORRUPTCTX   	- In case of an corrupted context
- *              MSGTRX_RES_OK           	- Operation ended correctly
+ * @return      MSGRX_RES_BADPOINTER   	- In case of bad pointer passed to the function
+ *		        MSGRX_RES_NOINITLIB    	- Need to init context before taking some action
+ *		        MSGRX_RES_CORRUPTCTX   	- In case of an corrupted context
+ *              MSGRX_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MsgRx_Res msgReceiverStartNewMsg(s_eFSP_MsgRxCtx* const ctx);
+e_eFSP_MSGRX_Res MSGRX_StartNewMsg(s_eFSP_MSGRX_Ctx* const ctx);
 
 /**
  * @brief       Retrive the pointer to the stored decoded data payload ( NO HEADER ), and the data size of the frame.
@@ -121,39 +121,39 @@ e_eFSP_MsgRx_Res msgReceiverStartNewMsg(s_eFSP_MsgRxCtx* const ctx);
  * @param[out]  retrivedLen - Pointer to a uint32_t variable where the size of the decoded data will be placed (raw
  *                            paylod data len )
  *
- * @return      MSGTRX_RES_BADPOINTER   	- In case of bad pointer passed to the function
- *		        MSGTRX_RES_NOINITLIB    	- Need to init context before taking some action
- *		        MSGTRX_RES_CORRUPTCTX   	- In case of an corrupted context
- *              MSGTRX_RES_OK           	- Operation ended correctly
+ * @return      MSGRX_RES_BADPOINTER   	- In case of bad pointer passed to the function
+ *		        MSGRX_RES_NOINITLIB    	- Need to init context before taking some action
+ *		        MSGRX_RES_CORRUPTCTX   	- In case of an corrupted context
+ *              MSGRX_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MsgRx_Res msgReceiverGetDecodedData(s_eFSP_MsgRxCtx* const ctx, uint8_t** dataP, uint32_t* const retrivedLen);
+e_eFSP_MSGRX_Res MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const ctx, uint8_t** dataP, uint32_t* const retrivedLen);
 
 /**
  * @brief       Receive encoded chunk that the alg will decode byte per byte
  *
  * @param[in]   ctx         	 - Msg receiver context
  *
- * @return  MSGTRX_RES_BADPOINTER   	- In case of bad pointer passed to the function
- *		    MSGTRX_RES_NOINITLIB    	- Need to init context before taking some action
- *		    MSGTRX_RES_BADPARAM     	- In case of an invalid parameter passed to the function
- *		    MSGTRX_RES_CORRUPTCTX   	- In case of an corrupted context
- *          MSGTRX_RES_OUTOFMEM     	- Can not decode data, initial mem pointer was too small. The only way to
+ * @return  MSGRX_RES_BADPOINTER   	- In case of bad pointer passed to the function
+ *		    MSGRX_RES_NOINITLIB    	- Need to init context before taking some action
+ *		    MSGRX_RES_BADPARAM     	- In case of an invalid parameter passed to the function
+ *		    MSGRX_RES_CORRUPTCTX   	- In case of an corrupted context
+ *          MSGRX_RES_OUTOFMEM     	- Can not decode data, initial mem pointer was too small. The only way to
  *                                        resolve the issue is increasing the size of the memory area passed to init.
  *                                        Keep in mind that if there are multiple and frequent error in data tx or rx
  *                                        we could end in this situation when data size in frame is corrupted and
  *                                        interpreted higher that it should be and EOF + SOF of the next frame are lost.
  *                                        So this status could be due to a transmissione error, but it's not possible
  *                                        to know the reason of the error without storing all the data and checking CRC.
- *		    MSGTRX_RES_MESSAGEENDED  	- Frame ended, restart context in order to parse a new frame. Every other call
- *                                        to this function will not have effect until we call msgDecoderStartNewMsg.
+ *		    MSGRX_RES_MESSAGEENDED  	- Frame ended, restart context in order to parse a new frame. Every other call
+ *                                        to this function will not have effect until we call MSGD_StartNewMsg.
  *                                        In this situation bear in mind that some data could be left out the parsing.
- *          MSGTRX_RES_MESSAGETIMEOUT   - The message is not received before "frameTimeoutMs". Restart to continue.
- *		    MSGTRX_RES_RXCLBKERROR      - Some error reported by the user receive function. Restart to continue.
- *		    MSGTRX_RES_CRCCLBKERROR     - The crc callback returned an error when the decoder where verifing CRC
- *          MSGTRX_RES_OK           	- Operation ended correctly. The chunk is parsed correclty but the frame is not
+ *          MSGRX_RES_MESSAGETIMEOUT   - The message is not received before "frameTimeoutMs". Restart to continue.
+ *		    MSGRX_RES_RXCLBKERROR      - Some error reported by the user receive function. Restart to continue.
+ *		    MSGRX_RES_CRCCLBKERROR     - The crc callback returned an error when the decoder where verifing CRC
+ *          MSGRX_RES_OK           	- Operation ended correctly. The chunk is parsed correclty but the frame is not
  *                                        finished yet
  */
-e_eFSP_MsgRx_Res msgReceiverReceiveChunk(s_eFSP_MsgRxCtx* const ctx);
+e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx);
 #ifdef __cplusplus
 } /* extern "C" */
 #endif

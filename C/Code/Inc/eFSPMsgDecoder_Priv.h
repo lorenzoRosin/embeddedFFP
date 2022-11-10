@@ -34,7 +34,7 @@ typedef enum
     MSGD_PRV_MSG_END_CHECK,
     MSGD_PRV_MSG_OK_CHECK,
     MSGD_PRV_ELABDONE
-}e_eFSP_MsgD_Priv_state;
+}e_eFSP_MSGD_Priv_state;
 
 
 

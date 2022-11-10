@@ -133,7 +133,7 @@ bool_t c32SAdaptEr(void* cntx, const uint32_t s, const uint8_t d[], const uint32
 void msgDecoderTestBadPointer(void)
 {
     /* Local variable */
-    s_eFSP_MsgDCtx ctx;
+    s_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[10u];
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
@@ -142,7 +142,7 @@ void msgDecoderTestBadPointer(void)
     bool_t isMsgDec;
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == msgDecoderInitCtx(NULL, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_BADPOINTER == MSGD_InitCtx(NULL, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestBadPointer 1  -- OK \n");
     }
@@ -152,7 +152,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == msgDecoderInitCtx(&ctx, NULL, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_BADPOINTER == MSGD_InitCtx(&ctx, NULL, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestBadPointer 2  -- OK \n");
     }
@@ -162,7 +162,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == msgDecoderInitCtx(&ctx, memArea, sizeof(memArea), NULL, &ctxAdapterCrc) )
+    if( MSGD_RES_BADPOINTER == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), NULL, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestBadPointer 3  -- OK \n");
     }
@@ -172,7 +172,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == msgDecoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, NULL) )
+    if( MSGD_RES_BADPOINTER == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, NULL) )
     {
         (void)printf("msgDecoderTestBadPointer 4  -- OK \n");
     }
@@ -182,7 +182,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == msgDecoderStartNewMsg(NULL) )
+    if( MSGD_RES_BADPOINTER == MSGD_StartNewMsg(NULL) )
     {
         (void)printf("msgDecoderTestBadPointer 5  -- OK \n");
     }
@@ -192,7 +192,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == msgDecoderGetDecodedData(NULL, &dataP, &var32) )
+    if( MSGD_RES_BADPOINTER == MSGD_GetDecodedData(NULL, &dataP, &var32) )
     {
         (void)printf("msgDecoderTestBadPointer 6  -- OK \n");
     }
@@ -202,7 +202,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == msgDecoderGetDecodedData(&ctx, NULL, &var32) )
+    if( MSGD_RES_BADPOINTER == MSGD_GetDecodedData(&ctx, NULL, &var32) )
     {
         (void)printf("msgDecoderTestBadPointer 7  -- OK \n");
     }
@@ -212,7 +212,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == msgDecoderGetDecodedData(&ctx, &dataP, NULL) )
+    if( MSGD_RES_BADPOINTER == MSGD_GetDecodedData(&ctx, &dataP, NULL) )
     {
         (void)printf("msgDecoderTestBadPointer 8  -- OK \n");
     }
@@ -222,7 +222,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == msgDecoderGetDecodedLen(NULL, &var32) )
+    if( MSGD_RES_BADPOINTER == MSGD_GetDecodedLen(NULL, &var32) )
     {
         (void)printf("msgDecoderTestBadPointer 9  -- OK \n");
     }
@@ -232,7 +232,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == msgDecoderGetDecodedLen(&ctx, NULL) )
+    if( MSGD_RES_BADPOINTER == MSGD_GetDecodedLen(&ctx, NULL) )
     {
         (void)printf("msgDecoderTestBadPointer 10 -- OK \n");
     }
@@ -242,7 +242,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == msgDecoderIsAFullMsgDecoded(NULL, &isMsgDec) )
+    if( MSGD_RES_BADPOINTER == MSGD_IsAFullMsgDecoded(NULL, &isMsgDec) )
     {
         (void)printf("msgDecoderTestBadPointer 11 -- OK \n");
     }
@@ -252,7 +252,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == msgDecoderIsAFullMsgDecoded(&ctx, NULL) )
+    if( MSGD_RES_BADPOINTER == MSGD_IsAFullMsgDecoded(&ctx, NULL) )
     {
         (void)printf("msgDecoderTestBadPointer 12 -- OK \n");
     }
@@ -262,7 +262,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == msgDecoderGetMostEffDatLen(NULL, &var32) )
+    if( MSGD_RES_BADPOINTER == MSGD_GetMostEffDatLen(NULL, &var32) )
     {
         (void)printf("msgDecoderTestBadPointer 13 -- OK \n");
     }
@@ -272,7 +272,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == msgDecoderGetMostEffDatLen(&ctx, NULL) )
+    if( MSGD_RES_BADPOINTER == MSGD_GetMostEffDatLen(&ctx, NULL) )
     {
         (void)printf("msgDecoderTestBadPointer 14 -- OK \n");
     }
@@ -282,7 +282,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == msgDecoderInsEncChunk(NULL, memArea, sizeof(memArea), &var32, &var32) )
+    if( MSGD_RES_BADPOINTER == MSGD_InsEncChunk(NULL, memArea, sizeof(memArea), &var32, &var32) )
     {
         (void)printf("msgDecoderTestBadPointer 15 -- OK \n");
     }
@@ -292,7 +292,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == msgDecoderInsEncChunk(&ctx, NULL, sizeof(memArea), &var32, &var32) )
+    if( MSGD_RES_BADPOINTER == MSGD_InsEncChunk(&ctx, NULL, sizeof(memArea), &var32, &var32) )
     {
         (void)printf("msgDecoderTestBadPointer 16 -- OK \n");
     }
@@ -302,7 +302,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == msgDecoderInsEncChunk(&ctx, memArea, sizeof(memArea), NULL, &var32) )
+    if( MSGD_RES_BADPOINTER == MSGD_InsEncChunk(&ctx, memArea, sizeof(memArea), NULL, &var32) )
     {
         (void)printf("msgDecoderTestBadPointer 17 -- OK \n");
     }
@@ -312,7 +312,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == msgDecoderInsEncChunk(&ctx, memArea, sizeof(memArea), &var32, NULL) )
+    if( MSGD_RES_BADPOINTER == MSGD_InsEncChunk(&ctx, memArea, sizeof(memArea), &var32, NULL) )
     {
         (void)printf("msgDecoderTestBadPointer 18 -- OK \n");
     }
@@ -325,7 +325,7 @@ void msgDecoderTestBadPointer(void)
 void msgDecoderTestBadInit(void)
 {
     /* Local variable */
-    s_eFSP_MsgDCtx ctx;
+    s_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[10u];
     uint32_t var32;
     uint8_t* dataP;
@@ -338,7 +338,7 @@ void msgDecoderTestBadInit(void)
     ctx.cbCrcCtx = &ctxAdapterCrc;
     ctx.cbCrcPtr = cbCrcPTest;
 
-    if( MSGD_RES_NOINITLIB == msgDecoderStartNewMsg(&ctx) )
+    if( MSGD_RES_NOINITLIB == MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestBadInit 1  -- OK \n");
     }
@@ -348,7 +348,7 @@ void msgDecoderTestBadInit(void)
     }
 
     /* Function */
-    if( MSGD_RES_NOINITLIB == msgDecoderGetDecodedData(&ctx, &dataP, &var32) )
+    if( MSGD_RES_NOINITLIB == MSGD_GetDecodedData(&ctx, &dataP, &var32) )
     {
         (void)printf("msgDecoderTestBadInit 2  -- OK \n");
     }
@@ -358,7 +358,7 @@ void msgDecoderTestBadInit(void)
     }
 
     /* Function */
-    if( MSGD_RES_NOINITLIB == msgDecoderGetDecodedLen(&ctx, &var32) )
+    if( MSGD_RES_NOINITLIB == MSGD_GetDecodedLen(&ctx, &var32) )
     {
         (void)printf("msgDecoderTestBadInit 3  -- OK \n");
     }
@@ -368,7 +368,7 @@ void msgDecoderTestBadInit(void)
     }
 
     /* Function */
-    if( MSGD_RES_NOINITLIB == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_NOINITLIB == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestBadInit 4  -- OK \n");
     }
@@ -378,7 +378,7 @@ void msgDecoderTestBadInit(void)
     }
 
     /* Function */
-    if( MSGD_RES_NOINITLIB == msgDecoderGetMostEffDatLen(&ctx, &var32) )
+    if( MSGD_RES_NOINITLIB == MSGD_GetMostEffDatLen(&ctx, &var32) )
     {
         (void)printf("msgDecoderTestBadInit 5  -- OK \n");
     }
@@ -388,7 +388,7 @@ void msgDecoderTestBadInit(void)
     }
 
     /* Function */
-    if( MSGD_RES_NOINITLIB == msgDecoderInsEncChunk(&ctx, memArea, sizeof(memArea), &var32, &var32) )
+    if( MSGD_RES_NOINITLIB == MSGD_InsEncChunk(&ctx, memArea, sizeof(memArea), &var32, &var32) )
     {
         (void)printf("msgDecoderTestBadInit 6  -- OK \n");
     }
@@ -401,14 +401,14 @@ void msgDecoderTestBadInit(void)
 void msgDecoderTestBadParamEntr(void)
 {
     /* Local variable */
-    s_eFSP_MsgDCtx ctx;
+    s_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[10u];
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
 
     /* Function */
-    if( MSGD_RES_BADPARAM == msgDecoderInitCtx(&ctx, memArea, 8u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_BADPARAM == MSGD_InitCtx(&ctx, memArea, 8u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestBadParamEntr 1  -- OK \n");
     }
@@ -418,7 +418,7 @@ void msgDecoderTestBadParamEntr(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestBadParamEntr 2  -- OK \n");
     }
@@ -428,7 +428,7 @@ void msgDecoderTestBadParamEntr(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPARAM == msgDecoderInsEncChunk(&ctx, memArea, 0u, &var32, &var32) )
+    if( MSGD_RES_BADPARAM == MSGD_InsEncChunk(&ctx, memArea, 0u, &var32, &var32) )
     {
         (void)printf("msgDecoderTestBadParamEntr 3  -- OK \n");
     }
@@ -441,7 +441,7 @@ void msgDecoderTestBadParamEntr(void)
 void msgDecoderTestBadParamStatus(void)
 {
     /* Local variable */
-    s_eFSP_MsgDCtx ctx;
+    s_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[10u];
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
@@ -450,7 +450,7 @@ void msgDecoderTestBadParamStatus(void)
     bool_t isMsgDec;
 
     /* Function */
-    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestBadParamStatus 1  -- OK \n");
     }
@@ -460,7 +460,7 @@ void msgDecoderTestBadParamStatus(void)
     }
 
     ctx.cbCrcPtr = NULL;
-    if( MSGD_RES_CORRUPTCTX == msgDecoderStartNewMsg(&ctx) )
+    if( MSGD_RES_CORRUPTCTX == MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestBadParamStatus 2  -- OK \n");
     }
@@ -470,7 +470,7 @@ void msgDecoderTestBadParamStatus(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestBadParamStatus 3  -- OK \n");
     }
@@ -480,7 +480,7 @@ void msgDecoderTestBadParamStatus(void)
     }
 
     ctx.cbCrcCtx = NULL;
-    if( MSGD_RES_CORRUPTCTX == msgDecoderStartNewMsg(&ctx) )
+    if( MSGD_RES_CORRUPTCTX == MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestBadParamStatus 4  -- OK \n");
     }
@@ -490,7 +490,7 @@ void msgDecoderTestBadParamStatus(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestBadParamStatus 5  -- OK \n");
     }
@@ -500,7 +500,7 @@ void msgDecoderTestBadParamStatus(void)
     }
 
     ctx.cbCrcCtx = NULL;
-    if( MSGD_RES_CORRUPTCTX == msgDecoderStartNewMsg(&ctx) )
+    if( MSGD_RES_CORRUPTCTX == MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestBadParamStatus 6  -- OK \n");
     }
@@ -510,7 +510,7 @@ void msgDecoderTestBadParamStatus(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestBadParamStatus 7  -- OK \n");
     }
@@ -520,7 +520,7 @@ void msgDecoderTestBadParamStatus(void)
     }
 
     ctx.cbCrcCtx = NULL;
-    if( MSGD_RES_CORRUPTCTX == msgDecoderGetDecodedData(&ctx, &dataP, &var32) )
+    if( MSGD_RES_CORRUPTCTX == MSGD_GetDecodedData(&ctx, &dataP, &var32) )
     {
         (void)printf("msgDecoderTestBadParamStatus 8  -- OK \n");
     }
@@ -530,7 +530,7 @@ void msgDecoderTestBadParamStatus(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestBadParamStatus 9  -- OK \n");
     }
@@ -540,7 +540,7 @@ void msgDecoderTestBadParamStatus(void)
     }
 
     ctx.cbCrcCtx = NULL;
-    if( MSGD_RES_CORRUPTCTX == msgDecoderGetDecodedLen(&ctx,&var32) )
+    if( MSGD_RES_CORRUPTCTX == MSGD_GetDecodedLen(&ctx,&var32) )
     {
         (void)printf("msgDecoderTestBadParamStatus 10 -- OK \n");
     }
@@ -550,7 +550,7 @@ void msgDecoderTestBadParamStatus(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestBadParamStatus 11 -- OK \n");
     }
@@ -560,7 +560,7 @@ void msgDecoderTestBadParamStatus(void)
     }
 
     ctx.cbCrcCtx = NULL;
-    if( MSGD_RES_CORRUPTCTX == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_CORRUPTCTX == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestBadParamStatus 12 -- OK \n");
     }
@@ -570,7 +570,7 @@ void msgDecoderTestBadParamStatus(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestBadParamStatus 13 -- OK \n");
     }
@@ -580,7 +580,7 @@ void msgDecoderTestBadParamStatus(void)
     }
 
     ctx.cbCrcCtx = NULL;
-    if( MSGD_RES_CORRUPTCTX == msgDecoderGetMostEffDatLen(&ctx, &var32) )
+    if( MSGD_RES_CORRUPTCTX == MSGD_GetMostEffDatLen(&ctx, &var32) )
     {
         (void)printf("msgDecoderTestBadParamStatus 14 -- OK \n");
     }
@@ -590,7 +590,7 @@ void msgDecoderTestBadParamStatus(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestBadParamStatus 15 -- OK \n");
     }
@@ -600,7 +600,7 @@ void msgDecoderTestBadParamStatus(void)
     }
 
     ctx.cbCrcCtx = NULL;
-    if( MSGD_RES_CORRUPTCTX == msgDecoderInsEncChunk(&ctx, memArea, 10u, &var32, &var32) )
+    if( MSGD_RES_CORRUPTCTX == MSGD_InsEncChunk(&ctx, memArea, 10u, &var32, &var32) )
     {
         (void)printf("msgDecoderTestBadParamStatus 16 -- OK \n");
     }
@@ -614,14 +614,14 @@ void msgDecoderTestBadParamStatus(void)
 void msgDecoderTestBadClBck(void)
 {
     /* Local variable */
-    s_eFSP_MsgDCtx ctx;
+    s_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[10u];
     cb_crc32_msgd cbCrcPTest = &c32SAdaptEr;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
 
     /* Function */
-    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestBadClBck 1  -- OK \n");
     }
@@ -630,7 +630,7 @@ void msgDecoderTestBadClBck(void)
         (void)printf("msgDecoderTestBadClBck 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderStartNewMsg(&ctx) )
+    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestBadClBck 2  -- OK \n");
     }
@@ -642,7 +642,7 @@ void msgDecoderTestBadClBck(void)
     /* Decode */
     uint8_t testData[] = {ECU_SOF, 0x00u, 0x00u, 0x00u, 0x00u, 0x01, 0x00u, 0x00u, 0x00u, 0x01, ECU_EOF};
 
-    if( MSGD_RES_CRCCLBKERROR == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &var32, &var32) )
+    if( MSGD_RES_CRCCLBKERROR == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &var32, &var32) )
     {
         if( CRC_RES_BADPOINTER == ctxAdapterCrc.lastError )
         {
@@ -662,14 +662,14 @@ void msgDecoderTestBadClBck(void)
 void msgDecoderTestMsgEnd(void)
 {
     /* Local variable */
-    s_eFSP_MsgDCtx ctx;
+    s_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[10u];
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
 
     /* Function */
-    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestMsgEnd 1  -- OK \n");
     }
@@ -678,7 +678,7 @@ void msgDecoderTestMsgEnd(void)
         (void)printf("msgDecoderTestMsgEnd 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderStartNewMsg(&ctx) )
+    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestMsgEnd 2  -- OK \n");
     }
@@ -690,7 +690,7 @@ void msgDecoderTestMsgEnd(void)
     /* Decode */
     uint8_t testData[] = {ECU_SOF, 0xA6u, 0xC1u, 0xDCu, 0x0Au, 0x01, 0x00u, 0x00u, 0x00u, 0x01, ECU_EOF};
 
-    if( MSGD_RES_MESSAGEENDED == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &var32, &var32) )
+    if( MSGD_RES_MESSAGEENDED == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &var32, &var32) )
     {
         (void)printf("msgDecoderTestMsgEnd 3  -- OK \n");
     }
@@ -703,14 +703,14 @@ void msgDecoderTestMsgEnd(void)
 void msgDecoderTestOutOfMem(void)
 {
     /* Local variable */
-    s_eFSP_MsgDCtx ctx;
+    s_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[9u];
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
 
     /* Function */
-    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestOutOfMem 1  -- OK \n");
     }
@@ -719,7 +719,7 @@ void msgDecoderTestOutOfMem(void)
         (void)printf("msgDecoderTestOutOfMem 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderStartNewMsg(&ctx) )
+    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestOutOfMem 2  -- OK \n");
     }
@@ -731,7 +731,7 @@ void msgDecoderTestOutOfMem(void)
     /* Decode */
     uint8_t testData[] = {ECU_SOF, 0xE9u, 0x7Au, 0xF2u, 0xDAu, 0x02, 0x00u, 0x00u, 0x00u, 0x01, 0x01, ECU_EOF};
 
-    if( MSGD_RES_OUTOFMEM == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &var32, &var32) )
+    if( MSGD_RES_OUTOFMEM == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &var32, &var32) )
     {
         (void)printf("msgDecoderTestOutOfMem 3  -- OK \n");
     }
@@ -744,7 +744,7 @@ void msgDecoderTestOutOfMem(void)
 void msgDecoderTestGeneral(void)
 {
     /* Local variable */
-    s_eFSP_MsgDCtx ctx;
+    s_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[40u];
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
@@ -756,7 +756,7 @@ void msgDecoderTestGeneral(void)
     bool_t isMsgDec;
 
     /* Function */
-    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestGeneral 1  -- OK \n");
     }
@@ -765,7 +765,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderStartNewMsg(&ctx) )
+    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestGeneral 2  -- OK \n");
     }
@@ -774,7 +774,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 2  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -790,7 +790,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 3  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -806,7 +806,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 4  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -822,7 +822,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 5  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 8u == mostEfficient )
         {
@@ -842,7 +842,7 @@ void msgDecoderTestGeneral(void)
     uint8_t testData[] = {ECU_SOF, 0x80u, 0xE4u, 0xB1u, 0x84u, 0x02, 0x00u, 0x00u, 0x00u, ECU_ESC, (uint8_t)(~ECU_SOF),
                           ECU_ESC, (uint8_t)(~ECU_EOF), ECU_EOF};
 
-    if( MSGD_RES_MESSAGEENDED == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
+    if( MSGD_RES_MESSAGEENDED == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
     {
         if( ( 14u == consumed ) && ( 0u == errorFound) )
         {
@@ -858,7 +858,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 7  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 0u == mostEfficient )
         {
@@ -874,7 +874,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 8  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
@@ -890,7 +890,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 9  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
@@ -906,7 +906,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 10 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
@@ -931,7 +931,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 12 -- FAIL \n");
     }
 
-    if( MSGD_RES_MESSAGEENDED == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
+    if( MSGD_RES_MESSAGEENDED == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
     {
         if( 0u == consumed )
         {
@@ -951,7 +951,7 @@ void msgDecoderTestGeneral(void)
 void msgDecoderTestCorernerMulti(void)
 {
     /* Local variable */
-    s_eFSP_MsgDCtx ctx;
+    s_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[40u];
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
@@ -963,7 +963,7 @@ void msgDecoderTestCorernerMulti(void)
     bool_t isMsgDec;
 
     /* Function */
-    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestCorernerMulti 1  -- OK \n");
     }
@@ -972,7 +972,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderStartNewMsg(&ctx) )
+    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestCorernerMulti 2  -- OK \n");
     }
@@ -981,7 +981,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 2  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -997,7 +997,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 3  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -1013,7 +1013,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 4  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1029,7 +1029,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 5  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 8u == mostEfficient )
         {
@@ -1049,7 +1049,7 @@ void msgDecoderTestCorernerMulti(void)
     uint8_t testData[] = {ECU_SOF, 0x73u, 0x9Fu, 0x52u, 0xD9u, 0x07, 0x00u, 0x00u, 0x00u, ECU_ESC, (uint8_t)(~ECU_SOF),
                           ECU_ESC, (uint8_t)(~ECU_EOF), 0x01, 0x02, 0x03, 0x04, 0x05, ECU_EOF};
 
-    if( MSGD_RES_OK == msgDecoderInsEncChunk(&ctx, testData, 4u, &consumed, &errorFound) )
+    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctx, testData, 4u, &consumed, &errorFound) )
     {
         if( ( 4u == consumed ) && ( 0u == errorFound) )
         {
@@ -1065,7 +1065,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 7  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 5u == mostEfficient )
         {
@@ -1081,7 +1081,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 8  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1097,7 +1097,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 9  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -1113,7 +1113,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 10 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -1131,7 +1131,7 @@ void msgDecoderTestCorernerMulti(void)
 
     consumed = 0u;
     errorFound = 0u;
-    if( MSGD_RES_OK == msgDecoderInsEncChunk(&ctx, &testData[4u], 4u, &consumed, &errorFound) )
+    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctx, &testData[4u], 4u, &consumed, &errorFound) )
     {
         if( ( 4u == consumed ) && ( 0u == errorFound) )
         {
@@ -1147,7 +1147,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 12 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 1u == mostEfficient )
         {
@@ -1163,7 +1163,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 13 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1179,7 +1179,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 14 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -1195,7 +1195,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 15 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -1213,7 +1213,7 @@ void msgDecoderTestCorernerMulti(void)
 
     consumed = 0u;
     errorFound = 0u;
-    if( MSGD_RES_OK == msgDecoderInsEncChunk(&ctx, &testData[8u], 4u, &consumed, &errorFound) )
+    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctx, &testData[8u], 4u, &consumed, &errorFound) )
     {
         if( ( 4u == consumed ) && ( 0u == errorFound) )
         {
@@ -1229,7 +1229,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 17 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 7u == mostEfficient )
         {
@@ -1245,7 +1245,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 18 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1261,7 +1261,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 19 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x01u == payLoadLen )
         {
@@ -1277,7 +1277,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 20 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x01u == payLoadLen )
         {
@@ -1295,7 +1295,7 @@ void msgDecoderTestCorernerMulti(void)
 
     consumed = 0u;
     errorFound = 0u;
-    if( MSGD_RES_OK == msgDecoderInsEncChunk(&ctx, &testData[12u], 4u, &consumed, &errorFound) )
+    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctx, &testData[12u], 4u, &consumed, &errorFound) )
     {
         if( ( 4u == consumed ) && ( 0u == errorFound) )
         {
@@ -1311,7 +1311,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 22 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 3u == mostEfficient )
         {
@@ -1327,7 +1327,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 23 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1343,7 +1343,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 24 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x05u == payLoadLen )
         {
@@ -1359,7 +1359,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 25 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x05u == payLoadLen )
         {
@@ -1377,7 +1377,7 @@ void msgDecoderTestCorernerMulti(void)
 
     consumed = 0u;
     errorFound = 0u;
-    if( MSGD_RES_MESSAGEENDED == msgDecoderInsEncChunk(&ctx, &testData[16u], 4u, &consumed, &errorFound) )
+    if( MSGD_RES_MESSAGEENDED == MSGD_InsEncChunk(&ctx, &testData[16u], 4u, &consumed, &errorFound) )
     {
         if( ( 3u == consumed ) && ( 0u == errorFound) )
         {
@@ -1393,7 +1393,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 27 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 0u == mostEfficient )
         {
@@ -1409,7 +1409,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 28 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
@@ -1425,7 +1425,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 29 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x07u == payLoadLen )
         {
@@ -1441,7 +1441,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 30 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x07u == payLoadLen )
         {
@@ -1472,7 +1472,7 @@ void msgDecoderTestCorernerMulti(void)
 void msgDecoderTestErrorAndContinue(void)
 {
     /* Local variable */
-    s_eFSP_MsgDCtx ctx;
+    s_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[40u];
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
@@ -1484,7 +1484,7 @@ void msgDecoderTestErrorAndContinue(void)
     bool_t isMsgDec;
 
     /* Function */
-    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestErrorAndContinue 1  -- OK \n");
     }
@@ -1493,7 +1493,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderStartNewMsg(&ctx) )
+    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestErrorAndContinue 2  -- OK \n");
     }
@@ -1502,7 +1502,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 2  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -1518,7 +1518,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 3  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -1534,7 +1534,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 4  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1550,7 +1550,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 5  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 8u == mostEfficient )
         {
@@ -1570,7 +1570,7 @@ void msgDecoderTestErrorAndContinue(void)
     uint8_t testData[] = { ECU_SOF, ECU_SOF, 0x80u, 0xE4u, 0xB1u, 0x84u, 0x02, 0x00u, 0x00u, 0x00u, ECU_ESC,
                            (uint8_t)(~ECU_SOF), ECU_ESC, (uint8_t)(~ECU_EOF), ECU_EOF};
 
-    if( MSGD_RES_MESSAGEENDED == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
+    if( MSGD_RES_MESSAGEENDED == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
     {
         if( ( 15u == consumed ) && ( 1u == errorFound) )
         {
@@ -1586,7 +1586,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 7  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 0u == mostEfficient )
         {
@@ -1602,7 +1602,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 8  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
@@ -1618,7 +1618,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 9  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
@@ -1634,7 +1634,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 10 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
@@ -1659,7 +1659,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 12 -- FAIL \n");
     }
 
-    if( MSGD_RES_MESSAGEENDED == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
+    if( MSGD_RES_MESSAGEENDED == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
     {
         if( 0u == consumed )
         {
@@ -1676,7 +1676,7 @@ void msgDecoderTestErrorAndContinue(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestErrorAndContinue 14 -- OK \n");
     }
@@ -1685,7 +1685,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 14 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderStartNewMsg(&ctx) )
+    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestErrorAndContinue 15 -- OK \n");
     }
@@ -1694,7 +1694,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 15 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -1710,7 +1710,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 16 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -1726,7 +1726,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 17 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1742,7 +1742,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 18 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 8u == mostEfficient )
         {
@@ -1762,7 +1762,7 @@ void msgDecoderTestErrorAndContinue(void)
     uint8_t testData2[] = { ECU_SOF, ECU_SOF, 0x00u, 0x00u, 0x00u, 0x00u, 0x02, 0x00u, 0x00u, 0x00u, ECU_ESC,
                            (uint8_t)(~ECU_SOF), ECU_ESC, (uint8_t)(~ECU_EOF), ECU_EOF};
 
-    if( MSGD_RES_OK == msgDecoderInsEncChunk(&ctx, testData2, sizeof(testData2), &consumed, &errorFound) )
+    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctx, testData2, sizeof(testData2), &consumed, &errorFound) )
     {
         if( ( 15u == consumed ) && ( 2u == errorFound) )
         {
@@ -1778,7 +1778,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 20 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 8u == mostEfficient )
         {
@@ -1794,7 +1794,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 21 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1810,7 +1810,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 22 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -1826,7 +1826,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 23 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -1851,7 +1851,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 25 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderInsEncChunk(&ctx, testData2, sizeof(testData2), &consumed, &errorFound) )
+    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctx, testData2, sizeof(testData2), &consumed, &errorFound) )
     {
         if( 15u == consumed )
         {
@@ -1871,7 +1871,7 @@ void msgDecoderTestErrorAndContinue(void)
 void msgDecoderTestErrorAndContinueEx(void)
 {
     /* Local variable */
-    s_eFSP_MsgDCtx ctx;
+    s_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[40u];
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
@@ -1883,7 +1883,7 @@ void msgDecoderTestErrorAndContinueEx(void)
     bool_t isMsgDec;
 
     /* Function */
-    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestErrorAndContinueEx 1  -- OK \n");
     }
@@ -1892,7 +1892,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderStartNewMsg(&ctx) )
+    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestErrorAndContinueEx 2  -- OK \n");
     }
@@ -1901,7 +1901,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 2  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -1917,7 +1917,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 3  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -1933,7 +1933,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 4  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1949,7 +1949,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 5  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 8u == mostEfficient )
         {
@@ -1969,7 +1969,7 @@ void msgDecoderTestErrorAndContinueEx(void)
     uint8_t testData[] = { ECU_SOF, 0x00u, 0x00u, 0x00u, 0x00u, 0x02, 0x00u, 0x00u, 0x00u, 0x01, 0x02, ECU_EOF,
                            ECU_SOF, 0x30u, 0x5Cu, 0xB1u, 0xD7u, 0x02, 0x00u, 0x00u, 0x00u, 0x01, 0x02, ECU_EOF};
 
-    if( MSGD_RES_MESSAGEENDED == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
+    if( MSGD_RES_MESSAGEENDED == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
     {
         if( ( 24u == consumed ) && ( 1u == errorFound) )
         {
@@ -1985,7 +1985,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 7  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 0u == mostEfficient )
         {
@@ -2001,7 +2001,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 8  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
@@ -2017,7 +2017,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 9  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
@@ -2033,7 +2033,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 10 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
@@ -2058,7 +2058,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 12 -- FAIL \n");
     }
 
-    if( MSGD_RES_MESSAGEENDED == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
+    if( MSGD_RES_MESSAGEENDED == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
     {
         if( 0u == consumed )
         {
@@ -2078,7 +2078,7 @@ void msgDecoderTestErrorAndContinueEx(void)
 void msgDecoderTestErrorTooLong(void)
 {
     /* Local variable */
-    s_eFSP_MsgDCtx ctx;
+    s_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[40u];
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
@@ -2090,7 +2090,7 @@ void msgDecoderTestErrorTooLong(void)
     bool_t isMsgDec;
 
     /* Function */
-    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestErrorTooLong 1  -- OK \n");
     }
@@ -2099,7 +2099,7 @@ void msgDecoderTestErrorTooLong(void)
         (void)printf("msgDecoderTestErrorTooLong 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderStartNewMsg(&ctx) )
+    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestErrorTooLong 2  -- OK \n");
     }
@@ -2108,7 +2108,7 @@ void msgDecoderTestErrorTooLong(void)
         (void)printf("msgDecoderTestErrorTooLong 2  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -2124,7 +2124,7 @@ void msgDecoderTestErrorTooLong(void)
         (void)printf("msgDecoderTestErrorTooLong 3  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -2140,7 +2140,7 @@ void msgDecoderTestErrorTooLong(void)
         (void)printf("msgDecoderTestErrorTooLong 4  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2156,7 +2156,7 @@ void msgDecoderTestErrorTooLong(void)
         (void)printf("msgDecoderTestErrorTooLong 5  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 8u == mostEfficient )
         {
@@ -2176,7 +2176,7 @@ void msgDecoderTestErrorTooLong(void)
     uint8_t testData[] = { ECU_SOF, 0x80u, 0xE4u, 0xB1u, 0x84u, 0x03, 0x00u, 0x00u, 0x00u,
                            0x01, 0x02, 0x03, 0x04, 0x05, ECU_EOF};
 
-    if( MSGD_RES_OK == msgDecoderInsEncChunk(&ctx, testData, 13u, &consumed, &errorFound) )
+    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctx, testData, 13u, &consumed, &errorFound) )
     {
         if( ( 13u == consumed ) && ( 1u == errorFound) )
         {
@@ -2192,7 +2192,7 @@ void msgDecoderTestErrorTooLong(void)
         (void)printf("msgDecoderTestErrorTooLong 7  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 8u == mostEfficient )
         {
@@ -2208,7 +2208,7 @@ void msgDecoderTestErrorTooLong(void)
         (void)printf("msgDecoderTestErrorTooLong 8  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2224,7 +2224,7 @@ void msgDecoderTestErrorTooLong(void)
         (void)printf("msgDecoderTestErrorTooLong 9  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -2240,7 +2240,7 @@ void msgDecoderTestErrorTooLong(void)
         (void)printf("msgDecoderTestErrorTooLong 10 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -2256,7 +2256,7 @@ void msgDecoderTestErrorTooLong(void)
         (void)printf("msgDecoderTestErrorTooLong 11 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
+    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
     {
         if( 15u == consumed )
         {
@@ -2276,7 +2276,7 @@ void msgDecoderTestErrorTooLong(void)
 void msgDecoderTestErrorTooShort(void)
 {
     /* Local variable */
-    s_eFSP_MsgDCtx ctx;
+    s_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[40u];
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
@@ -2288,7 +2288,7 @@ void msgDecoderTestErrorTooShort(void)
     bool_t isMsgDec;
 
     /* Function */
-    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestErrorTooShort 1  -- OK \n");
     }
@@ -2297,7 +2297,7 @@ void msgDecoderTestErrorTooShort(void)
         (void)printf("msgDecoderTestErrorTooShort 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderStartNewMsg(&ctx) )
+    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestErrorTooShort 2  -- OK \n");
     }
@@ -2306,7 +2306,7 @@ void msgDecoderTestErrorTooShort(void)
         (void)printf("msgDecoderTestErrorTooShort 2  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -2322,7 +2322,7 @@ void msgDecoderTestErrorTooShort(void)
         (void)printf("msgDecoderTestErrorTooShort 3  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -2338,7 +2338,7 @@ void msgDecoderTestErrorTooShort(void)
         (void)printf("msgDecoderTestErrorTooShort 4  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2354,7 +2354,7 @@ void msgDecoderTestErrorTooShort(void)
         (void)printf("msgDecoderTestErrorTooShort 5  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 8u == mostEfficient )
         {
@@ -2374,7 +2374,7 @@ void msgDecoderTestErrorTooShort(void)
     uint8_t testData[] = { ECU_SOF, 0x80u, 0xE4u, 0xB1u, 0x84u, 0x03, 0x00u, 0x00u, 0x00u,
                            0x01, 0x02, ECU_EOF};
 
-    if( MSGD_RES_OK == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
+    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
     {
         if( ( 12u == consumed ) && ( 1u == errorFound) )
         {
@@ -2390,7 +2390,7 @@ void msgDecoderTestErrorTooShort(void)
         (void)printf("msgDecoderTestErrorTooShort 7  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 8u == mostEfficient )
         {
@@ -2406,7 +2406,7 @@ void msgDecoderTestErrorTooShort(void)
         (void)printf("msgDecoderTestErrorTooShort 8  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2422,7 +2422,7 @@ void msgDecoderTestErrorTooShort(void)
         (void)printf("msgDecoderTestErrorTooShort 9  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -2438,7 +2438,7 @@ void msgDecoderTestErrorTooShort(void)
         (void)printf("msgDecoderTestErrorTooShort 10 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -2454,7 +2454,7 @@ void msgDecoderTestErrorTooShort(void)
         (void)printf("msgDecoderTestErrorTooShort 11 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
+    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
     {
         if( 12u == consumed )
         {
@@ -2474,7 +2474,7 @@ void msgDecoderTestErrorTooShort(void)
 void msgDecoderTestErrorTooShortExt(void)
 {
     /* Local variable */
-    s_eFSP_MsgDCtx ctx;
+    s_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[40u];
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
@@ -2486,7 +2486,7 @@ void msgDecoderTestErrorTooShortExt(void)
     bool_t isMsgDec;
 
     /* Function */
-    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestErrorTooShortExt 1  -- OK \n");
     }
@@ -2495,7 +2495,7 @@ void msgDecoderTestErrorTooShortExt(void)
         (void)printf("msgDecoderTestErrorTooShortExt 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderStartNewMsg(&ctx) )
+    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestErrorTooShortExt 2  -- OK \n");
     }
@@ -2504,7 +2504,7 @@ void msgDecoderTestErrorTooShortExt(void)
         (void)printf("msgDecoderTestErrorTooShortExt 2  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -2520,7 +2520,7 @@ void msgDecoderTestErrorTooShortExt(void)
         (void)printf("msgDecoderTestErrorTooShortExt 3  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -2536,7 +2536,7 @@ void msgDecoderTestErrorTooShortExt(void)
         (void)printf("msgDecoderTestErrorTooShortExt 4  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2552,7 +2552,7 @@ void msgDecoderTestErrorTooShortExt(void)
         (void)printf("msgDecoderTestErrorTooShortExt 5  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 8u == mostEfficient )
         {
@@ -2571,7 +2571,7 @@ void msgDecoderTestErrorTooShortExt(void)
     /* Remove */
     uint8_t testData[] = { ECU_SOF, 0x80u, 0xE4u, 0xB1u, 0x84u, 0x03, 0x00u, 0x00u, ECU_EOF};
 
-    if( MSGD_RES_OK == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
+    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
     {
         if( ( 9u == consumed ) && ( 1u == errorFound) )
         {
@@ -2587,7 +2587,7 @@ void msgDecoderTestErrorTooShortExt(void)
         (void)printf("msgDecoderTestErrorTooShortExt 7  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 8u == mostEfficient )
         {
@@ -2603,7 +2603,7 @@ void msgDecoderTestErrorTooShortExt(void)
         (void)printf("msgDecoderTestErrorTooShortExt 8  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderIsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2619,7 +2619,7 @@ void msgDecoderTestErrorTooShortExt(void)
         (void)printf("msgDecoderTestErrorTooShortExt 9  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -2635,7 +2635,7 @@ void msgDecoderTestErrorTooShortExt(void)
         (void)printf("msgDecoderTestErrorTooShortExt 10 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderGetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -2651,7 +2651,7 @@ void msgDecoderTestErrorTooShortExt(void)
         (void)printf("msgDecoderTestErrorTooShortExt 11 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == msgDecoderInsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
+    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &consumed, &errorFound) )
     {
         if( 9u == consumed )
         {
@@ -2671,7 +2671,7 @@ void msgDecoderTestErrorTooShortExt(void)
 void msgDecoderTestCodeCoverage(void)
 {
     /* Local variable */
-    s_eFSP_MsgDCtx ctx;
+    s_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[40u];
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
@@ -2680,7 +2680,7 @@ void msgDecoderTestCodeCoverage(void)
     uint32_t mostEfficient;
 
     /* Function */
-    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestCodeCoverage 1  -- OK \n");
     }
@@ -2690,7 +2690,7 @@ void msgDecoderTestCodeCoverage(void)
     }
 
     ctx.byteUStufferCtnx.memAreaSize = 0u;
-    if( MSGD_RES_CORRUPTCTX == msgDecoderStartNewMsg(&ctx) )
+    if( MSGD_RES_CORRUPTCTX == MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestCodeCoverage 2  -- OK \n");
     }
@@ -2700,7 +2700,7 @@ void msgDecoderTestCodeCoverage(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == msgDecoderInitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestCodeCoverage 3  -- OK \n");
     }
@@ -2712,7 +2712,7 @@ void msgDecoderTestCodeCoverage(void)
     uint8_t testData[] = { ECU_SOF, 0x80u, 0xE4u, 0xB1u, 0x84u, 0x02, 0x00u, 0x00u, 0x00u, ECU_ESC,
                            (uint8_t)(~ECU_SOF), ECU_ESC, (uint8_t)(~ECU_EOF), ECU_EOF};
 
-    if( MSGD_RES_OK == msgDecoderInsEncChunk(&ctx, testData, 9u, &consumed, &errorFound) )
+    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctx, testData, 9u, &consumed, &errorFound) )
     {
         if( ( 9u == consumed ) && ( 0u == errorFound) )
         {
@@ -2729,7 +2729,7 @@ void msgDecoderTestCodeCoverage(void)
     }
 
     ctx.byteUStufferCtnx.memAreaCntr = 15u;
-    if( MSGD_RES_CORRUPTCTX == msgDecoderGetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_CORRUPTCTX == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         (void)printf("msgDecoderTestCodeCoverage 5  -- OK \n");
     }
