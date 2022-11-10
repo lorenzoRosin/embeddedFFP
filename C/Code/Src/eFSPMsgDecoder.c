@@ -314,6 +314,7 @@ e_eFSP_MsgD_Res msgDecoderGetMostEffDatLen(s_eFSP_MsgDCtx* const ctx, uint32_t* 
                         if( 0u == dataSizeRaw )
                         {
                             /* No data, are we still waiting SOF? */
+                            isWaitingSof = false;
                             resByStuff = BUNSTF_IsWaitingSof(&ctx->byteUStufferCtnx, &isWaitingSof);
                             result = convertReturnFromBstfToMSGD(resByStuff);
 
