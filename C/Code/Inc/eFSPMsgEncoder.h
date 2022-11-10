@@ -49,7 +49,7 @@ typedef enum
 
 typedef struct
 {
-    s_eCU_BStuffCtx byteStufferCtnx;
+    s_eCU_BSTF_Ctx byteStufferCtnx;
     cb_crc32_msge   cbCrcPtr;
     void*           cbCrcCtx;
 }s_eFSP_MsgECtx;

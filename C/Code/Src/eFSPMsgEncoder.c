@@ -19,7 +19,7 @@
  *  PRIVATE STATIC FUNCTION DECLARATION
  **********************************************************************************************************************/
 static bool_t isMsgEncStatusStillCoherent(const s_eFSP_MsgECtx* ctx);
-static e_eFSP_MsgE_Res convertReturnFromBstfToMSGE(e_eCU_dBStf_Res returnedEvent);
+static e_eFSP_MsgE_Res convertReturnFromBstfToMSGE(e_eCU_BSTF_Res returnedEvent);
 
 
 
@@ -35,7 +35,7 @@ e_eFSP_MsgE_Res msgEncoderInitCtx(s_eFSP_MsgECtx* const ctx, uint8_t memArea[], 
 {
 	/* Local variable */
 	e_eFSP_MsgE_Res result;
-	e_eCU_dBStf_Res resultByStuff;
+	e_eCU_BSTF_Res resultByStuff;
 
 	/* Check pointer validity */
 	if( ( NULL == ctx ) || ( NULL == memArea ) || ( NULL == cbCrcP ) || ( NULL == clbCtx ) )
@@ -56,7 +56,7 @@ e_eFSP_MsgE_Res msgEncoderInitCtx(s_eFSP_MsgECtx* const ctx, uint8_t memArea[], 
             ctx->cbCrcCtx = clbCtx;
 
 			/* initialize internal bytestuffer */
-			resultByStuff =  bStufferInitCtx(&ctx->byteStufferCtnx, memArea, memAreaSize);
+			resultByStuff =  BSTF_InitCtx(&ctx->byteStufferCtnx, memArea, memAreaSize);
 			result = convertReturnFromBstfToMSGE(resultByStuff);
         }
 	}
@@ -72,7 +72,7 @@ e_eFSP_MsgE_Res msgEncoderStartNewMessage(s_eFSP_MsgECtx* const ctx, const uint3
 {
 	/* Local variable */
 	e_eFSP_MsgE_Res result;
-	e_eCU_dBStf_Res resultByStuff;
+	e_eCU_BSTF_Res resultByStuff;
 	uint8_t* dataP;
 	uint32_t maxDataSize;
     uint32_t cR32;
@@ -105,7 +105,7 @@ e_eFSP_MsgE_Res msgEncoderStartNewMessage(s_eFSP_MsgECtx* const ctx, const uint3
                 /* Get memory reference of CRC+LEN+DATA, so we can calculate data len and recalculate CRC */
                 maxDataSize = 0u;
                 dataP = NULL;
-				resultByStuff = bStufferGetUnStufDataLocation(&ctx->byteStufferCtnx, &dataP, &maxDataSize);
+				resultByStuff = BSTF_GetUnStufDataLocation(&ctx->byteStufferCtnx, &dataP, &maxDataSize);
 				result = convertReturnFromBstfToMSGE(resultByStuff);
 
 				if( MSGE_RES_OK == result )
@@ -145,7 +145,7 @@ e_eFSP_MsgE_Res msgEncoderStartNewMessage(s_eFSP_MsgECtx* const ctx, const uint3
 								/* the message frame is ready, need to start the bytestuffer with size of crc + size
 								* of len + real number of data */
 								nByteToSf = ( EFSP_MSGEN_HEADERSIZE + messageLen );
-								resultByStuff = bStufferStartNewFrame(&ctx->byteStufferCtnx, nByteToSf);
+								resultByStuff = BSTF_StartNewFrame(&ctx->byteStufferCtnx, nByteToSf);
 								result = convertReturnFromBstfToMSGE(resultByStuff);
 							}
 							else
@@ -172,7 +172,7 @@ e_eFSP_MsgE_Res msgEncoderGetPayloadLocation(s_eFSP_MsgECtx* const ctx, uint8_t*
 {
 	/* Local variable */
 	e_eFSP_MsgE_Res result;
-	e_eCU_dBStf_Res resultByStuff;
+	e_eCU_BSTF_Res resultByStuff;
 	uint8_t* dataPP;
 	uint32_t maxDataSizeP;
 
@@ -193,7 +193,7 @@ e_eFSP_MsgE_Res msgEncoderGetPayloadLocation(s_eFSP_MsgECtx* const ctx, uint8_t*
 			/* Get memory reference of CRC+LEN+DATA, so we can calculate reference of only data payload */
             maxDataSizeP = 0u;
             dataPP = NULL;
-			resultByStuff = bStufferGetUnStufDataLocation(&ctx->byteStufferCtnx, &dataPP, &maxDataSizeP);
+			resultByStuff = BSTF_GetUnStufDataLocation(&ctx->byteStufferCtnx, &dataPP, &maxDataSizeP);
 			result = convertReturnFromBstfToMSGE(resultByStuff);
 
 			if( MSGE_RES_OK == result )
@@ -224,7 +224,7 @@ e_eFSP_MsgE_Res msgEncoderRestartCurrentMessage(s_eFSP_MsgECtx* const ctx)
 {
 	/* Local variable */
 	e_eFSP_MsgE_Res result;
-	e_eCU_dBStf_Res resultByStuff;
+	e_eCU_BSTF_Res resultByStuff;
 
 	/* Check pointer validity */
 	if( NULL == ctx )
@@ -241,7 +241,7 @@ e_eFSP_MsgE_Res msgEncoderRestartCurrentMessage(s_eFSP_MsgECtx* const ctx)
 		else
 		{
 			/* Restart only the byte stuffer */
-			resultByStuff = bStufferRestartCurrentFrame(&ctx->byteStufferCtnx);
+			resultByStuff = BSTF_RestartCurrentFrame(&ctx->byteStufferCtnx);
 			result = convertReturnFromBstfToMSGE(resultByStuff);
 		}
 	}
@@ -253,7 +253,7 @@ e_eFSP_MsgE_Res msgEncoderGetRemToRetrive(s_eFSP_MsgECtx* const ctx, uint32_t* c
 {
 	/* Local variable */
 	e_eFSP_MsgE_Res result;
-	e_eCU_dBStf_Res resultByStuff;
+	e_eCU_BSTF_Res resultByStuff;
 
 	/* Check pointer validity */
 	if( ( NULL == ctx ) || ( NULL == retrivedLen ) )
@@ -270,7 +270,7 @@ e_eFSP_MsgE_Res msgEncoderGetRemToRetrive(s_eFSP_MsgECtx* const ctx, uint32_t* c
 		else
 		{
 			/* Get memory reference */
-			resultByStuff = bStufferGetRemToRetrive(&ctx->byteStufferCtnx, retrivedLen);
+			resultByStuff = BSTF_GetRemToRetrive(&ctx->byteStufferCtnx, retrivedLen);
 			result = convertReturnFromBstfToMSGE(resultByStuff);
 		}
 	}
@@ -288,7 +288,7 @@ e_eFSP_MsgE_Res msgEncoderRetriveEChunk(s_eFSP_MsgECtx* const ctx, uint8_t encod
 {
 	/* Local variable */
 	e_eFSP_MsgE_Res result;
-	e_eCU_dBStf_Res resultByStuff;
+	e_eCU_BSTF_Res resultByStuff;
 
 	/* Check pointer validity */
 	if( ( NULL == ctx )  || ( NULL == encodeDest ) || ( NULL == filledLen ) )
@@ -305,7 +305,7 @@ e_eFSP_MsgE_Res msgEncoderRetriveEChunk(s_eFSP_MsgECtx* const ctx, uint8_t encod
 		else
 		{
 			/* Get memory reference */
-			resultByStuff = bStufferRetriStufChunk(&ctx->byteStufferCtnx, encodeDest, maxDestLen, filledLen);
+			resultByStuff = BSTF_RetriStufChunk(&ctx->byteStufferCtnx, encodeDest, maxDestLen, filledLen);
 			result = convertReturnFromBstfToMSGE(resultByStuff);
 		}
 	}
@@ -339,49 +339,49 @@ bool_t isMsgEncStatusStillCoherent(const s_eFSP_MsgECtx* ctx)
     return result;
 }
 
-e_eFSP_MsgE_Res convertReturnFromBstfToMSGE(e_eCU_dBStf_Res returnedEvent)
+e_eFSP_MsgE_Res convertReturnFromBstfToMSGE(e_eCU_BSTF_Res returnedEvent)
 {
 	e_eFSP_MsgE_Res result;
 
 	switch( returnedEvent )
 	{
-		case DBSTF_RES_OK:
+		case BSTF_RES_OK:
 		{
 			result = MSGE_RES_OK;
             break;
 		}
 
-		case DBSTF_RES_BADPARAM:
+		case BSTF_RES_BADPARAM:
 		{
 			result = MSGE_RES_BADPARAM;
             break;
 		}
 
-		case DBSTF_RES_BADPOINTER:
+		case BSTF_RES_BADPOINTER:
 		{
 			result = MSGE_RES_BADPOINTER;
             break;
 		}
 
-		case DBSTF_RES_CORRUPTCTX:
+		case BSTF_RES_CORRUPTCTX:
 		{
 			result = MSGE_RES_CORRUPTCTX;
             break;
 		}
 
-		case DBSTF_RES_FRAMEENDED:
+		case BSTF_RES_FRAMEENDED:
 		{
 			result = MSGE_RES_MESSAGEENDED;
             break;
 		}
 
-		case DBSTF_RES_NOINITLIB:
+		case BSTF_RES_NOINITLIB:
 		{
 			result = MSGE_RES_NOINITLIB;
             break;
 		}
 
-		case DBSTF_RES_NOINITFRAME :
+		case BSTF_RES_NOINITFRAME :
 		{
 			result = MSGE_RES_NOINITMESSAGE;
             break;
