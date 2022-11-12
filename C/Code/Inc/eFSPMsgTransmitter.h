@@ -159,8 +159,8 @@ e_eFSP_MSGTX_Res MSGTX_RestartCurrentMessage(s_eFSP_MSGTX_Ctx* const ctx);
  *              MSGTX_RES_MESSAGETIMEOUT - The message is not sended before "i_frameTimeoutMs". Restart to continue.
  *              MSGTX_RES_TXCLBKERROR    - Some error reported by the user send function. Restart to continue.
  *              MSGTX_RES_OK             - Operation ended correctly, message is not still fully encoded. This happnes
- *                                         when the whole message want sended in "i_timePerSendMs" millisecond, but the
- *                                         "i_frameTimeoutMs" timeout is still not reached. Call this function again
+ *                                         when the whole message wasn't sended in "i_timePerSendMs" millisecond, but
+ *                                         the "i_frameTimeoutMs" timeout is still not reached. Call this function again
  *                                         to send another chunk of data.
  */
 e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx);

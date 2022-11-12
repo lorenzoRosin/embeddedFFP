@@ -184,18 +184,24 @@ e_eFSP_MSGTX_Res MSGTX_RestartCurrentMessage(s_eFSP_MSGTX_Ctx* const ctx)
 
 e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
 {
-	/* Local variable */
+	/* Local variable of the operation result */
 	e_eFSP_MSGTX_Res result;
 	e_eFSP_MSGE_Res resultMsgE;
 
-    /* Local variable of data to send */
+    /* Local variable to keep track of the current state machine state */
     e_eFSP_MSGTX_Priv_state stateM;
-    uint32_t remainingTimeMs;
-    uint32_t sendFramTimeTotal;
-    uint32_t sendFramTimeSingle;
-    const uint8_t *cDataToSendP;
-    uint32_t cDataToSendLen;
-    uint32_t cDataSendedSingle;
+
+    /* Local variable to keep track of the total time spended in the function */
+    uint32_t totalTxTime;
+
+    /* Local variable usend for the current time calculation */
+    uint32_t cTxTime;
+    uint32_t cRemainTxTime;
+
+    /* Local variable usend for the current data calculation */
+    const uint8_t *cDToTxP;
+    uint32_t cDToTxLen;
+    uint32_t cDTxed;
 
 
 	/* Check pointer validity */
@@ -213,13 +219,13 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
 		else
 		{
             /* Init time frame counter */
-            sendFramTimeTotal = 0u;
-            sendFramTimeSingle = 0u;
+            totalTxTime = 0u;
+            cTxTime = 0u;
             result = MSGTX_RES_OK;
             stateM = MSGTX_PRV_CHECKIFBUFFERTX;
 
             /* wait end elaboration or end for timeout */
-            while( ( ctx->timeCounterMs < ctx->frameTimeoutMs ) && ( sendFramTimeTotal < ctx->timePerSendMs ) &&
+            while( ( ctx->timeCounterMs < ctx->frameTimeoutMs ) && ( totalTxTime < ctx->timePerSendMs ) &&
                    ( stateM != MSGTX_PRV_ELABDONE ) )
             {
                 switch( stateM )
@@ -227,40 +233,44 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
                     case MSGTX_PRV_CHECKIFBUFFERTX:
                     {
                         /* Is data present in send buffer? */
-                        cDataToSendLen = ctx->sendBuffFill - ctx->sendBuffCntr;
+                        cDToTxLen = ctx->sendBuffFill - ctx->sendBuffCntr;
 
-                        if( cDataToSendLen > 0u )
+                        if( cDToTxLen > 0u )
                         {
                             /* Can send data in msg buffer */
-                            stateM = MSGTX_PRV_SEND_BUFF;
+                            stateM = MSGTX_PRV_SENDBUFF;
                         }
                         else
                         {
-                            /* No data in msg buffer */
-                            stateM = MSGTX_PRV_CHECK_RETRIVECHUNK;
+                            /* No data in msg buffer, retrive some other chunk of data, only if the message send is not
+                             * completed of course */
+                            stateM = MSGTX_PRV_RETRIVECHUNK;
                         }
                         break;
                     }
 
-                    case MSGTX_PRV_SEND_BUFF:
+                    case MSGTX_PRV_SENDBUFF:
                     {
-                        /* Refresh remaining time */
-                        remainingTimeMs = ctx->frameTimeoutMs - ctx->timeCounterMs;
+                        /* Ok, we need to send data present in the send buffer */
+                        /* Refresh Total remaining time */
+                        cRemainTxTime = ctx->frameTimeoutMs - ctx->timeCounterMs;
 
-                        if( ( ctx->timePerSendMs - sendFramTimeTotal ) < remainingTimeMs )
+                        /* If this session timeout is lower thant total remaining time ocntinue using the session
+                         * remaining time */
+                        if( ( ctx->timePerSendMs - totalTxTime ) < cRemainTxTime )
                         {
-                            remainingTimeMs = ctx->timePerSendMs - sendFramTimeTotal;
+                            cRemainTxTime = ctx->timePerSendMs - totalTxTime;
                         }
 
                         /* Get data to send */
-                        cDataToSendP = &ctx->sendBuff[ctx->sendBuffCntr];
-                        cDataToSendLen = ctx->sendBuffFill - ctx->sendBuffCntr;
+                        cDToTxP = &ctx->sendBuff[ctx->sendBuffCntr];
+                        cDToTxLen = ctx->sendBuffFill - ctx->sendBuffCntr;
 
                         /* Can send data from send buffer */
-                        if( true == (*ctx->cbTxP)(ctx->cbTxCtx, cDataToSendP, cDataToSendLen, &cDataSendedSingle, remainingTimeMs, &sendFramTimeSingle) )
+                        if( true == (*ctx->cbTxP)(ctx->cbTxCtx, cDToTxP, cDToTxLen, &cDTxed, cRemainTxTime, &cTxTime) )
                         {
                             /* Check for some strangeness */
-                            if( cDataSendedSingle > cDataToSendLen)
+                            if( cDTxed > cDToTxLen)
                             {
                                 result = MSGTX_RES_CORRUPTCTX;
                                 stateM = MSGTX_PRV_ELABDONE;
@@ -268,11 +278,11 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
                             else
                             {
                                 /* Update sended counter */
-                                ctx->sendBuffCntr += cDataSendedSingle;
+                                ctx->sendBuffCntr += cDTxed;
 
                                 /* Update timings */
-                                sendFramTimeTotal += sendFramTimeSingle;
-                                ctx->timeCounterMs += sendFramTimeSingle;
+                                totalTxTime += cTxTime;
+                                ctx->timeCounterMs += cTxTime;
 
                                 /* Go next state */
                                 stateM = MSGTX_PRV_CHECKIFBUFFERTX;
@@ -287,31 +297,37 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
                         break;
                     }
 
-                    case MSGTX_PRV_CHECK_RETRIVECHUNK:
+                    case MSGTX_PRV_RETRIVECHUNK:
                     {
-                        /* Reset counter */
+                        /* Ok, the send buffer is empty, need to load remainings data */
                         ctx->sendBuffCntr = 0u;
+                        ctx->sendBuffFill = 0u;
 
                         /* Is data present in message encoder buffer? */
-                        resultMsgE = MSGE_RetriveEChunk(&ctx->msgEncoderCtnx, ctx->sendBuff, ctx->sendBuffSize, &ctx->sendBuffFill);
+                        resultMsgE = MSGE_RetriveEChunk(&ctx->msgEncoderCtnx, ctx->sendBuff, ctx->sendBuffSize,
+                                                        &ctx->sendBuffFill);
                         result = convertReturnFromMSGEToMSGTX(resultMsgE);
 
                         if( MSGTX_RES_OK == result )
                         {
-                            /* Retrived some data to send */
+                            /* Retrived some data to send, by design if MSGE_RetriveEChunk return MSGE_RES_OK this
+                             * means that the value of loaded data inside send buffer is equals to it's size */
+
+                            /* Can go to send loaded data now */
                             stateM = MSGTX_PRV_CHECKIFBUFFERTX;
                         }
                         else if( MSGTX_RES_MESSAGESENDED == result )
                         {
+                            /* Ok we retrived all the possible data */
                             if( 0u == ctx->sendBuffFill )
                             {
-                                /* More data to send  */
+                                /* No more data to send or retrive */
                                 stateM = MSGTX_PRV_ELABDONE;
                             }
                             else
                             {
-                                /* No more data to retrive */
-                                stateM = MSGTX_PRV_ELABDONE;
+                                /* Ok retrived all data but need to send the remaining present in sendBuff */
+                                stateM = MSGTX_PRV_CHECKIFBUFFERTX;
                             }
                         }
                         else
