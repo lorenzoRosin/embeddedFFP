@@ -14,6 +14,7 @@
 #include "eFSPMsgTransmitter_Priv.h"
 
 
+
 /***********************************************************************************************************************
  *  PRIVATE STATIC FUNCTION DECLARATION
  **********************************************************************************************************************/
@@ -65,7 +66,7 @@ e_eFSP_MSGTX_Res MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const ctx, const s_eFSP_MSGTX_I
                 ctx->frameTimeoutMs = initData->i_frameTimeoutMs;
                 ctx->timePerSendMs = initData->i_timePerSendMs;
 
-                /* initialize internal bytestuffer */
+                /* initialize internal message encoder */
                 resultMsgE =  MSGE_InitCtx(&ctx->msgEncoderCtnx, initData->i_memArea, initData->i_memAreaSize,
                                                 initData->i_cbCrcP, initData->i_cbCrcCtx);
                 result = convertReturnFromMSGEToMSGTX(resultMsgE);
@@ -180,11 +181,6 @@ e_eFSP_MSGTX_Res MSGTX_RestartCurrentMessage(s_eFSP_MSGTX_Ctx* const ctx)
 
 	return result;
 }
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_disable = "MISRAC2004-17.4_b"
-    /* Suppressed for code clarity */
-#endif
 
 e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
 {
@@ -353,9 +349,7 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
 	return result;
 }
 
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MISRAC2004-17.4_b"
-#endif
+
 
 /***********************************************************************************************************************
  *  PRIVATE FUNCTION
@@ -372,22 +366,36 @@ bool_t isMsgTransStatusStillCoherent(const s_eFSP_MSGTX_Ctx* ctx)
 	else
 	{
         /* Check send buffer validity */
-        if( ( ctx->sendBuffSize < 1u ) || ( ctx->sendBuffFill > ctx->sendBuffSize )  ||
-            ( ctx->sendBuffCntr > ctx->sendBuffFill ) )
+        if( ctx->sendBuffSize < 1u )
         {
             result =  false;
         }
         else
         {
-            /* Check timings validity */
-            if( ( ctx->frameTimeoutMs < 1u ) || ( ctx->timePerSendMs < 1u ) ||
-                ( ctx->timePerSendMs > ctx->frameTimeoutMs ) )
+            /* Check send buffer validity */
+            if( ( ctx->sendBuffFill > ctx->sendBuffSize )  || ( ctx->sendBuffCntr > ctx->sendBuffFill ) )
             {
-                result = false;
+                result =  false;
             }
             else
             {
-                result = true;
+                /* Check timings validity */
+                if( ( ctx->frameTimeoutMs < 1u ) || ( ctx->timePerSendMs < 1u ) )
+                {
+                    result = false;
+                }
+                else
+                {
+                    /* Check timings validity */
+                    if( ctx->timePerSendMs > ctx->frameTimeoutMs )
+                    {
+                        result = false;
+                    }
+                    else
+                    {
+                        result = true;
+                    }
+                }
             }
         }
 	}
@@ -459,5 +467,3 @@ e_eFSP_MSGTX_Res convertReturnFromMSGEToMSGTX(e_eFSP_MSGE_Res returnedEvent)
 
 	return result;
 }
-
-

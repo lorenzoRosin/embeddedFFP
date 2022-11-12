@@ -52,7 +52,7 @@ typedef enum
 
 typedef struct
 {
-    s_eFSP_MSGE_Ctx  msgEncoderCtnx;
+    s_eFSP_MSGE_Ctx msgEncoderCtnx;
 	uint8_t*        sendBuff;
 	uint32_t        sendBuffSize;
 	uint32_t        sendBuffCntr;
