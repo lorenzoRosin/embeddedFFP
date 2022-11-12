@@ -1103,15 +1103,9 @@
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPMsgTransmitter.h</name>
-            <excluded>
-                <configuration>Library</configuration>
-            </excluded>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPMsgTransmitter_Priv.h</name>
-            <excluded>
-                <configuration>Library</configuration>
-            </excluded>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPStandardType.h</name>
@@ -1136,9 +1130,6 @@
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\..\Code\Src\eFSPMsgTransmitter.c</name>
-            <excluded>
-                <configuration>Library</configuration>
-            </excluded>
         </file>
     </group>
 </project>

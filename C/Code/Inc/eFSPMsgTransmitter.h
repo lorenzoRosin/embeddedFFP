@@ -143,7 +143,8 @@ e_eFSP_MSGTX_Res MSGTX_RestartCurrentMessage(s_eFSP_MSGTX_Ctx* const ctx);
  * @brief       Send encoded data chunk. The raw data copied in the buffer by using the function
  *              MSGTX_GetPayloadLocation will be encoded (header and byte stuffing) and sended by this function.
  *              The whole message can be sended calling multiple times this function. Eache time this function will
- *              try to send all the data that can be send in "timePerSendMs" variable.
+ *              try to send all the data that can be send in "i_timePerSendMs". The whole frame instead can be sended
+ *              in "i_frameTimeoutMs" milliseconds.
  *
  * @param[in]   ctx         - Message Transmitter context
  *
@@ -153,10 +154,14 @@ e_eFSP_MSGTX_Res MSGTX_RestartCurrentMessage(s_eFSP_MSGTX_Ctx* const ctx);
  *		        MSGTX_RES_NOINITMESSAGE  - Need to start a message before taking some action
  *		        MSGTX_RES_CORRUPTCTX     - In case of an corrupted context
  *              MSGTX_RES_MESSAGESENDED  - No more data that we can send, restart or start a new msg to proceed.
- *                                          This means that we have finished sending the current message.
- *              MSGTX_RES_MESSAGETIMEOUT - The message is not sended before "frameTimeoutMs". Restart to continue.
+ *                                         This means that we have finished sending the current message, without
+ *                                         any particular error or timeout.
+ *              MSGTX_RES_MESSAGETIMEOUT - The message is not sended before "i_frameTimeoutMs". Restart to continue.
  *              MSGTX_RES_TXCLBKERROR    - Some error reported by the user send function. Restart to continue.
- *              MSGTX_RES_OK             - Operation ended correctly, message is not still fully encoded
+ *              MSGTX_RES_OK             - Operation ended correctly, message is not still fully encoded. This happnes
+ *                                         when the whole message want sended in "i_timePerSendMs" millisecond, but the
+ *                                         "i_frameTimeoutMs" timeout is still not reached. Call this function again
+ *                                         to send another chunk of data.
  */
 e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx);
 
