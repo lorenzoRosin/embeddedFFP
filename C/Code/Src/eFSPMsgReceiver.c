@@ -114,12 +114,9 @@ e_eFSP_MSGRX_Res MSGRX_StartNewMsg(s_eFSP_MSGRX_Ctx* const ctx)
             if( MSGRX_RES_OK == result )
             {
                 /* Start timer here if we don't need to wait start of frame before start counting */
-                if( false == ctx->needWaitFrameStart )
+                if( true != ctx->rxTimer.tim_start( ctx->rxTimer.timerCtx, ctx->frameTimeoutMs ) )
                 {
-                    if( true != ctx->rxTimer.tim_start( ctx->rxTimer.timerCtx, ctx->frameTimeoutMs ) )
-                    {
-                        result = MSGRX_RES_TIMCLBKERROR;
-                    }
+                    result = MSGRX_RES_TIMCLBKERROR;
                 }
             }
         }
@@ -158,13 +155,10 @@ e_eFSP_MSGRX_Res MSGRX_StartNewMsgNClean(s_eFSP_MSGRX_Ctx* const ctx)
 
             if( MSGRX_RES_OK == result )
             {
-                /* Start timer here if we don't need to wait start of frame before start counting */
-                if( false == ctx->needWaitFrameStart )
+                /* Start timer */
+                if( true != ctx->rxTimer.tim_start( ctx->rxTimer.timerCtx, ctx->frameTimeoutMs ) )
                 {
-                    if( true != ctx->rxTimer.tim_start( ctx->rxTimer.timerCtx, ctx->frameTimeoutMs ) )
-                    {
-                        result = MSGRX_RES_TIMCLBKERROR;
-                    }
+                    result = MSGRX_RES_TIMCLBKERROR;
                 }
             }
         }
@@ -212,7 +206,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx, uint32_t* errRe
     e_eFSP_MSGRX_Priv_state stateM;
 
     /* Local variable usend for the current time calculation */
-    uint32_t sRemainTxTime;
+    uint32_t sRemRxTime;
     uint32_t receiveTimeout;
     uint32_t cRemainRxTime;
 
@@ -223,8 +217,6 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx, uint32_t* errRe
 
     /* Local variable to keep track of the total error found in protocol */
     uint32_t totalRxErr;
-
-    /* Local variable usend for the current data calculation */
     uint32_t cDRxErr;
 
     /* Other local variable */
@@ -246,7 +238,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx, uint32_t* errRe
 		else
 		{
             /* First, get the entry point remainings data */
-            if( true == ctx->rxTimer.tim_getRemaining(ctx->rxTimer.timerCtx, &sRemainTxTime) )
+            if( true == ctx->rxTimer.tim_getRemaining(ctx->rxTimer.timerCtx, &sRemRxTime) )
             {
                 /* Init time frame counter */
                 totalRxErr = 0u;
@@ -367,38 +359,72 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx, uint32_t* errRe
                             /* Check if frame timeout is eplased */
                             if( true == ctx->rxTimer.tim_getRemaining(ctx->rxTimer.timerCtx, &cRemainRxTime) )
                             {
-                                if( cRemainRxTime <= 0u )
+                                /* Check also if we are still waiting start of frame to be received */
+                                resultMsgE =  MSGD_IsWaitingSof(&ctx->msgDecoderCtnx, &isWaitingSof);
+                                result = convertReturnFromMSGDToMSGRX(resultMsgE);
+
+                                if( MSGRX_RES_OK == result )
                                 {
-                                    /* Time elapsed */
-                                    result = MSGRX_RES_MESSAGETIMEOUT;
-                                    stateM = MSGRX_PRV_ELABDONE;
-                                }
-                                else
-                                {
-                                    /* Check time validity */
-                                    if( cRemainRxTime > sRemainTxTime )
+                                    if( ( true == ctx->needWaitFrameStart ) && ( true == isWaitingSof ) )
                                     {
-                                        /* It's not possible to have more time to send the frame now than during
-                                         * the begining */
-                                        result = MSGRX_RES_CORRUPTCTX;
-                                        stateM = MSGRX_PRV_ELABDONE;
+                                        /* Still waiting start of frame, reset timer */
+                                        if( true == ctx->rxTimer.tim_start( ctx->rxTimer.timerCtx,
+                                                                            ctx->frameTimeoutMs ) )
+                                        {
+                                            /* Refresh start time also */
+                                            sRemRxTime = ( sRemRxTime - cRemainRxTime ) + ctx->frameTimeoutMs;
+
+                                            /* Refresh current remaining time */
+                                            cRemainRxTime = ctx->frameTimeoutMs;
+                                        }
+                                        else
+                                        {
+                                            result = MSGRX_RES_TIMCLBKERROR;
+                                            stateM = MSGRX_PRV_ELABDONE;
+                                        }
                                     }
-                                    else
+
+                                    if( MSGRX_RES_OK == result )
                                     {
-                                        /* Frame timeout is not elapsed, check current session if expired */
-                                        if( ( sRemainTxTime - cRemainRxTime ) >= ctx->timePerRecMs )
+                                        if( cRemainRxTime <= 0u )
                                         {
                                             /* Time elapsed */
-                                            result = MSGRX_RES_OK;
+                                            result = MSGRX_RES_MESSAGETIMEOUT;
                                             stateM = MSGRX_PRV_ELABDONE;
                                         }
                                         else
                                         {
-                                            /* Session timeout not elapsed, can send data */
-                                            receiveTimeout = ctx->timePerRecMs - ( sRemainTxTime - cRemainRxTime );
-                                            stateM = MSGRX_PRV_RECEIVE_BUFF;
+                                            /* Check time validity */
+                                            if( cRemainRxTime > sRemRxTime )
+                                            {
+                                                /* It's not possible to have more time to send the frame now than during
+                                                 * the begining */
+                                                result = MSGRX_RES_CORRUPTCTX;
+                                                stateM = MSGRX_PRV_ELABDONE;
+                                            }
+                                            else
+                                            {
+                                                /* Frame timeout is not elapsed, check current session if expired */
+                                                if( ( sRemRxTime - cRemainRxTime ) >= ctx->timePerRecMs )
+                                                {
+                                                    /* Time elapsed */
+                                                    result = MSGRX_RES_OK;
+                                                    stateM = MSGRX_PRV_ELABDONE;
+                                                }
+                                                else
+                                                {
+                                                    /* Session timeout not elapsed, can send data */
+                                                    receiveTimeout = ctx->timePerRecMs - ( sRemRxTime - cRemainRxTime );
+                                                    stateM = MSGRX_PRV_RECEIVE_BUFF;
+                                                }
+                                            }
                                         }
                                     }
+                                }
+                                else
+                                {
+                                    /* Some error */
+                                    stateM = MSGRX_PRV_ELABDONE;
                                 }
                             }
                             else
@@ -428,7 +454,8 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx, uint32_t* errRe
                                 else
                                 {
                                     /* Retrive data */
-                                    if( true == (*ctx->cbRxP)(ctx->cbRxCtx, ctx->rxBuff, &ctx->rxBuffFill, ctx->rxBuffSize, receiveTimeout) )
+                                    if( true == (*ctx->cbRxP)(ctx->cbRxCtx, ctx->rxBuff, &ctx->rxBuffFill,
+                                                              ctx->rxBuffSize, receiveTimeout) )
                                     {
                                         /* Check for some strangeness */
                                         if( cDRxed > cDToRxLen )
@@ -470,6 +497,9 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx, uint32_t* errRe
                         }
                     }
                 }
+
+                /* Save recorded error */
+                *errRec = totalRxErr;
             }
             else
             {
