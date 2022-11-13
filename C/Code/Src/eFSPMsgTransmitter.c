@@ -26,6 +26,10 @@ static e_eFSP_MSGTX_Res convertReturnFromMSGEToMSGTX(e_eFSP_MSGE_Res returnedEve
 /***********************************************************************************************************************
  *   GLOBAL FUNCTIONS
  **********************************************************************************************************************/
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_disable = "MISRAC2012-Rule-10.3"
+    /* Suppressed because this warning is not working */
+#endif
 e_eFSP_MSGTX_Res MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const ctx, const s_eFSP_MSGTX_InitData* initData)
 {
 	/* Local variable */
@@ -76,6 +80,10 @@ e_eFSP_MSGTX_Res MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const ctx, const s_eFSP_MSGTX_I
 
 	return result;
 }
+
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_restore = "MISRAC2012-Rule-10.3"
+#endif
 
 e_eFSP_MSGTX_Res MSGTX_StartNewMessage(s_eFSP_MSGTX_Ctx* const ctx, const uint32_t messageLen)
 {
@@ -182,6 +190,11 @@ e_eFSP_MSGTX_Res MSGTX_RestartCurrentMessage(s_eFSP_MSGTX_Ctx* const ctx)
 	return result;
 }
 
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_disable = "MISRAC2012-Rule-10.3"
+    /* Suppressed because this warning is not working */
+#endif
+
 e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
 {
 	/* Local variable of the operation result */
@@ -255,7 +268,7 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
                         /* Refresh Total remaining time */
                         cRemainTxTime = ctx->frameTimeoutMs - ctx->timeCounterMs;
 
-                        /* If this session timeout is lower thant total remaining time ocntinue using the session
+                        /* If this session timeout is lower thant total remaining time continue using the session
                          * remaining time */
                         if( ( ctx->timePerSendMs - totalTxTime ) < cRemainTxTime )
                         {
@@ -270,7 +283,7 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
                         if( true == (*ctx->cbTxP)(ctx->cbTxCtx, cDToTxP, cDToTxLen, &cDTxed, cRemainTxTime, &cTxTime) )
                         {
                             /* Check for some strangeness */
-                            if( cDTxed > cDToTxLen)
+                            if( cDTxed > cDToTxLen )
                             {
                                 result = MSGTX_RES_CORRUPTCTX;
                                 stateM = MSGTX_PRV_ELABDONE;
@@ -364,6 +377,10 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
 
 	return result;
 }
+
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_restore = "MISRAC2012-Rule-10.3"
+#endif
 
 
 
