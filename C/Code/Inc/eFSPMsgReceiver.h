@@ -75,7 +75,6 @@ typedef struct
     uint32_t        frameTimeoutMs;
     uint32_t        timePerRecMs;
     bool_t          needWaitFrameStart;
-    bool_t          waitingFrameStart;
 }s_eFSP_MSGRX_Ctx;
 
 typedef struct

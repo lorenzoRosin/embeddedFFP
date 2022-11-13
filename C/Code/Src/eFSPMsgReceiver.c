@@ -40,8 +40,9 @@ e_eFSP_MSGRX_Res MSGRX_InitCtx(s_eFSP_MSGRX_Ctx* const ctx, const s_eFSP_MSGRX_I
 	{
         /* Check pointer validity */
         if( ( NULL == initData->i_memArea ) || ( NULL == initData->i_receiveBuffArea ) ||
-            ( NULL == initData->i_cbCrcP ) || ( NULL == initData->i_cbCrcCrx ) ||
-            ( NULL == initData->i_cbRxP ) || ( NULL == initData->i_cbRxCtx ) )
+            ( NULL == initData->i_cbCrcP ) || ( NULL == initData->i_cbCrcCrx ) || ( NULL == initData->i_cbRxP ) ||
+            ( NULL == initData->i_cbRxCtx ) || ( NULL == initData->i_rxTimer.timerCtx ) ||
+            ( NULL == initData->i_rxTimer.tim_start ) || ( NULL == initData->i_rxTimer.tim_getRemaining ) )
         {
             result = MSGRX_RES_BADPOINTER;
         }
@@ -69,11 +70,10 @@ e_eFSP_MSGRX_Res MSGRX_InitCtx(s_eFSP_MSGRX_Ctx* const ctx, const s_eFSP_MSGRX_I
                     ctx->rxBuffFill = 0u;
                     ctx->cbRxP = initData->i_cbRxP;
                     ctx->cbRxCtx = initData->i_cbRxCtx;
-                    ctx->timeCounterMs = 0u;
+                    ctx->rxTimer = initData->i_rxTimer;
                     ctx->frameTimeoutMs = initData->i_frameTimeoutMs;
                     ctx->timePerRecMs = initData->i_timePerRecMs;
                     ctx->needWaitFrameStart = initData->i_needWaitFrameStart;
-                    ctx->waitingFrameStart = true;
 
                     /* initialize internal bytestuffer */
                     resultMsgE =  MSGD_InitCtx(&ctx->msgDecoderCtnx, initData->i_memArea, initData->i_memAreaSize,
@@ -107,13 +107,21 @@ e_eFSP_MSGRX_Res MSGRX_StartNewMsg(s_eFSP_MSGRX_Ctx* const ctx)
         }
         else
         {
-            /* Reset internal variable */
-            ctx->timeCounterMs = 0u;
-            ctx->waitingFrameStart = true;
-
             /* Init message encoder */
             resultMsgE = MSGD_StartNewMsg(&ctx->msgDecoderCtnx);
             result = convertReturnFromMSGDToMSGRX(resultMsgE);
+
+            if( MSGRX_RES_OK == result )
+            {
+                /* Start timer here if we don't need to wait start of frame before start counting */
+                if( false == ctx->needWaitFrameStart )
+                {
+                    if( true != ctx->rxTimer.tim_start( ctx->rxTimer.timerCtx, ctx->frameTimeoutMs ) )
+                    {
+                        result = MSGRX_RES_TIMCLBKERROR;
+                    }
+                }
+            }
         }
 	}
 
@@ -143,12 +151,22 @@ e_eFSP_MSGRX_Res MSGRX_StartNewMsgNClean(s_eFSP_MSGRX_Ctx* const ctx)
             /* Reset internal variable */
             ctx->rxBuffCntr = 0u;
             ctx->rxBuffFill = 0u;
-            ctx->timeCounterMs = 0u;
-            ctx->waitingFrameStart = true;
 
             /* Init message encoder */
             resultMsgE = MSGD_StartNewMsg(&ctx->msgDecoderCtnx);
             result = convertReturnFromMSGDToMSGRX(resultMsgE);
+
+            if( MSGRX_RES_OK == result )
+            {
+                /* Start timer here if we don't need to wait start of frame before start counting */
+                if( false == ctx->needWaitFrameStart )
+                {
+                    if( true != ctx->rxTimer.tim_start( ctx->rxTimer.timerCtx, ctx->frameTimeoutMs ) )
+                    {
+                        result = MSGRX_RES_TIMCLBKERROR;
+                    }
+                }
+            }
         }
 	}
 
@@ -193,11 +211,9 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx, uint32_t* errRe
     /* Local variable to keep track of the current state machine state */
     e_eFSP_MSGRX_Priv_state stateM;
 
-    /* Local variable to keep track of the total time spended in the function */
-    uint32_t totalRxTime;
-
     /* Local variable usend for the current time calculation */
-    uint32_t cRxTime;
+    uint32_t sRemainTxTime;
+    uint32_t receiveTimeout;
     uint32_t cRemainRxTime;
 
     /* Local variable usend for the current data calculation */
@@ -213,6 +229,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx, uint32_t* errRe
 
     /* Other local variable */
     uint32_t rxMostEff;
+    bool_t isWaitingSof;
 
 	/* Check pointer validity */
 	if( NULL == ctx )
@@ -228,163 +245,236 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx, uint32_t* errRe
 		}
 		else
 		{
-            /* Init time frame counter */
-            totalRxTime = 0u;
-            cRxTime = 0u;
-            totalRxErr = 0u;
-            result = MSGRX_RES_OK;
-            stateM = MSGRX_PRV_CHECKIFBUFFERRX;
-
-            /* wait end elaboration or end for timeout */
-            while( ( ctx->timeCounterMs < ctx->frameTimeoutMs ) && ( totalRxTime < ctx->timePerRecMs ) &&
-                   ( stateM != MSGRX_PRV_ELABDONE ) )
+            /* First, get the entry point remainings data */
+            if( true == ctx->rxTimer.tim_getRemaining(ctx->rxTimer.timerCtx, &sRemainTxTime) )
             {
-                switch( stateM )
+                /* Init time frame counter */
+                totalRxErr = 0u;
+                result = MSGRX_RES_OK;
+                stateM = MSGRX_PRV_CHECKIFBUFFERRX;
+
+                /* wait end elaboration or end for timeout */
+                while( stateM != MSGRX_PRV_ELABDONE )
                 {
-                    case MSGRX_PRV_CHECKIFBUFFERRX:
+                    switch( stateM )
                     {
-                        /* Is data present in receive buffer? */
-                        cDToRxLen = ctx->rxBuffFill - ctx->rxBuffCntr;
-
-                        if( cDToRxLen > 0u )
+                        case MSGRX_PRV_CHECKIFBUFFERRX:
                         {
-                            /* Can parse already received data in msg buffer */
-                            stateM = MSGRX_PRV_INSERTCHUNK;
-                        }
-                        else
-                        {
-                            /* No data in msg buffer, retrive some other chunk of data, only if the message rx is not
-                             * completed of course */
-                            ctx->rxBuffCntr = 0u;
-                            ctx->rxBuffFill = 0u;
-                            stateM = MSGRX_PRV_RECEIVE_BUFF;
-                        }
-                        break;
-                    }
+                            /* Is data present in receive buffer? */
+                            cDToRxLen = ctx->rxBuffFill - ctx->rxBuffCntr;
 
-                    case MSGRX_PRV_RECEIVE_BUFF:
-                    {
-                        /* Ok, rx buffer is empty and need to be filled with data that we can parse just after */
-                        /* Refresh Total remaining time */
-                        cRemainRxTime = ctx->frameTimeoutMs - ctx->timeCounterMs;
-
-                        /* If this session timeout is lower thant total remaining time continue using the session
-                         * remaining time */
-                        if( ( ctx->timePerRecMs - totalRxTime ) < cRemainRxTime )
-                        {
-                            cRemainRxTime = ctx->timePerRecMs - totalRxTime;
-                        }
-
-                        /* Before start receiving some random amount of data check the suggestd value */
-                        resultMsgE = MSGD_GetMostEffDatLen(&ctx->msgDecoderCtnx, &rxMostEff);
-                        result = convertReturnFromMSGDToMSGRX(resultMsgE);
-                        if( MSGRX_RES_OK == result )
-                        {
-                            if( 0u == rxMostEff )
+                            if( cDToRxLen > 0u )
                             {
-                                /* Frame already received */
-                                stateM = MSGRX_PRV_ELABDONE;
-                                result = MSGRX_RES_MESSAGERECEIVED;
+                                /* Can parse already received data in msg buffer */
+                                stateM = MSGRX_PRV_INSERTCHUNK;
                             }
                             else
                             {
-                                /* Retrive data */
-                                if( true == (*ctx->cbRxP)(ctx->cbRxCtx, ctx->rxBuff, &ctx->rxBuffFill, ctx->rxBuffSize, cRemainRxTime, &cRxTime) )
+                                /* No data in msg buffer, retrive some other chunk of data, only if the message rx is
+                                 * not completed of course */
+                                ctx->rxBuffCntr = 0u;
+                                ctx->rxBuffFill = 0u;
+                                stateM = MSGRX_PRV_CHECKTIMEOUTBEFORRX;
+                            }
+                            break;
+                        }
+
+                        case MSGRX_PRV_INSERTCHUNK:
+                        {
+                            /* Ok, we have some data in RX buffer */
+                            cDToRxP = &ctx->rxBuff[ctx->rxBuffCntr];
+                            cDToRxLen = ctx->rxBuffFill - ctx->rxBuffCntr;
+
+                            /* Restart timeout if needed before */
+                            if( true == ctx->needWaitFrameStart )
+                            {
+                                /* if we need to wait start of frame before counting timer check if needs to be
+                                 * resetted */
+                                resultMsgE =  MSGD_IsWaitingSof(&ctx->msgDecoderCtnx, &isWaitingSof);
+                                result = convertReturnFromMSGDToMSGRX(resultMsgE);
+
+                                if( MSGRX_RES_OK == result )
                                 {
-                                    /* Check for some strangeness */
-                                    if( cDRxed > cDToRxLen )
+                                    if( true == isWaitingSof )
                                     {
+                                        /* Still waiting start of frame! Reset timer */
+                                        if( true != ctx->rxTimer.tim_start( ctx->rxTimer.timerCtx,
+                                                                            ctx->frameTimeoutMs ) )
+                                        {
+                                            result = MSGRX_RES_TIMCLBKERROR;
+                                            stateM = MSGRX_PRV_ELABDONE;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    stateM = MSGRX_PRV_ELABDONE;
+                                }
+                            }
+
+                            if( MSGRX_RES_OK == result )
+                            {
+                                /* We can try to decode data event if we already finished cuz the function
+                                * MSGD_InsEncChunk is well maden */
+                                resultMsgE = MSGD_InsEncChunk(&ctx->msgDecoderCtnx, cDToRxP, cDToRxLen, &cDRxed,
+                                                              &cDRxErr);
+                                result = convertReturnFromMSGDToMSGRX(resultMsgE);
+
+                                totalRxErr += cDRxErr;
+
+                                /* If we are waiting start of frame and error occours we can restart the frame timer */
+                                if( ( true == isWaitingSof ) && ( 0u != cDRxErr ) )
+                                {
+                                    /* Still waiting start of frame! Reset timer */
+                                    if( true != ctx->rxTimer.tim_start( ctx->rxTimer.timerCtx,
+                                                                        ctx->frameTimeoutMs ) )
+                                    {
+                                        result = MSGRX_RES_TIMCLBKERROR;
+                                        stateM = MSGRX_PRV_ELABDONE;
+                                    }
+                                }
+
+                                if( MSGRX_RES_OK == result )
+                                {
+                                    /* Retrived some data, by design if MSGD_InsEncChunk return MSGE_RES_OK this
+                                    * means that the value of loaded data inside send buffer is equals to it's size */
+                                    ctx->rxBuffCntr = 0u;
+                                    ctx->rxBuffFill = 0u;
+
+                                    /* Can see if other data are needed */
+                                    stateM = MSGRX_PRV_CHECKIFBUFFERRX;
+                                }
+                                else if( MSGRX_RES_MESSAGERECEIVED == result )
+                                {
+                                    /* Ok we retrived all the possible data */
+                                    stateM = MSGRX_PRV_ELABDONE;
+
+                                    /* Update RX buffer */
+                                    ctx->rxBuffCntr += cDRxed;
+                                }
+                                else
+                                {
+                                    /* Some error */
+                                    stateM = MSGRX_PRV_ELABDONE;
+                                }
+                            }
+
+                            break;
+                        }
+
+                        case MSGRX_PRV_CHECKTIMEOUTBEFORRX:
+                        {
+                            /* Check if frame timeout is eplased */
+                            if( true == ctx->rxTimer.tim_getRemaining(ctx->rxTimer.timerCtx, &cRemainRxTime) )
+                            {
+                                if( cRemainRxTime <= 0u )
+                                {
+                                    /* Time elapsed */
+                                    result = MSGRX_RES_MESSAGETIMEOUT;
+                                    stateM = MSGRX_PRV_ELABDONE;
+                                }
+                                else
+                                {
+                                    /* Check time validity */
+                                    if( cRemainRxTime > sRemainTxTime )
+                                    {
+                                        /* It's not possible to have more time to send the frame now than during
+                                         * the begining */
                                         result = MSGRX_RES_CORRUPTCTX;
                                         stateM = MSGRX_PRV_ELABDONE;
                                     }
                                     else
                                     {
-                                        /* Update sended counter */
-                                        ctx->rxBuffCntr += cDRxed;
-
-                                        /* Update timings */
-                                        totalRxTime += cRxTime;
-                                        ctx->timeCounterMs += cRxTime;
-
-                                        /* Go next state */
-                                        stateM = MSGRX_PRV_CHECKIFBUFFERRX;
+                                        /* Frame timeout is not elapsed, check current session if expired */
+                                        if( ( sRemainTxTime - cRemainRxTime ) >= ctx->timePerRecMs )
+                                        {
+                                            /* Time elapsed */
+                                            result = MSGRX_RES_OK;
+                                            stateM = MSGRX_PRV_ELABDONE;
+                                        }
+                                        else
+                                        {
+                                            /* Session timeout not elapsed, can send data */
+                                            receiveTimeout = ctx->timePerRecMs - ( sRemainTxTime - cRemainRxTime );
+                                            stateM = MSGRX_PRV_RECEIVE_BUFF;
+                                        }
                                     }
+                                }
+                            }
+                            else
+                            {
+                                /* Some error on timer */
+                                result = MSGRX_RES_TIMCLBKERROR;
+                                stateM = MSGRX_PRV_ELABDONE;
+                            }
+                            break;
+                        }
+
+                        case MSGRX_PRV_RECEIVE_BUFF:
+                        {
+                            /* Ok, rx buffer is empty and need to be filled with data that we can pars */
+
+                            /* Before start receiving some random amount of data check the suggestd value */
+                            resultMsgE = MSGD_GetMostEffDatLen(&ctx->msgDecoderCtnx, &rxMostEff);
+                            result = convertReturnFromMSGDToMSGRX(resultMsgE);
+                            if( MSGRX_RES_OK == result )
+                            {
+                                if( 0u == rxMostEff )
+                                {
+                                    /* Frame already received */
+                                    stateM = MSGRX_PRV_ELABDONE;
+                                    result = MSGRX_RES_MESSAGERECEIVED;
                                 }
                                 else
                                 {
-                                    /* Error sending data */
-                                    result = MSGRX_RES_RXCLBKERROR;
-                                    stateM = MSGRX_PRV_ELABDONE;
+                                    /* Retrive data */
+                                    if( true == (*ctx->cbRxP)(ctx->cbRxCtx, ctx->rxBuff, &ctx->rxBuffFill, ctx->rxBuffSize, receiveTimeout) )
+                                    {
+                                        /* Check for some strangeness */
+                                        if( cDRxed > cDToRxLen )
+                                        {
+                                            result = MSGRX_RES_CORRUPTCTX;
+                                            stateM = MSGRX_PRV_ELABDONE;
+                                        }
+                                        else
+                                        {
+                                            /* Update received counter */
+                                            ctx->rxBuffCntr += cDRxed;
+
+                                            /* Go next state */
+                                            stateM = MSGRX_PRV_CHECKIFBUFFERRX;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        /* Error sending data */
+                                        result = MSGRX_RES_RXCLBKERROR;
+                                        stateM = MSGRX_PRV_ELABDONE;
+                                    }
                                 }
                             }
+                            else
+                            {
+                                stateM = MSGRX_PRV_ELABDONE;
+                            }
+
+                            break;
                         }
-                        else
+
+                        default:
                         {
+                            /* Impossible end here */
                             stateM = MSGRX_PRV_ELABDONE;
+                            result = MSGRX_RES_CORRUPTCTX;
+                            break;
                         }
-
-                        break;
-                    }
-
-                    case MSGRX_PRV_INSERTCHUNK:
-                    {
-                        /* Ok, we have some data in RX buffer */
-                        cDToRxP = &ctx->rxBuff[ctx->rxBuffCntr];
-                        cDToRxLen = ctx->rxBuffFill - ctx->rxBuffCntr;
-
-                        /* We can try to decode data event if we already finished cuz the function MSGD_InsEncChunk
-                         * is well maden */
-                        resultMsgE = MSGD_InsEncChunk(&ctx->msgDecoderCtnx, cDToRxP, cDToRxLen, &cDRxed, &cDRxErr);
-                        result = convertReturnFromMSGDToMSGRX(resultMsgE);
-
-                        totalRxErr += cDRxErr;
-
-                        if( MSGRX_RES_OK == result )
-                        {
-                            /* Retrived some data, by design if MSGD_InsEncChunk return MSGE_RES_OK this
-                             * means that the value of loaded data inside send buffer is equals to it's size */
-                            ctx->rxBuffCntr = 0u;
-                            ctx->rxBuffFill = 0u;
-
-                            /* Can see if other data are needed */
-                            stateM = MSGRX_PRV_CHECKIFBUFFERRX;
-                        }
-                        else if( MSGRX_RES_MESSAGERECEIVED == result )
-                        {
-                            /* Ok we retrived all the possible data */
-                            stateM = MSGRX_PRV_ELABDONE;
-
-                            /* Update RX buffer */
-                            ctx->rxBuffCntr += cDRxed;
-                        }
-                        else
-                        {
-                            /* Some error */
-                            stateM = MSGRX_PRV_ELABDONE;
-                        }
-
-                        break;
-                    }
-
-                    default:
-                    {
-                        /* Impossible end here */
-                        stateM = MSGRX_PRV_ELABDONE;
-                        result = MSGRX_RES_CORRUPTCTX;
-                        break;
                     }
                 }
             }
-
-            /* Check for timeout */
-            if( ctx->timeCounterMs >= ctx->frameTimeoutMs )
+            else
             {
-                if( ( MSGRX_RES_OK == result ) || ( MSGRX_RES_MESSAGERECEIVED == result ) )
-                {
-                    /* Frame can go in timeout when we are not finished (RES_OK) or when all the message is sended
-                     * ( RES_MESSAGESENDED ) */
-                    result = MSGRX_RES_MESSAGETIMEOUT;
-                }
+                /* Some error on timer */
+                result = MSGRX_RES_TIMCLBKERROR;
             }
 		}
 	}
@@ -402,7 +492,9 @@ bool_t isMsgReceStatusStillCoherent(const s_eFSP_MSGRX_Ctx* ctx)
     bool_t result;
 
 	/* Check pointer validity */
-	if( ( NULL == ctx->rxBuff ) || ( NULL == ctx->cbRxP ) || ( NULL == ctx->cbRxCtx ) )
+	if( ( NULL == ctx->rxBuff ) || ( NULL == ctx->cbRxP ) || ( NULL == ctx->cbRxCtx ) ||
+        ( NULL == ctx->rxTimer.timerCtx ) || ( NULL == ctx->rxTimer.tim_start ) ||
+        ( NULL == ctx->rxTimer.tim_getRemaining ) )
 	{
 		result = false;
 	}
