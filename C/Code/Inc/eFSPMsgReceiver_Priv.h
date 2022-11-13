@@ -31,9 +31,9 @@ extern "C" {
  **********************************************************************************************************************/
 typedef enum
 {
-    MSGRX_PRV_CHECKIFBUFFERTX = 0,
-    MSGRX_PRV_SEND_BUFF,
-    MSGRX_PRV_CHECK_RETRIVECHUNK,
+    MSGRX_PRV_CHECKIFBUFFERRX = 0,
+    MSGRX_PRV_RECEIVE_BUFF,
+    MSGRX_PRV_INSERTCHUNK,
     MSGRX_PRV_ELABDONE
 }e_eFSP_MSGRX_Priv_state;
 
