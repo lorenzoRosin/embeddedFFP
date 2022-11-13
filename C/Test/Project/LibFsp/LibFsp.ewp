@@ -1091,15 +1091,9 @@
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPMsgReceiver.h</name>
-            <excluded>
-                <configuration>Library</configuration>
-            </excluded>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPMsgReceiver_Priv.h</name>
-            <excluded>
-                <configuration>Library</configuration>
-            </excluded>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPMsgTransmitter.h</name>
@@ -1124,9 +1118,6 @@
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\..\Code\Src\eFSPMsgReceiver.c</name>
-            <excluded>
-                <configuration>Library</configuration>
-            </excluded>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\..\Code\Src\eFSPMsgTransmitter.c</name>

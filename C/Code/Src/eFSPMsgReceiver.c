@@ -39,38 +39,47 @@ e_eFSP_MSGRX_Res MSGRX_InitCtx(s_eFSP_MSGRX_Ctx* const ctx, const s_eFSP_MSGRX_I
 	else
 	{
         /* Check pointer validity */
-        if( ( NULL == initData->i_memArea ) || ( NULL == initData->i_receiveBuffArea ) || ( NULL == initData->i_cbCrcP ) ||
-            ( NULL == initData->i_cbCrcCrx ) || ( NULL == initData->i_cbRxP ) || ( NULL == initData->i_cbRxCtx ) )
+        if( ( NULL == initData->i_memArea ) || ( NULL == initData->i_receiveBuffArea ) ||
+            ( NULL == initData->i_cbCrcP ) || ( NULL == initData->i_cbCrcCrx ) ||
+            ( NULL == initData->i_cbRxP ) || ( NULL == initData->i_cbRxCtx ) )
         {
             result = MSGRX_RES_BADPOINTER;
         }
         else
         {
-            /* Check data validity, we need some len to store the data */
-            if( ( initData->i_receiveBuffAreaSize < 1u ) || ( initData->i_frameTimeoutMs < 1u ) ||
-                ( initData->i_timePerRecMs < 1u ) || ( initData->i_timePerRecMs > initData->i_frameTimeoutMs ) )
+            /* Check data validity of data area */
+            if( initData->i_receiveBuffAreaSize < 1u)
             {
                 result = MSGRX_RES_BADPARAM;
             }
             else
             {
-                /* Initialize internal status variable */
-                ctx->rxBuff = initData->i_receiveBuffArea;
-                ctx->rxBuffSize = initData->i_receiveBuffAreaSize;
-                ctx->rxBuffCntr = 0u;
-                ctx->rxBuffFill = 0u;
-                ctx->cbRxP = initData->i_cbRxP;
-                ctx->cbRxCtx = initData->i_cbRxCtx;
-                ctx->timeCounterMs = 0u;
-                ctx->frameTimeoutMs = initData->i_frameTimeoutMs;
-                ctx->timePerRecMs = initData->i_timePerRecMs;
-                ctx->needWaitFrameStart = initData->i_needWaitFrameStart;
-                ctx->waitingFrameStart = true;
+                /* Check data validity of time */
+                if( ( initData->i_frameTimeoutMs < 1u ) || ( initData->i_timePerRecMs < 1u ) ||
+                    ( initData->i_timePerRecMs > initData->i_frameTimeoutMs ) )
+                {
+                    result = MSGRX_RES_BADPARAM;
+                }
+                else
+                {
+                    /* Initialize internal status variable */
+                    ctx->rxBuff = initData->i_receiveBuffArea;
+                    ctx->rxBuffSize = initData->i_receiveBuffAreaSize;
+                    ctx->rxBuffCntr = 0u;
+                    ctx->rxBuffFill = 0u;
+                    ctx->cbRxP = initData->i_cbRxP;
+                    ctx->cbRxCtx = initData->i_cbRxCtx;
+                    ctx->timeCounterMs = 0u;
+                    ctx->frameTimeoutMs = initData->i_frameTimeoutMs;
+                    ctx->timePerRecMs = initData->i_timePerRecMs;
+                    ctx->needWaitFrameStart = initData->i_needWaitFrameStart;
+                    ctx->waitingFrameStart = true;
 
-                /* initialize internal bytestuffer */
-                resultMsgE =  MSGD_InitCtx(&ctx->msgDecoderCtnx, initData->i_memArea, initData->i_memAreaSize,
-                                                initData->i_cbCrcP, initData->i_cbCrcCrx);
-                result = convertReturnFromMSGDToMSGRX(resultMsgE);
+                    /* initialize internal bytestuffer */
+                    resultMsgE =  MSGD_InitCtx(&ctx->msgDecoderCtnx, initData->i_memArea, initData->i_memAreaSize,
+                                                    initData->i_cbCrcP, initData->i_cbCrcCrx);
+                    result = convertReturnFromMSGDToMSGRX(resultMsgE);
+                }
             }
         }
 	}
