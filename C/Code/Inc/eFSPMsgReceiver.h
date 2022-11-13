@@ -34,7 +34,18 @@ extern "C" {
  * the cntx parameter is a custom pointer that can be used by the creator of this TX callback, and will not be used
  * by the MSG RECEIVER module */
 typedef bool_t (*cb_rx_msge) ( void* cntx, const uint8_t dataReceived[], uint32_t* const receivedLen,
-                               const uint32_t maxDataRxSize, const uint32_t timeToReceive, uint32_t* const timeElaps );
+                               const uint32_t maxDataRxSize, const uint32_t timeToReceive);
+
+/* Call backs to functions that act as a timer */
+typedef bool_t (*cb_rx_tim_start) ( void* cntx, const uint32_t timeoutVal );
+typedef bool_t (*cb_rx_tim_getRemaining) ( void* cntx, uint32_t* const remainings );
+
+typedef struct
+{
+    void*                   timerCtx;
+    cb_rx_tim_start         tim_start;
+    cb_rx_tim_getRemaining  tim_getRemaining;
+}s_eFSP_RXTIMER;
 
 typedef enum
 {
@@ -48,6 +59,7 @@ typedef enum
     MSGRX_RES_NOINITLIB,
 	MSGRX_RES_CRCCLBKERROR,
     MSGRX_RES_RXCLBKERROR,
+    MSGRX_RES_TIMCLBKERROR
 }e_eFSP_MSGRX_Res;
 
 typedef struct
@@ -59,7 +71,7 @@ typedef struct
     uint32_t        rxBuffFill;
     cb_rx_msge      cbRxP;
     void*           cbRxCtx;
-    uint32_t        timeCounterMs;
+    s_eFSP_RXTIMER  rxTimer;
     uint32_t        frameTimeoutMs;
     uint32_t        timePerRecMs;
     bool_t          needWaitFrameStart;
@@ -76,6 +88,7 @@ typedef struct
     void*           i_cbCrcCrx;
     cb_rx_msge      i_cbRxP;
     void*           i_cbRxCtx;
+    s_eFSP_RXTIMER  i_rxTimer;
     uint32_t        i_frameTimeoutMs;
     uint32_t        i_timePerRecMs;
     bool_t          i_needWaitFrameStart;
@@ -109,6 +122,7 @@ e_eFSP_MSGRX_Res MSGRX_InitCtx(s_eFSP_MSGRX_Ctx* const ctx, const s_eFSP_MSGRX_I
  * @return      MSGRX_RES_BADPOINTER   	- In case of bad pointer passed to the function
  *		        MSGRX_RES_NOINITLIB    	- Need to init context before taking some action
  *		        MSGRX_RES_CORRUPTCTX   	- In case of an corrupted context
+ *              MSGRX_RES_TIMCLBKERROR  - The timer function returned an error
  *              MSGRX_RES_OK           	- Operation ended correctly
  */
 e_eFSP_MSGRX_Res MSGRX_StartNewMsg(s_eFSP_MSGRX_Ctx* const ctx);
@@ -123,6 +137,7 @@ e_eFSP_MSGRX_Res MSGRX_StartNewMsg(s_eFSP_MSGRX_Ctx* const ctx);
  * @return      MSGRX_RES_BADPOINTER   	- In case of bad pointer passed to the function
  *		        MSGRX_RES_NOINITLIB    	- Need to init context before taking some action
  *		        MSGRX_RES_CORRUPTCTX   	- In case of an corrupted context
+ *              MSGRX_RES_TIMCLBKERROR  - The timer function returned an error
  *              MSGRX_RES_OK           	- Operation ended correctly
  */
 e_eFSP_MSGRX_Res MSGRX_StartNewMsgNClean(s_eFSP_MSGRX_Ctx* const ctx);
@@ -170,6 +185,7 @@ e_eFSP_MSGRX_Res MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const ctx, uint8_t** dat
  *          MSGRX_RES_MESSAGETIMEOUT    - The message is not received before "i_frameTimeoutMs". Restart to continue.
  *		    MSGRX_RES_RXCLBKERROR       - Some error reported by the user receive function. Restart to continue.
  *		    MSGRX_RES_CRCCLBKERROR      - The crc callback returned an error when the decoder where verifing CRC
+ *          MSGRX_RES_TIMCLBKERROR      - The timer function returned an error
  *          MSGRX_RES_OK           	    - Operation ended correctly. The chunk is parsed correctly but the frame is not
  *                                        finished yet. This function return OK when the i_timePerRecMs timeout is
  *                                        reached, but i_frameTimeoutMs is not elapsed.
