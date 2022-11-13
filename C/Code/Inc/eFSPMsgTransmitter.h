@@ -34,7 +34,18 @@ extern "C" {
  * the cntx parameter is a custom pointer that can be used by the creator of this TX callback, and will not be used
  * by the MSG TRANSMITTER module */
 typedef bool_t (*cb_tx_msge) ( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSendLen,
-                               uint32_t* const dataSended, const uint32_t timeToSend, uint32_t* const timeElapsed );
+                               uint32_t* const dataSended, const uint32_t timeToSend );
+
+/* Call backs to functions that act as a timer */
+typedef bool_t (*cb_tx_tim_start) ( void* cntx, const uint32_t timeoutVal );
+typedef bool_t (*cb_tx_tim_getRemaining) ( void* cntx, uint32_t* const remainings );
+
+typedef struct
+{
+    void*                   timerCtx;
+    cb_tx_tim_start         tim_start;
+    cb_tx_tim_getRemaining  tim_getRemaining;
+}s_eFSP_TXTIMER;
 
 typedef enum
 {
@@ -48,6 +59,7 @@ typedef enum
     MSGTX_RES_NOINITMESSAGE,
 	MSGTX_RES_CRCCLBKERROR,
     MSGTX_RES_TXCLBKERROR,
+    MSGTX_RES_TIMCLBKERROR
 }e_eFSP_MSGTX_Res;
 
 typedef struct
@@ -59,7 +71,7 @@ typedef struct
     uint32_t        sendBuffFill;
     cb_tx_msge      cbTxP;
     void*           cbTxCtx;
-    uint32_t        timeCounterMs;
+    s_eFSP_TXTIMER  txTimer;
     uint32_t        frameTimeoutMs;
     uint32_t        timePerSendMs;
 }s_eFSP_MSGTX_Ctx;
@@ -74,6 +86,7 @@ typedef struct
     void*           i_cbCrcCtx;
     cb_tx_msge      i_cbTxP;
     void*           i_cbTxCtx;
+    s_eFSP_TXTIMER  i_txTimer;
     uint32_t        i_frameTimeoutMs;
     uint32_t        i_timePerSendMs;
 }s_eFSP_MSGTX_InitData;
@@ -107,6 +120,7 @@ e_eFSP_MSGTX_Res MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const ctx, const s_eFSP_MSGTX_I
  *		        MSGTX_RES_NOINITLIB      - Need to init the data encoder context before taking some action
  *		        MSGTX_RES_CORRUPTCTX     - In case of an corrupted context
  *				MSGTX_RES_CRCCLBKERROR   - The crc callback function returned an error
+ *              MSGTX_RES_TIMCLBKERROR   - The timer function returned an error
  *              MSGTX_RES_OK             - Operation ended correctly
  */
 e_eFSP_MSGTX_Res MSGTX_StartNewMessage(s_eFSP_MSGTX_Ctx* const ctx, const uint32_t messageLen);
@@ -135,6 +149,7 @@ e_eFSP_MSGTX_Res MSGTX_GetPayloadLocation(s_eFSP_MSGTX_Ctx* const ctx, uint8_t**
  *		        MSGTX_RES_NOINITLIB      - Need to init the data encoder context before taking some action
  *		        MSGTX_RES_NOINITMESSAGE  - Need to start a message before restarting it
  *		        MSGTX_RES_CORRUPTCTX     - In case of an corrupted context
+ *              MSGTX_RES_TIMCLBKERROR   - The timer function returned an error
  *              MSGTX_RES_OK             - Operation ended correctly
  */
 e_eFSP_MSGTX_Res MSGTX_RestartCurrentMessage(s_eFSP_MSGTX_Ctx* const ctx);
@@ -158,6 +173,7 @@ e_eFSP_MSGTX_Res MSGTX_RestartCurrentMessage(s_eFSP_MSGTX_Ctx* const ctx);
  *                                         any particular error or timeout.
  *              MSGTX_RES_MESSAGETIMEOUT - The message is not sended before "i_frameTimeoutMs". Restart to continue.
  *              MSGTX_RES_TXCLBKERROR    - Some error reported by the user send function. Restart to continue.
+ *              MSGTX_RES_TIMCLBKERROR   - The timer function returned an error
  *              MSGTX_RES_OK             - Operation ended correctly, message is not still fully encoded. This happnes
  *                                         when the whole message wasn't sended in "i_timePerSendMs" millisecond, but
  *                                         the "i_frameTimeoutMs" timeout is still not reached. Call this function again
