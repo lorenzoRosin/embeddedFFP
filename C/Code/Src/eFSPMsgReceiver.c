@@ -19,7 +19,8 @@
  **********************************************************************************************************************/
 static bool_t isMsgReceStatusStillCoherent(const s_eFSP_MSGRX_Ctx* ctx);
 static e_eFSP_MSGRX_Res convertReturnFromMSGDToMSGRX(e_eFSP_MSGD_Res returnedEvent);
-
+static e_eFSP_MSGRX_Res ifWaitingSofAndEnabledWaitResetTim(s_eFSP_MSGRX_Ctx* const ctx, uint32_t* const startTimeR);
+static e_eFSP_MSGRX_Res ifEnabledWaitSofResetTim(const s_eFSP_MSGRX_Ctx* ctx, uint32_t* const startTimeR);
 
 
 /***********************************************************************************************************************
@@ -205,7 +206,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx, uint32_t* errRe
     /* Local variable to keep track of the current state machine state */
     e_eFSP_MSGRX_Priv_state stateM;
 
-    /* Local variable usend for the current time calculation */
+    /* Local variable used for the current time calculation */
     uint32_t sRemRxTime;
     uint32_t receiveTimeout;
     uint32_t cRemainRxTime;
@@ -237,7 +238,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx, uint32_t* errRe
 		}
 		else
 		{
-            /* First, get the entry point remainings data */
+            /* First get entry point for timeout calculation */
             if( true == ctx->rxTimer.tim_getRemaining(ctx->rxTimer.timerCtx, &sRemRxTime) )
             {
                 /* Init time frame counter */
@@ -278,31 +279,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx, uint32_t* errRe
                             cDToRxLen = ctx->rxBuffFill - ctx->rxBuffCntr;
 
                             /* Restart timeout if needed before */
-                            if( true == ctx->needWaitFrameStart )
-                            {
-                                /* if we need to wait start of frame before counting timer check if needs to be
-                                 * resetted */
-                                resultMsgE =  MSGD_IsWaitingSof(&ctx->msgDecoderCtnx, &isWaitingSof);
-                                result = convertReturnFromMSGDToMSGRX(resultMsgE);
-
-                                if( MSGRX_RES_OK == result )
-                                {
-                                    if( true == isWaitingSof )
-                                    {
-                                        /* Still waiting start of frame! Reset timer */
-                                        if( true != ctx->rxTimer.tim_start( ctx->rxTimer.timerCtx,
-                                                                            ctx->frameTimeoutMs ) )
-                                        {
-                                            result = MSGRX_RES_TIMCLBKERROR;
-                                            stateM = MSGRX_PRV_ELABDONE;
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    stateM = MSGRX_PRV_ELABDONE;
-                                }
-                            }
+                            result = ifWaitingSofAndEnabledWaitResetTim(ctx, &sRemRxTime);
 
                             if( MSGRX_RES_OK == result )
                             {
@@ -315,15 +292,9 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx, uint32_t* errRe
                                 totalRxErr += cDRxErr;
 
                                 /* If we are waiting start of frame and error occours we can restart the frame timer */
-                                if( ( true == isWaitingSof ) && ( 0u != cDRxErr ) )
+                                if( 0u != cDRxErr )
                                 {
-                                    /* Still waiting start of frame! Reset timer */
-                                    if( true != ctx->rxTimer.tim_start( ctx->rxTimer.timerCtx,
-                                                                        ctx->frameTimeoutMs ) )
-                                    {
-                                        result = MSGRX_RES_TIMCLBKERROR;
-                                        stateM = MSGRX_PRV_ELABDONE;
-                                    }
+                                    result = ifEnabledWaitSofResetTim(ctx, &sRemRxTime);
                                 }
 
                                 if( MSGRX_RES_OK == result )
@@ -350,6 +321,11 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx, uint32_t* errRe
                                     stateM = MSGRX_PRV_ELABDONE;
                                 }
                             }
+                            else
+                            {
+                                /* Some error reported */
+                                stateM = MSGRX_PRV_ELABDONE;
+                            }
 
                             break;
                         }
@@ -365,24 +341,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx, uint32_t* errRe
 
                                 if( MSGRX_RES_OK == result )
                                 {
-                                    if( ( true == ctx->needWaitFrameStart ) && ( true == isWaitingSof ) )
-                                    {
-                                        /* Still waiting start of frame, reset timer */
-                                        if( true == ctx->rxTimer.tim_start( ctx->rxTimer.timerCtx,
-                                                                            ctx->frameTimeoutMs ) )
-                                        {
-                                            /* Refresh start time also */
-                                            sRemRxTime = ( sRemRxTime - cRemainRxTime ) + ctx->frameTimeoutMs;
-
-                                            /* Refresh current remaining time */
-                                            cRemainRxTime = ctx->frameTimeoutMs;
-                                        }
-                                        else
-                                        {
-                                            result = MSGRX_RES_TIMCLBKERROR;
-                                            stateM = MSGRX_PRV_ELABDONE;
-                                        }
-                                    }
+                                    result = ifWaitingSofAndEnabledWaitResetTim(ctx, &sRemRxTime);
 
                                     if( MSGRX_RES_OK == result )
                                     {
@@ -419,6 +378,11 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx, uint32_t* errRe
                                                 }
                                             }
                                         }
+                                    }
+                                    else
+                                    {
+                                        /* Some error reported */
+                                        stateM = MSGRX_PRV_ELABDONE;
                                     }
                                 }
                                 else
@@ -617,4 +581,113 @@ e_eFSP_MSGRX_Res convertReturnFromMSGDToMSGRX(e_eFSP_MSGD_Res returnedEvent)
 	}
 
 	return result;
+}
+
+e_eFSP_MSGRX_Res ifWaitingSofAndEnabledWaitResetTim(s_eFSP_MSGRX_Ctx* const ctx, uint32_t* const startTimeR)
+{
+	/* Local variable */
+	e_eFSP_MSGRX_Res result;
+	e_eFSP_MSGD_Res resultMsgE;
+    uint32_t timeElapsedFromStart;
+    uint32_t currentRemainingTime;
+    bool_t isWaitingSof;
+
+    /* Do we need to wait start of frame? */
+    if( true == ctx->needWaitFrameStart )
+    {
+        /* Can wait start of frame.. Are we waiting Start of frame? */
+        resultMsgE =  MSGD_IsWaitingSof(&ctx->msgDecoderCtnx, &isWaitingSof);
+        result = convertReturnFromMSGDToMSGRX(resultMsgE);
+
+        if( MSGRX_RES_OK == result )
+        {
+            /* Is frame encoder waiting start of frame? */
+            if( true == isWaitingSof )
+            {
+                /* Still waiting start of frame, get current time and reset  */
+                if( true == ctx->rxTimer.tim_getRemaining( ctx->rxTimer.timerCtx, &currentRemainingTime ) )
+                {
+                    /* Reset timer */
+                    if( true == ctx->rxTimer.tim_start( ctx->rxTimer.timerCtx, ctx->frameTimeoutMs ) )
+                    {
+                        /* Calculate time elapsed from start */
+                        timeElapsedFromStart = ( *startTimeR - currentRemainingTime );
+
+                        /* Refresh start time also */
+                        *startTimeR = timeElapsedFromStart + ctx->frameTimeoutMs;
+                    }
+                    else
+                    {
+                        /* Error resetting timer */
+                        result = MSGRX_RES_TIMCLBKERROR;
+                    }
+                }
+                else
+                {
+                    /* Error resetting timer */
+                    result = MSGRX_RES_TIMCLBKERROR;
+                }
+            }
+            else
+            {
+                /* Not waiting SOF, no need to do nothing */
+            }
+        }
+        else
+        {
+            /* Error */
+        }
+    }
+    else
+    {
+        /* no need to wait start of frame, do no modify startTimeR */
+        result = MSGRX_RES_OK;
+    }
+
+    return result;
+}
+
+e_eFSP_MSGRX_Res ifEnabledWaitSofResetTim(const s_eFSP_MSGRX_Ctx* ctx, uint32_t* const startTimeR)
+{
+	/* Local variable */
+	e_eFSP_MSGRX_Res result;
+    uint32_t timeElapsedFromStart;
+    uint32_t currentRemainingTime;
+
+    /* Do we need to wait start of frame? */
+    if( true == ctx->needWaitFrameStart )
+    {
+        /* yes, get current remaining time and reset  */
+        if( true == ctx->rxTimer.tim_getRemaining( ctx->rxTimer.timerCtx, &currentRemainingTime ) )
+        {
+            /* Reset timer */
+            if( true == ctx->rxTimer.tim_start( ctx->rxTimer.timerCtx, ctx->frameTimeoutMs ) )
+            {
+                /* Calculate time elapsed from start */
+                timeElapsedFromStart = ( *startTimeR - currentRemainingTime );
+
+                /* Refresh start time also */
+                *startTimeR = timeElapsedFromStart + ctx->frameTimeoutMs;
+
+                result = MSGRX_RES_OK;
+            }
+            else
+            {
+                /* Error resetting timer */
+                result = MSGRX_RES_TIMCLBKERROR;
+            }
+        }
+        else
+        {
+            /* Error resetting timer */
+            result = MSGRX_RES_TIMCLBKERROR;
+        }
+    }
+    else
+    {
+        /* no need to wait start of frame, do no modify startTimeR */
+        result = MSGRX_RES_OK;
+    }
+
+    return result;
 }
