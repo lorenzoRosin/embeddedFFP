@@ -398,7 +398,6 @@ e_eFSP_MSGD_Res MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* cons
 	e_eFSP_MSGD_Res result;
 	s_eCU_BUNSTF_Res resByStuff;
     bool_t isFullUnstuffed;
-    bool_t isMCoherent;
     bool_t isWaitingSof;
     bool_t isFrameBad;
     uint32_t dataSizeRemaings;

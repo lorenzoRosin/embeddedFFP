@@ -285,8 +285,8 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx, uint32_t* errRe
                             {
                                 /* We can try to decode data event if we already finished cuz the function
                                 * MSGD_InsEncChunk is well maden */
-                                resultMsgE = MSGD_InsEncChunk(&ctx->msgDecoderCtnx, cDToRxP, cDToRxLen, &cDRxed,
-                                                              &cDRxErr);
+                                resultMsgE = MSGD_InsEncChunk(&ctx->msgDecoderCtnx, cDToRxP, cDToRxLen, &cDRxed );
+                                cDRxErr++;
                                 result = convertReturnFromMSGDToMSGRX(resultMsgE);
 
                                 totalRxErr += cDRxErr;
