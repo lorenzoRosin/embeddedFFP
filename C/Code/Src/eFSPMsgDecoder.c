@@ -437,7 +437,7 @@ e_eFSP_MSGD_Res MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* cons
 #endif
 
 e_eFSP_MSGD_Res MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const ctx, uint8_t encArea[], const uint32_t encLen,
-                                      uint32_t* const consumedEncData)
+                                 uint32_t* const consumedEncData)
 {
 	/* Local return  */
 	e_eFSP_MSGD_Res result;
@@ -732,12 +732,12 @@ e_eFSP_MSGD_Res IsAFullMsgDecoded(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isMs
             if( false == isFullUnstuffed )
             {
                 /* Not full unstuffed so itisnt full decoded. Even if the a bad frame is received its not
-                 * fll decoded */
+                 * fully decoded */
                 *isMsgDec = false;
             }
             else
             {
-                /* Full frame received, check if it is valid */
+                /* Full frame received at unstuffer level, check if it is valid message at this level */
                 result = isMsgCorrect(&ctx->byteUStufferCtnx, &isCorrect, ctx->cbCrcPtr, ctx->cbCrcCtx);
 
                 if( MSGD_RES_OK == result )

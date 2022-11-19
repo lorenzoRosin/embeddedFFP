@@ -79,7 +79,7 @@ e_eFSP_MSGD_Res MSGD_InitCtx(s_eFSP_MSGD_Ctx* const ctx, uint8_t memArea[], cons
 								 cb_crc32_msgd cbCrcP, void* const clbCtx);
 
 /**
- * @brief       Start receiving a new message, loosing the previous stored decoded msg frame
+ * @brief       Start receiving a new message, loosing the previous stored decoded msg frame. Clear even error state
  *
  * @param[in]   ctx         - Msg decoder context
  *
@@ -93,12 +93,13 @@ e_eFSP_MSGD_Res MSGD_StartNewMsg(s_eFSP_MSGD_Ctx* const ctx);
 /**
  * @brief       Retrive the pointer to the stored decoded data payload ( NO HEADER ), and the data size of the frame.
  *              Keep in mind that the message parsing could be ongoing, and if an error in the frame occour the
- *              retrivedLen could be setted to 0 again. We will retrive only payload size and no CRC + LEN header
+ *              retrivedLen could be setted to 0 again. We will retrive only payload size and no CRC + LEN header.
+ *              Use this function when the whole message is decoded.
  *
  * @param[in]   ctx         - Msg decoder context
  * @param[out]  dataP       - Pointer to a Pointer pointing to the decoded data payload ( NO CRC NO DATA SIZE )
  * @param[out]  retrivedLen - Pointer to a uint32_t variable where the size of the decoded data will be placed (raw
- *                            paylod data len )
+ *                            paylod data len, no header no crc )
  *
  * @return      MSGD_RES_BADPOINTER   	- In case of bad pointer passed to the function
  *		        MSGD_RES_NOINITLIB    	- Need to init context before taking some action
@@ -110,7 +111,7 @@ e_eFSP_MSGD_Res MSGD_GetDecodedData(s_eFSP_MSGD_Ctx* const ctx, uint8_t** dataP,
 /**
  * @brief       Retrive the size of encoded data payload frame. Keep in mind that the message parsing could be ongoing,
  *              and if an error in the frame occour the retrivedLen could be setted to 0 again. We will retrive only
- * 				payload size and no CRC + LEN header
+ * 				payload size and no CRC + LEN header. Use this function when the whole message is decoded.
  *
  * @param[in]   ctx         - Msg decoder context
  * @param[out]  retrivedLen - Pointer to a uint32_t variable where the size of the decoded data will be placed (raw
@@ -141,11 +142,12 @@ e_eFSP_MSGD_Res MSGD_IsWaitingSof(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isWa
  *              If a bad frame is received this function will consider it as an unfinished frame.
  *
  * @param[in]   ctx         - Msg decoder context
- * @param[out]  isMsgDec 	- Pointer to a bool_t variable where we will store if the message parsing is ongoing
+ * @param[out]  isMsgDec 	- Pointer to a bool_t variable where we will store if the message dedoded ended.
  *
  * @return      MSGD_RES_BADPOINTER   	- In case of bad pointer passed to the function
  *		        MSGD_RES_NOINITLIB    	- Need to init context before taking some action
  *		        MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
+ *				MSGD_RES_CRCCLBKERROR   - The crc callback returned an error when the decoder where verifing CRC
  *              MSGD_RES_OK           	- Operation ended correctly
  */
 e_eFSP_MSGD_Res MSGD_IsAFullMsgDecoded(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isMsgDec);
@@ -217,13 +219,13 @@ e_eFSP_MSGD_Res MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* cons
  *                                        function. In this situation bear in mind that some data could be left out
  *                                        the parsing and so we need to reparse that data with another call of
  *                                        MSGD_InsEncChunk.
- *				MSGE_RES_CRCCLBKERROR   - The crc callback returned an error when the decoder where verifing CRC
+ *				MSGD_RES_CRCCLBKERROR   - The crc callback returned an error when the decoder where verifing CRC
  *              MSGD_RES_OK           	- Operation ended correctly. The chunk is parsed correclty but the frame is not
  *                                        finished yet. In this situation consumedEncData is always reported with a
  *                                        value equals to encLen.
  */
 e_eFSP_MSGD_Res MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const ctx, uint8_t encArea[], const uint32_t encLen,
-                                      uint32_t* const consumedEncData);
+                                 uint32_t* const consumedEncData);
 
 #ifdef __cplusplus
 } /* extern "C" */
