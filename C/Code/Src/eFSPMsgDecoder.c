@@ -248,6 +248,8 @@ e_eFSP_MSGD_Res MSGD_IsAFullMsgDecoded(s_eFSP_MSGD_Ctx* const ctx, bool_t* const
 	/* Local variable */
 	e_eFSP_MSGD_Res result;
 	s_eCU_BUNSTF_Res resByStuff;
+    bool_t isFullUnstuffed;
+    bool_t isCorrect;
 
 	/* Check pointer validity */
 	if( ( NULL == ctx ) || ( NULL == isMsgDec ) )
@@ -263,8 +265,127 @@ e_eFSP_MSGD_Res MSGD_IsAFullMsgDecoded(s_eFSP_MSGD_Ctx* const ctx, bool_t* const
 		}
 		else
 		{
-			resByStuff = BUNSTF_IsAFullFrameUnstuff(&ctx->byteUStufferCtnx, isMsgDec);
+			resByStuff = BUNSTF_IsAFullFrameUnstuff(&ctx->byteUStufferCtnx, &isFullUnstuffed);
 			result = convertReturnFromBstfToMSGD(resByStuff);
+
+            if( MSGD_RES_OK == result )
+            {
+                if( false == isFullUnstuffed )
+                {
+                    /* Not full unstuffed so itisnt full decoded. Even if the a bad frame is received its not
+                     * fll decoded */
+                    *isMsgDec = false;
+                }
+                else
+                {
+                    /* Full frame received, check if it is valid */
+                    result = isMsgCorrect(&ctx->byteUStufferCtnx, &isCorrect, ctx->cbCrcPtr, ctx->cbCrcCtx);
+
+                    if( MSGD_RES_OK == result )
+                    {
+                        if( true == isCorrect )
+                        {
+                            /* Correct message so it's decoded */
+                            *isMsgDec = true;
+                        }
+                        else
+                        {
+                            /* Bad frame so it's not decoded */
+                            *isMsgDec = false;
+                        }
+                    }
+                }
+            }
+		}
+	}
+
+	return result;
+}
+
+e_eFSP_MSGD_Res MSGD_IsCurrentFrameBad(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isFrameBad)
+{
+	/* Local variable */
+	e_eFSP_MSGD_Res result;
+	s_eCU_BUNSTF_Res resByStuff;
+    bool_t isFullUnstuffed;
+    bool_t isCorrect;
+    bool_t isFrameBadloc;
+
+	/* Check pointer validity */
+	if( ( NULL == ctx ) || ( NULL == isFrameBad ) )
+	{
+		result = MSGD_RES_BADPOINTER;
+	}
+	else
+	{
+		/* Check internal status validity */
+		if( false == isMsgDecStatusStillCoherent(ctx) )
+		{
+			result = MSGD_RES_CORRUPTCTX;
+		}
+		else
+		{
+            resByStuff = BUNSTF_IsCurrentFrameBad(&ctx->byteUStufferCtnx, &isFrameBadloc);
+            result = convertReturnFromBstfToMSGD(resByStuff);
+
+            if( MSGD_RES_OK == result )
+            {
+                if( true == isFrameBadloc )
+                {
+                    /* Not correct at bytestuffer level */
+                    *isFrameBad = true;
+                }
+                else
+                {
+                    /* Frame seems ok, check the correctnes */
+                    resByStuff = BUNSTF_IsAFullFrameUnstuff(&ctx->byteUStufferCtnx, &isFullUnstuffed);
+                    result = convertReturnFromBstfToMSGD(resByStuff);
+
+                    if( MSGD_RES_OK == result )
+                    {
+                        if( false == isFullUnstuffed )
+                        {
+                            /* Check ongoing coherence */
+                            result = isMsgCoherent(&ctx->byteUStufferCtnx, &isCorrect);
+
+                            if( MSGD_RES_OK == result )
+                            {
+                                /* no strange error found, check message correctness */
+                                if( true != isCorrect )
+                                {
+                                    /* Message not ended but something about it0s coherence is wrong */
+                                    *isFrameBad = true;
+                                }
+                                else
+                                {
+                                    /* Correct message */
+                                    *isFrameBad = false;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            /* Check complete frame coherence */
+                            result = isMsgCorrect(&ctx->byteUStufferCtnx, &isCorrect, ctx->cbCrcPtr, ctx->cbCrcCtx);
+
+                            if( MSGD_RES_OK == result )
+                            {
+                                /* no strange error found, check message correctness */
+                                if( true != isCorrect )
+                                {
+                                    /* Message ended but something about CRC or length is not rigth, restart a frame */
+                                    *isFrameBad = true;
+                                }
+                                else
+                                {
+                                    /* Correct message */
+                                    *isFrameBad = false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 		}
 	}
 
@@ -277,7 +398,9 @@ e_eFSP_MSGD_Res MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* cons
 	e_eFSP_MSGD_Res result;
 	s_eCU_BUNSTF_Res resByStuff;
     bool_t isFullUnstuffed;
+    bool_t isMCoherent;
     bool_t isWaitingSof;
+    bool_t isFrameBad;
     uint32_t dataSizeRemaings;
 	uint32_t dPayRxed;
     uint32_t dataSizeRaw;
@@ -300,84 +423,99 @@ e_eFSP_MSGD_Res MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* cons
 		{
             /* Check if frame is already ended */
             isFullUnstuffed = false;
-			resByStuff = BUNSTF_IsAFullFrameUnstuff(&ctx->byteUStufferCtnx, &isFullUnstuffed);
-			result = convertReturnFromBstfToMSGD(resByStuff);
+			result = MSGD_IsAFullMsgDecoded(ctx, &isFullUnstuffed);
 
             if( MSGD_RES_OK == result )
             {
                 if( true == isFullUnstuffed )
                 {
-                    /* Full unstuffed, done */
+                    /* Full decoded frame */
                     *mostEffPayload = 0u;
                 }
                 else
                 {
-                    /* How many byte do we have decoded? */
-                    dataSizeRaw = 0u;
-                    dataPP = NULL;
-                    resByStuff = BUNSTF_GetUnstufData(&ctx->byteUStufferCtnx, &dataPP, &dataSizeRaw);
-                    result = convertReturnFromBstfToMSGD(resByStuff);
+                    /* Check for error */
+                    result = MSGD_IsCurrentFrameBad(ctx, &isFrameBad);
 
                     if( MSGD_RES_OK == result )
                     {
-                        /* Do we have enough data?  */
-                        if( 0u == dataSizeRaw )
+                        if( true == isFrameBad )
                         {
-                            /* No data, are we still waiting SOF? */
-                            isWaitingSof = false;
-                            resByStuff = BUNSTF_IsWaitingSof(&ctx->byteUStufferCtnx, &isWaitingSof);
+                            /* Bad frame, dont request more data */
+                            *mostEffPayload = 0u;
+                        }
+                        else
+                        {
+                            /* Message seemes to make sense, estiamte */
+                            /* How many byte do we have decoded? */
+                            dataSizeRaw = 0u;
+                            dataPP = NULL;
+                            resByStuff = BUNSTF_GetUnstufData(&ctx->byteUStufferCtnx, &dataPP, &dataSizeRaw);
                             result = convertReturnFromBstfToMSGD(resByStuff);
 
                             if( MSGD_RES_OK == result )
                             {
-                                if( true == isWaitingSof )
+                                /* Do we have enough data?  */
+                                if( 0u == dataSizeRaw )
                                 {
-                                    /* Header + SOF */
-                                    *mostEffPayload = EFSP_MSGDE_HEADERSIZE + 1u;
+                                    /* No data, are we still waiting SOF? */
+                                    isWaitingSof = false;
+                                    resByStuff = BUNSTF_IsWaitingSof(&ctx->byteUStufferCtnx, &isWaitingSof);
+                                    result = convertReturnFromBstfToMSGD(resByStuff);
+
+                                    if( MSGD_RES_OK == result )
+                                    {
+                                        if( true == isWaitingSof )
+                                        {
+                                            /* Header + SOF */
+                                            *mostEffPayload = EFSP_MSGDE_HEADERSIZE + 1u;
+                                        }
+                                        else
+                                        {
+                                            /* Header only */
+                                            *mostEffPayload = EFSP_MSGDE_HEADERSIZE;
+                                        }
+                                    }
+                                }
+                                else if( dataSizeRaw < EFSP_MSGDE_HEADERSIZE )
+                                {
+                                    /* Need to receive all the header before estimating data size */
+                                    *mostEffPayload = EFSP_MSGDE_HEADERSIZE - dataSizeRaw;
                                 }
                                 else
                                 {
-                                    /* Header only */
-                                    *mostEffPayload = EFSP_MSGDE_HEADERSIZE;
-                                }
-                            }
-                        }
-                        else if( dataSizeRaw < EFSP_MSGDE_HEADERSIZE )
-                        {
-                            /* Need to receive all the header before estimating data size */
-                            *mostEffPayload = EFSP_MSGDE_HEADERSIZE - dataSizeRaw;
-                        }
-                        else
-                        {
-                            /* Enough data! Start remaining data estimation */
-                            dPayToRx = composeU32LE(dataPP[0x04u], dataPP[0x05u], dataPP[0x06u], dataPP[0x07u]);
+                                    /* Enough data! Start remaining data estimation */
+                                    dPayToRx = composeU32LE(dataPP[0x04u], dataPP[0x05u], dataPP[0x06u], dataPP[0x07u]);
 
-                            /* How much payload we have */
-                            dPayRxed = dataSizeRaw - EFSP_MSGDE_HEADERSIZE;
+                                    /* How much payload do we have */
+                                    dPayRxed = dataSizeRaw - EFSP_MSGDE_HEADERSIZE;
 
-                            /* A correct frame payload must have less lenght than the size reported in frame header */
-                            if( dPayRxed <= dPayToRx )
-                            {
-                                dataSizeRemaings = dPayToRx - dPayRxed;
+                                    /* A correct frame payload must have less lenght than the size reported in frame
+                                     * header */
+                                    if( dPayRxed <= dPayToRx )
+                                    {
+                                        dataSizeRemaings = dPayToRx - dPayRxed;
 
-                                /* Wait remaining data + EOF */
-                                if( dataSizeRemaings < MAX_UINT32VAL )
-                                {
-                                    /* dataSizeRemaings != 0 -> need data + EOF */
-                                    /* dataSizeRemaings == 0 -> need EOF . Infact we are sure the frame is not ended
-                                     * because we already have called the function BUNSTF_IsAFullFrameUnstuff */
-                                    *mostEffPayload = dataSizeRemaings + 1u;
+                                        /* Wait remaining data + EOF */
+                                        if( dataSizeRemaings < MAX_UINT32VAL )
+                                        {
+                                            /* dataSizeRemaings != 0 -> need data + EOF
+                                             * dataSizeRemaings == 0 -> need EOF . Infact we are sure the frame is not
+                                             * ended because we already have called the function
+                                             * BUNSTF_IsAFullFrameUnstuff */
+                                            *mostEffPayload = dataSizeRemaings + 1u;
+                                        }
+                                        else
+                                        {
+                                            *mostEffPayload = dataSizeRemaings;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        /* We have more data than expected -> bad frame */
+                                        *mostEffPayload = 0u;
+                                    }
                                 }
-                                else
-                                {
-                                    *mostEffPayload = dataSizeRemaings;
-                                }
-                            }
-                            else
-                            {
-                                /* We have more data than expected, but it's impossible because MSGD_InsEncChunk
-                                 * is able to prevent this kind of situation */
-                                result = MSGD_RES_CORRUPTCTX;
                             }
                         }
                     }
@@ -395,7 +533,7 @@ e_eFSP_MSGD_Res MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* cons
 #endif
 
 e_eFSP_MSGD_Res MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const ctx, uint8_t encArea[], const uint32_t encLen,
-                                      uint32_t* const consumedEncData, uint32_t* errEncRec)
+                                      uint32_t* const consumedEncData)
 {
 	/* Local return  */
 	e_eFSP_MSGD_Res result;
@@ -407,21 +545,11 @@ e_eFSP_MSGD_Res MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const ctx, uint8_t encArea[], 
     bool_t isMCorrect;
     bool_t isMCoherent;
 
-    /* Current loop var */
-    const uint8_t *cArea;
-    uint32_t cEncLen;
-    uint32_t cCosumed;
-    uint32_t cErrRec;
-
-    /* Total counter */
-    uint32_t totalCosumed;
-    uint32_t totalErrSofRec;
-
     /* Redo loop var */
     e_eFSP_MSGD_Priv_state insertEncState;
 
 	/* Check pointer validity */
-	if( ( NULL == ctx ) || ( NULL == encArea ) || ( NULL == consumedEncData ) || ( NULL == errEncRec ) )
+	if( ( NULL == ctx ) || ( NULL == encArea ) || ( NULL == consumedEncData ) )
 	{
 		result = MSGD_RES_BADPOINTER;
 	}
@@ -434,53 +562,49 @@ e_eFSP_MSGD_Res MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const ctx, uint8_t encArea[], 
 		}
 		else
 		{
-            /* init current var */
-            cArea = encArea;
-            cEncLen = encLen;
-
-            /* Init total counter */
-            totalCosumed = 0u;
-            totalErrSofRec = 0u;
-
             /* Elaborate */
-            insertEncState = MSGD_PRV_INSERTCHUNK;
+            insertEncState = MSGD_PRV_PRECHECK;
             result = MSGD_RES_OK;
 
             while( insertEncState != MSGD_PRV_ELABDONE )
             {
                 switch( insertEncState )
                 {
+                    case MSGD_PRV_PRECHECK:
+                    {
+                        /* Before inserting data check if the current message is coherent */
+                        resultMsgCoherent = isMsgCoherent(&ctx->byteUStufferCtnx, &isMCoherent);
+
+                        if( MSGD_RES_OK == resultMsgCoherent )
+                        {
+                            /* no strange error found, check message correctness */
+                            if( true != isMCoherent )
+                            {
+                                /* Message is not coherent */
+                                insertEncState = MSGD_PRV_ELABDONE;
+                                result = MSGD_RES_BADFRAME;
+                            }
+                            else
+                            {
+                                /* Message is correct but not ended */
+                                insertEncState = MSGD_PRV_INSERTCHUNK;
+                            }
+                        }
+                        else
+                        {
+                            /* Some error */
+                            result = resultMsgCoherent;
+                            insertEncState = MSGD_PRV_ELABDONE;
+                        }
+
+                        break;
+                    }
+
                     case MSGD_PRV_INSERTCHUNK:
                     {
-                        /* Init partial coutner  */
-                        cCosumed = 0u;
-                        cErrRec = 0u;
-
                         /* Insert data */
-                        resByStuff = BUNSTF_InsStufChunk(&ctx->byteUStufferCtnx, cArea, cEncLen, &cCosumed, &cErrRec);
+                        resByStuff = BUNSTF_InsStufChunk(&ctx->byteUStufferCtnx, encArea, encLen, consumedEncData);
                         result = convertReturnFromBstfToMSGD(resByStuff);
-
-                        /* update total counter */
-                        if( totalErrSofRec < ( MAX_UINT32VAL - cErrRec ) )
-                        {
-                            totalErrSofRec += cErrRec;
-                        }
-                        else
-                        {
-                            totalErrSofRec = MAX_UINT32VAL;
-                            result = MSGD_RES_OUTOFMEM;
-                        }
-
-                        /* update total counter */
-                        if( totalCosumed < ( MAX_UINT32VAL - cCosumed ) )
-                        {
-                            totalCosumed += cCosumed;
-                        }
-                        else
-                        {
-                            totalCosumed = MAX_UINT32VAL;
-                            result = MSGD_RES_OUTOFMEM;
-                        }
 
                         if( MSGD_RES_MESSAGEENDED == result )
                         {
@@ -491,6 +615,16 @@ e_eFSP_MSGD_Res MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const ctx, uint8_t encArea[], 
                         {
                             /* Check if okied correclty */
                             insertEncState = MSGD_PRV_MSG_OK_CHECK;
+                        }
+                        else if( MSGD_RES_BADFRAME == result )
+                        {
+                            /* bad frame, return till somehome will restart elaboration */
+                            insertEncState = MSGD_PRV_ELABDONE;
+                        }
+                        else if( MSGD_RES_FRAMERESTART == result )
+                        {
+                            /* Frame restarted, return */
+                            insertEncState = MSGD_PRV_ELABDONE;
                         }
                         else
                         {
@@ -511,53 +645,9 @@ e_eFSP_MSGD_Res MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const ctx, uint8_t encArea[], 
                             /* no strange error found, check message correctness */
                             if( true != isMCorrect )
                             {
-                                /* Too small frame or bad cr found, discharge and continue parse data if present */
-                                /* Increase error counter if frame is wrong */
-                                if( totalErrSofRec < MAX_UINT32VAL )
-                                {
-                                    totalErrSofRec += 1u;
-                                }
-                                else
-                                {
-                                    totalErrSofRec = MAX_UINT32VAL;
-                                    result = MSGD_RES_OUTOFMEM;
-                                }
-
-                                if( MSGD_RES_MESSAGEENDED == result )
-                                {
-                                    /* Message ended but something about CRC is not rigth, restart a frame */
-                                    resByStuff = BUNSTF_StartNewFrame(&ctx->byteUStufferCtnx);
-                                    result = convertReturnFromBstfToMSGD(resByStuff);
-
-                                    if( MSGD_RES_OK == result )
-                                    {
-                                        /* retrigger and update counter if we have some space */
-                                        if( totalCosumed < encLen )
-                                        {
-                                            /* retrigger */
-                                            insertEncState = MSGD_PRV_INSERTCHUNK;
-
-                                            /* Update pointer */
-                                            cArea = &encArea[totalCosumed];
-                                            cEncLen = encLen - totalCosumed;
-                                        }
-                                        else
-                                        {
-                                            /* No more data */
-                                            insertEncState = MSGD_PRV_ELABDONE;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        /* Error */
-                                        insertEncState = MSGD_PRV_ELABDONE;
-                                    }
-                                }
-                                else
-                                {
-                                    /* Error */
-                                    insertEncState = MSGD_PRV_ELABDONE;
-                                }
+                                /* Message ended but something about CRC or length is not rigth, restart a frame */
+                                insertEncState = MSGD_PRV_ELABDONE;
+                                result = MSGD_RES_BADFRAME;
                             }
                             else
                             {
@@ -585,52 +675,8 @@ e_eFSP_MSGD_Res MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const ctx, uint8_t encArea[], 
                             /* no strange error found, check message correctness */
                             if( true != isMCoherent )
                             {
-                                /* Message not ended but something about message length is not coherent */
-                                if( totalErrSofRec < MAX_UINT32VAL )
-                                {
-                                    totalErrSofRec += 1u;
-                                }
-                                else
-                                {
-                                    totalErrSofRec = MAX_UINT32VAL;
-                                    result = MSGD_RES_OUTOFMEM;
-                                }
-
-                                if( MSGD_RES_OK == result )
-                                {
-                                    /* When a message has some coherence error during the receiving process
-                                     * we can only restart the frame */
-                                    resByStuff = BUNSTF_StartNewFrame(&ctx->byteUStufferCtnx);
-                                    result = convertReturnFromBstfToMSGD(resByStuff);
-
-                                    if( MSGD_RES_OK == result )
-                                    {
-                                        /* retrigger and update counter if we have some space */
-                                        if( totalCosumed < encLen )
-                                        {
-                                            /* retrigger */
-                                            insertEncState = MSGD_PRV_INSERTCHUNK;
-
-                                            /* Update pointer */
-                                            cArea = &encArea[totalCosumed];
-                                            cEncLen = encLen - totalCosumed;
-                                        }
-                                        else
-                                        {
-                                            /* No more data to elab */
-                                            insertEncState = MSGD_PRV_ELABDONE;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        insertEncState = MSGD_PRV_ELABDONE;
-                                    }
-                                }
-                                else
-                                {
-                                    /* Some error */
-                                    insertEncState = MSGD_PRV_ELABDONE;
-                                }
+                                insertEncState = MSGD_PRV_ELABDONE;
+                                result = MSGD_RES_BADFRAME;
                             }
                             else
                             {
@@ -656,10 +702,6 @@ e_eFSP_MSGD_Res MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const ctx, uint8_t encArea[], 
                     }
                 }
             }
-
-            /* Update return variable */
-            *consumedEncData = totalCosumed;
-            *errEncRec = totalErrSofRec;
 		}
 	}
 
@@ -669,6 +711,8 @@ e_eFSP_MSGD_Res MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const ctx, uint8_t encArea[], 
 #ifdef __IAR_SYSTEMS_ICC__
     #pragma cstat_restore = "MISRAC2012-Rule-10.3"
 #endif
+
+
 
 /***********************************************************************************************************************
  *  PRIVATE FUNCTION
@@ -726,9 +770,21 @@ e_eFSP_MSGD_Res convertReturnFromBstfToMSGD(s_eCU_BUNSTF_Res returnedEvent)
             break;
 		}
 
+		case BUNSTF_RES_BADFRAME:
+		{
+			result = MSGD_RES_BADFRAME;
+            break;
+		}
+
 		case BUNSTF_RES_FRAMEENDED:
 		{
 			result = MSGD_RES_MESSAGEENDED;
+            break;
+		}
+
+		case BUNSTF_RES_FRAMERESTART:
+		{
+			result = MSGD_RES_FRAMERESTART;
             break;
 		}
 
@@ -894,8 +950,6 @@ static e_eFSP_MSGD_Res isMsgCoherent(s_eCU_BUNSTF_Ctx* ctx, bool_t* isCoherent)
 
     return result;
 }
-
-
 
 uint32_t composeU32LE(uint8_t v1, uint8_t v2, uint8_t v3, uint8_t v4)
 {

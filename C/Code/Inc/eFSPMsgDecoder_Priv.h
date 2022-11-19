@@ -30,7 +30,8 @@ extern "C" {
  **********************************************************************************************************************/
 typedef enum
 {
-    MSGD_PRV_INSERTCHUNK = 0,
+    MSGD_PRV_PRECHECK = 0,
+    MSGD_PRV_INSERTCHUNK,
     MSGD_PRV_MSG_END_CHECK,
     MSGD_PRV_MSG_OK_CHECK,
     MSGD_PRV_ELABDONE

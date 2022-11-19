@@ -137,7 +137,8 @@ e_eFSP_MSGD_Res MSGD_GetDecodedLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* const r
 e_eFSP_MSGD_Res MSGD_IsWaitingSof(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isWaitingSof);
 
 /**
- * @brief       Check if the current message is finished or if we need to decode some more data to have the full frame
+ * @brief       Check if the current message is finished or if we need to decode some more data to have the full frame.
+ *              If a bad frame is received this function will consider it as an unfinished frame.
  *
  * @param[in]   ctx         - Msg decoder context
  * @param[out]  isMsgDec 	- Pointer to a bool_t variable where we will store if the message parsing is ongoing
@@ -148,6 +149,20 @@ e_eFSP_MSGD_Res MSGD_IsWaitingSof(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isWa
  *              MSGD_RES_OK           	- Operation ended correctly
  */
 e_eFSP_MSGD_Res MSGD_IsAFullMsgDecoded(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isMsgDec);
+
+/**
+ * @brief       Check if the current received data compose a bad frame. If a bad frame is detected we can only
+ *              call MSGD_StartNewMsg before parsing new data.
+ *
+ * @param[in]   ctx         - Msg decoder context
+ * @param[out]  isFrameBad 	- Pointer to a bool_t variable where we will store if the frame is bad formed
+ *
+ * @return      MSGD_RES_BADPOINTER   	- In case of bad pointer passed to the function
+ *		        MSGD_RES_NOINITLIB    	- Need to init context before taking some action
+ *		        MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
+ *              MSGD_RES_OK           	- Operation ended correctly
+ */
+e_eFSP_MSGD_Res MSGD_IsCurrentFrameBad(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isFrameBad);
 
 /**
  * @brief       Return the most efficient numbers of data that needs to be passed to MSGD_InsEncChunk in the next
@@ -172,13 +187,10 @@ e_eFSP_MSGD_Res MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* cons
  * @param[in]   encLen      	 - Size of the encArea
  * @param[out]  consumedEncData  - Pointer to an uint32_t were we will store how many encoded data has been
  *                                 analized. keep in mind that unalized data were not decoded and will need to be
- *                                 reparsed. Un parsed data happens when the frame ended earlier
- *                                 ( MSGD_RES_MESSAGEENDED is returned ) or when some error is returned. When the
- *                                 function return MSGD_RES_OK consumedStuffData will always be returned has
- *                                 encLen.
- * @param[out]  errSofRec        - Pointer to an uint32_t were we will store how many protocol error were detected.
- *                                 Even with some error detected, the protocol will continue parsing data discharging
- *                                 error. When an error is found the algoritms will restart searching for the SOF.
+ *                                 be reparsed. Un parsed data happens when the frame ended earlier
+ *                                 ( MSGD_RES_MESSAGEENDED, MSGD_RES_BADFRAME or MSGD_RES_FRAMERESTART is returned ) or
+ *                                 when some error is returned. When the function return MSGD_RES_OK consumedStuffData
+ *                                 will always be returned has encLen.
  *
  * @return      MSGD_RES_BADPOINTER   	- In case of bad pointer passed to the function
  *		        MSGD_RES_NOINITLIB    	- Need to init context before taking some action
@@ -195,13 +207,23 @@ e_eFSP_MSGD_Res MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* cons
  *                                        to this function will not have effect until we call MSGD_StartNewMsg.
  *                                        In this situation bear in mind that some data could be left out the parsing
  *                                        and so we need to reparse that data after calling MSGD_StartNewMsg.
+ *              MSGD_RES_BADFRAME       - Found an error while parsing, the frame passed is invalid.
+ *                                        Restart context in order to parse a new frame. Every other call
+ *                                        to this function will not have effect until we call MSGD_StartNewMsg.
+ *                                        In this situation bear in mind that some data could be left out the parsing,
+ *                                        and so we need to reparse that data after calling MSGD_StartNewMsg.
+ *              MSGD_RES_FRAMERESTART   - During frame receiving another start of frame is received. In this situation
+ *                                        clear old data and restart the frame, witouth the need to call any other
+ *                                        function. In this situation bear in mind that some data could be left out
+ *                                        the parsing and so we need to reparse that data with another call of
+ *                                        MSGD_InsEncChunk.
  *				MSGE_RES_CRCCLBKERROR   - The crc callback returned an error when the decoder where verifing CRC
  *              MSGD_RES_OK           	- Operation ended correctly. The chunk is parsed correclty but the frame is not
  *                                        finished yet. In this situation consumedEncData is always reported with a
  *                                        value equals to encLen.
  */
 e_eFSP_MSGD_Res MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const ctx, uint8_t encArea[], const uint32_t encLen,
-                                      uint32_t* const consumedEncData, uint32_t* errSofRec);
+                                      uint32_t* const consumedEncData);
 
 #ifdef __cplusplus
 } /* extern "C" */
