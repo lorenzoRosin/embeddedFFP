@@ -21,6 +21,8 @@
  **********************************************************************************************************************/
 static bool_t isMsgDecStatusStillCoherent(const s_eFSP_MSGD_Ctx* ctx);
 static e_eFSP_MSGD_Res convertReturnFromBstfToMSGD(s_eCU_BUNSTF_Res returnedEvent);
+static e_eFSP_MSGD_Res IsAFullMsgDecoded(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isMsgDec);
+static e_eFSP_MSGD_Res IsCurrentFrameBad(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isFrameBad);
 static e_eFSP_MSGD_Res isMsgCorrect(s_eCU_BUNSTF_Ctx* ctx, bool_t* isCorrect, cb_crc32_msgd cbCrcPtr, void* cbCrcCtx);
 static e_eFSP_MSGD_Res isMsgCoherent(s_eCU_BUNSTF_Ctx* ctx, bool_t* isCoherent);
 static uint32_t composeU32LE(uint8_t v1, uint8_t v2, uint8_t v3, uint8_t v4);
@@ -247,9 +249,6 @@ e_eFSP_MSGD_Res MSGD_IsAFullMsgDecoded(s_eFSP_MSGD_Ctx* const ctx, bool_t* const
 {
 	/* Local variable */
 	e_eFSP_MSGD_Res result;
-	s_eCU_BUNSTF_Res resByStuff;
-    bool_t isFullUnstuffed;
-    bool_t isCorrect;
 
 	/* Check pointer validity */
 	if( ( NULL == ctx ) || ( NULL == isMsgDec ) )
@@ -265,37 +264,7 @@ e_eFSP_MSGD_Res MSGD_IsAFullMsgDecoded(s_eFSP_MSGD_Ctx* const ctx, bool_t* const
 		}
 		else
 		{
-			resByStuff = BUNSTF_IsAFullFrameUnstuff(&ctx->byteUStufferCtnx, &isFullUnstuffed);
-			result = convertReturnFromBstfToMSGD(resByStuff);
-
-            if( MSGD_RES_OK == result )
-            {
-                if( false == isFullUnstuffed )
-                {
-                    /* Not full unstuffed so itisnt full decoded. Even if the a bad frame is received its not
-                     * fll decoded */
-                    *isMsgDec = false;
-                }
-                else
-                {
-                    /* Full frame received, check if it is valid */
-                    result = isMsgCorrect(&ctx->byteUStufferCtnx, &isCorrect, ctx->cbCrcPtr, ctx->cbCrcCtx);
-
-                    if( MSGD_RES_OK == result )
-                    {
-                        if( true == isCorrect )
-                        {
-                            /* Correct message so it's decoded */
-                            *isMsgDec = true;
-                        }
-                        else
-                        {
-                            /* Bad frame so it's not decoded */
-                            *isMsgDec = false;
-                        }
-                    }
-                }
-            }
+            result = IsAFullMsgDecoded(ctx, isMsgDec);
 		}
 	}
 
@@ -306,10 +275,6 @@ e_eFSP_MSGD_Res MSGD_IsCurrentFrameBad(s_eFSP_MSGD_Ctx* const ctx, bool_t* const
 {
 	/* Local variable */
 	e_eFSP_MSGD_Res result;
-	s_eCU_BUNSTF_Res resByStuff;
-    bool_t isFullUnstuffed;
-    bool_t isCorrect;
-    bool_t isFrameBadloc;
 
 	/* Check pointer validity */
 	if( ( NULL == ctx ) || ( NULL == isFrameBad ) )
@@ -325,67 +290,7 @@ e_eFSP_MSGD_Res MSGD_IsCurrentFrameBad(s_eFSP_MSGD_Ctx* const ctx, bool_t* const
 		}
 		else
 		{
-            resByStuff = BUNSTF_IsCurrentFrameBad(&ctx->byteUStufferCtnx, &isFrameBadloc);
-            result = convertReturnFromBstfToMSGD(resByStuff);
-
-            if( MSGD_RES_OK == result )
-            {
-                if( true == isFrameBadloc )
-                {
-                    /* Not correct at bytestuffer level */
-                    *isFrameBad = true;
-                }
-                else
-                {
-                    /* Frame seems ok, check the correctnes */
-                    resByStuff = BUNSTF_IsAFullFrameUnstuff(&ctx->byteUStufferCtnx, &isFullUnstuffed);
-                    result = convertReturnFromBstfToMSGD(resByStuff);
-
-                    if( MSGD_RES_OK == result )
-                    {
-                        if( false == isFullUnstuffed )
-                        {
-                            /* Check ongoing coherence */
-                            result = isMsgCoherent(&ctx->byteUStufferCtnx, &isCorrect);
-
-                            if( MSGD_RES_OK == result )
-                            {
-                                /* no strange error found, check message correctness */
-                                if( true != isCorrect )
-                                {
-                                    /* Message not ended but something about it0s coherence is wrong */
-                                    *isFrameBad = true;
-                                }
-                                else
-                                {
-                                    /* Correct message */
-                                    *isFrameBad = false;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            /* Check complete frame coherence */
-                            result = isMsgCorrect(&ctx->byteUStufferCtnx, &isCorrect, ctx->cbCrcPtr, ctx->cbCrcCtx);
-
-                            if( MSGD_RES_OK == result )
-                            {
-                                /* no strange error found, check message correctness */
-                                if( true != isCorrect )
-                                {
-                                    /* Message ended but something about CRC or length is not rigth, restart a frame */
-                                    *isFrameBad = true;
-                                }
-                                else
-                                {
-                                    /* Correct message */
-                                    *isFrameBad = false;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            result = IsCurrentFrameBad(ctx, isFrameBad);
 		}
 	}
 
@@ -422,7 +327,7 @@ e_eFSP_MSGD_Res MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* cons
 		{
             /* Check if frame is already ended */
             isFullUnstuffed = false;
-			result = MSGD_IsAFullMsgDecoded(ctx, &isFullUnstuffed);
+			result = IsAFullMsgDecoded(ctx, &isFullUnstuffed);
 
             if( MSGD_RES_OK == result )
             {
@@ -434,7 +339,7 @@ e_eFSP_MSGD_Res MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* cons
                 else
                 {
                     /* Check for error */
-                    result = MSGD_IsCurrentFrameBad(ctx, &isFrameBad);
+                    result = IsCurrentFrameBad(ctx, &isFrameBad);
 
                     if( MSGD_RES_OK == result )
                     {
@@ -799,6 +704,139 @@ e_eFSP_MSGD_Res convertReturnFromBstfToMSGD(s_eCU_BUNSTF_Res returnedEvent)
 			result = MSGD_RES_CORRUPTCTX;
             break;
 		}
+	}
+
+	return result;
+}
+
+e_eFSP_MSGD_Res IsAFullMsgDecoded(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isMsgDec)
+{
+	/* Local variable */
+	e_eFSP_MSGD_Res result;
+	s_eCU_BUNSTF_Res resByStuff;
+    bool_t isFullUnstuffed;
+    bool_t isCorrect;
+
+	/* Check pointer validity */
+	if( ( NULL == ctx ) || ( NULL == isMsgDec ) )
+	{
+		result = MSGD_RES_BADPOINTER;
+	}
+	else
+	{
+        resByStuff = BUNSTF_IsAFullFrameUnstuff(&ctx->byteUStufferCtnx, &isFullUnstuffed);
+        result = convertReturnFromBstfToMSGD(resByStuff);
+
+        if( MSGD_RES_OK == result )
+        {
+            if( false == isFullUnstuffed )
+            {
+                /* Not full unstuffed so itisnt full decoded. Even if the a bad frame is received its not
+                 * fll decoded */
+                *isMsgDec = false;
+            }
+            else
+            {
+                /* Full frame received, check if it is valid */
+                result = isMsgCorrect(&ctx->byteUStufferCtnx, &isCorrect, ctx->cbCrcPtr, ctx->cbCrcCtx);
+
+                if( MSGD_RES_OK == result )
+                {
+                    if( true == isCorrect )
+                    {
+                        /* Correct message so it's decoded */
+                        *isMsgDec = true;
+                    }
+                    else
+                    {
+                        /* Bad frame so it's not decoded */
+                        *isMsgDec = false;
+                    }
+                }
+            }
+        }
+	}
+
+	return result;
+}
+
+e_eFSP_MSGD_Res IsCurrentFrameBad(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isFrameBad)
+{
+	/* Local variable */
+	e_eFSP_MSGD_Res result;
+	s_eCU_BUNSTF_Res resByStuff;
+    bool_t isFullUnstuffed;
+    bool_t isCorrect;
+    bool_t isFrameBadloc;
+
+	/* Check pointer validity */
+	if( ( NULL == ctx ) || ( NULL == isFrameBad ) )
+	{
+		result = MSGD_RES_BADPOINTER;
+	}
+	else
+	{
+        resByStuff = BUNSTF_IsCurrentFrameBad(&ctx->byteUStufferCtnx, &isFrameBadloc);
+        result = convertReturnFromBstfToMSGD(resByStuff);
+
+        if( MSGD_RES_OK == result )
+        {
+            if( true == isFrameBadloc )
+            {
+                /* Not correct at bytestuffer level */
+                *isFrameBad = true;
+            }
+            else
+            {
+                /* Frame seems ok, check the correctnes */
+                resByStuff = BUNSTF_IsAFullFrameUnstuff(&ctx->byteUStufferCtnx, &isFullUnstuffed);
+                result = convertReturnFromBstfToMSGD(resByStuff);
+
+                if( MSGD_RES_OK == result )
+                {
+                    if( false == isFullUnstuffed )
+                    {
+                        /* Check ongoing coherence */
+                        result = isMsgCoherent(&ctx->byteUStufferCtnx, &isCorrect);
+
+                        if( MSGD_RES_OK == result )
+                        {
+                            /* no strange error found, check message correctness */
+                            if( true != isCorrect )
+                            {
+                                /* Message not ended but something about it0s coherence is wrong */
+                                *isFrameBad = true;
+                            }
+                            else
+                            {
+                                /* Correct message */
+                                *isFrameBad = false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        /* Check complete frame coherence */
+                        result = isMsgCorrect(&ctx->byteUStufferCtnx, &isCorrect, ctx->cbCrcPtr, ctx->cbCrcCtx);
+
+                        if( MSGD_RES_OK == result )
+                        {
+                            /* no strange error found, check message correctness */
+                            if( true != isCorrect )
+                            {
+                                /* Message ended but something about CRC or length is not rigth, restart a frame */
+                                *isFrameBad = true;
+                            }
+                            else
+                            {
+                                /* Correct message */
+                                *isFrameBad = false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
 	}
 
 	return result;
