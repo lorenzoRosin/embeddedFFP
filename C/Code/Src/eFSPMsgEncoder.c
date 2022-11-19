@@ -283,8 +283,8 @@ e_eFSP_MSGE_Res MSGE_GetRemToRetrive(s_eFSP_MSGE_Ctx* const ctx, uint32_t* const
     /* Suppressed because this warning is not working */
 #endif
 
-e_eFSP_MSGE_Res MSGE_RetriveEChunk(s_eFSP_MSGE_Ctx* const ctx, uint8_t encodeDest[],
-									    const uint32_t maxDestLen, uint32_t* const filledLen)
+e_eFSP_MSGE_Res MSGE_RetriveEChunk(s_eFSP_MSGE_Ctx* const ctx, uint8_t encodeDest[], const uint32_t maxDestLen,
+                                   uint32_t* const filledLen)
 {
 	/* Local variable */
 	e_eFSP_MSGE_Res result;

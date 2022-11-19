@@ -49,7 +49,7 @@ typedef enum
 
 typedef struct
 {
-    s_eCU_BSTF_Ctx byteStufferCtnx;
+    s_eCU_BSTF_Ctx  byteStufferCtnx;
     cb_crc32_msge   cbCrcPtr;
     void*           cbCrcCtx;
 }s_eFSP_MSGE_Ctx;
@@ -63,7 +63,7 @@ typedef struct
  * @brief       Initialize the message encoder context
  *
  * @param[in]   ctx         - Message Encoder context
- * @param[in]   memArea     - Pointer to a memory area that we will use encode message
+ * @param[in]   memArea     - Pointer to a memory area that we will use to encode message
  * @param[in]   memAreaSize - Dimension in byte of the memArea
  * @param[in]   cbCrcP      - Pointer to a CRC 32 seed callback function
  * @param[in]   clbCtx      - Custom context passed to the callback function
@@ -160,8 +160,8 @@ e_eFSP_MSGE_Res MSGE_GetRemToRetrive(s_eFSP_MSGE_Ctx* const ctx, uint32_t* const
  *                                        completed, but we can be sure that filledLen will have the same value of
  *                                        maxDestLen
  */
-e_eFSP_MSGE_Res MSGE_RetriveEChunk(s_eFSP_MSGE_Ctx* const ctx, uint8_t encodeDest[],
-									    const uint32_t maxDestLen, uint32_t* const filledLen);
+e_eFSP_MSGE_Res MSGE_RetriveEChunk(s_eFSP_MSGE_Ctx* const ctx, uint8_t encodeDest[], const uint32_t maxDestLen,
+                                   uint32_t* const filledLen);
 
 #ifdef __cplusplus
 } /* extern "C" */
