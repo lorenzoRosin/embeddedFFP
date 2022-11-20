@@ -74,7 +74,7 @@ e_eFSP_MSGTX_Res MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const ctx, const s_eFSP_MSGTX_I
 
                 /* initialize internal message encoder */
                 resultMsgE =  MSGE_InitCtx(&ctx->msgEncoderCtnx, initData->i_memArea, initData->i_memAreaSize,
-                                                initData->i_cbCrcP, initData->i_cbCrcCtx);
+                                           initData->i_cbCrcP, initData->i_cbCrcCtx);
                 result = convertReturnFromMSGEToMSGTX(resultMsgE);
             }
         }
@@ -157,7 +157,7 @@ e_eFSP_MSGTX_Res MSGTX_GetPayloadLocation(s_eFSP_MSGTX_Ctx* const ctx, uint8_t**
 		}
 		else
 		{
-			/* Get memory reference of CRC+LEN+DATA, so we can calculate reference of only data payload */
+			/* Get only the payload data reference */
 			resultMsgE = MSGE_GetPayloadLocation(&ctx->msgEncoderCtnx, dataP, maxDataSize);
 			result = convertReturnFromMSGEToMSGTX(resultMsgE);
 		}
@@ -231,7 +231,6 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
     const uint8_t *cDToTxP;
     uint32_t cDToTxLen;
     uint32_t cDTxed;
-
 
 	/* Check pointer validity */
 	if( NULL == ctx )

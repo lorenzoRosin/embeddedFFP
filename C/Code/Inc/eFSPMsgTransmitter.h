@@ -92,6 +92,7 @@ typedef struct
 }s_eFSP_MSGTX_InitData;
 
 
+
 /***********************************************************************************************************************
  * GLOBAL PROTOTYPES
  **********************************************************************************************************************/
@@ -159,7 +160,8 @@ e_eFSP_MSGTX_Res MSGTX_RestartCurrentMessage(s_eFSP_MSGTX_Ctx* const ctx);
  *              MSGTX_GetPayloadLocation will be encoded (header and byte stuffing) and sended by this function.
  *              The whole message can be sended calling multiple times this function. Eache time this function will
  *              try to send all the data that can be send in "i_timePerSendMs". The whole frame instead can be sended
- *              in "i_frameTimeoutMs" milliseconds.
+ *              in "i_frameTimeoutMs" milliseconds. This function can return different status, but if we keep call
+ *              this function even after i_frameTimeoutMs it will start returning only MSGTX_RES_MESSAGETIMEOUT.
  *
  * @param[in]   ctx         - Message Transmitter context
  *
@@ -174,7 +176,7 @@ e_eFSP_MSGTX_Res MSGTX_RestartCurrentMessage(s_eFSP_MSGTX_Ctx* const ctx);
  *              MSGTX_RES_MESSAGETIMEOUT - The message is not sended before "i_frameTimeoutMs". Restart to continue.
  *              MSGTX_RES_TXCLBKERROR    - Some error reported by the user send function. Restart to continue.
  *              MSGTX_RES_TIMCLBKERROR   - The timer function returned an error
- *              MSGTX_RES_OK             - Operation ended correctly, message is not still fully encoded. This happnes
+ *              MSGTX_RES_OK             - Operation ended correctly, message is not still fully sended. This happnes
  *                                         when the whole message wasn't sended in "i_timePerSendMs" millisecond, but
  *                                         the "i_frameTimeoutMs" timeout is still not reached. Call this function again
  *                                         to send another chunk of data.
