@@ -246,103 +246,178 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
 		}
 		else
 		{
-            /* First, get the entry point remainings data */
-            if( true == ctx->txTimer.tim_getRemaining(ctx->txTimer.timerCtx, &sRemainTxTime) )
+            /* Init state machine value */
+            sendTimeout = 0u;
+            sRemainTxTime = 0u;
+            result = MSGTX_RES_OK;
+            stateM = MSGTX_PRV_CHECKINITTIMEOUT;
+
+            /* wait end elaboration or end for timeout */
+            while( stateM != MSGTX_PRV_ELABDONE )
             {
-                /* Init state machine value */
-                result = MSGTX_RES_OK;
-                stateM = MSGTX_PRV_CHECKIFBUFFERTX;
-
-                /* wait end elaboration or end for timeout */
-                while( stateM != MSGTX_PRV_ELABDONE )
+                switch( stateM )
                 {
-                    switch( stateM )
+                    case MSGTX_PRV_CHECKINITTIMEOUT:
                     {
-                        case MSGTX_PRV_CHECKIFBUFFERTX:
+                        /* Check if frame timeout is eplased */
+                        if( true == ctx->txTimer.tim_getRemaining(ctx->txTimer.timerCtx, &sRemainTxTime) )
                         {
-                            /* Is data present in send buffer? */
-                            cDToTxLen = ctx->sendBuffFill - ctx->sendBuffCntr;
-
-                            if( cDToTxLen > 0u )
+                            if( sRemainTxTime <= 0u )
                             {
-                                /* Can send data in msg buffer, but before check if timeout elapsed */
-                                stateM = MSGTX_PRV_CHECKTIMEOUTBEFORTX;
-                            }
-                            else
-                            {
-                                /* No data in msg buffer, retrive some other chunk of data, only if the message send is
-                                 * not completed of course */
-                                stateM = MSGTX_PRV_RETRIVECHUNK;
-                            }
-                            break;
-                        }
-
-                        case MSGTX_PRV_RETRIVECHUNK:
-                        {
-                            /* Ok, the send buffer is empty, need to load remainings data */
-                            ctx->sendBuffCntr = 0u;
-                            ctx->sendBuffFill = 0u;
-
-                            /* Is data present in message encoder buffer? */
-                            resultMsgE = MSGE_RetriveEChunk(&ctx->msgEncoderCtnx, ctx->sendBuff, ctx->sendBuffSize,
-                                                            &ctx->sendBuffFill);
-                            result = convertReturnFromMSGEToMSGTX(resultMsgE);
-
-                            if( MSGTX_RES_OK == result )
-                            {
-                                /* Retrived some data to send, by design if MSGE_RetriveEChunk return MSGE_RES_OK this
-                                 * means that the value of loaded data inside send buffer is equals to it's size */
-
-                                /* Can go to send loaded data now, but before check if timeout elapsed */
-                                stateM = MSGTX_PRV_CHECKTIMEOUTBEFORTX;
-                            }
-                            else if( MSGTX_RES_MESSAGESENDED == result )
-                            {
-                                /* Ok we retrived all the possible data */
-                                if( 0u == ctx->sendBuffFill )
-                                {
-                                    /* No more data to send or retrive */
-                                    stateM = MSGTX_PRV_ELABDONE;
-                                }
-                                else
-                                {
-                                    /* Ok retrived all data but need to send the remaining present in sendBuff, but
-                                     * before check if timeout elapsed */
-                                    stateM = MSGTX_PRV_CHECKTIMEOUTBEFORTX;
-                                }
-                            }
-                            else
-                            {
-                                /* Some error */
+                                /* Time elapsed */
+                                result = MSGTX_RES_MESSAGETIMEOUT;
                                 stateM = MSGTX_PRV_ELABDONE;
                             }
-
-                            break;
-                        }
-
-                        case MSGTX_PRV_CHECKTIMEOUTBEFORTX:
-                        {
-                            /* Check if frame timeout is eplased */
-                            if( true == ctx->txTimer.tim_getRemaining(ctx->txTimer.timerCtx, &cRemainTxTime) )
+                            else
                             {
-                                if( cRemainTxTime <= 0u )
+                                /* Frame timeout is not elapsed, calculate frame session timeout */
+                                if( sRemainTxTime >= ctx->timePerSendMs )
                                 {
                                     /* Time elapsed */
-                                    result = MSGTX_RES_MESSAGETIMEOUT;
+                                    sendTimeout = ctx->timePerSendMs;
+                                }
+                                else
+                                {
+                                    /* Session timeout not elapsed, can send data */
+                                    sendTimeout = sRemainTxTime;
+                                }
+
+                                /* check if we have some data to send in TX buffer */
+                                stateM = MSGTX_PRV_CHECKIFBUFFERTX;
+                            }
+                        }
+                        else
+                        {
+                            /* Some error on timer */
+                            result = MSGTX_RES_TIMCLBKERROR;
+                            stateM = MSGTX_PRV_ELABDONE;
+                        }
+                        break;
+                    }
+
+                    case MSGTX_PRV_CHECKIFBUFFERTX:
+                    {
+                        /* Is data present in send buffer? */
+                        cDToTxLen = ctx->sendBuffFill - ctx->sendBuffCntr;
+
+                        if( cDToTxLen > 0u )
+                        {
+                            /* Can send data in msg buffer */
+                            stateM = MSGTX_PRV_SENDBUFF;
+                        }
+                        else
+                        {
+                            /* No data in msg buffer, retrive some other chunk of data, only if the message send is
+                             * not completed of course */
+                            ctx->sendBuffFill = 0u;
+                            ctx->sendBuffCntr = 0u;
+                            stateM = MSGTX_PRV_RETRIVECHUNK;
+                        }
+                        break;
+                    }
+
+                    case MSGTX_PRV_RETRIVECHUNK:
+                    {
+                        /* Ok, the send buffer is empty, need to load remainings data */
+                        ctx->sendBuffCntr = 0u;
+                        ctx->sendBuffFill = 0u;
+
+                        /* Is data present in message encoder buffer? */
+                        resultMsgE = MSGE_RetriveEChunk(&ctx->msgEncoderCtnx, ctx->sendBuff, ctx->sendBuffSize,
+                                                        &ctx->sendBuffFill);
+                        result = convertReturnFromMSGEToMSGTX(resultMsgE);
+
+                        if( MSGTX_RES_OK == result )
+                        {
+                            /* Retrived some data to send, by design if MSGE_RetriveEChunk return MSGE_RES_OK this
+                             * means that the value of loaded data inside send buffer is equals to it's size */
+
+                            /* Can go to send loaded data now */
+                            stateM = MSGTX_PRV_SENDBUFF;
+                        }
+                        else if( MSGTX_RES_MESSAGESENDED == result )
+                        {
+                            /* Ok we retrived all the possible data */
+                            if( 0u == ctx->sendBuffFill )
+                            {
+                                /* No more data to send or retrive */
+                                stateM = MSGTX_PRV_ELABDONE;
+                            }
+                            else
+                            {
+                                /* Ok retrived all data but need to send the remaining data present in sendBuff */
+                                stateM = MSGTX_PRV_SENDBUFF;
+                            }
+                        }
+                        else
+                        {
+                            /* Some error */
+                            stateM = MSGTX_PRV_ELABDONE;
+                        }
+
+                        break;
+                    }
+
+                    case MSGTX_PRV_SENDBUFF:
+                    {
+                        /* Get data to send */
+                        cDToTxP = &ctx->sendBuff[ctx->sendBuffCntr];
+                        cDToTxLen = ctx->sendBuffFill - ctx->sendBuffCntr;
+
+                        /* Can send data from send buffer */
+                        if( true == (*ctx->cbTxP)(ctx->cbTxCtx, cDToTxP, cDToTxLen, &cDTxed, sendTimeout) )
+                        {
+                            /* Check for some strangeness */
+                            if( cDTxed > cDToTxLen )
+                            {
+                                result = MSGTX_RES_CORRUPTCTX;
+                                stateM = MSGTX_PRV_ELABDONE;
+                            }
+                            else
+                            {
+                                /* Update sended counter */
+                                ctx->sendBuffCntr += cDTxed;
+
+                                /* Check if time is elapsed */
+                                stateM = MSGTX_PRV_CHECKTIMEOUTAFTERTX;
+                            }
+                        }
+                        else
+                        {
+                            /* Error sending data */
+                            result = MSGTX_RES_TXCLBKERROR;
+                            stateM = MSGTX_PRV_ELABDONE;
+                        }
+                        break;
+                    }
+
+                    case MSGTX_PRV_CHECKTIMEOUTAFTERTX:
+                    {
+                        /* Check if frame timeout is eplased */
+                        if( true == ctx->txTimer.tim_getRemaining(ctx->txTimer.timerCtx, &cRemainTxTime) )
+                        {
+                            if( cRemainTxTime <= 0u )
+                            {
+                                /* Time elapsed */
+                                result = MSGTX_RES_MESSAGETIMEOUT;
+                                stateM = MSGTX_PRV_ELABDONE;
+                            }
+                            else
+                            {
+                                /* Check time validity */
+                                if( cRemainTxTime > sRemainTxTime )
+                                {
+                                    /* It's not possible to have more time to send the frame now than during
+                                     * the begining */
+                                    result = MSGTX_RES_CORRUPTCTX;
                                     stateM = MSGTX_PRV_ELABDONE;
                                 }
                                 else
                                 {
-                                    /* Check time validity */
-                                    if( cRemainTxTime > sRemainTxTime )
+                                    /* During start do we had the whole time slice? */
+                                    if( sRemainTxTime >= ctx->timePerSendMs )
                                     {
-                                        /* It's not possible to have more time to send the frame now than during
-                                         * the begining */
-                                        result = MSGTX_RES_CORRUPTCTX;
-                                        stateM = MSGTX_PRV_ELABDONE;
-                                    }
-                                    else
-                                    {
+                                        /* Started with a whole time slice */
                                         /* Frame timeout is not elapsed, check current session if expired */
                                         if( ( sRemainTxTime - cRemainTxTime ) >= ctx->timePerSendMs )
                                         {
@@ -354,67 +429,39 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
                                         {
                                             /* Session timeout not elapsed, can send data */
                                             sendTimeout = ctx->timePerSendMs - ( sRemainTxTime - cRemainTxTime );
-                                            stateM = MSGTX_PRV_SENDBUFF;
+
+                                            /* Check if something to send is present */
+                                            stateM = MSGTX_PRV_CHECKIFBUFFERTX;
                                         }
+                                    }
+                                    else
+                                    {
+                                        /* Started only with remaining time */
+                                        sendTimeout = cRemainTxTime;
+
+                                        /* Check if something to send is present */
+                                        stateM = MSGTX_PRV_CHECKIFBUFFERTX;
                                     }
                                 }
                             }
-                            else
-                            {
-                                /* Some error on timer */
-                                result = MSGTX_RES_TIMCLBKERROR;
-                                stateM = MSGTX_PRV_ELABDONE;
-                            }
-                            break;
                         }
-
-                        case MSGTX_PRV_SENDBUFF:
+                        else
                         {
-                            /* Get data to send */
-                            cDToTxP = &ctx->sendBuff[ctx->sendBuffCntr];
-                            cDToTxLen = ctx->sendBuffFill - ctx->sendBuffCntr;
-
-                            /* Can send data from send buffer */
-                            if( true == (*ctx->cbTxP)(ctx->cbTxCtx, cDToTxP, cDToTxLen, &cDTxed, sendTimeout) )
-                            {
-                                /* Check for some strangeness */
-                                if( cDTxed > cDToTxLen )
-                                {
-                                    result = MSGTX_RES_CORRUPTCTX;
-                                    stateM = MSGTX_PRV_ELABDONE;
-                                }
-                                else
-                                {
-                                    /* Update sended counter */
-                                    ctx->sendBuffCntr += cDTxed;
-
-                                    /* Go next state */
-                                    stateM = MSGTX_PRV_CHECKIFBUFFERTX;
-                                }
-                            }
-                            else
-                            {
-                                /* Error sending data */
-                                result = MSGTX_RES_TXCLBKERROR;
-                                stateM = MSGTX_PRV_ELABDONE;
-                            }
-                            break;
-                        }
-
-                        default:
-                        {
-                            /* Impossible end here */
+                            /* Some error on timer */
+                            result = MSGTX_RES_TIMCLBKERROR;
                             stateM = MSGTX_PRV_ELABDONE;
-                            result = MSGTX_RES_CORRUPTCTX;
-                            break;
                         }
+                        break;
+                    }
+
+                    default:
+                    {
+                        /* Impossible end here */
+                        stateM = MSGTX_PRV_ELABDONE;
+                        result = MSGTX_RES_CORRUPTCTX;
+                        break;
                     }
                 }
-            }
-            else
-            {
-                /* Some error on timer */
-                result = MSGTX_RES_TIMCLBKERROR;
             }
         }
 	}
