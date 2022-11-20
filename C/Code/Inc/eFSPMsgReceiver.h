@@ -161,7 +161,15 @@ e_eFSP_MSGRX_Res MSGRX_StartNewMsgNClean(s_eFSP_MSGRX_Ctx* const ctx);
 e_eFSP_MSGRX_Res MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const ctx, uint8_t** dataP, uint32_t* const retrivedLen);
 
 /**
- * @brief       Receive encoded chunk that the alg will decode byte per byte
+ * @brief       Receive encoded chunk that the alg will decode byte per byte.
+ *              The whole message can be received calling multiple times this function. Eache time this function will
+ *              try to read all the data that can be readed in "i_timePerRecMs". The whole frame instead can be received
+ *              in "i_frameTimeoutMs" milliseconds. This function can return different status, but if we keep call
+ *              this function even after i_frameTimeoutMs it will start returning only MSGRX_RES_MESSAGETIMEOUT.
+ *              If the flag i_needWaitFrameStart is true the timeout is started in the moment we receive the
+ *              start of frame (if another SOF is received the timeout is reloaded). If the flag i_needWaitFrameStart
+ *              is false the timeout is started in the moment we call the function MSGRX_StartNewMsg or
+ *              MSGRX_StartNewMsgNClean is called.
  *
  * @param[in]   ctx         	 - Msg receiver context
  *
@@ -177,11 +185,21 @@ e_eFSP_MSGRX_Res MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const ctx, uint8_t** dat
  *                                        So this status could be due to a transmissione error, but it's not possible
  *                                        to know the reason of the error without storing all the data and checking CRC.
  *		    MSGRX_RES_MESSAGEENDED      - Frame ended, restart context in order to parse a new frame. Every other call
- *                                        to this function will not have effect until we call MSGRX_StartNewMsg or
- *                                        MSGRX_StartNewMsgNClean. In this situation bear in mind that some data could
- *                                        be left out the parsing and can remain saved inside a RX buffer. The only
- *                                        way to completly clean RX buffer is calling MSGRX_StartNewMsgNClean.
+ *                                        to this function will not have effect until we call MSGRX_StartNewMsg,
+ *                                        MSGRX_StartNewMsgNClean or timeout elapse. In this situation bear in mind
+ *                                        that some data could be left out the parsing and can remain saved inside a
+ *                                        RX buffer. The onlyway to completly clean RX buffer is calling
+ *                                        MSGRX_StartNewMsgNClean.
  *          MSGRX_RES_MESSAGETIMEOUT    - The message is not received before "i_frameTimeoutMs". Restart to continue.
+ *          MSGRX_RES_BADFRAME          - Found an error while parsing, the frame passed is invalid.
+ *                                        Restart context in order to parse a new frame. Every other call
+ *                                        to this function will not have effect until we call MSGRX_StartNewMsg or
+ *                                        timeout elapse. In this situation bear in mind that some data could be left
+ *                                        out the parsing and can remain saved inside a RX buffer.
+ *          MSGRX_RES_FRAMERESTART      - During frame receiving another start of frame is received. In this situation
+ *                                        clear old data and restart the frame, witouth the need to call any other
+ *                                        function. In this situation bear in mind that some data could be left
+ *                                        out the parsing and can remain saved inside a RX buffer.
  *		    MSGRX_RES_RXCLBKERROR       - Some error reported by the user receive function. Restart to continue.
  *		    MSGRX_RES_CRCCLBKERROR      - The crc callback returned an error when the decoder where verifing CRC
  *          MSGRX_RES_TIMCLBKERROR      - The timer function returned an error
