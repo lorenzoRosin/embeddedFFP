@@ -14,13 +14,14 @@
 #include "eFSPMsgReceiver_Priv.h"
 
 
+
 /***********************************************************************************************************************
  *  PRIVATE STATIC FUNCTION DECLARATION
  **********************************************************************************************************************/
 static bool_t isMsgReceStatusStillCoherent(const s_eFSP_MSGRX_Ctx* ctx);
 static e_eFSP_MSGRX_Res convertReturnFromMSGDToMSGRX(e_eFSP_MSGD_Res returnedEvent);
 static e_eFSP_MSGRX_Res ifWaitingSofAndEnabledWaitResetTim(s_eFSP_MSGRX_Ctx* const ctx, uint32_t* const startTimeR);
-static e_eFSP_MSGRX_Res ifEnabledWaitSofResetTim(const s_eFSP_MSGRX_Ctx* ctx, uint32_t* const startTimeR);
+
 
 
 /***********************************************************************************************************************
@@ -78,7 +79,7 @@ e_eFSP_MSGRX_Res MSGRX_InitCtx(s_eFSP_MSGRX_Ctx* const ctx, const s_eFSP_MSGRX_I
 
                     /* initialize internal bytestuffer */
                     resultMsgE =  MSGD_InitCtx(&ctx->msgDecoderCtnx, initData->i_memArea, initData->i_memAreaSize,
-                                                    initData->i_cbCrcP, initData->i_cbCrcCrx);
+                                               initData->i_cbCrcP, initData->i_cbCrcCrx);
                     result = convertReturnFromMSGDToMSGRX(resultMsgE);
                 }
             }
@@ -197,7 +198,7 @@ e_eFSP_MSGRX_Res MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const ctx, uint8_t** dat
 	return result;
 }
 
-e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx, uint32_t* errRec)
+e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
 {
 	/* Local variable of the operation result */
 	e_eFSP_MSGRX_Res result;
@@ -215,10 +216,6 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx, uint32_t* errRe
     uint8_t *cDToRxP;
     uint32_t cDToRxLen;
     uint32_t cDRxed;
-
-    /* Local variable to keep track of the total error found in protocol */
-    uint32_t totalRxErr;
-    uint32_t cDRxErr;
 
     /* Other local variable */
     uint32_t rxMostEff;
@@ -242,7 +239,6 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx, uint32_t* errRe
             if( true == ctx->rxTimer.tim_getRemaining(ctx->rxTimer.timerCtx, &sRemRxTime) )
             {
                 /* Init time frame counter */
-                totalRxErr = 0u;
                 result = MSGRX_RES_OK;
                 stateM = MSGRX_PRV_CHECKIFBUFFERRX;
 
@@ -286,16 +282,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx, uint32_t* errRe
                                 /* We can try to decode data event if we already finished cuz the function
                                 * MSGD_InsEncChunk is well maden */
                                 resultMsgE = MSGD_InsEncChunk(&ctx->msgDecoderCtnx, cDToRxP, cDToRxLen, &cDRxed );
-                                cDRxErr++;
                                 result = convertReturnFromMSGDToMSGRX(resultMsgE);
-
-                                totalRxErr += cDRxErr;
-
-                                /* If we are waiting start of frame and error occours we can restart the frame timer */
-                                if( 0u != cDRxErr )
-                                {
-                                    result = ifEnabledWaitSofResetTim(ctx, &sRemRxTime);
-                                }
 
                                 if( MSGRX_RES_OK == result )
                                 {
@@ -461,9 +448,6 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx, uint32_t* errRe
                         }
                     }
                 }
-
-                /* Save recorded error */
-                *errRec = totalRxErr;
             }
             else
             {
@@ -554,7 +538,19 @@ e_eFSP_MSGRX_Res convertReturnFromMSGDToMSGRX(e_eFSP_MSGD_Res returnedEvent)
             break;
         }
 
+        case MSGD_RES_BADFRAME:
+        {
+			result = MSGRX_RES_OUTOFMEM;
+            break;
+        }
+
 		case MSGD_RES_MESSAGEENDED:
+		{
+			result = MSGRX_RES_MESSAGERECEIVED;
+            break;
+		}
+
+		case MSGD_RES_FRAMERESTART:
 		{
 			result = MSGRX_RES_MESSAGERECEIVED;
             break;
@@ -636,51 +632,6 @@ e_eFSP_MSGRX_Res ifWaitingSofAndEnabledWaitResetTim(s_eFSP_MSGRX_Ctx* const ctx,
         else
         {
             /* Error */
-        }
-    }
-    else
-    {
-        /* no need to wait start of frame, do no modify startTimeR */
-        result = MSGRX_RES_OK;
-    }
-
-    return result;
-}
-
-e_eFSP_MSGRX_Res ifEnabledWaitSofResetTim(const s_eFSP_MSGRX_Ctx* ctx, uint32_t* const startTimeR)
-{
-	/* Local variable */
-	e_eFSP_MSGRX_Res result;
-    uint32_t timeElapsedFromStart;
-    uint32_t currentRemainingTime;
-
-    /* Do we need to wait start of frame? */
-    if( true == ctx->needWaitFrameStart )
-    {
-        /* yes, get current remaining time and reset  */
-        if( true == ctx->rxTimer.tim_getRemaining( ctx->rxTimer.timerCtx, &currentRemainingTime ) )
-        {
-            /* Reset timer */
-            if( true == ctx->rxTimer.tim_start( ctx->rxTimer.timerCtx, ctx->frameTimeoutMs ) )
-            {
-                /* Calculate time elapsed from start */
-                timeElapsedFromStart = ( *startTimeR - currentRemainingTime );
-
-                /* Refresh start time also */
-                *startTimeR = timeElapsedFromStart + ctx->frameTimeoutMs;
-
-                result = MSGRX_RES_OK;
-            }
-            else
-            {
-                /* Error resetting timer */
-                result = MSGRX_RES_TIMCLBKERROR;
-            }
-        }
-        else
-        {
-            /* Error resetting timer */
-            result = MSGRX_RES_TIMCLBKERROR;
         }
     }
     else
