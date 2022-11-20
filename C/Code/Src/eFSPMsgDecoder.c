@@ -327,30 +327,31 @@ e_eFSP_MSGD_Res MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* cons
 		{
             /* Check if frame is already ended */
             isFullUnstuffed = false;
-			result = IsAFullMsgDecoded(ctx, &isFullUnstuffed);
+            resByStuff = BUNSTF_IsAFullFrameUnstuff(&ctx->byteUStufferCtnx, &isFullUnstuffed);
+            result = convertReturnFromBstfToMSGD(resByStuff);
 
             if( MSGD_RES_OK == result )
             {
                 if( true == isFullUnstuffed )
                 {
-                    /* Full decoded frame */
+                    /* Full unstuffed frame, could be wrong or rigth but no more data is needed */
                     *mostEffPayload = 0u;
                 }
                 else
                 {
                     /* Check for error */
-                    result = IsCurrentFrameBad(ctx, &isFrameBad);
+                    resByStuff = BUNSTF_IsCurrentFrameBad(&ctx->byteUStufferCtnx, &isFrameBad);
+                    result = convertReturnFromBstfToMSGD(resByStuff);
 
                     if( MSGD_RES_OK == result )
                     {
                         if( true == isFrameBad )
                         {
-                            /* Bad frame, dont request more data */
+                            /* Bad frame only for unstuffer level, dont request more data */
                             *mostEffPayload = 0u;
                         }
                         else
                         {
-                            /* Message seemes to make sense, estiamte */
                             /* How many byte do we have decoded? */
                             dataSizeRaw = 0u;
                             dataPP = NULL;
@@ -416,7 +417,7 @@ e_eFSP_MSGD_Res MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* cons
                                     }
                                     else
                                     {
-                                        /* We have more data than expected -> bad frame */
+                                        /* We have more data than expected -> bad frame -> no need to receive data */
                                         *mostEffPayload = 0u;
                                     }
                                 }

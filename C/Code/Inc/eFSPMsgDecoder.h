@@ -162,13 +162,15 @@ e_eFSP_MSGD_Res MSGD_IsAFullMsgDecoded(s_eFSP_MSGD_Ctx* const ctx, bool_t* const
  * @return      MSGD_RES_BADPOINTER   	- In case of bad pointer passed to the function
  *		        MSGD_RES_NOINITLIB    	- Need to init context before taking some action
  *		        MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
+ *				MSGD_RES_CRCCLBKERROR   - The crc callback returned an error when the decoder where verifing CRC
  *              MSGD_RES_OK           	- Operation ended correctly
  */
 e_eFSP_MSGD_Res MSGD_IsCurrentFrameBad(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isFrameBad);
 
 /**
  * @brief       Return the most efficient numbers of data that needs to be passed to MSGD_InsEncChunk in the next
- *              function call in order to speedup operation
+ *              function call in order to speedup operation. When this function return 0 it's mean that the frame
+ *              is fully received or that the frame is corrupted and we need to start receiving a new frame.
  *
  * @param[in]   ctx             - Msg decoder context
  * @param[out]  mostEffPayload  - Pointer to an uint32_t were we will store the most efficient numbers of data len
