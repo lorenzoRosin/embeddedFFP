@@ -184,7 +184,7 @@ e_eFSP_MSGRX_Res MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const ctx, uint8_t** dat
  *                                        interpreted higher that it should be and EOF + SOF of the next frame are lost.
  *                                        So this status could be due to a transmissione error, but it's not possible
  *                                        to know the reason of the error without storing all the data and checking CRC.
- *		    MSGRX_RES_MESSAGEENDED      - Frame ended, restart context in order to parse a new frame. Every other call
+ *		    MSGRX_RES_MESSAGERECEIVED   - Frame ended, restart context in order to parse a new frame. Every other call
  *                                        to this function will not have effect until we call MSGRX_StartNewMsg,
  *                                        MSGRX_StartNewMsgNClean or timeout elapse. In this situation bear in mind
  *                                        that some data could be left out the parsing and can remain saved inside a
