@@ -325,7 +325,7 @@ e_eFSP_MSGD_Res MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* cons
 		}
 		else
 		{
-            /* Check if frame is already ended */
+            /* Check if the frame is already ended */
             isFullUnstuffed = false;
             resByStuff = BUNSTF_IsAFullFrameUnstuff(&ctx->byteUStufferCtnx, &isFullUnstuffed);
             result = convertReturnFromBstfToMSGD(resByStuff);
