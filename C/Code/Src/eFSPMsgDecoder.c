@@ -543,7 +543,7 @@ e_eFSP_MSGD_Res MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const ctx, uint8_t encArea[], 
 
                     case MSGD_PRV_MSG_END_CHECK:
                     {
-                        /* Verify msg integrity */
+                        /* Verify message integrity */
                         resMsgCorrect = isMsgCorrect(&ctx->byteUStufferCtnx, &isMCorrect, ctx->cbCrcPtr, ctx->cbCrcCtx);
 
                         if( MSGD_RES_OK == resMsgCorrect )
