@@ -734,21 +734,7 @@ e_eFSP_MSGD_Res IsAFullMsgDecoded(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isMs
         else
         {
             /* Full frame received at unstuffer level, check if it is valid message at this level */
-            result = isMsgCorrect(&ctx->byteUStufferCtnx, &isCorrect, ctx->cbCrcPtr, ctx->cbCrcCtx);
-
-            if( MSGD_RES_OK == result )
-            {
-                if( true == isCorrect )
-                {
-                    /* Correct message so it's decoded */
-                    *isMsgDec = true;
-                }
-                else
-                {
-                    /* Bad frame so it's not decoded */
-                    *isMsgDec = false;
-                }
-            }
+            result = isMsgCorrect(&ctx->byteUStufferCtnx, isMsgDec, ctx->cbCrcPtr, ctx->cbCrcCtx);
         }
     }
 
@@ -772,12 +758,13 @@ e_eFSP_MSGD_Res IsCurrentFrameBad(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isFr
     {
         if( true == isFrameBadloc )
         {
-            /* Not correct at bytestuffer level */
+            /* Not correct at bytestuffer level, no need to check CRC or data len */
             *isFrameBad = true;
         }
         else
         {
-            /* Frame seems ok, check the correctnes */
+            /* Frame seems ok, no error found. It could be ended on in receiving state. If ended check CRC,
+             * if still in receiving state check coherence with datalen */
             isFullUnstuffed = false;
             resByStuff = BUNSTF_IsAFullFrameUnstuff(&ctx->byteUStufferCtnx, &isFullUnstuffed);
             result = convertReturnFromBstfToMSGD(resByStuff);
@@ -794,12 +781,12 @@ e_eFSP_MSGD_Res IsCurrentFrameBad(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isFr
                         /* no strange error found, check message correctness */
                         if( true != isCorrect )
                         {
-                            /* Message not ended but something about it0s coherence is wrong */
+                            /* Message not ended but something about it's coherence is wrong */
                             *isFrameBad = true;
                         }
                         else
                         {
-                            /* Correct message */
+                            /* Correct message, till now */
                             *isFrameBad = false;
                         }
                     }

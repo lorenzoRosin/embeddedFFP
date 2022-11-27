@@ -29,7 +29,6 @@ extern "C" {
 /***********************************************************************************************************************
  *      TYPEDEFS
  **********************************************************************************************************************/
-
 /* Call back to a function that will calculate the CRC for this modules
  * the cntx parameter is a custom pointer that can be used by the creator of this CRC callback, and will not be used
  * by the MSG DECODER module */
