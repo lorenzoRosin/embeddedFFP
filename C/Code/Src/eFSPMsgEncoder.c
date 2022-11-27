@@ -30,6 +30,7 @@ static e_eFSP_MSGE_Res convertReturnFromBstfToMSGE(e_eCU_BSTF_Res returnedEvent)
     #pragma cstat_disable = "MISRAC2012-Rule-10.3"
     /* Suppressed because this warning is not working */
 #endif
+
 e_eFSP_MSGE_Res MSGE_InitCtx(s_eFSP_MSGE_Ctx* const ctx, uint8_t memArea[], const uint32_t memAreaSize,
 								  cb_crc32_msge cbCrcP, void* const clbCtx)
 {

@@ -137,7 +137,7 @@ e_eFSP_MSGE_Res MSGE_RestartCurrentMessage(s_eFSP_MSGE_Ctx* const ctx);
 e_eFSP_MSGE_Res MSGE_GetRemToRetrive(s_eFSP_MSGE_Ctx* const ctx, uint32_t* const retrivedLen);
 
 /**
- * @brief       Retrive encoded data chunk. The raw data copied in the buffer by using the function
+ * @brief       Retrive encoded data chunk. The raw data copied in the buffer using the function
  *              MSGE_GetPayloadLocation will be encoded (header and byte stuffing) and retrived by this function.
  *
  * @param[in]   ctx         - Message Encoder context

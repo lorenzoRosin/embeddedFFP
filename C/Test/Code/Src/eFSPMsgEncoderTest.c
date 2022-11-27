@@ -1,18 +1,28 @@
 /**
- * @file eFSPMsgEncoderTest.c
+ * @file       eFSPMsgEncoderTest.c
  *
- */
-
-
+ * @brief      Message encoder test
+ *
+ * @author     Lorenzo Rosin
+ *
+ **********************************************************************************************************************/
 
 /***********************************************************************************************************************
  *      INCLUDES
  **********************************************************************************************************************/
 #include "eFSPMsgEncoderTest.h"
-#include <stdio.h>
 #include "eCUCrc.h"
 
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_disable = "MISRAC2004-20.9", "MISRAC2012-Rule-21.6"
+    /* Suppressed for code clarity in test execution*/
+#endif
 
+#include <stdio.h>
+
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_restore = "MISRAC2004-20.9", "MISRAC2012-Rule-21.6"
+#endif
 
 /***********************************************************************************************************************
  *   PRIVATE TEST FUNCTION DECLARATION
@@ -34,7 +44,7 @@ static void msgEncoderTestBadPointer(void);
 static void msgEncoderTestBadInit(void);
 static void msgEncoderTestBadIniMsg(void);
 static void msgEncoderTestBadParamEntr(void);
-static void msgEncoderTestBadParamStatus(void);
+static void msgEncoderTestCorruptContext(void);
 static void msgEncoderTestBadClBck(void);
 static void msgEncoderTestMsgEnd(void);
 static void msgEncoderTestGeneral(void);
@@ -51,7 +61,7 @@ void msgEncoderTest(void)
     msgEncoderTestBadInit();
     msgEncoderTestBadIniMsg();
     msgEncoderTestBadParamEntr();
-    msgEncoderTestBadParamStatus();
+    msgEncoderTestCorruptContext();
     msgEncoderTestBadClBck();
     msgEncoderTestMsgEnd();
     msgEncoderTestGeneral();
@@ -461,7 +471,7 @@ void msgEncoderTestBadParamEntr(void)
     }
 }
 
-void msgEncoderTestBadParamStatus(void)
+void msgEncoderTestCorruptContext(void)
 {
     /* Local variable */
     s_eFSP_MSGE_Ctx ctx;
@@ -477,221 +487,221 @@ void msgEncoderTestBadParamStatus(void)
     /* Function */
     if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgEncoderTestBadParamStatus 1  -- OK \n");
+        (void)printf("msgEncoderTestCorruptContext 1  -- OK \n");
     }
     else
     {
-        (void)printf("msgEncoderTestBadParamStatus 1  -- FAIL \n");
+        (void)printf("msgEncoderTestCorruptContext 1  -- FAIL \n");
     }
 
     ctx.cbCrcCtx = NULL;
     if( MSGE_RES_CORRUPTCTX == MSGE_StartNewMessage(&ctx, 2u) )
     {
-        (void)printf("msgEncoderTestBadParamStatus 2  -- OK \n");
+        (void)printf("msgEncoderTestCorruptContext 2  -- OK \n");
     }
     else
     {
-        (void)printf("msgEncoderTestBadParamStatus 2  -- FAIL \n");
+        (void)printf("msgEncoderTestCorruptContext 2  -- FAIL \n");
     }
 
     /* Function */
     if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgEncoderTestBadParamStatus 3  -- OK \n");
+        (void)printf("msgEncoderTestCorruptContext 3  -- OK \n");
     }
     else
     {
-        (void)printf("msgEncoderTestBadParamStatus 3  -- FAIL \n");
+        (void)printf("msgEncoderTestCorruptContext 3  -- FAIL \n");
     }
 
     ctx.cbCrcPtr = NULL;
     if( MSGE_RES_CORRUPTCTX == MSGE_StartNewMessage(&ctx, 2u) )
     {
-        (void)printf("msgEncoderTestBadParamStatus 4  -- OK \n");
+        (void)printf("msgEncoderTestCorruptContext 4  -- OK \n");
     }
     else
     {
-        (void)printf("msgEncoderTestBadParamStatus 4  -- FAIL \n");
+        (void)printf("msgEncoderTestCorruptContext 4  -- FAIL \n");
     }
 
     /* Function */
     if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgEncoderTestBadParamStatus 5  -- OK \n");
+        (void)printf("msgEncoderTestCorruptContext 5  -- OK \n");
     }
     else
     {
-        (void)printf("msgEncoderTestBadParamStatus 5  -- FAIL \n");
+        (void)printf("msgEncoderTestCorruptContext 5  -- FAIL \n");
     }
 
     ctx.cbCrcPtr = NULL;
     if( MSGE_RES_CORRUPTCTX == MSGE_GetPayloadLocation(&ctx, &dataP, &var32) )
     {
-        (void)printf("msgEncoderTestBadParamStatus 6  -- OK \n");
+        (void)printf("msgEncoderTestCorruptContext 6  -- OK \n");
     }
     else
     {
-        (void)printf("msgEncoderTestBadParamStatus 6  -- FAIL \n");
+        (void)printf("msgEncoderTestCorruptContext 6  -- FAIL \n");
     }
 
     /* Function */
     if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgEncoderTestBadParamStatus 7  -- OK \n");
+        (void)printf("msgEncoderTestCorruptContext 7  -- OK \n");
     }
     else
     {
-        (void)printf("msgEncoderTestBadParamStatus 7  -- FAIL \n");
+        (void)printf("msgEncoderTestCorruptContext 7  -- FAIL \n");
     }
 
     ctx.cbCrcPtr = NULL;
     if( MSGE_RES_CORRUPTCTX == MSGE_RestartCurrentMessage(&ctx) )
     {
-        (void)printf("msgEncoderTestBadParamStatus 8  -- OK \n");
+        (void)printf("msgEncoderTestCorruptContext 8  -- OK \n");
     }
     else
     {
-        (void)printf("msgEncoderTestBadParamStatus 8  -- FAIL \n");
+        (void)printf("msgEncoderTestCorruptContext 8  -- FAIL \n");
     }
 
     /* Function */
     if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgEncoderTestBadParamStatus 9  -- OK \n");
+        (void)printf("msgEncoderTestCorruptContext 9  -- OK \n");
     }
     else
     {
-        (void)printf("msgEncoderTestBadParamStatus 9  -- FAIL \n");
+        (void)printf("msgEncoderTestCorruptContext 9  -- FAIL \n");
     }
 
     ctx.cbCrcPtr = NULL;
     if( MSGE_RES_CORRUPTCTX == MSGE_GetRemToRetrive(&ctx, &var32) )
     {
-        (void)printf("msgEncoderTestBadParamStatus 10 -- OK \n");
+        (void)printf("msgEncoderTestCorruptContext 10 -- OK \n");
     }
     else
     {
-        (void)printf("msgEncoderTestBadParamStatus 10 -- FAIL \n");
+        (void)printf("msgEncoderTestCorruptContext 10 -- FAIL \n");
     }
 
     /* Function */
     if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgEncoderTestBadParamStatus 11 -- OK \n");
+        (void)printf("msgEncoderTestCorruptContext 11 -- OK \n");
     }
     else
     {
-        (void)printf("msgEncoderTestBadParamStatus 11 -- FAIL \n");
+        (void)printf("msgEncoderTestCorruptContext 11 -- FAIL \n");
     }
 
     ctx.cbCrcPtr = NULL;
     if( MSGE_RES_CORRUPTCTX == MSGE_RetriveEChunk(&ctx, memArea, 2u, &var32) )
     {
-        (void)printf("msgEncoderTestBadParamStatus 12 -- OK \n");
+        (void)printf("msgEncoderTestCorruptContext 12 -- OK \n");
     }
     else
     {
-        (void)printf("msgEncoderTestBadParamStatus 12 -- FAIL \n");
+        (void)printf("msgEncoderTestCorruptContext 12 -- FAIL \n");
     }
 
     /* Function */
     if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgEncoderTestBadParamStatus 13 -- OK \n");
+        (void)printf("msgEncoderTestCorruptContext 13 -- OK \n");
     }
     else
     {
-        (void)printf("msgEncoderTestBadParamStatus 13 -- FAIL \n");
+        (void)printf("msgEncoderTestCorruptContext 13 -- FAIL \n");
     }
 
     ctx.byteStufferCtnx.memArea = NULL;
     if( MSGE_RES_CORRUPTCTX == MSGE_StartNewMessage(&ctx, 2u) )
     {
-        (void)printf("msgEncoderTestBadParamStatus 14 -- OK \n");
+        (void)printf("msgEncoderTestCorruptContext 14 -- OK \n");
     }
     else
     {
-        (void)printf("msgEncoderTestBadParamStatus 14 -- FAIL \n");
+        (void)printf("msgEncoderTestCorruptContext 14 -- FAIL \n");
     }
 
     /* Function */
     if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgEncoderTestBadParamStatus 15 -- OK \n");
+        (void)printf("msgEncoderTestCorruptContext 15 -- OK \n");
     }
     else
     {
-        (void)printf("msgEncoderTestBadParamStatus 15 -- FAIL \n");
+        (void)printf("msgEncoderTestCorruptContext 15 -- FAIL \n");
     }
 
     ctx.byteStufferCtnx.memArea = NULL;
     if( MSGE_RES_CORRUPTCTX == MSGE_GetPayloadLocation(&ctx, &dataP, &var32) )
     {
-        (void)printf("msgEncoderTestBadParamStatus 16 -- OK \n");
+        (void)printf("msgEncoderTestCorruptContext 16 -- OK \n");
     }
     else
     {
-        (void)printf("msgEncoderTestBadParamStatus 16 -- FAIL \n");
+        (void)printf("msgEncoderTestCorruptContext 16 -- FAIL \n");
     }
 
     /* Function */
     if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgEncoderTestBadParamStatus 17 -- OK \n");
+        (void)printf("msgEncoderTestCorruptContext 17 -- OK \n");
     }
     else
     {
-        (void)printf("msgEncoderTestBadParamStatus 17 -- FAIL \n");
+        (void)printf("msgEncoderTestCorruptContext 17 -- FAIL \n");
     }
 
     ctx.byteStufferCtnx.memArea = NULL;
     if( MSGE_RES_CORRUPTCTX == MSGE_RestartCurrentMessage(&ctx) )
     {
-        (void)printf("msgEncoderTestBadParamStatus 18 -- OK \n");
+        (void)printf("msgEncoderTestCorruptContext 18 -- OK \n");
     }
     else
     {
-        (void)printf("msgEncoderTestBadParamStatus 18 -- FAIL \n");
+        (void)printf("msgEncoderTestCorruptContext 18 -- FAIL \n");
     }
 
     /* Function */
     if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgEncoderTestBadParamStatus 19 -- OK \n");
+        (void)printf("msgEncoderTestCorruptContext 19 -- OK \n");
     }
     else
     {
-        (void)printf("msgEncoderTestBadParamStatus 19 -- FAIL \n");
+        (void)printf("msgEncoderTestCorruptContext 19 -- FAIL \n");
     }
 
     ctx.byteStufferCtnx.memArea = NULL;
     if( MSGE_RES_CORRUPTCTX == MSGE_GetRemToRetrive(&ctx, &var32) )
     {
-        (void)printf("msgEncoderTestBadParamStatus 20 -- OK \n");
+        (void)printf("msgEncoderTestCorruptContext 20 -- OK \n");
     }
     else
     {
-        (void)printf("msgEncoderTestBadParamStatus 20 -- FAIL \n");
+        (void)printf("msgEncoderTestCorruptContext 20 -- FAIL \n");
     }
 
     /* Function */
     if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgEncoderTestBadParamStatus 21 -- OK \n");
+        (void)printf("msgEncoderTestCorruptContext 21 -- OK \n");
     }
     else
     {
-        (void)printf("msgEncoderTestBadParamStatus 21 -- FAIL \n");
+        (void)printf("msgEncoderTestCorruptContext 21 -- FAIL \n");
     }
 
     ctx.byteStufferCtnx.memArea = NULL;
     if( MSGE_RES_CORRUPTCTX == MSGE_RetriveEChunk(&ctx, memArea, 2u, &var32) )
     {
-        (void)printf("msgEncoderTestBadParamStatus 22 -- OK \n");
+        (void)printf("msgEncoderTestCorruptContext 22 -- OK \n");
     }
     else
     {
-        (void)printf("msgEncoderTestBadParamStatus 22 -- FAIL \n");
+        (void)printf("msgEncoderTestCorruptContext 22 -- FAIL \n");
     }
 }
 
@@ -732,33 +742,6 @@ void msgEncoderTestBadClBck(void)
         (void)printf("msgEncoderTestBadClBck 2  -- FAIL \n");
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void msgEncoderTestMsgEnd(void)
 {
@@ -852,6 +835,41 @@ void msgEncoderTestMsgEnd(void)
         (void)printf("msgEncoderTestMsgEnd 4  -- FAIL \n");
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void msgEncoderTestGeneral(void)
 {
