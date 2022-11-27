@@ -424,7 +424,7 @@ void msgEncoderTestBadParamEntr(void)
         (void)printf("msgEncoderTestBadParamEntr 3  -- FAIL \n");
     }
 
-    if( MSGE_RES_BADPARAM == MSGE_StartNewMessage(&ctx, (0xFFFFFFFFu - EFSP_MIN_MSGEN_BUFFLEN + 1u) ) )
+    if( MSGE_RES_BADPARAM == MSGE_StartNewMessage(&ctx, (MAX_UINT32VAL - EFSP_MIN_MSGEN_BUFFLEN + 1u) ) )
     {
         (void)printf("msgEncoderTestBadParamEntr 4  -- OK \n");
     }
