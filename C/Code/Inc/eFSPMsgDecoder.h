@@ -141,12 +141,12 @@ e_eFSP_MSGD_Res MSGD_IsWaitingSof(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isWa
  *              If a bad frame is received this function will consider it as an unfinished frame.
  *
  * @param[in]   ctx         - Msg decoder context
- * @param[out]  isMsgDec 	- Pointer to a bool_t variable where we will store if the message dedoded ended.
+ * @param[out]  isMsgDec 	- Pointer to a bool_t variable where we will store if the message decoded ended.
  *
  * @return      MSGD_RES_BADPOINTER   	- In case of bad pointer passed to the function
  *		        MSGD_RES_NOINITLIB    	- Need to init context before taking some action
  *		        MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
- *				MSGD_RES_CRCCLBKERROR   - The crc callback returned an error when the decoder where verifing CRC
+ *				MSGD_RES_CRCCLBKERROR   - The crc callback returned an error when the decoder here verifing CRC
  *              MSGD_RES_OK           	- Operation ended correctly
  */
 e_eFSP_MSGD_Res MSGD_IsAFullMsgDecoded(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isMsgDec);
@@ -161,7 +161,7 @@ e_eFSP_MSGD_Res MSGD_IsAFullMsgDecoded(s_eFSP_MSGD_Ctx* const ctx, bool_t* const
  * @return      MSGD_RES_BADPOINTER   	- In case of bad pointer passed to the function
  *		        MSGD_RES_NOINITLIB    	- Need to init context before taking some action
  *		        MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
- *				MSGD_RES_CRCCLBKERROR   - The crc callback returned an error when the decoder where verifing CRC
+ *				MSGD_RES_CRCCLBKERROR   - The crc callback returned an error when the decoder were verifing CRC
  *              MSGD_RES_OK           	- Operation ended correctly
  */
 e_eFSP_MSGD_Res MSGD_IsCurrentFrameBad(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isFrameBad);
@@ -220,7 +220,7 @@ e_eFSP_MSGD_Res MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* cons
  *                                        function. In this situation bear in mind that some data could be left out
  *                                        the parsing and so we need to reparse that data with another call of
  *                                        MSGD_InsEncChunk.
- *				MSGD_RES_CRCCLBKERROR   - The crc callback returned an error when the decoder where verifing CRC
+ *				MSGD_RES_CRCCLBKERROR   - The crc callback returned an error when the decoder were verifing CRC
  *              MSGD_RES_OK           	- Operation ended correctly. The chunk is parsed correclty but the frame is not
  *                                        finished yet. In this situation consumedEncData is always reported with a
  *                                        value equals to encLen.
