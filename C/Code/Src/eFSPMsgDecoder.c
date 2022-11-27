@@ -717,7 +717,6 @@ e_eFSP_MSGD_Res IsAFullMsgDecoded(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isMs
 	e_eFSP_MSGD_Res result;
 	s_eCU_BUNSTF_Res resByStuff;
     bool_t isFullUnstuffed;
-    bool_t isCorrect;
 
     isFullUnstuffed = false;
     resByStuff = BUNSTF_IsAFullFrameUnstuff(&ctx->byteUStufferCtnx, &isFullUnstuffed);
