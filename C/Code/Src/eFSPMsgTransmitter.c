@@ -30,6 +30,7 @@ static e_eFSP_MSGTX_Res convertReturnFromMSGEToMSGTX(e_eFSP_MSGE_Res returnedEve
     #pragma cstat_disable = "MISRAC2012-Rule-10.3"
     /* Suppressed because this warning is not working */
 #endif
+
 e_eFSP_MSGTX_Res MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const ctx, const s_eFSP_MSGTX_InitData* initData)
 {
 	/* Local variable */
