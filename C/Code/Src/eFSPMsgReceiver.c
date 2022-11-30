@@ -355,7 +355,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
 
                     case MSGRX_PRV_CHECKHOWMANYDATA:
                     {
-                        /* How many byte do we need? */
+                        /* How many byte do we need to receive? */
                         resultMsgE = MSGD_GetMostEffDatLen(&ctx->msgDecoderCtnx, &rxMostEff);
                         result = convertReturnFromMSGDToMSGRX(resultMsgE);
                         if( MSGRX_RES_OK == result )
