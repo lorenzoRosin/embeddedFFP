@@ -150,7 +150,7 @@ e_eFSP_MSGRX_Res MSGRX_StartNewMsgNClean(s_eFSP_MSGRX_Ctx* const ctx);
  *
  * @param[in]   ctx         - Msg receiver context
  * @param[out]  dataP       - Pointer to a Pointer pointing to the decoded data payload ( NO CRC NO DATA SIZE )
- * @param[out]  retrivedLen - Pointer to a uint32_t variable where the size of the decoded data will be placed (raw
+ * @param[out]  retrivedLen - Pointer to a uint32_t variable where the size of the decoded data will be placed ( raw
  *                            paylod data len )
  *
  * @return      MSGRX_RES_BADPOINTER   	- In case of bad pointer passed to the function
