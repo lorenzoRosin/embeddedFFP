@@ -128,7 +128,7 @@ e_eFSP_MSGRX_Res MSGRX_StartNewMsg(s_eFSP_MSGRX_Ctx* const ctx)
 
 e_eFSP_MSGRX_Res MSGRX_StartNewMsgNClean(s_eFSP_MSGRX_Ctx* const ctx)
 {
-	/* Local variable */
+	/* Local variable for result */
 	e_eFSP_MSGRX_Res result;
 	e_eFSP_MSGD_Res resultMsgE;
 
