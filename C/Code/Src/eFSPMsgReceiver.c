@@ -114,7 +114,7 @@ e_eFSP_MSGRX_Res MSGRX_StartNewMsg(s_eFSP_MSGRX_Ctx* const ctx)
 
             if( MSGRX_RES_OK == result )
             {
-                /* Start timer here if we don't need to wait start of frame before start counting */
+                /* Start timer even if we need to wait SOF, this case is handled in the MSGRX_GetDecodedData */
                 if( true != ctx->rxTimer.tim_start( ctx->rxTimer.timerCtx, ctx->frameTimeoutMs ) )
                 {
                     result = MSGRX_RES_TIMCLBKERROR;
@@ -156,7 +156,7 @@ e_eFSP_MSGRX_Res MSGRX_StartNewMsgNClean(s_eFSP_MSGRX_Ctx* const ctx)
 
             if( MSGRX_RES_OK == result )
             {
-                /* Start timer */
+                /* Start timer even if we need to wait SOF, this case is handled in the MSGRX_GetDecodedData */
                 if( true != ctx->rxTimer.tim_start( ctx->rxTimer.timerCtx, ctx->frameTimeoutMs ) )
                 {
                     result = MSGRX_RES_TIMCLBKERROR;
