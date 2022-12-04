@@ -428,8 +428,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                         }
                         else
                         {
-                            /* No data in msg buffer, retrive some other chunk of data, only if the message rx is
-                            * not completed of course */
+                            /* No data in msg buffer, retrive some other chunk of data */
                             ctx->rxBuffCntr = 0u;
                             ctx->rxBuffFill = 0u;
                             stateM = MSGRX_PRV_RECEIVE_BUFF;
@@ -474,53 +473,62 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                         cDToRxP = &ctx->rxBuff[ctx->rxBuffCntr];
                         cDToRxLen = ctx->rxBuffFill - ctx->rxBuffCntr;
 
-                        /* We can try to decode data event if we already finished cuz the function
-                        * MSGD_InsEncChunk is well maden */
-                        resultMsgE = MSGD_InsEncChunk(&ctx->msgDecoderCtnx, cDToRxP, cDToRxLen, &cDRxed );
-                        result = convertReturnFromMSGDToMSGRX(resultMsgE);
-
-                        if( MSGRX_RES_OK == result )
+                        if( cDToRxLen > 0u )
                         {
-                            /* Retrived some data, by design if MSGD_InsEncChunk return MSGE_RES_OK this
-                             * means that the value of loaded data inside send buffer is equals to it's size */
-                            ctx->rxBuffCntr = 0u;
-                            ctx->rxBuffFill = 0u;
+                            /* We can try to decode data event if we already finished cuz the function
+                            * MSGD_InsEncChunk is well maden */
+                            resultMsgE = MSGD_InsEncChunk(&ctx->msgDecoderCtnx, cDToRxP, cDToRxLen, &cDRxed );
+                            result = convertReturnFromMSGDToMSGRX(resultMsgE);
 
-                            /* Check for timeout */
-                            stateM = MSGRX_PRV_CHECKTIMEOUTAFTERRX;
-                        }
-                        else if( MSGRX_RES_MESSAGERECEIVED == result )
-                        {
-                            /* Ok we retrived all the possible data */
-                            /* Update RX buffer */
-                            ctx->rxBuffCntr += cDRxed;
+                            if( MSGRX_RES_OK == result )
+                            {
+                                /* Retrived some data, by design if MSGD_InsEncChunk return MSGE_RES_OK this
+                                 * means that the value of loaded data inside send buffer is equals to it's size */
+                                ctx->rxBuffCntr = 0u;
+                                ctx->rxBuffFill = 0u;
 
-                            /* Check for timeout */
-                            stateM = MSGRX_PRV_CHECKTIMEOUTAFTERRX;
-                        }
-                        else if( MSGRX_RES_BADFRAME == result )
-                        {
-                            /* Update RX buffer */
-                            ctx->rxBuffCntr += cDRxed;
+                                /* Check for timeout */
+                                stateM = MSGRX_PRV_CHECKTIMEOUTAFTERRX;
+                            }
+                            else if( MSGRX_RES_MESSAGERECEIVED == result )
+                            {
+                                /* Ok we retrived all the possible data */
+                                /* Update RX buffer */
+                                ctx->rxBuffCntr += cDRxed;
 
-                            /* Bad frame, but check timeout also */
-                            stateM = MSGRX_PRV_CHECKTIMEOUTAFTERRX;
-                        }
-                        else if( MSGRX_RES_FRAMERESTART == result )
-                        {
-                            /* Update RX buffer */
-                            ctx->rxBuffCntr += cDRxed;
+                                /* Check for timeout */
+                                stateM = MSGRX_PRV_CHECKTIMEOUTAFTERRX;
+                            }
+                            else if( MSGRX_RES_BADFRAME == result )
+                            {
+                                /* Update RX buffer */
+                                ctx->rxBuffCntr += cDRxed;
 
-                             /* ok frame restarted, but check timeout also */
-                            stateM = MSGRX_PRV_CHECKTIMEOUTAFTERRX;
+                                /* Bad frame, but check timeout also */
+                                stateM = MSGRX_PRV_CHECKTIMEOUTAFTERRX;
+                            }
+                            else if( MSGRX_RES_FRAMERESTART == result )
+                            {
+                                /* Update RX buffer */
+                                ctx->rxBuffCntr += cDRxed;
+
+                                 /* ok frame restarted, but check timeout also */
+                                stateM = MSGRX_PRV_CHECKTIMEOUTAFTERRX;
+                            }
+                            else
+                            {
+                                /* Update RX buffer */
+                                ctx->rxBuffCntr += cDRxed;
+
+                                /* Some error, can return */
+                                stateM = MSGRX_PRV_ELABDONE;
+                            }
                         }
                         else
                         {
-                            /* Update RX buffer */
-                            ctx->rxBuffCntr += cDRxed;
-
-                            /* Some error, can return */
-                            stateM = MSGRX_PRV_ELABDONE;
+                            /* Didn't receive data in the previous MSGRX_PRV_RECEIVE_BUFF, check timeout */
+                            result = MSGRX_RES_OK;
+                            stateM = MSGRX_PRV_CHECKTIMEOUTAFTERRX;
                         }
 
                         break;
