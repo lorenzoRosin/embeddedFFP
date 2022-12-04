@@ -873,16 +873,26 @@ void msgDecoderTestBadClBck(void)
         (void)printf("msgDecoderTestBadClBck 2  -- FAIL \n");
     }
 
-    if( MSGD_RES_CRCCLBKERROR == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    /* Decode */
+    uint8_t testData[] = {ECU_SOF, 0x00u, 0x00u, 0x00u, 0x00u, 0x01, 0x00u, 0x00u, 0x00u, 0x01, ECU_EOF};
+
+    if( MSGD_RES_CRCCLBKERROR == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &var32) )
     {
-        (void)printf("msgDecoderTestBadClBck 3  -- OK \n");
+        if( CRC_RES_BADPOINTER == ctxAdapterCrc.lastError )
+        {
+            (void)printf("msgDecoderTestBadClBck 3  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgDecoderTestBadClBck 3  -- FAIL \n");
+        }
     }
     else
     {
         (void)printf("msgDecoderTestBadClBck 3  -- FAIL \n");
     }
 
-    if( MSGD_RES_CRCCLBKERROR == MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_CRCCLBKERROR == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestBadClBck 4  -- OK \n");
     }
@@ -891,19 +901,9 @@ void msgDecoderTestBadClBck(void)
         (void)printf("msgDecoderTestBadClBck 4  -- FAIL \n");
     }
 
-    /* Decode */
-    uint8_t testData[] = {ECU_SOF, 0x00u, 0x00u, 0x00u, 0x00u, 0x01, 0x00u, 0x00u, 0x00u, 0x01, ECU_EOF};
-
-    if( MSGD_RES_CRCCLBKERROR == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &var32) )
+    if( MSGD_RES_CRCCLBKERROR == MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
     {
-        if( CRC_RES_BADPOINTER == ctxAdapterCrc.lastError )
-        {
-            (void)printf("msgDecoderTestBadClBck 5  -- OK \n");
-        }
-        else
-        {
-            (void)printf("msgDecoderTestBadClBck 5  -- FAIL \n");
-        }
+        (void)printf("msgDecoderTestBadClBck 5  -- OK \n");
     }
     else
     {
