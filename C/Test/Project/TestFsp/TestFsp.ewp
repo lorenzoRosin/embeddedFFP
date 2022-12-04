@@ -1084,9 +1084,6 @@
         <name>Inc</name>
         <file>
             <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgDecoderTest.h</name>
-            <excluded>
-                <configuration>Release</configuration>
-            </excluded>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgDeEncoderTest.h</name>
@@ -1120,9 +1117,6 @@
         <name>Src</name>
         <file>
             <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgDecoderTest.c</name>
-            <excluded>
-                <configuration>Release</configuration>
-            </excluded>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgDeEncoderTest.c</name>
