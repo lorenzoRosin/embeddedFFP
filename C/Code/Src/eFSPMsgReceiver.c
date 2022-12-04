@@ -418,7 +418,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
 
                     case MSGRX_PRV_CHECKIFBUFFERRX:
                     {
-                        /* Is needed data present in receive buffer? */
+                        /* Is needed data already present in the receive buffer? */
                         cDToRxLen = ctx->rxBuffFill - ctx->rxBuffCntr;
 
                         if( cDToRxLen > 0u )
