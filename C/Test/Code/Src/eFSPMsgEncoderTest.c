@@ -868,46 +868,12 @@ void msgEncoderTestMsgEnd(void)
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void msgEncoderTestGeneral(void)
 {
     /* Local variable */
     s_eFSP_MSGE_Ctx ctx;
     uint8_t  memArea[12u] = {0u};
+    uint8_t  msgA[24u] = {0u};
     cb_crc32_msge cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
@@ -926,14 +892,237 @@ void msgEncoderTestGeneral(void)
         (void)printf("msgEncoderTestGeneral 1  -- FAIL \n");
     }
 
-    ctx.byteStufferCtnx.memAreaSize = 0u;
-    if( MSGE_RES_CORRUPTCTX == MSGE_GetPayloadLocation(&ctx, &dataP, &var32) )
+    ctx.byteStufferCtnx.memAreaSize = 3u;
+    if( MSGE_RES_BADPOINTER == MSGE_StartNewMessage(&ctx, sizeof(memArea)) )
     {
         (void)printf("msgEncoderTestGeneral 2  -- OK \n");
     }
     else
     {
         (void)printf("msgEncoderTestGeneral 2  -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    {
+        (void)printf("msgEncoderTestGeneral 3  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral 3  -- FAIL \n");
+    }
+
+    if( MSGE_RES_OK == MSGE_GetPayloadLocation(&ctx, &dataP, &var32) )
+    {
+        if( 4u == var32 )
+        {
+            (void)printf("msgEncoderTestGeneral 4  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgEncoderTestGeneral 4  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral 4  -- FAIL \n");
+    }
+
+    dataP[0u] = 1u;
+    dataP[1u] = 2u;
+    dataP[2u] = 3u;
+    dataP[3u] = ECU_ESC;
+    if( MSGE_RES_BADPOINTER == MSGE_StartNewMessage(&ctx, var32) )
+    {
+        (void)printf("msgEncoderTestGeneral 5  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral 5  -- FAIL \n");
+    }
+
+    if( MSGE_RES_OK == MSGE_GetRemToRetrive(&ctx, &var32) )
+    {
+        if( 15u == var32)
+        {
+            (void)printf("msgEncoderTestGeneral 6  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgEncoderTestGeneral 6  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral 6  -- FAIL \n");
+    }
+
+    if( MSGE_RES_OK == MSGE_RetriveEChunk(&ctx, msgA, 5u, &var32) )
+    {
+        if( 5u == var32 )
+        {
+            if( (ECU_SOF == msgA[0u]) && (0x7Bu == msgA[1u]) && (0x39u == msgA[2u]) && (0x19u == msgA[3u]) &&
+                (0x52u == msgA[4u]) )
+            {
+                (void)printf("msgEncoderTestGeneral 7  -- OK \n");
+            }
+            else
+            {
+                (void)printf("msgEncoderTestGeneral 7  -- FAIL \n");
+            }
+        }
+        else
+        {
+            (void)printf("msgEncoderTestGeneral 7  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral 7  -- FAIL \n");
+    }
+
+    if( MSGE_RES_BADPOINTER == MSGE_RestartCurrentMessage(&ctx) )
+    {
+        (void)printf("msgEncoderTestGeneral 8  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral 8  -- FAIL \n");
+    }
+
+    if( MSGE_RES_OK == MSGE_GetRemToRetrive(&ctx, &var32) )
+    {
+        if( 14u == var32)
+        {
+            (void)printf("msgEncoderTestGeneral 9  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgEncoderTestGeneral 9  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral 9  -- FAIL \n");
+    }
+
+    if( MSGE_RES_OK == MSGE_RetriveEChunk(&ctx, msgA, 5u, &var32) )
+    {
+        if( 5u == var32 )
+        {
+            if( (ECU_SOF == msgA[0u]) && (0x7Bu == msgA[1u]) && (0x39u == msgA[2u]) && (0x19u == msgA[3u]) &&
+                (0x52u == msgA[4u]) )
+            {
+                (void)printf("msgEncoderTestGeneral 10 -- OK \n");
+            }
+            else
+            {
+                (void)printf("msgEncoderTestGeneral 10 -- FAIL \n");
+            }
+        }
+        else
+        {
+            (void)printf("msgEncoderTestGeneral 10 -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral 10 -- FAIL \n");
+    }
+
+    if( MSGE_RES_OK == MSGE_GetRemToRetrive(&ctx, &var32) )
+    {
+        if( 9u == var32)
+        {
+            (void)printf("msgEncoderTestGeneral 11 -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgEncoderTestGeneral 11 -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral 11 -- FAIL \n");
+    }
+
+    if( MSGE_RES_OK == MSGE_RetriveEChunk(&ctx, msgA, 4u, &var32) )
+    {
+        if( 4u == var32 )
+        {
+            if( (0x04u == msgA[1u]) && (0x00u == msgA[2u]) && (0x00u == msgA[3u]) && (0x00u == msgA[4u]) )
+            {
+                (void)printf("msgEncoderTestGeneral 12 -- OK \n");
+            }
+            else
+            {
+                (void)printf("msgEncoderTestGeneral 12 -- FAIL \n");
+            }
+        }
+        else
+        {
+            (void)printf("msgEncoderTestGeneral 12 -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral 12 -- FAIL \n");
+    }
+
+    if( MSGE_RES_OK == MSGE_GetRemToRetrive(&ctx, &var32) )
+    {
+        if( 4u == var32)
+        {
+            (void)printf("msgEncoderTestGeneral 13 -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgEncoderTestGeneral 13 -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral 13 -- FAIL \n");
+    }
+
+    if( MSGE_RES_MESSAGEENDED == MSGE_RetriveEChunk(&ctx, msgA, 10u, &var32) )
+    {
+        if( 6u == var32 )
+        {
+            if( (0x01u == msgA[0u]) && (0x02u == msgA[1u]) && (0x03u == msgA[2u]) && (ECU_ESC == msgA[3u]) &&
+                ( ((uint8_t)~ECU_ESC) == msgA[4u]) && (ECU_EOF == msgA[4u]) )
+            {
+                (void)printf("msgEncoderTestGeneral 14 -- OK \n");
+            }
+            else
+            {
+                (void)printf("msgEncoderTestGeneral 14 -- FAIL \n");
+            }
+        }
+        else
+        {
+            (void)printf("msgEncoderTestGeneral 14 -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral 14 -- FAIL \n");
+    }
+
+    if( MSGE_RES_OK == MSGE_GetRemToRetrive(&ctx, &var32) )
+    {
+        if( 0u == var32)
+        {
+            (void)printf("msgEncoderTestGeneral 15 -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgEncoderTestGeneral 15 -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral 13 -- FAIL \n");
     }
 }
 
