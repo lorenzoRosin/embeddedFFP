@@ -439,7 +439,7 @@ void msgEncoderTestBadParamEntr(void)
         (void)printf("msgEncoderTestBadParamEntr 3  -- FAIL \n");
     }
 
-    if( MSGE_RES_BADPARAM == MSGE_StartNewMessage(&ctx, (MAX_UINT32VAL - EFSP_MIN_MSGEN_BUFFLEN + 1u) ) )
+    if( MSGE_RES_BADPARAM == MSGE_StartNewMessage(&ctx, (MAX_UINT32VAL - EFSP_MIN_MSGEN_PAYLOAD + 1u) ) )
     {
         (void)printf("msgEncoderTestBadParamEntr 4  -- OK \n");
     }
@@ -1123,6 +1123,26 @@ void msgEncoderTestGeneral(void)
     else
     {
         (void)printf("msgEncoderTestGeneral 15 -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    {
+        (void)printf("msgEncoderTestGeneral 16 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral 16 -- FAIL \n");
+    }
+
+    ctx.byteStufferCtnx.memAreaSize = 3u;
+    if( MSGE_RES_CORRUPTCTX == MSGE_GetPayloadLocation(&ctx, &dataP, &var32) )
+    {
+        (void)printf("msgEncoderTestGeneral 17 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral 17 -- FAIL \n");
     }
 }
 
