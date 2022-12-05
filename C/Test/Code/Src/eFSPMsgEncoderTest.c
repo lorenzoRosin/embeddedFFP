@@ -893,7 +893,7 @@ void msgEncoderTestGeneral(void)
     }
 
     ctx.byteStufferCtnx.memAreaSize = 3u;
-    if( MSGE_RES_BADPOINTER == MSGE_StartNewMessage(&ctx, sizeof(memArea)) )
+    if( MSGE_RES_CORRUPTCTX == MSGE_StartNewMessage(&ctx, sizeof(memArea)) )
     {
         (void)printf("msgEncoderTestGeneral 2  -- OK \n");
     }
@@ -932,7 +932,7 @@ void msgEncoderTestGeneral(void)
     dataP[1u] = 2u;
     dataP[2u] = 3u;
     dataP[3u] = ECU_ESC;
-    if( MSGE_RES_BADPOINTER == MSGE_StartNewMessage(&ctx, var32) )
+    if( MSGE_RES_OK == MSGE_StartNewMessage(&ctx, var32) )
     {
         (void)printf("msgEncoderTestGeneral 5  -- OK \n");
     }
@@ -981,7 +981,7 @@ void msgEncoderTestGeneral(void)
         (void)printf("msgEncoderTestGeneral 7  -- FAIL \n");
     }
 
-    if( MSGE_RES_BADPOINTER == MSGE_RestartCurrentMessage(&ctx) )
+    if( MSGE_RES_OK == MSGE_RestartCurrentMessage(&ctx) )
     {
         (void)printf("msgEncoderTestGeneral 8  -- OK \n");
     }
@@ -992,7 +992,7 @@ void msgEncoderTestGeneral(void)
 
     if( MSGE_RES_OK == MSGE_GetRemToRetrive(&ctx, &var32) )
     {
-        if( 14u == var32)
+        if( 15u == var32)
         {
             (void)printf("msgEncoderTestGeneral 9  -- OK \n");
         }
@@ -1032,7 +1032,7 @@ void msgEncoderTestGeneral(void)
 
     if( MSGE_RES_OK == MSGE_GetRemToRetrive(&ctx, &var32) )
     {
-        if( 9u == var32)
+        if( 10u == var32)
         {
             (void)printf("msgEncoderTestGeneral 11 -- OK \n");
         }
@@ -1050,7 +1050,7 @@ void msgEncoderTestGeneral(void)
     {
         if( 4u == var32 )
         {
-            if( (0x04u == msgA[1u]) && (0x00u == msgA[2u]) && (0x00u == msgA[3u]) && (0x00u == msgA[4u]) )
+            if( (0x04u == msgA[0u]) && (0x00u == msgA[1u]) && (0x00u == msgA[2u]) && (0x00u == msgA[3u]) )
             {
                 (void)printf("msgEncoderTestGeneral 12 -- OK \n");
             }
@@ -1071,7 +1071,7 @@ void msgEncoderTestGeneral(void)
 
     if( MSGE_RES_OK == MSGE_GetRemToRetrive(&ctx, &var32) )
     {
-        if( 4u == var32)
+        if( 6u == var32)
         {
             (void)printf("msgEncoderTestGeneral 13 -- OK \n");
         }
@@ -1090,7 +1090,7 @@ void msgEncoderTestGeneral(void)
         if( 6u == var32 )
         {
             if( (0x01u == msgA[0u]) && (0x02u == msgA[1u]) && (0x03u == msgA[2u]) && (ECU_ESC == msgA[3u]) &&
-                ( ((uint8_t)~ECU_ESC) == msgA[4u]) && (ECU_EOF == msgA[4u]) )
+                ( ((uint8_t)~ECU_ESC) == msgA[4u]) && (ECU_EOF == msgA[5u]) )
             {
                 (void)printf("msgEncoderTestGeneral 14 -- OK \n");
             }
@@ -1122,7 +1122,7 @@ void msgEncoderTestGeneral(void)
     }
     else
     {
-        (void)printf("msgEncoderTestGeneral 13 -- FAIL \n");
+        (void)printf("msgEncoderTestGeneral 15 -- FAIL \n");
     }
 }
 
