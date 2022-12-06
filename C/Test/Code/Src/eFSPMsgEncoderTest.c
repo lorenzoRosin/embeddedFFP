@@ -53,6 +53,7 @@ static void msgEncoderTestCorruptContext(void);
 static void msgEncoderTestBadClBck(void);
 static void msgEncoderTestMsgEnd(void);
 static void msgEncoderTestGeneral(void);
+static void msgEncoderTestGeneral2(void);
 
 
 /***********************************************************************************************************************
@@ -70,6 +71,7 @@ void msgEncoderTest(void)
     msgEncoderTestBadClBck();
     msgEncoderTestMsgEnd();
     msgEncoderTestGeneral();
+    msgEncoderTestGeneral2();
 
     (void)printf("\n\nMESSAGE ENCODER TEST END \n\n");
 }
@@ -1146,6 +1148,195 @@ void msgEncoderTestGeneral(void)
     }
 }
 
+
+void msgEncoderTestGeneral2(void)
+{
+    /* Local variable */
+    s_eFSP_MSGE_Ctx ctx;
+    uint8_t  memArea[12u] = {0u};
+    uint8_t  msgA[24u] = {0u};
+    cb_crc32_msge cbCrcPTest = &c32SAdapt;
+    s_eCU_crcAdapterCtx ctxAdapterCrc;
+    uint32_t var32;
+    uint8_t* dataP;
+
+    /* Set value */
+    (void)memset(memArea, 0, sizeof(memArea));
+
+    /* Function */
+    if( MSGE_RES_OK == MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    {
+        (void)printf("msgEncoderTestGeneral2 1  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral2 1  -- FAIL \n");
+    }
+
+    if( MSGE_RES_OK == MSGE_GetPayloadLocation(&ctx, &dataP, &var32) )
+    {
+        if( 4u == var32 )
+        {
+            (void)printf("msgEncoderTestGeneral2 2  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgEncoderTestGeneral2 2  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral2 2  -- FAIL \n");
+    }
+
+    dataP[0u] = 1u;
+    dataP[1u] = 2u;
+    dataP[2u] = 3u;
+    dataP[3u] = 0x53u;
+    if( MSGE_RES_OK == MSGE_StartNewMessage(&ctx, var32) )
+    {
+        (void)printf("msgEncoderTestGeneral2 3  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral2 3  -- FAIL \n");
+    }
+
+    if( MSGE_RES_OK == MSGE_GetRemToRetrive(&ctx, &var32) )
+    {
+        if( 15u == var32)
+        {
+            (void)printf("msgEncoderTestGeneral2 4  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgEncoderTestGeneral2 4  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral2 4  -- FAIL \n");
+    }
+
+    if( MSGE_RES_OK == MSGE_RetriveEChunk(&ctx, msgA, 6u, &var32) )
+    {
+        if( 6u == var32 )
+        {
+            if( (ECU_SOF == msgA[0u]) && (0x72u == msgA[1u]) && (0xC4u == msgA[2u]) && (ECU_ESC == msgA[3u]) &&
+                ( (uint8_t)(~0xA1u) == msgA[4u] ) && (0xDBu == msgA[5u]) )
+            {
+                (void)printf("msgEncoderTestGeneral2 5  -- OK \n");
+            }
+            else
+            {
+                (void)printf("msgEncoderTestGeneral2 5  -- FAIL \n");
+            }
+        }
+        else
+        {
+            (void)printf("msgEncoderTestGeneral2 5  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral2 5  -- FAIL \n");
+    }
+
+    if( MSGE_RES_OK == MSGE_GetRemToRetrive(&ctx, &var32) )
+    {
+        if( 9u == var32)
+        {
+            (void)printf("msgEncoderTestGeneral2 6  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgEncoderTestGeneral2 6  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral2 6  -- FAIL \n");
+    }
+
+    if( MSGE_RES_OK == MSGE_RetriveEChunk(&ctx, msgA, 4u, &var32) )
+    {
+        if( 4u == var32 )
+        {
+            if( (0x04u == msgA[0u]) && (0x00u == msgA[1u]) && (0x00u == msgA[2u]) && (0x00u == msgA[3u]) )
+            {
+                (void)printf("msgEncoderTestGeneral2 7  -- OK \n");
+            }
+            else
+            {
+                (void)printf("msgEncoderTestGeneral2 7  -- FAIL \n");
+            }
+        }
+        else
+        {
+            (void)printf("msgEncoderTestGeneral2 7  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral2 7  -- FAIL \n");
+    }
+
+    if( MSGE_RES_OK == MSGE_GetRemToRetrive(&ctx, &var32) )
+    {
+        if( 5u == var32)
+        {
+            (void)printf("msgEncoderTestGeneral2 8  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgEncoderTestGeneral2 8  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral2 8  -- FAIL \n");
+    }
+
+    if( MSGE_RES_MESSAGEENDED == MSGE_RetriveEChunk(&ctx, msgA, 10u, &var32) )
+    {
+        if( 5u == var32 )
+        {
+            if( (0x01u == msgA[0u]) && (0x02u == msgA[1u]) && (0x03u == msgA[2u]) && (0x53u == msgA[3u]) &&
+                ( ECU_EOF == msgA[4u])  )
+            {
+                (void)printf("msgEncoderTestGeneral2 9  -- OK \n");
+            }
+            else
+            {
+                (void)printf("msgEncoderTestGeneral2 9  -- FAIL \n");
+            }
+        }
+        else
+        {
+            (void)printf("msgEncoderTestGeneral2 9  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral2 9  -- FAIL \n");
+    }
+
+    if( MSGE_RES_OK == MSGE_GetRemToRetrive(&ctx, &var32) )
+    {
+        if( 0u == var32)
+        {
+            (void)printf("msgEncoderTestGeneral2 10 -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgEncoderTestGeneral2 10 -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgEncoderTestGeneral2 10 -- FAIL \n");
+    }
+}
 
 #ifdef __IAR_SYSTEMS_ICC__
     #pragma cstat_restore = "MISRAC2012-Rule-10.3", "CERT-STR32-C"
