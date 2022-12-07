@@ -4212,7 +4212,7 @@ void msgDecoderTestErrorBadStuff(void)
     /* Remove */
     if( MSGD_RES_BADFRAME == MSGD_InsEncChunk(&ctx, &testData[1u], sizeof(testData) - 1u, &consumed) )
     {
-        if( (sizeof(testData) - 1u) == consumed )
+        if( 12u == consumed )
         {
             (void)printf("msgDecoderTestErrorBadStuff 25 -- OK \n");
         }
@@ -4225,5 +4225,4 @@ void msgDecoderTestErrorBadStuff(void)
     {
         (void)printf("msgDecoderTestErrorBadStuff 25 -- FAIL \n");
     }
-
 }
