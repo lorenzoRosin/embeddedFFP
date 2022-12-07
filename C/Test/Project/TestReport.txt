@@ -1,0 +1,143 @@
+
+
+ << Logging of terminal I/O resumes >> 
+
+
+
+MESSAGE TRANSMITTER TEST START 
+
+msgTransmitterTestBadPointer 1  -- OK 
+msgTransmitterTestBadPointer 2  -- OK 
+msgTransmitterTestBadPointer 3  -- OK 
+msgTransmitterTestBadPointer 4  -- OK 
+msgTransmitterTestBadPointer 5  -- OK 
+msgTransmitterTestBadPointer 6  -- OK 
+msgTransmitterTestBadPointer 7  -- OK 
+msgTransmitterTestBadPointer 8  -- OK 
+msgTransmitterTestBadPointer 9  -- OK 
+msgTransmitterTestBadPointer 10 -- OK 
+msgTransmitterTestBadPointer 11 -- OK 
+msgTransmitterTestBadPointer 12 -- FAIL 
+msgTransmitterTestBadPointer 13 -- OK 
+msgTransmitterTestBadPointer 14 -- OK 
+msgTransmitterTestBadPointer 15 -- OK 
+msgTransmitterTestBadPointer 16 -- OK 
+msgTransmitterTestBadPointer 17 -- OK 
+
+
+MESSAGE TRANSMITTER TEST END 
+
+
+
+ << Logging of terminal I/O resumes >> 
+
+
+
+MESSAGE TRANSMITTER TEST START 
+
+msgTransmitterTestBadPointer 1  -- OK 
+msgTransmitterTestBadPointer 2  -- OK 
+msgTransmitterTestBadPointer 3  -- OK 
+msgTransmitterTestBadPointer 4  -- OK 
+msgTransmitterTestBadPointer 5  -- OK 
+msgTransmitterTestBadPointer 6  -- OK 
+msgTransmitterTestBadPointer 7  -- OK 
+msgTransmitterTestBadPointer 8  -- OK 
+msgTransmitterTestBadPointer 9  -- OK 
+msgTransmitterTestBadPointer 10 -- OK 
+msgTransmitterTestBadPointer 11 -- OK 
+msgTransmitterTestBadPointer 12 -- OK 
+msgTransmitterTestBadPointer 13 -- OK 
+msgTransmitterTestBadPointer 14 -- OK 
+msgTransmitterTestBadPointer 15 -- OK 
+msgTransmitterTestBadPointer 16 -- OK 
+msgTransmitterTestBadPointer 17 -- OK 
+
+
+ << Logging of terminal I/O resumes >> 
+
+
+
+MESSAGE TRANSMITTER TEST START 
+
+msgTransmitterTestBadPointer 1  -- OK 
+msgTransmitterTestBadPointer 2  -- OK 
+msgTransmitterTestBadPointer 3  -- OK 
+msgTransmitterTestBadPointer 4  -- OK 
+msgTransmitterTestBadPointer 5  -- OK 
+msgTransmitterTestBadPointer 6  -- OK 
+msgTransmitterTestBadPointer 7  -- OK 
+msgTransmitterTestBadPointer 8  -- OK 
+msgTransmitterTestBadPointer 9  -- OK 
+msgTransmitterTestBadPointer 10 -- OK 
+msgTransmitterTestBadPointer 11 -- OK 
+msgTransmitterTestBadPointer 12 -- OK 
+msgTransmitterTestBadPointer 13 -- OK 
+msgTransmitterTestBadPointer 14 -- OK 
+msgTransmitterTestBadPointer 15 -- OK 
+msgTransmitterTestBadPointer 16 -- OK 
+msgTransmitterTestBadPointer 17 -- OK 
+msgTransmitterTestBadInit 1  -- OK 
+msgTransmitterTestBadInit 2  -- OK 
+msgTransmitterTestBadInit 3  -- OK 
+msgTransmitterTestBadInit 4  -- FAIL 
+
+
+ << Logging of terminal I/O resumes >> 
+
+
+
+MESSAGE TRANSMITTER TEST START 
+
+msgTransmitterTestBadPointer 1  -- OK 
+msgTransmitterTestBadPointer 2  -- OK 
+msgTransmitterTestBadPointer 3  -- OK 
+msgTransmitterTestBadPointer 4  -- OK 
+msgTransmitterTestBadPointer 5  -- OK 
+msgTransmitterTestBadPointer 6  -- OK 
+msgTransmitterTestBadPointer 7  -- OK 
+msgTransmitterTestBadPointer 8  -- OK 
+msgTransmitterTestBadPointer 9  -- OK 
+msgTransmitterTestBadPointer 10 -- OK 
+msgTransmitterTestBadPointer 11 -- OK 
+msgTransmitterTestBadPointer 12 -- OK 
+msgTransmitterTestBadPointer 13 -- OK 
+msgTransmitterTestBadPointer 14 -- OK 
+msgTransmitterTestBadPointer 15 -- OK 
+msgTransmitterTestBadPointer 16 -- OK 
+msgTransmitterTestBadPointer 17 -- OK 
+msgTransmitterTestBadInit 1  -- OK 
+msgTransmitterTestBadInit 2  -- OK 
+msgTransmitterTestBadInit 3  -- OK 
+
+
+ << Logging of terminal I/O resumes >> 
+
+
+
+MESSAGE TRANSMITTER TEST START 
+
+msgTransmitterTestBadPointer 1  -- OK 
+msgTransmitterTestBadPointer 2  -- OK 
+msgTransmitterTestBadPointer 3  -- OK 
+msgTransmitterTestBadPointer 4  -- OK 
+msgTransmitterTestBadPointer 5  -- OK 
+msgTransmitterTestBadPointer 6  -- OK 
+msgTransmitterTestBadPointer 7  -- OK 
+msgTransmitterTestBadPointer 8  -- OK 
+msgTransmitterTestBadPointer 9  -- OK 
+msgTransmitterTestBadPointer 10 -- OK 
+msgTransmitterTestBadPointer 11 -- OK 
+msgTransmitterTestBadPointer 12 -- OK 
+msgTransmitterTestBadPointer 13 -- OK 
+msgTransmitterTestBadPointer 14 -- OK 
+msgTransmitterTestBadPointer 15 -- OK 
+msgTransmitterTestBadPointer 16 -- OK 
+msgTransmitterTestBadPointer 17 -- OK 
+msgTransmitterTestBadInit 1  -- OK 
+msgTransmitterTestBadInit 2  -- OK 
+msgTransmitterTestBadInit 3  -- OK 
+msgTransmitterTestBadIniMsg 1  -- OK 
+msgTransmitterTestBadIniMsg 2  -- OK 
+msgTransmitterTestBadIniMsg 1  -- OK 
+msgTransmitterTestBadIniMsg 2  -- OK 

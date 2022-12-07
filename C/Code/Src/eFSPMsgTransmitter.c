@@ -233,6 +233,10 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
     uint32_t cDToTxLen;
     uint32_t cDTxed;
 
+    /* Data just to check */
+    uint8_t* dataP;
+    uint32_t maxDataSize;
+
 	/* Check pointer validity */
 	if( NULL == ctx )
 	{
@@ -247,6 +251,31 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
 		}
 		else
 		{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             /* Init state machine value */
             sendTimeout = 0u;
             sRemainTxTime = 0u;
@@ -464,6 +493,27 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
                     }
                 }
             }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
 	}
 

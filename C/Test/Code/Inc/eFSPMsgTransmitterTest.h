@@ -1,7 +1,11 @@
 /**
- * @file eFSPMsgTransmitterTest.h
+ * @file       eFSPMsgTransmitterTest.h
  *
- */
+ * @brief      Message trasmitter test
+ *
+ * @author     Lorenzo Rosin
+ *
+ **********************************************************************************************************************/
 
 #ifndef EFSPMSGTRANSMITTERTEST_H
 #define EFSPMSGTRANSMITTERTEST_H
@@ -26,7 +30,11 @@ extern "C" {
  * GLOBAL PROTOTYPES
  **********************************************************************************************************************/
 /**
- * Test the transmitter module
+ * @brief       Test the message transmitter module
+ *
+ * @param[in]   none
+ *
+ * @return      none
  */
 void msgTransmitterTest(void);
 
