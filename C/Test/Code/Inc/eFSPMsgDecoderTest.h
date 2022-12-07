@@ -1,7 +1,11 @@
 /**
- * @file eFSPMsgDecoderTest.h
+ * @file       eFSPMsgDecoderTest.h
  *
- */
+ * @brief      Message dencoder test
+ *
+ * @author     Lorenzo Rosin
+ *
+ **********************************************************************************************************************/
 
 #ifndef EFSPMSGDECODERTEST_H
 #define EFSPMSGDECODERTEST_H
@@ -26,7 +30,11 @@ extern "C" {
  * GLOBAL PROTOTYPES
  **********************************************************************************************************************/
 /**
- * Test the Message decoder module
+ * @brief       Test the message dencoder module
+ *
+ * @param[in]   none
+ *
+ * @return      none
  */
 void msgDecoderTest(void);
 

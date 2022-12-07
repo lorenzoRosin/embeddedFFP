@@ -1,18 +1,33 @@
 /**
- * @file eFSPMsgDecoderTest.c
+ * @file       eFSPMsgDecoderTest.h
  *
- */
-
-
+ * @brief      Message dencoder test
+ *
+ * @author     Lorenzo Rosin
+ *
+ **********************************************************************************************************************/
 
 /***********************************************************************************************************************
  *      INCLUDES
  **********************************************************************************************************************/
 #include "eFSPMsgDecoderTest.h"
 #include "eCUCrc.h"
+
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_disable = "MISRAC2004-20.9", "MISRAC2012-Rule-21.6"
+    /* Suppressed for code clarity in test execution*/
+#endif
+
 #include <stdio.h>
 
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_restore = "MISRAC2004-20.9", "MISRAC2012-Rule-21.6"
+#endif
 
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_disable = "MISRAC2012-Rule-10.3", "CERT-STR32-C", "MISRAC2012-Rule-11.5", "CERT-EXP36-C_b"
+    /* Suppressed for code clarity in test execution*/
+#endif
 
 /***********************************************************************************************************************
  *   PRIVATE TEST FUNCTION DECLARATION
@@ -46,7 +61,6 @@ static void msgDecoderTestErrorAndContinue(void);
 static void msgDecoderTestErrorAndContinueEx(void);
 static void msgDecoderTestErrorShortFrame(void);
 static void msgDecoderTestErrorBadStuff(void);
-static void msgDecoderTestErrorCodeCoverage(void);
 
 /***********************************************************************************************************************
  *   GLOBAL FUNCTIONS
@@ -71,7 +85,6 @@ void msgDecoderTest(void)
     msgDecoderTestErrorAndContinueEx();
     msgDecoderTestErrorShortFrame();
     msgDecoderTestErrorBadStuff();
-    msgDecoderTestErrorCodeCoverage();
 
     (void)printf("\n\nMESSAGE DECODER TEST END \n\n");
 }
@@ -366,6 +379,7 @@ void msgDecoderTestBadInit(void)
     bool_t isMsgDec;
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
+    ctxAdapterCrc.lastError = CRC_RES_OK;
 
     /* Function */
     ctx.byteUStufferCtnx.isInit = false;
@@ -424,7 +438,14 @@ void msgDecoderTestBadInit(void)
     /* Function */
     if( MSGD_RES_NOINITLIB == MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
     {
-        (void)printf("msgDecoderTestBadInit 6  -- OK \n");
+        if( CRC_RES_OK == ctxAdapterCrc.lastError )
+        {
+            (void)printf("msgDecoderTestBadInit 6  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgDecoderTestBadInit 6  -- FAIL \n");
+        }
     }
     else
     {
@@ -2542,9 +2563,9 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 31 -- FAIL \n");
     }
 
-    if( ( ECU_SOF == payLoadLoc[0u] ) && ( ECU_EOF == payLoadLoc[1u] ) && ( 0x01 == payLoadLoc[2u] ) &&
-        ( 0x02 == payLoadLoc[3u] ) && ( 0x03 == payLoadLoc[4u] ) && ( 0x04 == payLoadLoc[5u] ) &&
-        ( 0x05 == payLoadLoc[6u] ) )
+    if( ( ECU_SOF == payLoadLoc[0u] ) && ( ECU_EOF == payLoadLoc[1u] ) && ( 0x01u == payLoadLoc[2u] ) &&
+        ( 0x02u == payLoadLoc[3u] ) && ( 0x03u == payLoadLoc[4u] ) && ( 0x04u == payLoadLoc[5u] ) &&
+        ( 0x05u == payLoadLoc[6u] ) )
     {
         (void)printf("msgDecoderTestCorernerMulti 32 -- OK \n");
     }
@@ -4229,35 +4250,6 @@ void msgDecoderTestErrorBadStuff(void)
     }
 }
 
-void msgDecoderTestErrorCodeCoverage(void)
-{
-    /* Local variable */
-    s_eFSP_MSGD_Ctx ctx;
-    uint8_t  memArea[40u];
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
-    s_eCU_crcAdapterCtx ctxAdapterCrc;
-    uint32_t consumed;
-    uint32_t mostEfficient;
-    uint32_t payLoadLen;
-    uint8_t* payLoadLoc;
-    bool_t isMsgDec;
-
-    /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
-    {
-        (void)printf("msgDecoderTestErrorCodeCoverage 1  -- OK \n");
-    }
-    else
-    {
-        (void)printf("msgDecoderTestErrorCodeCoverage 1  -- FAIL \n");
-    }
-
-    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
-    {
-        (void)printf("msgDecoderTestErrorCodeCoverage 2  -- OK \n");
-    }
-    else
-    {
-        (void)printf("msgDecoderTestErrorCodeCoverage 2  -- FAIL \n");
-    }
-}
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_restore = "MISRAC2012-Rule-10.3", "CERT-STR32-C", "MISRAC2012-Rule-11.5", "CERT-EXP36-C_b"
+#endif

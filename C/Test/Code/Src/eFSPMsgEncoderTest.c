@@ -25,7 +25,7 @@
 #endif
 
 #ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_disable = "MISRAC2012-Rule-10.3", "CERT-STR32-C"
+    #pragma cstat_disable = "MISRAC2012-Rule-10.3", "CERT-STR32-C", "MISRAC2012-Rule-11.5", "CERT-EXP36-C_b"
     /* Suppressed for code clarity in test execution*/
 #endif
 
@@ -1223,7 +1223,7 @@ void msgEncoderTestGeneral2(void)
         if( 6u == var32 )
         {
             if( (ECU_SOF == msgA[0u]) && (0x72u == msgA[1u]) && (0xC4u == msgA[2u]) && (ECU_ESC == msgA[3u]) &&
-                ( (uint8_t)(~0xA1u) == msgA[4u] ) && (0xDBu == msgA[5u]) )
+                ( ((uint8_t)(~0xA1u)) == msgA[4u] ) && (0xDBu == msgA[5u]) )
             {
                 (void)printf("msgEncoderTestGeneral2 5  -- OK \n");
             }
@@ -1339,5 +1339,5 @@ void msgEncoderTestGeneral2(void)
 }
 
 #ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MISRAC2012-Rule-10.3", "CERT-STR32-C"
+    #pragma cstat_restore = "MISRAC2012-Rule-10.3", "CERT-STR32-C", "MISRAC2012-Rule-11.5", "CERT-EXP36-C_b"
 #endif

@@ -13,11 +13,11 @@ int main(void)
 {
     /* Start testing */
     // msgEncoderTest();
-    msgDecoderTest();
+    // msgDecoderTest();
     //msgDeEncoderTest();
     //msgTransmitterTest();
-    // msgReceiverTest();
-    // msgRxTransmitterTest();
+    //msgReceiverTest();
+    //msgRxTransmitterTest();
 
     return 0;
 }
