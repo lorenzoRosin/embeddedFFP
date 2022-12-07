@@ -121,17 +121,17 @@ e_eFSP_MSGTX_Res MSGTX_StartNewMessage(s_eFSP_MSGTX_Ctx* const ctx, const uint32
 	}
 	else
 	{
-        /* Check param validity, need at least 1 byte of paylaod */
-        if( messageLen <= 0u )
+        /* Check internal status validity */
+        if( false == isMsgTransStatusStillCoherent(ctx) )
         {
-            result = MSGTX_RES_BADPARAM;
+            result = MSGTX_RES_CORRUPTCTX;
         }
 		else
 		{
-            /* Check internal status validity */
-            if( false == isMsgTransStatusStillCoherent(ctx) )
+            /* Check param validity, need at least 1 byte of paylaod */
+            if( messageLen <= 0u )
             {
-                result = MSGTX_RES_CORRUPTCTX;
+                result = MSGTX_RES_BADPARAM;
             }
             else
             {
@@ -239,6 +239,7 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
 	/* Local variable of the operation result */
 	e_eFSP_MSGTX_Res result;
 	e_eFSP_MSGE_Res resultMsgE;
+    bool_t isInit;
 
     /* Local variable to keep track of the current state machine state */
     e_eFSP_MSGTX_Priv_state stateM;
@@ -267,42 +268,46 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
 		}
 		else
 		{
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             /* Init state machine value */
             sendTimeout = 0u;
             sRemainTxTime = 0u;
             result = MSGTX_RES_OK;
-            stateM = MSGTX_PRV_CHECKINITTIMEOUT;
+            stateM = MSGTX_PRV_CHECKINIT;
 
             /* wait end elaboration or end for timeout */
             while( stateM != MSGTX_PRV_ELABDONE )
             {
                 switch( stateM )
                 {
+                    case MSGTX_PRV_CHECKINIT:
+                    {
+                        /* Check if lib is initialized */
+                        resultMsgE = MSGE_IsInit(&ctx->msgEncoderCtnx, &isInit);
+                        result = convertReturnFromMSGEToMSGTX(resultMsgE);
+
+                        /* Check if frame timeout is eplased */
+                        if( MSGTX_RES_OK == result )
+                        {
+                            if( true == isInit )
+                            {
+                                /* All ok */
+                                stateM = MSGTX_PRV_CHECKINITTIMEOUT;
+                            }
+                            else
+                            {
+                                /* Need to init the lib before */
+                                result = MSGTX_RES_NOINITLIB;
+                                stateM = MSGTX_PRV_ELABDONE;
+                            }
+                        }
+                        else
+                        {
+                            /* Some error */
+                            stateM = MSGTX_PRV_ELABDONE;
+                        }
+                        break;
+                    }
+
                     case MSGTX_PRV_CHECKINITTIMEOUT:
                     {
                         /* Check if frame timeout is eplased */
@@ -509,27 +514,6 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
                     }
                 }
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
 	}
 

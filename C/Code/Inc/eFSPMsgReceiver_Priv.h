@@ -31,7 +31,8 @@ extern "C" {
  **********************************************************************************************************************/
 typedef enum
 {
-    MSGRX_PRV_CHECKINITTIMEOUT = 0,
+    MSGRX_PRV_CHECKINIT = 0,
+    MSGRX_PRV_CHECKINITTIMEOUT,
     MSGRX_PRV_CHECKHOWMANYDATA,
     MSGRX_PRV_CHECKIFBUFFERRX,
     MSGRX_PRV_INSERTCHUNK,

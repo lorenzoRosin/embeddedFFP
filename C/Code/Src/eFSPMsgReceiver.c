@@ -246,6 +246,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
     uint32_t receiveTimeout;
     uint32_t cRemainRxTime;
     bool_t isMsgDec;
+    bool_t isInit;
 
     /* Local variable usend for the current data calculation */
     uint8_t *cDToRxP;
@@ -272,7 +273,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
 		{
             /* Init time frame counter */
             result = MSGRX_RES_OK;
-            stateM = MSGRX_PRV_CHECKINITTIMEOUT;
+            stateM = MSGRX_PRV_CHECKINIT;
 
             /* Init data */
             sRemRxTime = 0u;
@@ -287,6 +288,35 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
             {
                 switch( stateM )
                 {
+                    case MSGRX_PRV_CHECKINIT:
+                    {
+                        /* Check if lib is initialized */
+                        resultMsgD = MSGD_IsInit(&ctx->msgDecoderCtnx, &isInit);
+                        result = convertReturnFromMSGDToMSGRX(resultMsgD);
+
+                        /* Check if frame timeout is eplased */
+                        if( MSGRX_RES_OK == result )
+                        {
+                            if( true == isInit )
+                            {
+                                /* All ok */
+                                stateM = MSGRX_PRV_CHECKINITTIMEOUT;
+                            }
+                            else
+                            {
+                                /* Need to init the lib before */
+                                result = MSGRX_RES_NOINITLIB;
+                                stateM = MSGRX_PRV_ELABDONE;
+                            }
+                        }
+                        else
+                        {
+                            /* Some error */
+                            stateM = MSGRX_PRV_ELABDONE;
+                        }
+                        break;
+                    }
+
                     case MSGRX_PRV_CHECKINITTIMEOUT:
                     {
                         /* Check if frame timeout is eplased */

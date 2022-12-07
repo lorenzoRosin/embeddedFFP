@@ -31,7 +31,8 @@ extern "C" {
  **********************************************************************************************************************/
 typedef enum
 {
-    MSGTX_PRV_CHECKINITTIMEOUT = 0,
+    MSGTX_PRV_CHECKINIT = 0,
+    MSGTX_PRV_CHECKINITTIMEOUT,
     MSGTX_PRV_CHECKIFBUFFERTX,
     MSGTX_PRV_RETRIVECHUNK,
     MSGTX_PRV_SENDBUFF,
