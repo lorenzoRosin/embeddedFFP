@@ -282,6 +282,7 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
                     case MSGTX_PRV_CHECKINIT:
                     {
                         /* Check if lib is initialized */
+                        isInit = false;
                         resultMsgE = MSGE_IsInit(&ctx->msgEncoderCtnx, &isInit);
                         result = convertReturnFromMSGEToMSGTX(resultMsgE);
 

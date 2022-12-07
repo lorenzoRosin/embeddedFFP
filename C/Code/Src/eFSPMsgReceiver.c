@@ -291,6 +291,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                     case MSGRX_PRV_CHECKINIT:
                     {
                         /* Check if lib is initialized */
+                        isInit = false;
                         resultMsgD = MSGD_IsInit(&ctx->msgDecoderCtnx, &isInit);
                         result = convertReturnFromMSGDToMSGRX(resultMsgD);
 
