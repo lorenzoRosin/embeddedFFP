@@ -46,6 +46,7 @@ static void msgDecoderTestErrorAndContinue(void);
 static void msgDecoderTestErrorAndContinueEx(void);
 static void msgDecoderTestErrorShortFrame(void);
 static void msgDecoderTestErrorBadStuff(void);
+static void msgDecoderTestErrorCodeCoverage(void);
 
 /***********************************************************************************************************************
  *   GLOBAL FUNCTIONS
@@ -70,6 +71,7 @@ void msgDecoderTest(void)
     msgDecoderTestErrorAndContinueEx();
     msgDecoderTestErrorShortFrame();
     msgDecoderTestErrorBadStuff();
+    msgDecoderTestErrorCodeCoverage();
 
     (void)printf("\n\nMESSAGE DECODER TEST END \n\n");
 }
@@ -4224,5 +4226,38 @@ void msgDecoderTestErrorBadStuff(void)
     else
     {
         (void)printf("msgDecoderTestErrorBadStuff 25 -- FAIL \n");
+    }
+}
+
+void msgDecoderTestErrorCodeCoverage(void)
+{
+    /* Local variable */
+    s_eFSP_MSGD_Ctx ctx;
+    uint8_t  memArea[40u];
+    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    s_eCU_crcAdapterCtx ctxAdapterCrc;
+    uint32_t consumed;
+    uint32_t mostEfficient;
+    uint32_t payLoadLen;
+    uint8_t* payLoadLoc;
+    bool_t isMsgDec;
+
+    /* Function */
+    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    {
+        (void)printf("msgDecoderTestErrorCodeCoverage 1  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgDecoderTestErrorCodeCoverage 1  -- FAIL \n");
+    }
+
+    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
+    {
+        (void)printf("msgDecoderTestErrorCodeCoverage 2  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgDecoderTestErrorCodeCoverage 2  -- FAIL \n");
     }
 }
