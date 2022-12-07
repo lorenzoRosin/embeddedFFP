@@ -468,6 +468,9 @@ e_eFSP_MSGD_Res MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const ctx, uint8_t encArea[], 
 		}
 		else
 		{
+            /* Init data */
+            *consumedEncData = 0u;
+
             /* Elaborate */
             insertEncState = MSGD_PRV_PRECHECK;
             result = MSGD_RES_OK;
