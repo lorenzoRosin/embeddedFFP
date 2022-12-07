@@ -91,8 +91,8 @@ e_eFSP_MSGD_Res MSGD_StartNewMsg(s_eFSP_MSGD_Ctx* const ctx);
 
 /**
  * @brief       Retrive the pointer to the stored decoded data payload ( NO HEADER ), and the data size of the frame.
- *              Keep in mind that the message parsing could be ongoing, and if an error in the frame occour the
- *              retrivedLen could be setted to 0 again. We will retrive only payload size and no CRC + LEN header.
+ *              Keep in mind that the message parsing could be ongoing, and some value could change after parsing more
+ *              data. We will retrive only payload size and no CRC + LEN header.
  *              Use this function when the whole message is decoded.
  *
  * @param[in]   ctx         - Msg decoder context
@@ -109,7 +109,7 @@ e_eFSP_MSGD_Res MSGD_GetDecodedData(s_eFSP_MSGD_Ctx* const ctx, uint8_t** dataP,
 
 /**
  * @brief       Retrive the size of encoded data payload frame. Keep in mind that the message parsing could be ongoing,
- *              and if an error in the frame occour the retrivedLen could be setted to 0 again. We will retrive only
+ *              and some value could change after parsing more data. We will retrive only
  * 				payload size and no CRC + LEN header. Use this function when the whole message is decoded.
  *
  * @param[in]   ctx         - Msg decoder context
