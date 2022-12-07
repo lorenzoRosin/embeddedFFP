@@ -1,7 +1,7 @@
 #include "eFSPMsgEncoderTest.h"
 #include "eFSPMsgDecoderTest.h"
 //#include "eFSPMsgDeEncoderTest.h"
-//#include "eFSPMsgTransmitterTest.h"
+#include "eFSPMsgTransmitterTest.h"
 // #include "eFSPMsgReceiverTest.h"
 // #include "eFSPMsgRxTransmitterTest.h"
 
@@ -15,7 +15,7 @@ int main(void)
     // msgEncoderTest();
     // msgDecoderTest();
     //msgDeEncoderTest();
-    //msgTransmitterTest();
+    msgTransmitterTest();
     //msgReceiverTest();
     //msgRxTransmitterTest();
 
