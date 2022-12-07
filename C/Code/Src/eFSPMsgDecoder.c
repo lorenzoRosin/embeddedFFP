@@ -76,6 +76,26 @@ e_eFSP_MSGD_Res MSGD_InitCtx(s_eFSP_MSGD_Ctx* const ctx, uint8_t memArea[], cons
     #pragma cstat_restore = "MISRAC2012-Rule-10.3"
 #endif
 
+e_eFSP_MSGD_Res MSGD_IsInit(s_eFSP_MSGD_Ctx* const ctx, bool_t* isInit)
+{
+	/* Local variable */
+	e_eFSP_MSGD_Res result;
+	s_eCU_BUNSTF_Res resByStuff;
+
+	/* Check pointer validity */
+	if( ( NULL == ctx ) || ( NULL == isInit ) )
+	{
+		result = MSGD_RES_BADPOINTER;
+	}
+	else
+	{
+        resByStuff = BUNSTF_IsInit(&ctx->byteUStufferCtnx, isInit);
+        result = convertReturnFromBstfToMSGD(resByStuff);
+	}
+
+	return result;
+}
+
 e_eFSP_MSGD_Res MSGD_StartNewMsg(s_eFSP_MSGD_Ctx* const ctx)
 {
 	/* Local variable */

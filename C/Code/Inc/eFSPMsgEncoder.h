@@ -76,6 +76,17 @@ e_eFSP_MSGE_Res MSGE_InitCtx(s_eFSP_MSGE_Ctx* const ctx, uint8_t memArea[], cons
 								  cb_crc32_msge cbCrcP, void* const clbCtx);
 
 /**
+ * @brief       Check if the lib is initialized
+ *
+ * @param[in]   ctx         - Message Encoder context
+ * @param[out]  isInit      - Pointer to a bool_t variable that will be filled with true if the lib is initialized
+ *
+ * @return      MSGE_RES_BADPOINTER    - In case of bad pointer passed to the function
+ *              MSGE_RES_OK            - Operation ended correctly
+ */
+e_eFSP_MSGE_Res MSGE_IsInit(s_eFSP_MSGE_Ctx* const ctx, bool_t* isInit);
+
+/**
  * @brief       Start to encode a new msg given the dimension of raw payload it self. This function suppouse that
  *              data payload that need to be encoded were already copied in memory.( see MSGE_GetPayloadLocation
  *              in order to know how get the data pointer, and copy the data )

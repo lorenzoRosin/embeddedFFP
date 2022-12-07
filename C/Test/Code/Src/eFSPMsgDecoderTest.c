@@ -157,6 +157,7 @@ void msgDecoderTestBadPointer(void)
     uint32_t var32;
     uint8_t* dataP;
     bool_t isMsgDec;
+    bool_t isInit;
 
     /* Function */
     if( MSGD_RES_BADPOINTER == MSGD_InitCtx(NULL, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
@@ -367,6 +368,24 @@ void msgDecoderTestBadPointer(void)
     {
         (void)printf("msgDecoderTestBadPointer 21 -- FAIL \n");
     }
+
+    if( MSGD_RES_BADPOINTER == MSGD_IsInit( NULL, &isInit ) )
+    {
+        (void)printf("msgDecoderTestBadPointer 22 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgDecoderTestBadPointer 22 -- FAIL \n");
+    }
+
+    if( MSGD_RES_BADPOINTER == MSGD_IsInit( &ctx, NULL ) )
+    {
+        (void)printf("msgDecoderTestBadPointer 23 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgDecoderTestBadPointer 23 -- FAIL \n");
+    }
 }
 
 void msgDecoderTestBadInit(void)
@@ -380,6 +399,7 @@ void msgDecoderTestBadInit(void)
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     ctxAdapterCrc.lastError = CRC_RES_OK;
+    bool_t isInit;
 
     /* Function */
     ctx.byteUStufferCtnx.isInit = false;
@@ -471,6 +491,22 @@ void msgDecoderTestBadInit(void)
     {
         (void)printf("msgDecoderTestBadInit 8  -- FAIL \n");
     }
+
+    if( MSGD_RES_OK == MSGD_IsInit( &ctx, &isInit ) )
+    {
+        if( false == isInit )
+        {
+            (void)printf("msgDecoderTestBadInit 9  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgDecoderTestBadInit 9  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgDecoderTestBadInit 9  -- FAIL \n");
+    }
 }
 
 void msgDecoderTestBadParamEntr(void)
@@ -481,6 +517,7 @@ void msgDecoderTestBadParamEntr(void)
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
+    bool_t isInit;
 
     /* Function */
     if( MSGD_RES_BADPARAM == MSGD_InitCtx(&ctx, memArea, 8u, cbCrcPTest, &ctxAdapterCrc) )
@@ -510,6 +547,22 @@ void msgDecoderTestBadParamEntr(void)
     else
     {
         (void)printf("msgDecoderTestBadParamEntr 3  -- FAIL \n");
+    }
+
+    if( MSGD_RES_OK == MSGD_IsInit( &ctx, &isInit ) )
+    {
+        if( true == isInit )
+        {
+            (void)printf("msgDecoderTestBadParamEntr 4  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgDecoderTestBadParamEntr 4  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgDecoderTestBadParamEntr 4  -- FAIL \n");
     }
 }
 

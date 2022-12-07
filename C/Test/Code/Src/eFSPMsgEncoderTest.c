@@ -148,6 +148,7 @@ void msgEncoderTestBadPointer(void)
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
     uint8_t* dataP;
+    bool_t isInit;
 
     /* Function */
     if( MSGE_RES_BADPOINTER == MSGE_InitCtx(NULL, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
@@ -288,6 +289,24 @@ void msgEncoderTestBadPointer(void)
     {
         (void)printf("msgEncoderTestBadPointer 14 -- FAIL \n");
     }
+
+    if( MSGE_RES_BADPOINTER == MSGE_IsInit( NULL, &isInit ) )
+    {
+        (void)printf("msgEncoderTestBadPointer 15 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgEncoderTestBadPointer 15 -- FAIL \n");
+    }
+
+    if( MSGE_RES_BADPOINTER == MSGE_IsInit( &ctx, NULL ) )
+    {
+        (void)printf("msgEncoderTestBadPointer 16 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgEncoderTestBadPointer 16 -- FAIL \n");
+    }
 }
 
 void msgEncoderTestBadInit(void)
@@ -297,6 +316,7 @@ void msgEncoderTestBadInit(void)
     uint8_t  memArea[5u];
     uint32_t var32;
     uint8_t* dataP;
+    bool_t isInit;
 
     /* Set value */
     ctx.byteStufferCtnx.isInit = false;
@@ -350,6 +370,22 @@ void msgEncoderTestBadInit(void)
     {
         (void)printf("msgEncoderTestBadInit 5  -- FAIL \n");
     }
+
+    if( MSGE_RES_OK == MSGE_IsInit( &ctx, &isInit ) )
+    {
+        if( false == isInit )
+        {
+            (void)printf("msgEncoderTestBadInit 6  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgEncoderTestBadInit 6  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgEncoderTestBadInit 6  -- FAIL \n");
+    }
 }
 
 void msgEncoderTestBadIniMsg(void)
@@ -360,6 +396,7 @@ void msgEncoderTestBadIniMsg(void)
     cb_crc32_msge cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
+    bool_t isInit;
 
     /* Set value */
     (void)memset(memArea, 0, sizeof(memArea));
@@ -399,6 +436,22 @@ void msgEncoderTestBadIniMsg(void)
     else
     {
         (void)printf("msgEncoderTestBadIniMsg 4  -- FAIL \n");
+    }
+
+    if( MSGE_RES_OK == MSGE_IsInit( &ctx, &isInit ) )
+    {
+        if( true == isInit )
+        {
+            (void)printf("msgEncoderTestBadIniMsg 5  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgEncoderTestBadIniMsg 5  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgEncoderTestBadIniMsg 5  -- FAIL \n");
     }
 }
 

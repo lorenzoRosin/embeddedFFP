@@ -78,6 +78,17 @@ e_eFSP_MSGD_Res MSGD_InitCtx(s_eFSP_MSGD_Ctx* const ctx, uint8_t memArea[], cons
 								 cb_crc32_msgd cbCrcP, void* const clbCtx);
 
 /**
+ * @brief       Check if the lib is initialized
+ *
+ * @param[in]   ctx         - Msg decoder context
+ * @param[out]  isInit      - Pointer to a bool_t variable that will be filled with true if the lib is initialized
+ *
+ * @return      MSGD_RES_BADPOINTER    - In case of bad pointer passed to the function
+ *              MSGD_RES_OK            - Operation ended correctly
+ */
+e_eFSP_MSGD_Res MSGD_IsInit(s_eFSP_MSGD_Ctx* const ctx, bool_t* isInit);
+
+/**
  * @brief       Start receiving a new message, loosing the previous stored decoded msg frame. Clear even error state
  *
  * @param[in]   ctx         - Msg decoder context

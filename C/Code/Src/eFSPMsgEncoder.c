@@ -69,6 +69,26 @@ e_eFSP_MSGE_Res MSGE_InitCtx(s_eFSP_MSGE_Ctx* const ctx, uint8_t memArea[], cons
     #pragma cstat_restore = "MISRAC2012-Rule-10.3"
 #endif
 
+e_eFSP_MSGE_Res MSGE_IsInit(s_eFSP_MSGE_Ctx* const ctx, bool_t* isInit)
+{
+	/* Local variable */
+	e_eFSP_MSGE_Res result;
+    e_eCU_BSTF_Res resultByStuff;
+
+	/* Check pointer validity */
+	if( ( NULL == ctx ) || ( NULL == isInit ) )
+	{
+		result = MSGE_RES_BADPOINTER;
+	}
+	else
+	{
+        resultByStuff = BSTF_IsInit(&ctx->byteStufferCtnx, isInit);
+        result = convertReturnFromBstfToMSGE(resultByStuff);
+	}
+
+	return result;
+}
+
 e_eFSP_MSGE_Res MSGE_StartNewMessage(s_eFSP_MSGE_Ctx* const ctx, const uint32_t messageLen)
 {
 	/* Local variable */
@@ -88,17 +108,17 @@ e_eFSP_MSGE_Res MSGE_StartNewMessage(s_eFSP_MSGE_Ctx* const ctx, const uint32_t 
 	}
 	else
 	{
-        /* Check param validity, need at least 1 byte of paylaod */
-        if( ( messageLen <= 0u ) || ( messageLen > ( MAX_UINT32VAL - EFSP_MSGEN_HEADERSIZE ) ) )
+        /* Check internal status validity */
+        if( false == isMsgEncStatusStillCoherent(ctx) )
         {
-            result = MSGE_RES_BADPARAM;
+            result = MSGE_RES_CORRUPTCTX;
         }
 		else
 		{
-            /* Check internal status validity */
-            if( false == isMsgEncStatusStillCoherent(ctx) )
+            /* Check param validity, need at least 1 byte of paylaod */
+            if( ( messageLen <= 0u ) || ( messageLen > ( MAX_UINT32VAL - EFSP_MSGEN_HEADERSIZE ) ) )
             {
-                result = MSGE_RES_CORRUPTCTX;
+                result = MSGE_RES_BADPARAM;
             }
             else
             {
