@@ -113,6 +113,17 @@ typedef struct
 e_eFSP_MSGRX_Res MSGRX_InitCtx(s_eFSP_MSGRX_Ctx* const ctx, const s_eFSP_MSGRX_InitData* initData);
 
 /**
+ * @brief       Check if the lib is initialized
+ *
+ * @param[in]   ctx         - Msg receiver context
+ * @param[out]  isInit      - Pointer to a bool_t variable that will be filled with true if the lib is initialized
+ *
+ * @return      MSGRX_RES_BADPOINTER    - In case of bad pointer passed to the function
+ *              MSGRX_RES_OK            - Operation ended correctly
+ */
+e_eFSP_MSGRX_Res MSGRX_IsInit(s_eFSP_MSGRX_Ctx* const ctx, bool_t* isInit);
+
+/**
  * @brief       Start receiving a new message, loosing the previous stored decoded msg frame, but not the data in rx
  *              buffer, retrived toghether with the current discharged frame. If i_needWaitFrameStart is true the
  *              timeout will start counting after the first byte of the frame is received, otherwise it will start

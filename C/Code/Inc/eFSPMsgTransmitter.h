@@ -109,6 +109,17 @@ typedef struct
 e_eFSP_MSGTX_Res MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const ctx, const s_eFSP_MSGTX_InitData* initData);
 
 /**
+ * @brief       Check if the lib is initialized
+ *
+ * @param[in]   ctx         - Message transmitter context
+ * @param[out]  isInit      - Pointer to a bool_t variable that will be filled with true if the lib is initialized
+ *
+ * @return      MSGTX_RES_BADPOINTER    - In case of bad pointer passed to the function
+ *              MSGTX_RES_OK            - Operation ended correctly
+ */
+e_eFSP_MSGTX_Res MSGTX_IsInit(s_eFSP_MSGTX_Ctx* const ctx, bool_t* isInit);
+
+/**
  * @brief       Start to encode a new msg given the dimension of raw payload it self. This function suppouse that
  *              data payload that need to be encoded were already copied in memory.( see MSGTX_GetPayloadLocation
  *              in order to know how get the data pointer, and copy the data )

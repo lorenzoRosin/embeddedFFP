@@ -317,9 +317,13 @@ void msgEncoderTestBadInit(void)
     uint32_t var32;
     uint8_t* dataP;
     bool_t isInit;
+    cb_crc32_msge cbCrcPTest = &c32SAdapt;
+    s_eCU_crcAdapterCtx ctxAdapterCrc;
 
     /* Set value */
     ctx.byteStufferCtnx.isInit = false;
+    ctx.cbCrcCtx = &ctxAdapterCrc;
+    ctx.cbCrcPtr = cbCrcPTest;
 
     /* Function */
     if( MSGE_RES_NOINITLIB == MSGE_StartNewMessage(&ctx, 1u) )

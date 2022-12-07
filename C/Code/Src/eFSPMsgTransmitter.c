@@ -88,6 +88,26 @@ e_eFSP_MSGTX_Res MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const ctx, const s_eFSP_MSGTX_I
     #pragma cstat_restore = "MISRAC2012-Rule-10.3"
 #endif
 
+e_eFSP_MSGTX_Res MSGTX_IsInit(s_eFSP_MSGTX_Ctx* const ctx, bool_t* isInit)
+{
+	/* Local variable */
+	e_eFSP_MSGTX_Res result;
+	e_eFSP_MSGE_Res resultMsgE;
+
+	/* Check pointer validity */
+	if( ( NULL == ctx ) || ( NULL == isInit ) )
+	{
+		result = MSGTX_RES_BADPOINTER;
+	}
+	else
+	{
+        resultMsgE = MSGE_IsInit(&ctx->msgEncoderCtnx, isInit);
+        result = convertReturnFromMSGEToMSGTX(resultMsgE);
+	}
+
+	return result;
+}
+
 e_eFSP_MSGTX_Res MSGTX_StartNewMessage(s_eFSP_MSGTX_Ctx* const ctx, const uint32_t messageLen)
 {
 	/* Local variable */
