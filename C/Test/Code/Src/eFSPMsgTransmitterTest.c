@@ -1585,6 +1585,16 @@ void msgTransmitterTestBadClBckTim(void)
         (void)printf("msgTransmitterTestBadClBckTim 3  -- FAIL \n");
     }
 
+     /* Function */
+    if( MSGTX_RES_TIMCLBKERROR == MSGTX_RestartCurrentMessage(&ctx) )
+    {
+        (void)printf("msgTransmitterTestBadClBckTim 4  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestBadClBckTim 4  -- FAIL \n");
+    }
+
     /* Clear */
     memset(&ctx, 0u, sizeof(s_eFSP_MSGTX_Ctx));
     memset(&initData, 0u, sizeof(s_eFSP_MSGTX_InitData));
@@ -1606,35 +1616,23 @@ void msgTransmitterTestBadClBckTim(void)
 
     if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
     {
-        (void)printf("msgTransmitterTestBadClBckTim 4  -- OK \n");
-    }
-    else
-    {
-        (void)printf("msgTransmitterTestBadClBckTim 4  -- FAIL \n");
-    }
-
-    if( MSGTX_RES_OK == MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
-    {
-        if( 2u == dataL )
-        {
-            (void)printf("msgTransmitterTestBadClBckTim 5  -- OK \n");
-        }
-        else
-        {
-            (void)printf("msgTransmitterTestBadClBckTim 5  -- FAIL \n");
-        }
+        (void)printf("msgTransmitterTestBadClBckTim 5  -- OK \n");
     }
     else
     {
         (void)printf("msgTransmitterTestBadClBckTim 5  -- FAIL \n");
     }
 
-    /* Function */
-    dataP[0u] = 0x01;
-    dataP[1u] = 0x02;
-    if( MSGTX_RES_OK == MSGTX_StartNewMessage(&ctx, 2u) )
+    if( MSGTX_RES_OK == MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
     {
-        (void)printf("msgTransmitterTestBadClBckTim 6  -- OK \n");
+        if( 2u == dataL )
+        {
+            (void)printf("msgTransmitterTestBadClBckTim 6  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgTransmitterTestBadClBckTim 6  -- FAIL \n");
+        }
     }
     else
     {
@@ -1642,13 +1640,25 @@ void msgTransmitterTestBadClBckTim(void)
     }
 
     /* Function */
-    if( MSGTX_RES_TIMCLBKERROR == MSGTX_SendChunk(&ctx) )
+    dataP[0u] = 0x01;
+    dataP[1u] = 0x02;
+    if( MSGTX_RES_OK == MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestBadClBckTim 7  -- OK \n");
     }
     else
     {
         (void)printf("msgTransmitterTestBadClBckTim 7  -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGTX_RES_TIMCLBKERROR == MSGTX_SendChunk(&ctx) )
+    {
+        (void)printf("msgTransmitterTestBadClBckTim 8  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestBadClBckTim 8  -- FAIL \n");
     }
 
 }
