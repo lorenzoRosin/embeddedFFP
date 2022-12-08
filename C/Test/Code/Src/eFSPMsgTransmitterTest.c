@@ -928,7 +928,425 @@ void msgTransmitterTestBadParamEntr(void)
 
 void msgTransmitterTestCorruptContext(void)
 {
+    /* Local variable */
+    s_eFSP_MSGTX_Ctx ctx;
+    s_eFSP_MSGTX_InitData initData;
+    cb_crc32_msge cbCrcPTest = &c32SAdapt;
+    s_eCU_crcAdapterCtx ctxAdapterCrc;
+    s_eCU_msgSendAdapterCtx ctxAdapterSend;
+    s_eCU_timerAdapterCtx ctxAdapterTim;
+    uint8_t  memArea[10u];
+    uint8_t  sendBuff[10u];
+    uint8_t* dataP;
+    uint32_t dataL;
+    bool_t isInit;
 
+    /* Clear */
+    memset(&ctx, 0u, sizeof(s_eFSP_MSGTX_Ctx));
+    memset(&initData, 0u, sizeof(s_eFSP_MSGTX_InitData));
+
+    /* Init */
+    initData.i_memArea = memArea;
+    initData.i_memAreaSize = sizeof(memArea);
+    initData.i_sendBuffArea = sendBuff;
+    initData.i_sendBuffAreaSize = sizeof(sendBuff);
+    initData.i_cbCrcP = cbCrcPTest;
+    initData.i_cbCrcCtx = &ctxAdapterCrc;
+    initData.i_cbTxP = &sendMsg;
+    initData.i_cbTxCtx = &ctxAdapterSend;
+    initData.i_txTimer.timerCtx = &ctxAdapterTim;
+    initData.i_txTimer.tim_start = &timStart;
+    initData.i_txTimer.tim_getRemaining = &timGetRemaining;
+    initData.i_frameTimeoutMs = 1000u;
+    initData.i_timePerSendMs = 100u;
+    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 1  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 1  -- FAIL \n");
+    }
+
+    /* Function */
+    ctx.sendBuff = NULL;
+    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 2  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 2  -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 3  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 3  -- FAIL \n");
+    }
+
+    /* Function */
+    ctx.cbTxP = NULL;
+    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 4  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 4  -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 5  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 5  -- FAIL \n");
+    }
+
+    /* Function */
+    ctx.cbTxCtx = NULL;
+    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 6  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 6  -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 7  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 7  -- FAIL \n");
+    }
+
+    /* Function */
+    ctx.txTimer.timerCtx = NULL;
+    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 8  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 8  -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 9  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 9  -- FAIL \n");
+    }
+
+    /* Function */
+    ctx.txTimer.tim_start = NULL;
+    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 10 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 10 -- FAIL \n");
+    }
+
+
+    /* Function */
+    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 11 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 11 -- FAIL \n");
+    }
+
+    /* Function */
+    ctx.txTimer.tim_getRemaining = NULL;
+    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 12 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 12 -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 13 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 13 -- FAIL \n");
+    }
+
+    /* Function */
+    ctx.sendBuffSize = 0u;
+    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 14 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 14 -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 15 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 15 -- FAIL \n");
+    }
+
+    /* Function */
+    ctx.sendBuffFill = ctx.sendBuffSize + 1u;
+    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 16 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 16 -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 17 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 17 -- FAIL \n");
+    }
+
+    /* Function */
+    ctx.sendBuffCntr = ctx.sendBuffFill + 1u;
+    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 18 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 18 -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 19 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 19 -- FAIL \n");
+    }
+
+    /* Function */
+    ctx.frameTimeoutMs = 0u;
+    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 20 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 20 -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 21 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 21 -- FAIL \n");
+    }
+
+    /* Function */
+    ctx.timePerSendMs = 0u;
+    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 22 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 22 -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 23 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 23 -- FAIL \n");
+    }
+
+    /* Function */
+    ctx.timePerSendMs = ctx.frameTimeoutMs + 1u;
+    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 24 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 24 -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 25 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 25 -- FAIL \n");
+    }
+
+    /* Function */
+    ctx.timePerSendMs = 0u;
+    if( MSGTX_RES_CORRUPTCTX == MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 26 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 26 -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 27 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 27 -- FAIL \n");
+    }
+
+    /* Function */
+    ctx.timePerSendMs = 0u;
+    if( MSGTX_RES_CORRUPTCTX == MSGTX_RestartCurrentMessage(&ctx) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 28 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 28 -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 29 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 29 -- FAIL \n");
+    }
+
+    /* Function */
+    ctx.timePerSendMs = 0u;
+    if( MSGTX_RES_CORRUPTCTX == MSGTX_SendChunk(&ctx) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 30 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 30 -- FAIL \n");
+    }
+
+    /* Function */
+    ctx.msgEncoderCtnx.cbCrcCtx = NULL;
+    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 31 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 31 -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 32 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 32 -- FAIL \n");
+    }
+
+    /* Function */
+    ctx.msgEncoderCtnx.cbCrcCtx = NULL;
+    if( MSGTX_RES_CORRUPTCTX == MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 33 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 33 -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 34 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 34 -- FAIL \n");
+    }
+
+    /* Function */
+    ctx.msgEncoderCtnx.cbCrcCtx = NULL;
+    if( MSGTX_RES_CORRUPTCTX == MSGTX_RestartCurrentMessage(&ctx) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 35 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 35 -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 36 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 36 -- FAIL \n");
+    }
+
+    /* Function */
+    ctx.msgEncoderCtnx.cbCrcCtx = NULL;
+    if( MSGTX_RES_CORRUPTCTX == MSGTX_SendChunk(&ctx) )
+    {
+        (void)printf("msgTransmitterTestCorruptContext 37 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCorruptContext 37 -- FAIL \n");
+    }
 }
 
 void msgTransmitterTestBadClBck(void)
