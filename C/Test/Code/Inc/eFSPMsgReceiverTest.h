@@ -1,7 +1,11 @@
 /**
- * @file eFSPMsgReceiverTest.h
+ * @file       eFSPMsgReceiverTest.h
  *
- */
+ * @brief      Message receiver test
+ *
+ * @author     Lorenzo Rosin
+ *
+ **********************************************************************************************************************/
 
 #ifndef EFSPMSGRECEIVERTEST_H
 #define EFSPMSGRECEIVERTEST_H
@@ -26,7 +30,11 @@ extern "C" {
  * GLOBAL PROTOTYPES
  **********************************************************************************************************************/
 /**
- * Test the message receiver module
+ * @brief       Test the message receiver module
+ *
+ * @param[in]   none
+ *
+ * @return      none
  */
 void msgReceiverTest(void);
 

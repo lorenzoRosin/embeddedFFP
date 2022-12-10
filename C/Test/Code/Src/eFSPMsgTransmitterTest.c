@@ -26,6 +26,8 @@
     #pragma cstat_restore = "MISRAC2004-20.9", "MISRAC2012-Rule-21.6"
 #endif
 
+
+
 /***********************************************************************************************************************
  *   PRIVATE TEST FUNCTION DECLARATION
  **********************************************************************************************************************/
@@ -54,6 +56,9 @@ static bool_t timStart ( void* cntx, const uint32_t timeoutVal );
 static bool_t timGetRemaining ( void* cntx, uint32_t* const remainings );
 static bool_t timStartErr ( void* cntx, const uint32_t timeoutVal );
 static bool_t timGetRemainingErr ( void* cntx, uint32_t* const remainings );
+
+
+
 /***********************************************************************************************************************
  *   PRIVATE FUNCTION DECLARATION
  **********************************************************************************************************************/
