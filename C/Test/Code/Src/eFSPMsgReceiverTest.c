@@ -1550,7 +1550,7 @@ void msgReceiverTestBadClBckCrc(void)
     /* Local variable */
     s_eFSP_MSGRX_Ctx ctx;
     s_eFSP_MSGRX_InitData initData;
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    cb_crc32_msgd cbCrcPTest = &c32SAdaptEr;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
     s_eCU_timerAdapterCtx ctxAdapterTim;
@@ -1609,22 +1609,13 @@ void msgReceiverTestBadClBckCrc(void)
     m_rxPayload[9u] = 0xCC;
     m_rxPayload[10u] = 0xCC;
     m_rxPayload[11u] = ECU_EOF;
-    if( MSGRX_RES_OK == MSGRX_ReceiveChunk(&ctx) )
+    if( MSGRX_RES_CRCCLBKERROR == MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("msgReceiverTestBadClBckCrc 3  -- OK \n");
     }
     else
     {
         (void)printf("msgReceiverTestBadClBckCrc 3  -- FAIL \n");
-    }
-
-    if( MSGRX_RES_CRCCLBKERROR == MSGRX_ReceiveChunk(&ctx) )
-    {
-        (void)printf("msgReceiverTestBadClBckCrc 4  -- OK \n");
-    }
-    else
-    {
-        (void)printf("msgReceiverTestBadClBckCrc 4  -- FAIL \n");
     }
 }
 
