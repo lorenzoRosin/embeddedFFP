@@ -340,6 +340,9 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                                             /* Ok restarted the timer */
                                             sRemRxTime = ctx->frameTimeoutMs;
                                             receiveTimeout = ctx->timePerRecMs;
+
+                                            /* check if we have some data to receive in RX buffer */
+                                            stateM = MSGRX_PRV_CHECKHOWMANYDATA;
                                         }
                                         else
                                         {
@@ -371,7 +374,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                                                 receiveTimeout = sRemRxTime;
                                             }
 
-                                            /* check if we have some data to send in RX buffer */
+                                            /* check if we have some data to receive in RX buffer */
                                             stateM = MSGRX_PRV_CHECKHOWMANYDATA;
                                         }
                                     }
@@ -399,7 +402,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                                             receiveTimeout = sRemRxTime;
                                         }
 
-                                        /* check if we have some data to send in RX buffer */
+                                        /* check if we have some data to receive in RX buffer */
                                         stateM = MSGRX_PRV_CHECKHOWMANYDATA;
                                     }
                                 }
@@ -766,7 +769,7 @@ e_eFSP_MSGRX_Res convertReturnFromMSGDToMSGRX(e_eFSP_MSGD_Res returnedEvent)
 
         case MSGD_RES_BADFRAME:
         {
-			result = MSGRX_RES_OUTOFMEM;
+			result = MSGRX_RES_BADFRAME;
             break;
         }
 
@@ -778,7 +781,7 @@ e_eFSP_MSGRX_Res convertReturnFromMSGDToMSGRX(e_eFSP_MSGD_Res returnedEvent)
 
 		case MSGD_RES_FRAMERESTART:
 		{
-			result = MSGRX_RES_MESSAGERECEIVED;
+			result = MSGRX_RES_FRAMERESTART;
             break;
 		}
 

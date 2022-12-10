@@ -46,9 +46,9 @@ typedef struct
 
 static bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t d[], const uint32_t dLen, uint32_t* const c32Val);
 static bool_t c32SAdaptEr(void* cntx, const uint32_t s, const uint8_t d[], const uint32_t dLen, uint32_t* const c32Val);
-static bool_t receiveMsg( void* cntx, const uint8_t dataToRx[], uint32_t* const dataRecevd, const uint32_t dataRxMax,
+static bool_t receiveMsg( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd, const uint32_t dataRxMax,
                        const uint32_t timeToRx );
-static bool_t receiveMsgErr( void* cntx, const uint8_t dataToRx[], uint32_t* const dataRecevd, const uint32_t dataRxMax,
+static bool_t receiveMsgErr( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd, const uint32_t dataRxMax,
                           const uint32_t timeToRx );
 static bool_t timStart ( void* cntx, const uint32_t timeoutVal );
 static bool_t timGetRemaining ( void* cntx, uint32_t* const remainings );
@@ -146,7 +146,11 @@ bool_t c32SAdaptEr(void* cntx, const uint32_t s, const uint8_t d[], const uint32
     return result;
 }
 
-bool_t receiveMsg( void* cntx, const uint8_t dataToRx[], uint32_t* const dataRecevd, const uint32_t dataRxMax,
+static uint8_t  m_rxPayload[100u];
+static uint32_t m_payloadSize;
+static uint32_t m_payloadCounter;
+
+bool_t receiveMsg( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd, const uint32_t dataRxMax,
                 const uint32_t timeToRx )
 {
     bool_t result;
@@ -155,11 +159,28 @@ bool_t receiveMsg( void* cntx, const uint8_t dataToRx[], uint32_t* const dataRec
     result = true;
 
 
+    if( m_payloadCounter < m_payloadSize )
+    {
+        if( ( m_payloadSize - m_payloadCounter ) >= dataRxMax )
+        {
+            memcpy(dataToRx, &m_rxPayload[m_payloadCounter], dataRxMax);
+            m_payloadCounter += dataRxMax;
+            *dataRecevd = dataRxMax;
+        }
+        else
+        {
+            memcpy(dataToRx, &m_rxPayload[m_payloadCounter], ( m_payloadSize - m_payloadCounter ) );
+            m_payloadCounter += ( m_payloadSize - m_payloadCounter ) ;
+            *dataRecevd = ( m_payloadSize - m_payloadCounter );
+        }
+    }
+
+
     return result;
 }
 
 
-bool_t receiveMsgErr( void* cntx, const uint8_t dataToRx[], uint32_t* const dataRecevd, const uint32_t dataRxMax,
+bool_t receiveMsgErr( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd, const uint32_t dataRxMax,
                 const uint32_t timeToRx )
 {
     bool_t result;
@@ -1526,7 +1547,85 @@ void msgReceiverTestCorruptContext(void)
 
 void msgReceiverTestBadClBckCrc(void)
 {
+    /* Local variable */
+    s_eFSP_MSGRX_Ctx ctx;
+    s_eFSP_MSGRX_InitData initData;
+    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    s_eCU_crcAdapterCtx ctxAdapterCrc;
+    s_eCU_msgSendAdapterCtx ctxAdapterRx;
+    s_eCU_timerAdapterCtx ctxAdapterTim;
+    uint8_t  memArea[10u];
+    uint8_t  recBuff[10u];
+    uint8_t* dataP;
+    uint32_t dataL;
+    bool_t isInit;
 
+    /* Function */
+    initData.i_memArea = memArea;
+    initData.i_memAreaSize = sizeof(memArea);
+    initData.i_receiveBuffArea = recBuff;
+    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.i_cbCrcP = cbCrcPTest;
+    initData.i_cbCrcCrx = &ctxAdapterCrc;
+    initData.i_cbRxP = &receiveMsg;
+    initData.i_cbRxCtx = &ctxAdapterRx;
+    initData.i_rxTimer.timerCtx = &ctxAdapterTim;
+    initData.i_rxTimer.tim_start = &timStart;
+    initData.i_rxTimer.tim_getRemaining = &timGetRemaining;
+    initData.i_frameTimeoutMs = 1000u;
+    initData.i_timePerRecMs = 100u;
+    initData.i_needWaitFrameStart = true;
+    if( MSGRX_RES_OK == MSGRX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgReceiverTestBadClBckCrc 1  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestBadClBckCrc 1  -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGRX_RES_OK == MSGRX_StartNewMsg(&ctx) )
+    {
+        (void)printf("msgReceiverTestBadClBckCrc 2  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestBadClBckCrc 2  -- FAIL \n");
+    }
+
+    /* Fucntion */
+    m_payloadSize = 12u;
+    m_payloadCounter = 0u;
+    m_rxPayload[0u] = ECU_SOF;
+    m_rxPayload[1u] = 0x00;
+    m_rxPayload[2u] = 0x00;
+    m_rxPayload[3u] = 0x00;
+    m_rxPayload[4u] = 0x00;
+    m_rxPayload[5u] = 0x02;
+    m_rxPayload[6u] = 0x00;
+    m_rxPayload[7u] = 0x00;
+    m_rxPayload[8u] = 0x00;
+    m_rxPayload[9u] = 0xCC;
+    m_rxPayload[10u] = 0xCC;
+    m_rxPayload[11u] = ECU_EOF;
+    if( MSGRX_RES_OK == MSGRX_ReceiveChunk(&ctx) )
+    {
+        (void)printf("msgReceiverTestBadClBckCrc 3  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestBadClBckCrc 3  -- FAIL \n");
+    }
+
+    if( MSGRX_RES_CRCCLBKERROR == MSGRX_ReceiveChunk(&ctx) )
+    {
+        (void)printf("msgReceiverTestBadClBckCrc 4  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestBadClBckCrc 4  -- FAIL \n");
+    }
 }
 
 void msgReceiverTestBadClBckReceive(void)
