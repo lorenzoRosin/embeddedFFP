@@ -280,6 +280,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
             /* Init data */
             sRemRxTime = 0u;
             sessionRemanTime = 0u;
+            totalRemanTime = 0u;
             rxMostEff = 0u;
             cDRxed = 0u;
             isMsgDec = false;
