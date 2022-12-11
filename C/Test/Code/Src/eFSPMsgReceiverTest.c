@@ -106,6 +106,8 @@ void msgReceiverTest(void)
     msgReceiverTestCornerCase();
     msgReceiverTestCornerCase2();
     msgReceiverTestCornerCase3();
+    msgReceiverTestCornerCase4();
+    // msgReceiverTestCornerCase5();
 
     (void)printf("\n\nMESSAGE RECEIVER TEST END \n\n");
 }
