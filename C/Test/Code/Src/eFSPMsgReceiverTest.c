@@ -54,6 +54,7 @@ static bool_t timStart ( void* cntx, const uint32_t timeoutVal );
 static bool_t timGetRemaining ( void* cntx, uint32_t* const remainings );
 static bool_t timStartErr ( void* cntx, const uint32_t timeoutVal );
 static bool_t timGetRemainingErr ( void* cntx, uint32_t* const remainings );
+static bool_t timGetRemainingErrCntrl( void* cntx, uint32_t* const remainings );
 
 
 
@@ -68,6 +69,7 @@ static void msgReceiverTestBadClBckCrc(void);
 static void msgReceiverTestBadClBckReceive(void);
 static void msgReceiverTestBadClBckTim(void);
 static void msgReceiverTestBadFrame(void);
+static void msgReceiverTestCornerCase(void);
 
 
 
@@ -86,6 +88,7 @@ void msgReceiverTest(void)
     msgReceiverTestBadClBckReceive();
     msgReceiverTestBadClBckTim();
     msgReceiverTestBadFrame();
+    msgReceiverTestCornerCase();
 
     (void)printf("\n\nMESSAGE RECEIVER TEST END \n\n");
 }
@@ -194,12 +197,14 @@ bool_t receiveMsgErr( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd
 }
 
 static uint32_t m_tim_remainingTime;
+static uint32_t m_tim_timCnt;
 
 bool_t timStart ( void* cntx, const uint32_t timeoutVal )
 {
     bool_t result;
     s_eCU_timerAdapterCtx* ctxCur = (s_eCU_timerAdapterCtx*)cntx;
     ctxCur->sendIsError = true;
+    m_tim_timCnt = 0u;
 
     m_tim_remainingTime = timeoutVal;
     result = true;
@@ -212,7 +217,7 @@ bool_t timGetRemaining ( void* cntx, uint32_t* const remainings )
     bool_t result;
     s_eCU_timerAdapterCtx* ctxCur = (s_eCU_timerAdapterCtx*)cntx;
     ctxCur->sendIsError = true;
-
+    m_tim_timCnt++;
     if( m_tim_remainingTime > 0u )
     {
         m_tim_remainingTime--;
@@ -230,6 +235,7 @@ bool_t timStartErr ( void* cntx, const uint32_t timeoutVal )
     bool_t result;
     s_eCU_timerAdapterCtx* ctxCur = (s_eCU_timerAdapterCtx*)cntx;
     ctxCur->sendIsError = true;
+    m_tim_timCnt = 0u;
 
     m_tim_remainingTime = timeoutVal;
     result = false;
@@ -242,7 +248,7 @@ bool_t timGetRemainingErr ( void* cntx, uint32_t* const remainings )
     bool_t result;
     s_eCU_timerAdapterCtx* ctxCur = (s_eCU_timerAdapterCtx*)cntx;
     ctxCur->sendIsError = true;
-
+    m_tim_timCnt++;
     if( m_tim_remainingTime > 0u )
     {
         m_tim_remainingTime--;
@@ -254,7 +260,30 @@ bool_t timGetRemainingErr ( void* cntx, uint32_t* const remainings )
     return result;
 }
 
+bool_t timGetRemainingErrCntrl ( void* cntx, uint32_t* const remainings )
+{
+    bool_t result;
+    s_eCU_timerAdapterCtx* ctxCur = (s_eCU_timerAdapterCtx*)cntx;
+    ctxCur->sendIsError = true;
+    m_tim_timCnt++;
+    if( m_tim_remainingTime > 0u )
+    {
+        m_tim_remainingTime--;
+    }
 
+    *remainings = m_tim_remainingTime;
+
+    if( m_tim_timCnt < 2 )
+    {
+        result = true;
+    }
+    else
+    {
+        result = false;
+    }
+
+    return result;
+}
 
 /***********************************************************************************************************************
  *   PRIVATE FUNCTION
@@ -1854,6 +1883,64 @@ void msgReceiverTestBadClBckTim(void)
     {
         (void)printf("msgReceiverTestBadClBckTim 8  -- FAIL \n");
     }
+
+    /* Function */
+    initData.i_memArea = memArea;
+    initData.i_memAreaSize = sizeof(memArea);
+    initData.i_receiveBuffArea = recBuff;
+    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.i_cbCrcP = cbCrcPTest;
+    initData.i_cbCrcCrx = &ctxAdapterCrc;
+    initData.i_cbRxP = &receiveMsg;
+    initData.i_cbRxCtx = &ctxAdapterRx;
+    initData.i_rxTimer.timerCtx = &ctxAdapterTim;
+    initData.i_rxTimer.tim_start = &timStart;
+    initData.i_rxTimer.tim_getRemaining = &timGetRemainingErrCntrl;
+    initData.i_frameTimeoutMs = 1000u;
+    initData.i_timePerRecMs = 100u;
+    initData.i_needWaitFrameStart = false;
+    if( MSGRX_RES_OK == MSGRX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgReceiverTestBadClBckTim 9  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestBadClBckTim 9  -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGRX_RES_OK == MSGRX_StartNewMsg(&ctx) )
+    {
+        (void)printf("msgReceiverTestBadClBckTim 10 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestBadClBckTim 10 -- FAIL \n");
+    }
+
+    /* Fucntion */
+    m_payloadSize = 12u;
+    m_payloadCounter = 0u;
+    m_rxPayload[0u] = ECU_SOF;
+    m_rxPayload[1u] = 0x00;
+    m_rxPayload[2u] = 0x00;
+    m_rxPayload[3u] = 0x00;
+    m_rxPayload[4u] = 0x00;
+    m_rxPayload[5u] = 0x02;
+    m_rxPayload[6u] = 0x00;
+    m_rxPayload[7u] = 0x00;
+    m_rxPayload[8u] = 0x00;
+    m_rxPayload[9u] = 0xCC;
+    m_rxPayload[10u] = 0xCC;
+    m_rxPayload[11u] = ECU_EOF;
+    if( MSGRX_RES_TIMCLBKERROR == MSGRX_ReceiveChunk(&ctx) )
+    {
+        (void)printf("msgReceiverTestBadClBckTim 11 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestBadClBckTim 11 -- FAIL \n");
+    }
 }
 
 void msgReceiverTestBadFrame(void)
@@ -2054,5 +2141,249 @@ void msgReceiverTestBadFrame(void)
     else
     {
         (void)printf("msgReceiverTestBadFrame 9  -- FAIL \n");
+    }
+
+    /* Function */
+    initData.i_memArea = memArea;
+    initData.i_memAreaSize = sizeof(memArea);
+    initData.i_receiveBuffArea = recBuff;
+    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.i_cbCrcP = cbCrcPTest;
+    initData.i_cbCrcCrx = &ctxAdapterCrc;
+    initData.i_cbRxP = &receiveMsg;
+    initData.i_cbRxCtx = &ctxAdapterRx;
+    initData.i_rxTimer.timerCtx = &ctxAdapterTim;
+    initData.i_rxTimer.tim_start = &timStart;
+    initData.i_rxTimer.tim_getRemaining = &timGetRemaining;
+    initData.i_frameTimeoutMs = 1000u;
+    initData.i_timePerRecMs = 100u;
+    initData.i_needWaitFrameStart = true;
+    if( MSGRX_RES_OK == MSGRX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgReceiverTestBadFrame 10 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestBadFrame 10 -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGRX_RES_OK == MSGRX_StartNewMsg(&ctx) )
+    {
+        (void)printf("msgReceiverTestBadFrame 11 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestBadFrame 11 -- FAIL \n");
+    }
+
+    /* Fucntion */
+    m_payloadSize = 12u;
+    m_payloadCounter = 0u;
+    m_rxPayload[0u] = ECU_SOF;
+    m_rxPayload[1u] = 0x50;
+    m_rxPayload[2u] = 0x7B;
+    m_rxPayload[3u] = 0x0A;
+    m_rxPayload[4u] = 0x68;
+    m_rxPayload[5u] = 0x01;
+    m_rxPayload[6u] = 0x00;
+    m_rxPayload[7u] = 0x00;
+    m_rxPayload[8u] = 0x00;
+    m_rxPayload[9u] = 0xCC;
+    m_rxPayload[10u] = 0xCC;
+    m_rxPayload[11u] = ECU_EOF;
+
+    if( MSGRX_RES_BADFRAME == MSGRX_ReceiveChunk(&ctx) )
+    {
+        (void)printf("msgReceiverTestBadFrame 12 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestBadFrame 12 -- FAIL \n");
+    }
+
+    if( MSGRX_RES_OK == MSGRX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgReceiverTestBadFrame 13 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestBadFrame 13 -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGRX_RES_OK == MSGRX_StartNewMsg(&ctx) )
+    {
+        (void)printf("msgReceiverTestBadFrame 14 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestBadFrame 14 -- FAIL \n");
+    }
+
+    /* Fucntion */
+    m_payloadSize = 12u;
+    m_payloadCounter = 0u;
+    m_rxPayload[0u] = ECU_SOF;
+    m_rxPayload[1u] = 0x50;
+    m_rxPayload[2u] = 0x7B;
+    m_rxPayload[3u] = 0x0A;
+    m_rxPayload[4u] = 0x68;
+    m_rxPayload[5u] = 0x01;
+    m_rxPayload[6u] = 0x00;
+    m_rxPayload[7u] = 0x00;
+    m_rxPayload[8u] = 0x00;
+    m_rxPayload[9u] = ECU_EOF;
+
+    if( MSGRX_RES_BADFRAME == MSGRX_ReceiveChunk(&ctx) )
+    {
+        (void)printf("msgReceiverTestBadFrame 15 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestBadFrame 15 -- FAIL \n");
+    }
+
+    /* Function */
+    initData.i_memArea = memArea;
+    initData.i_memAreaSize = sizeof(memArea);
+    initData.i_receiveBuffArea = recBuff;
+    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.i_cbCrcP = cbCrcPTest;
+    initData.i_cbCrcCrx = &ctxAdapterCrc;
+    initData.i_cbRxP = &receiveMsg;
+    initData.i_cbRxCtx = &ctxAdapterRx;
+    initData.i_rxTimer.timerCtx = &ctxAdapterTim;
+    initData.i_rxTimer.tim_start = &timStart;
+    initData.i_rxTimer.tim_getRemaining = &timGetRemaining;
+    initData.i_frameTimeoutMs = 1000u;
+    initData.i_timePerRecMs = 100u;
+    initData.i_needWaitFrameStart = false;
+    if( MSGRX_RES_OK == MSGRX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgReceiverTestBadFrame 16 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestBadFrame 16 -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGRX_RES_OK == MSGRX_StartNewMsg(&ctx) )
+    {
+        (void)printf("msgReceiverTestBadFrame 17 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestBadFrame 17 -- FAIL \n");
+    }
+
+    /* Fucntion */
+    m_payloadSize = 13u;
+    m_payloadCounter = 0u;
+    m_rxPayload[0u] = ECU_SOF;
+    m_rxPayload[1u] = ECU_SOF;
+    m_rxPayload[2u] = 0x50;
+    m_rxPayload[3u] = 0x7B;
+    m_rxPayload[4u] = 0x0A;
+    m_rxPayload[5u] = 0x68;
+    m_rxPayload[6u] = 0x02;
+    m_rxPayload[7u] = 0x00;
+    m_rxPayload[8u] = 0x00;
+    m_rxPayload[9u] = 0x00;
+    m_rxPayload[10u] = 0xCC;
+    m_rxPayload[11u] = 0xCC;
+    m_rxPayload[12u] = ECU_EOF;
+    if( MSGRX_RES_FRAMERESTART == MSGRX_ReceiveChunk(&ctx) )
+    {
+        (void)printf("msgReceiverTestBadFrame 18 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestBadFrame 18 -- FAIL \n");
+    }
+}
+
+void msgReceiverTestCornerCase(void)
+{
+    /* Local variable */
+    s_eFSP_MSGRX_Ctx ctx;
+    s_eFSP_MSGRX_InitData initData;
+    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    s_eCU_crcAdapterCtx ctxAdapterCrc;
+    s_eCU_msgSendAdapterCtx ctxAdapterRx;
+    s_eCU_timerAdapterCtx ctxAdapterTim;
+    uint8_t  memArea[10u];
+    uint8_t  recBuff[10u];
+    uint8_t* dataP;
+    uint32_t dataL;
+    bool_t isInit;
+
+    /* Function */
+    initData.i_memArea = memArea;
+    initData.i_memAreaSize = sizeof(memArea);
+    initData.i_receiveBuffArea = recBuff;
+    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.i_cbCrcP = cbCrcPTest;
+    initData.i_cbCrcCrx = &ctxAdapterCrc;
+    initData.i_cbRxP = &receiveMsg;
+    initData.i_cbRxCtx = &ctxAdapterRx;
+    initData.i_rxTimer.timerCtx = &ctxAdapterTim;
+    initData.i_rxTimer.tim_start = &timStart;
+    initData.i_rxTimer.tim_getRemaining = &timGetRemaining;
+    initData.i_frameTimeoutMs = 1000u;
+    initData.i_timePerRecMs = 1u;
+    initData.i_needWaitFrameStart = false;
+    if( MSGRX_RES_OK == MSGRX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgReceiverTestCornerCase 1  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestCornerCase 1  -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGRX_RES_OK == MSGRX_StartNewMsg(&ctx) )
+    {
+        (void)printf("msgReceiverTestCornerCase 2  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestCornerCase 2  -- FAIL \n");
+    }
+
+    /* Fucntion */
+    m_payloadSize = 13u;
+    m_payloadCounter = 0u;
+    m_rxPayload[0u] = ECU_SOF;
+    m_rxPayload[1u] = ECU_SOF;
+    m_rxPayload[2u] = 0x50;
+    m_rxPayload[3u] = 0x7B;
+    m_rxPayload[4u] = 0x0A;
+    m_rxPayload[5u] = 0x68;
+    m_rxPayload[6u] = 0x02;
+    m_rxPayload[7u] = 0x00;
+    m_rxPayload[8u] = 0x00;
+    m_rxPayload[9u] = 0x00;
+    m_rxPayload[10u] = 0xCC;
+    m_rxPayload[11u] = 0xCC;
+    m_rxPayload[12u] = ECU_EOF;
+    if( MSGRX_RES_FRAMERESTART == MSGRX_ReceiveChunk(&ctx) )
+    {
+        (void)printf("msgReceiverTestCornerCase 3  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestCornerCase 3  -- FAIL \n");
+    }
+
+    if( MSGRX_RES_MESSAGERECEIVED == MSGRX_ReceiveChunk(&ctx) )
+    {
+        (void)printf("msgReceiverTestCornerCase 4  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestCornerCase 4  -- FAIL \n");
     }
 }
