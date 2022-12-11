@@ -433,6 +433,13 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                             {
                                 /* Ok we need some data to be retrived */
                                 stateM = MSGRX_PRV_CHECKIFBUFFERRX;
+
+                                /* Check compatibility with rx buffer dimension */
+                                if( rxMostEff > ctx->rxBuffSize )
+                                {
+                                    /* In this way we dont' have any overflow */
+                                    rxMostEff = ctx->rxBuffSize;
+                                }
                             }
                             else
                             {
@@ -598,6 +605,19 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                             {
                                 /* Timeout dosent occour in this situation */
                                 stateM = MSGRX_PRV_ELABDONE;
+
+                                /* Frame restarted, restart the timer */
+                                if( true == ctx->rxTimer.tim_start( ctx->rxTimer.timerCtx, ctx->frameTimeoutMs ) )
+                                {
+                                    /* Ok restarted the timer */
+                                    sRemRxTime = ctx->frameTimeoutMs;
+                                    receiveTimeout = ctx->timePerRecMs;
+                                }
+                                else
+                                {
+                                    /* Some error */
+                                    result = MSGRX_RES_TIMCLBKERROR;
+                                }
                             }
                             else
                             {
