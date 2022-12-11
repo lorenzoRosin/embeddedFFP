@@ -2702,39 +2702,6 @@ void msgReceiverTestCornerCase(void)
         (void)printf("msgReceiverTestCornerCase 23 -- FAIL \n");
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /* Function */
     initData.i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
@@ -2964,5 +2931,91 @@ void msgReceiverTestCornerCase(void)
     else
     {
         (void)printf("msgReceiverTestCornerCase 38 -- FAIL \n");
+    }
+
+    /* Function */
+    initData.i_memArea = memArea;
+    initData.i_memAreaSize = sizeof(memArea);
+    initData.i_receiveBuffArea = recBuff;
+    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.i_cbCrcP = cbCrcPTest;
+    initData.i_cbCrcCrx = &ctxAdapterCrc;
+    initData.i_cbRxP = &receiveMsgJump;
+    initData.i_cbRxCtx = &ctxAdapterRx;
+    initData.i_rxTimer.timerCtx = &ctxAdapterTim;
+    initData.i_rxTimer.tim_start = &timStart;
+    initData.i_rxTimer.tim_getRemaining = &timGetRemaining;
+    initData.i_frameTimeoutMs = 10u;
+    initData.i_timePerRecMs = 10u;
+    initData.i_needWaitFrameStart = true;
+    if( MSGRX_RES_OK == MSGRX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgReceiverTestCornerCase 39 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestCornerCase 39 -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGRX_RES_OK == MSGRX_StartNewMsg(&ctx) )
+    {
+        (void)printf("msgReceiverTestCornerCase 40 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestCornerCase 40 -- FAIL \n");
+    }
+
+    /* Fucntion */
+    m_payloadSize = 13u;
+    m_payloadCounter = 0u;
+    m_rxPayload[0u] = ECU_SOF;
+    m_rxPayload[1u] = ECU_SOF;
+    m_rxPayload[2u] = 0x50;
+    m_rxPayload[3u] = 0x7B;
+    m_rxPayload[4u] = 0x0A;
+    m_rxPayload[5u] = 0x68;
+    m_rxPayload[6u] = 0x02;
+    m_rxPayload[7u] = 0x00;
+    m_rxPayload[8u] = 0x00;
+    m_rxPayload[9u] = 0x00;
+    m_rxPayload[10u] = 0xCC;
+    m_rxPayload[11u] = 0xCC;
+    m_rxPayload[12u] = ECU_EOF;
+    if( MSGRX_RES_FRAMERESTART == MSGRX_ReceiveChunk(&ctx) )
+    {
+        (void)printf("msgReceiverTestCornerCase 41 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestCornerCase 41 -- FAIL \n");
+    }
+
+    if( MSGRX_RES_MESSAGERECEIVED == MSGRX_ReceiveChunk(&ctx) )
+    {
+        (void)printf("msgReceiverTestCornerCase 42 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestCornerCase 42 -- FAIL \n");
+    }
+
+    if( MSGRX_RES_MESSAGERECEIVED == MSGRX_ReceiveChunk(&ctx) )
+    {
+        (void)printf("msgReceiverTestCornerCase 43 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestCornerCase 43 -- FAIL \n");
+    }
+
+    if( MSGRX_RES_MESSAGETIMEOUT == MSGRX_ReceiveChunk(&ctx) )
+    {
+        (void)printf("msgReceiverTestCornerCase 44 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestCornerCase 44 -- FAIL \n");
     }
 }
