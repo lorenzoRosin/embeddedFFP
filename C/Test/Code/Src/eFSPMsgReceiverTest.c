@@ -24,6 +24,11 @@
     #pragma cstat_restore = "MISRAC2004-20.9", "MISRAC2012-Rule-21.6"
 #endif
 
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_disable = "MISRAC2012-Rule-10.3", "CERT-STR32-C", "MISRAC2012-Rule-11.5", "CERT-EXP36-C_b", \
+                            "MISRAC2012-Rule-8.9_a", "MISRAC2012-Rule-8.13", "MISRAC2012-Rule-2.2_b", "MISRAC2004-16.7"
+    /* Suppressed for code clarity in test execution*/
+#endif
 
 
 /***********************************************************************************************************************
@@ -167,79 +172,19 @@ bool_t receiveMsg( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd, c
                 const uint32_t timeToRx )
 {
     bool_t result;
-    s_eCU_msgSendAdapterCtx* ctxCur = (s_eCU_msgSendAdapterCtx*)cntx;
-    ctxCur->sendIsError = true;
-    result = true;
+    s_eCU_msgSendAdapterCtx* ctxCur;
 
-
-    if( m_payloadCounter < m_payloadSize )
+    if( ( NULL == cntx ) || ( NULL == dataToRx ) || ( NULL == dataRecevd ) )
     {
-        if( ( m_payloadSize - m_payloadCounter ) >= dataRxMax )
-        {
-            (void)memcpy(dataToRx, &m_rxPayload[m_payloadCounter], dataRxMax);
-            m_payloadCounter += dataRxMax;
-            *dataRecevd = dataRxMax;
-        }
-        else
-        {
-            (void)memcpy(dataToRx, &m_rxPayload[m_payloadCounter], ( m_payloadSize - m_payloadCounter ) );
-            m_payloadCounter += ( m_payloadSize - m_payloadCounter ) ;
-            *dataRecevd = ( m_payloadSize - m_payloadCounter );
-        }
+        result = false;
     }
     else
     {
-        *dataRecevd = 0u;
-    }
+        ctxCur = (s_eCU_msgSendAdapterCtx*)cntx;
+        ctxCur->sendIsError = true;
+        result = true;
 
 
-    return result;
-}
-
-bool_t receiveMsgCrrupt (void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd, const uint32_t dataRxMax,
-                const uint32_t timeToRx )
-{
-    bool_t result;
-    s_eCU_msgSendAdapterCtx* ctxCur = (s_eCU_msgSendAdapterCtx*)cntx;
-    ctxCur->sendIsError = true;
-    result = true;
-
-
-    if( m_payloadCounter < m_payloadSize )
-    {
-        if( ( m_payloadSize - m_payloadCounter ) >= dataRxMax )
-        {
-            (void)memcpy(dataToRx, &m_rxPayload[m_payloadCounter], dataRxMax);
-            m_payloadCounter += dataRxMax;
-            *dataRecevd = dataRxMax +1u;
-        }
-        else
-        {
-            (void)memcpy(dataToRx, &m_rxPayload[m_payloadCounter], ( m_payloadSize - m_payloadCounter ) );
-            m_payloadCounter += ( m_payloadSize - m_payloadCounter ) ;
-            *dataRecevd = ( m_payloadSize - m_payloadCounter );
-        }
-    }
-    else
-    {
-        *dataRecevd = 0u;
-    }
-
-
-    return result;
-}
-
-bool_t receiveMsgJump( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd, const uint32_t dataRxMax,
-                const uint32_t timeToRx )
-{
-    bool_t result;
-    s_eCU_msgSendAdapterCtx* ctxCur = (s_eCU_msgSendAdapterCtx*)cntx;
-    ctxCur->sendIsError = true;
-    result = true;
-
-
-    if( 0 == m_read_jump )
-    {
         if( m_payloadCounter < m_payloadSize )
         {
             if( ( m_payloadSize - m_payloadCounter ) >= dataRxMax )
@@ -259,14 +204,96 @@ bool_t receiveMsgJump( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecev
         {
             *dataRecevd = 0u;
         }
-        m_read_jump = 1u;
+    }
+
+    return result;
+}
+
+bool_t receiveMsgCrrupt (void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd, const uint32_t dataRxMax,
+                const uint32_t timeToRx )
+{
+    bool_t result;
+    s_eCU_msgSendAdapterCtx* ctxCur;
+
+    if( ( NULL == cntx ) || ( NULL == dataToRx ) || ( NULL == dataRecevd ) )
+    {
+        result = false;
     }
     else
     {
-        m_read_jump = 0u;
-        *dataRecevd = 0u;
+        ctxCur = (s_eCU_msgSendAdapterCtx*)cntx;
+        ctxCur->sendIsError = true;
+        result = true;
+
+        if( m_payloadCounter < m_payloadSize )
+        {
+            if( ( m_payloadSize - m_payloadCounter ) >= dataRxMax )
+            {
+                (void)memcpy(dataToRx, &m_rxPayload[m_payloadCounter], dataRxMax);
+                m_payloadCounter += dataRxMax;
+                *dataRecevd = dataRxMax +1u;
+            }
+            else
+            {
+                (void)memcpy(dataToRx, &m_rxPayload[m_payloadCounter], ( m_payloadSize - m_payloadCounter ) );
+                m_payloadCounter += ( m_payloadSize - m_payloadCounter ) ;
+                *dataRecevd = ( m_payloadSize - m_payloadCounter );
+            }
+        }
+        else
+        {
+            *dataRecevd = 0u;
+        }
     }
 
+    return result;
+}
+
+bool_t receiveMsgJump( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd, const uint32_t dataRxMax,
+                const uint32_t timeToRx )
+{
+    bool_t result;
+    s_eCU_msgSendAdapterCtx* ctxCur;
+
+    ctxCur = (s_eCU_msgSendAdapterCtx*)cntx;
+    ctxCur->sendIsError = true;
+    result = true;
+
+    if( ( NULL == cntx ) || ( NULL == dataToRx ) || ( NULL == dataRecevd ) )
+    {
+        result = false;
+    }
+    else
+    {
+        if( 0u == m_read_jump )
+        {
+            if( m_payloadCounter < m_payloadSize )
+            {
+                if( ( m_payloadSize - m_payloadCounter ) >= dataRxMax )
+                {
+                    (void)memcpy(dataToRx, &m_rxPayload[m_payloadCounter], dataRxMax);
+                    m_payloadCounter += dataRxMax;
+                    *dataRecevd = dataRxMax;
+                }
+                else
+                {
+                    (void)memcpy(dataToRx, &m_rxPayload[m_payloadCounter], ( m_payloadSize - m_payloadCounter ) );
+                    m_payloadCounter += ( m_payloadSize - m_payloadCounter ) ;
+                    *dataRecevd = ( m_payloadSize - m_payloadCounter );
+                }
+            }
+            else
+            {
+                *dataRecevd = 0u;
+            }
+            m_read_jump = 1u;
+        }
+        else
+        {
+            m_read_jump = 0u;
+            *dataRecevd = 0u;
+        }
+    }
 
     return result;
 }
@@ -275,10 +302,20 @@ bool_t receiveMsgErr( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd
                 const uint32_t timeToRx )
 {
     bool_t result;
-    s_eCU_msgSendAdapterCtx* ctxCur = (s_eCU_msgSendAdapterCtx*)cntx;
-    ctxCur->sendIsError = true;
-    result = false;
+    s_eCU_msgSendAdapterCtx* ctxCur;
 
+    (void)timeToRx;
+    (void)dataRxMax;
+    if( ( NULL == cntx ) || ( NULL == dataToRx ) || ( NULL == dataRecevd ) )
+    {
+        result = false;
+    }
+    else
+    {
+        ctxCur = (s_eCU_msgSendAdapterCtx*)cntx;
+        ctxCur->sendIsError = true;
+        result = false;
+    }
 
     return result;
 }
@@ -290,12 +327,21 @@ static uint32_t m_tim_timCntInc;
 bool_t timStart ( void* cntx, const uint32_t timeoutVal )
 {
     bool_t result;
-    s_eCU_timerAdapterCtx* ctxCur = (s_eCU_timerAdapterCtx*)cntx;
-    ctxCur->sendIsError = true;
-    m_tim_timCnt = 0u;
-    m_tim_timCntInc = 0u;
-    m_tim_remainingTime = timeoutVal;
-    result = true;
+    s_eCU_timerAdapterCtx* ctxCur;
+
+    if( NULL == cntx )
+    {
+        result = false;
+    }
+    else
+    {
+        ctxCur = (s_eCU_timerAdapterCtx*)cntx;
+        ctxCur->sendIsError = true;
+        m_tim_timCnt = 0u;
+        m_tim_timCntInc = 0u;
+        m_tim_remainingTime = timeoutVal;
+        result = true;
+    }
 
     return result;
 }
@@ -303,16 +349,30 @@ bool_t timStart ( void* cntx, const uint32_t timeoutVal )
 bool_t timGetRemaining ( void* cntx, uint32_t* const remainings )
 {
     bool_t result;
-    s_eCU_timerAdapterCtx* ctxCur = (s_eCU_timerAdapterCtx*)cntx;
-    ctxCur->sendIsError = true;
-    m_tim_timCnt++;
-    if( m_tim_remainingTime > 0u )
-    {
-        m_tim_remainingTime--;
-    }
+    s_eCU_timerAdapterCtx* ctxCur;
 
-    *remainings = m_tim_remainingTime;
-    result = true;
+    if( ( NULL == cntx ) || ( NULL == remainings ) )
+    {
+        result = false;
+    }
+    else
+    {
+        ctxCur = (s_eCU_timerAdapterCtx*)cntx;
+        ctxCur->sendIsError = true;
+
+        if( m_tim_timCnt < MAX_UINT32VAL )
+        {
+            m_tim_timCnt++;
+        }
+
+        if( m_tim_remainingTime > 0u )
+        {
+            m_tim_remainingTime--;
+        }
+
+        *remainings = m_tim_remainingTime;
+        result = true;
+    }
 
     return result;
 }
@@ -320,12 +380,28 @@ bool_t timGetRemaining ( void* cntx, uint32_t* const remainings )
 bool_t timGetRemainingCorr ( void* cntx, uint32_t* const remainings )
 {
     bool_t result;
-    s_eCU_timerAdapterCtx* ctxCur = (s_eCU_timerAdapterCtx*)cntx;
-    ctxCur->sendIsError = true;
-    m_tim_timCnt++;
-    *remainings = m_tim_remainingTime + m_tim_timCntInc;
-    m_tim_timCntInc++;
-    result = true;
+    s_eCU_timerAdapterCtx* ctxCur;
+
+    if( ( NULL == cntx ) || ( NULL == remainings ) )
+    {
+        result = false;
+    }
+    else
+    {
+        ctxCur = (s_eCU_timerAdapterCtx*)cntx;
+        ctxCur->sendIsError = true;
+        if( m_tim_timCnt < MAX_UINT32VAL )
+        {
+            m_tim_timCnt++;
+        }
+        *remainings = m_tim_remainingTime + m_tim_timCntInc;
+
+        if( m_tim_timCntInc < MAX_UINT32VAL )
+        {
+            m_tim_timCntInc++;
+        }
+        result = true;
+    }
 
     return result;
 }
@@ -333,12 +409,21 @@ bool_t timGetRemainingCorr ( void* cntx, uint32_t* const remainings )
 bool_t timStartErr ( void* cntx, const uint32_t timeoutVal )
 {
     bool_t result;
-    s_eCU_timerAdapterCtx* ctxCur = (s_eCU_timerAdapterCtx*)cntx;
-    ctxCur->sendIsError = true;
-    m_tim_timCnt = 0u;
+    s_eCU_timerAdapterCtx* ctxCur;
 
-    m_tim_remainingTime = timeoutVal;
-    result = false;
+    if( NULL == cntx )
+    {
+        result = false;
+    }
+    else
+    {
+        ctxCur = (s_eCU_timerAdapterCtx*)cntx;
+        ctxCur->sendIsError = true;
+        m_tim_timCnt = 0u;
+
+        m_tim_remainingTime = timeoutVal;
+        result = false;
+    }
 
     return result;
 }
@@ -346,16 +431,28 @@ bool_t timStartErr ( void* cntx, const uint32_t timeoutVal )
 bool_t timGetRemainingErr ( void* cntx, uint32_t* const remainings )
 {
     bool_t result;
-    s_eCU_timerAdapterCtx* ctxCur = (s_eCU_timerAdapterCtx*)cntx;
-    ctxCur->sendIsError = true;
-    m_tim_timCnt++;
-    if( m_tim_remainingTime > 0u )
-    {
-        m_tim_remainingTime--;
-    }
+    s_eCU_timerAdapterCtx* ctxCur;
 
-    *remainings = m_tim_remainingTime;
-    result = false;
+    if( ( NULL == cntx ) || ( NULL == remainings) )
+    {
+        result = false;
+    }
+    else
+    {
+        ctxCur = (s_eCU_timerAdapterCtx*)cntx;
+        ctxCur->sendIsError = true;
+        if( m_tim_timCnt < MAX_UINT32VAL )
+        {
+            m_tim_timCnt++;
+        }
+        if( m_tim_remainingTime > 0u )
+        {
+            m_tim_remainingTime--;
+        }
+
+        *remainings = m_tim_remainingTime;
+        result = false;
+    }
 
     return result;
 }
@@ -363,23 +460,35 @@ bool_t timGetRemainingErr ( void* cntx, uint32_t* const remainings )
 bool_t timGetRemainingErrCntrl ( void* cntx, uint32_t* const remainings )
 {
     bool_t result;
-    s_eCU_timerAdapterCtx* ctxCur = (s_eCU_timerAdapterCtx*)cntx;
-    ctxCur->sendIsError = true;
-    m_tim_timCnt++;
-    if( m_tim_remainingTime > 0u )
-    {
-        m_tim_remainingTime--;
-    }
+    s_eCU_timerAdapterCtx* ctxCur;
 
-    *remainings = m_tim_remainingTime;
-
-    if( m_tim_timCnt < 2 )
+    if( ( NULL == cntx ) || ( NULL == remainings) )
     {
-        result = true;
+        result = false;
     }
     else
     {
-        result = false;
+        ctxCur = (s_eCU_timerAdapterCtx*)cntx;
+        ctxCur->sendIsError = true;
+        if( m_tim_timCnt < MAX_UINT32VAL )
+        {
+            m_tim_timCnt++;
+        }
+        if( m_tim_remainingTime > 0u )
+        {
+            m_tim_remainingTime--;
+        }
+
+        *remainings = m_tim_remainingTime;
+
+        if( m_tim_timCnt < 2u )
+        {
+            result = true;
+        }
+        else
+        {
+            result = false;
+        }
     }
 
     return result;
@@ -2698,16 +2807,16 @@ void msgReceiverTestCornerCase(void)
     m_payloadCounter = 0u;
     m_rxPayload[0u] = ECU_SOF;
     m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] = 0x50;
-    m_rxPayload[3u] = 0x7B;
-    m_rxPayload[4u] = 0x0A;
-    m_rxPayload[5u] = 0x68;
-    m_rxPayload[6u] = 0x02;
-    m_rxPayload[7u] = 0x00;
-    m_rxPayload[8u] = 0x00;
-    m_rxPayload[9u] = 0x00;
-    m_rxPayload[10u] = 0xCC;
-    m_rxPayload[11u] = 0xCC;
+    m_rxPayload[2u] = 0x50u;
+    m_rxPayload[3u] = 0x7Bu;
+    m_rxPayload[4u] = 0x0Au;
+    m_rxPayload[5u] = 0x68u;
+    m_rxPayload[6u] = 0x02u;
+    m_rxPayload[7u] = 0x00u;
+    m_rxPayload[8u] = 0x00u;
+    m_rxPayload[9u] = 0x00u;
+    m_rxPayload[10u] = 0xCCu;
+    m_rxPayload[11u] = 0xCCu;
     m_rxPayload[12u] = ECU_EOF;
     if( MSGRX_RES_FRAMERESTART == MSGRX_ReceiveChunk(&ctx) )
     {
@@ -3073,7 +3182,7 @@ void msgReceiverTestCornerCase2(void)
     {
         if( 2u == dataL )
         {
-            if( (  0xCC == dataP[0u] ) || (  0xC1 == dataP[1u] ) )
+            if( (  0xCCu == dataP[0u] ) || (  0xC1u == dataP[1u] ) )
             {
                 (void)printf("msgReceiverTestCornerCase2 17 -- OK \n");
             }
@@ -3667,24 +3776,7 @@ void msgReceiverTestCornerCase3(void)
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_restore = "MISRAC2012-Rule-10.3", "CERT-STR32-C", "MISRAC2012-Rule-11.5", "CERT-EXP36-C_b", \
+                            "MISRAC2012-Rule-8.9_a", "MISRAC2012-Rule-8.13", "MISRAC2012-Rule-2.2_b", "MISRAC2004-16.7"
+#endif

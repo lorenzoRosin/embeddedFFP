@@ -26,7 +26,11 @@
     #pragma cstat_restore = "MISRAC2004-20.9", "MISRAC2012-Rule-21.6"
 #endif
 
-
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_disable = "MISRAC2012-Rule-10.3", "CERT-STR32-C", "MISRAC2012-Rule-11.5", "CERT-EXP36-C_b", \
+                            "MISRAC2012-Rule-8.9_a", "MISRAC2012-Rule-8.13", "MISRAC2012-Rule-2.2_b", "MISRAC2004-16.7"
+    /* Suppressed for code clarity in test execution*/
+#endif
 
 /***********************************************************************************************************************
  *   PRIVATE TEST FUNCTION DECLARATION
@@ -153,10 +157,21 @@ bool_t sendMsg( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSen
                 const uint32_t timeToSend )
 {
     bool_t result;
-    s_eCU_msgSendAdapterCtx* ctxCur = (s_eCU_msgSendAdapterCtx*)cntx;
-    ctxCur->sendIsError = true;
-    result = true;
+    s_eCU_msgSendAdapterCtx* ctxCur;
 
+    (void)dataToSendLen;
+    (void)timeToSend;
+
+    if( ( NULL == cntx ) || ( NULL == dataToSend ) || ( NULL == dataSended ) )
+    {
+        result = false;
+    }
+    else
+    {
+        ctxCur = (s_eCU_msgSendAdapterCtx*)cntx;
+        ctxCur->sendIsError = true;
+        result = true;
+    }
 
     return result;
 }
@@ -166,10 +181,21 @@ bool_t sendMsgErr( void* cntx, const uint8_t dataToSend[], const uint32_t dataTo
                 const uint32_t timeToSend )
 {
     bool_t result;
-    s_eCU_msgSendAdapterCtx* ctxCur = (s_eCU_msgSendAdapterCtx*)cntx;
-    ctxCur->sendIsError = true;
-    result = false;
+    s_eCU_msgSendAdapterCtx* ctxCur;
 
+    (void)dataToSendLen;
+    (void)timeToSend;
+
+    if( ( NULL == cntx ) || ( NULL == dataToSend ) || ( NULL == dataSended ) )
+    {
+        result = false;
+    }
+    else
+    {
+        ctxCur = (s_eCU_msgSendAdapterCtx*)cntx;
+        ctxCur->sendIsError = true;
+        result = false;
+    }
 
     return result;
 }
@@ -179,11 +205,20 @@ static uint32_t m_tim_remainingTime;
 bool_t timStart ( void* cntx, const uint32_t timeoutVal )
 {
     bool_t result;
-    s_eCU_timerAdapterCtx* ctxCur = (s_eCU_timerAdapterCtx*)cntx;
-    ctxCur->sendIsError = true;
+    s_eCU_timerAdapterCtx* ctxCur;
 
-    m_tim_remainingTime = timeoutVal;
-    result = true;
+    if( NULL == cntx )
+    {
+        result = false;
+    }
+    else
+    {
+        ctxCur = (s_eCU_timerAdapterCtx*)cntx;
+        ctxCur->sendIsError = true;
+
+        m_tim_remainingTime = timeoutVal;
+        result = true;
+    }
 
     return result;
 }
@@ -191,16 +226,25 @@ bool_t timStart ( void* cntx, const uint32_t timeoutVal )
 bool_t timGetRemaining ( void* cntx, uint32_t* const remainings )
 {
     bool_t result;
-    s_eCU_timerAdapterCtx* ctxCur = (s_eCU_timerAdapterCtx*)cntx;
-    ctxCur->sendIsError = true;
+    s_eCU_timerAdapterCtx* ctxCur;
 
-    if( m_tim_remainingTime > 0u )
+    if( ( NULL == cntx ) || ( NULL == remainings ) )
     {
-        m_tim_remainingTime--;
+        result = false;
     }
+    else
+    {
+        ctxCur = (s_eCU_timerAdapterCtx*)cntx;
+        ctxCur->sendIsError = true;
 
-    *remainings = m_tim_remainingTime;
-    result = true;
+        if( m_tim_remainingTime > 0u )
+        {
+            m_tim_remainingTime--;
+        }
+
+        *remainings = m_tim_remainingTime;
+        result = true;
+    }
 
     return result;
 }
@@ -209,11 +253,20 @@ bool_t timGetRemaining ( void* cntx, uint32_t* const remainings )
 bool_t timStartErr ( void* cntx, const uint32_t timeoutVal )
 {
     bool_t result;
-    s_eCU_timerAdapterCtx* ctxCur = (s_eCU_timerAdapterCtx*)cntx;
-    ctxCur->sendIsError = true;
+    s_eCU_timerAdapterCtx* ctxCur;
 
-    m_tim_remainingTime = timeoutVal;
-    result = false;
+    if( NULL == cntx )
+    {
+        result = false;
+    }
+    else
+    {
+        ctxCur = (s_eCU_timerAdapterCtx*)cntx;
+        ctxCur->sendIsError = true;
+
+        m_tim_remainingTime = timeoutVal;
+        result = false;
+    }
 
     return result;
 }
@@ -221,16 +274,25 @@ bool_t timStartErr ( void* cntx, const uint32_t timeoutVal )
 bool_t timGetRemainingErr ( void* cntx, uint32_t* const remainings )
 {
     bool_t result;
-    s_eCU_timerAdapterCtx* ctxCur = (s_eCU_timerAdapterCtx*)cntx;
-    ctxCur->sendIsError = true;
+    s_eCU_timerAdapterCtx* ctxCur;
 
-    if( m_tim_remainingTime > 0u )
+    if( ( NULL == cntx ) || ( NULL == remainings ) )
     {
-        m_tim_remainingTime--;
+        result = false;
     }
+    else
+    {
+        ctxCur = (s_eCU_timerAdapterCtx*)cntx;
+        ctxCur->sendIsError = true;
 
-    *remainings = m_tim_remainingTime;
-    result = false;
+        if( m_tim_remainingTime > 0u )
+        {
+            m_tim_remainingTime--;
+        }
+
+        *remainings = m_tim_remainingTime;
+        result = false;
+    }
 
     return result;
 }
@@ -644,7 +706,7 @@ void msgTransmitterTestBadInit(void)
     bool_t isInit;
 
     /* Function */
-    memset(&ctx, 0u, sizeof(s_eFSP_MSGTX_Ctx));
+    (void)memset(&ctx, 0, sizeof(s_eFSP_MSGTX_Ctx));
     ctx.msgEncoderCtnx.byteStufferCtnx.isInit = false;
     ctx.msgEncoderCtnx.cbCrcCtx = &ctxAdapterCrc;
     ctx.msgEncoderCtnx.cbCrcPtr = cbCrcPTest;
@@ -732,8 +794,8 @@ void msgTransmitterTestBadIniMsg(void)
     bool_t isInit;
 
     /* Clear */
-    memset(&ctx, 0u, sizeof(s_eFSP_MSGTX_Ctx));
-    memset(&initData, 0u, sizeof(s_eFSP_MSGTX_InitData));
+    (void)memset(&ctx, 0, sizeof(s_eFSP_MSGTX_Ctx));
+    (void)memset(&initData, 0, sizeof(s_eFSP_MSGTX_InitData));
 
     /* Init */
     initData.i_memArea = memArea;
@@ -808,8 +870,8 @@ void msgTransmitterTestBadParamEntr(void)
     uint8_t  sendBuff[10u];
 
     /* Clear */
-    memset(&ctx, 0u, sizeof(s_eFSP_MSGTX_Ctx));
-    memset(&initData, 0u, sizeof(s_eFSP_MSGTX_InitData));
+    (void)memset(&ctx, 0, sizeof(s_eFSP_MSGTX_Ctx));
+    (void)memset(&initData, 0, sizeof(s_eFSP_MSGTX_InitData));
 
     /* Init */
     initData.i_memArea = memArea;
@@ -975,8 +1037,8 @@ void msgTransmitterTestCorruptContext(void)
     uint32_t dataL;
 
     /* Clear */
-    memset(&ctx, 0u, sizeof(s_eFSP_MSGTX_Ctx));
-    memset(&initData, 0u, sizeof(s_eFSP_MSGTX_InitData));
+    (void)memset(&ctx, 0, sizeof(s_eFSP_MSGTX_Ctx));
+    (void)memset(&initData, 0, sizeof(s_eFSP_MSGTX_InitData));
 
     /* Init */
     initData.i_memArea = memArea;
@@ -1395,8 +1457,8 @@ void msgTransmitterTestBadClBckCrc(void)
     uint8_t  sendBuff[10u];
 
     /* Clear */
-    memset(&ctx, 0u, sizeof(s_eFSP_MSGTX_Ctx));
-    memset(&initData, 0u, sizeof(s_eFSP_MSGTX_InitData));
+    (void)memset(&ctx, 0, sizeof(s_eFSP_MSGTX_Ctx));
+    (void)memset(&initData, 0, sizeof(s_eFSP_MSGTX_InitData));
 
     /* Init */
     initData.i_memArea = memArea;
@@ -1454,8 +1516,8 @@ void msgTransmitterTestBadClBckSend(void)
     uint32_t dataL;
 
     /* Clear */
-    memset(&ctx, 0u, sizeof(s_eFSP_MSGTX_Ctx));
-    memset(&initData, 0u, sizeof(s_eFSP_MSGTX_InitData));
+    (void)memset(&ctx, 0, sizeof(s_eFSP_MSGTX_Ctx));
+    (void)memset(&initData, 0, sizeof(s_eFSP_MSGTX_InitData));
 
     /* Init */
     initData.i_memArea = memArea;
@@ -1498,8 +1560,8 @@ void msgTransmitterTestBadClBckSend(void)
     }
 
     /* Function */
-    dataP[0u] = 0x01;
-    dataP[1u] = 0x02;
+    dataP[0u] = 0x01u;
+    dataP[1u] = 0x02u;
     if( MSGTX_RES_OK == MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestBadClBckSend 3  -- OK \n");
@@ -1535,8 +1597,8 @@ void msgTransmitterTestBadClBckTim(void)
     uint32_t dataL;
 
     /* Clear */
-    memset(&ctx, 0u, sizeof(s_eFSP_MSGTX_Ctx));
-    memset(&initData, 0u, sizeof(s_eFSP_MSGTX_InitData));
+    (void)memset(&ctx, 0, sizeof(s_eFSP_MSGTX_Ctx));
+    (void)memset(&initData, 0, sizeof(s_eFSP_MSGTX_InitData));
 
     /* Init */
     initData.i_memArea = memArea;
@@ -1579,8 +1641,8 @@ void msgTransmitterTestBadClBckTim(void)
     }
 
     /* Function */
-    dataP[0u] = 0x01;
-    dataP[1u] = 0x02;
+    dataP[0u] = 0x01u;
+    dataP[1u] = 0x02u;
     if( MSGTX_RES_TIMCLBKERROR == MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestBadClBckTim 3  -- OK \n");
@@ -1601,8 +1663,8 @@ void msgTransmitterTestBadClBckTim(void)
     }
 
     /* Clear */
-    memset(&ctx, 0u, sizeof(s_eFSP_MSGTX_Ctx));
-    memset(&initData, 0u, sizeof(s_eFSP_MSGTX_InitData));
+    (void)memset(&ctx, 0, sizeof(s_eFSP_MSGTX_Ctx));
+    (void)memset(&initData, 0, sizeof(s_eFSP_MSGTX_InitData));
 
     /* Init */
     initData.i_memArea = memArea;
@@ -1645,8 +1707,8 @@ void msgTransmitterTestBadClBckTim(void)
     }
 
     /* Function */
-    dataP[0u] = 0x01;
-    dataP[1u] = 0x02;
+    dataP[0u] = 0x01u;
+    dataP[1u] = 0x02u;
     if( MSGTX_RES_OK == MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestBadClBckTim 7  -- OK \n");
@@ -1667,3 +1729,8 @@ void msgTransmitterTestBadClBckTim(void)
     }
 
 }
+
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_restore = "MISRAC2012-Rule-10.3", "CERT-STR32-C", "MISRAC2012-Rule-11.5", "CERT-EXP36-C_b", \
+                            "MISRAC2012-Rule-8.9_a", "MISRAC2012-Rule-8.13", "MISRAC2012-Rule-2.2_b", "MISRAC2004-16.7"
+#endif
