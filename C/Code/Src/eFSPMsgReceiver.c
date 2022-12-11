@@ -244,8 +244,8 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
     /* Local variable used for the current time calculation */
     uint32_t sRemRxTime;
     uint32_t cRemainRxTime;
+    uint32_t elapsedFromStart;
     uint32_t sessionRemanTime;
-    uint32_t totalRemanTime;
 
     bool_t isMsgDec;
     bool_t isInit;
@@ -280,7 +280,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
             /* Init data */
             sRemRxTime = 0u;
             sessionRemanTime = 0u;
-            totalRemanTime = 0u;
+            elapsedFromStart = 0u;
             rxMostEff = 0u;
             cDRxed = 0u;
             isMsgDec = false;
