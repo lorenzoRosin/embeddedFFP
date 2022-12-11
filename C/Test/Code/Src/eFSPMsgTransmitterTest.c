@@ -54,6 +54,8 @@ static bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t d[], const u
 static bool_t c32SAdaptEr(void* cntx, const uint32_t s, const uint8_t d[], const uint32_t dLen, uint32_t* const c32Val);
 static bool_t sendMsg( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSendLen, uint32_t* const dataSended,
                        const uint32_t timeToSend );
+static bool_t sendMsgOnce( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSendLen, uint32_t* const dataSended,
+                       const uint32_t timeToSend );
 static bool_t sendMsgErr( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSendLen, uint32_t* const dataSended,
                           const uint32_t timeToSend );
 static bool_t timStart ( void* cntx, const uint32_t timeoutVal );
@@ -74,6 +76,7 @@ static void msgTransmitterTestCorruptContext(void);
 static void msgTransmitterTestBadClBckCrc(void);
 static void msgTransmitterTestBadClBckSend(void);
 static void msgTransmitterTestBadClBckTim(void);
+static void msgTransmitterTestCornerCase(void);
 
 
 
@@ -92,6 +95,7 @@ void msgTransmitterTest(void)
     msgTransmitterTestBadClBckCrc();
     msgTransmitterTestBadClBckSend();
     msgTransmitterTestBadClBckTim();
+    msgTransmitterTestCornerCase();
 
     (void)printf("\n\nMESSAGE TRANSMITTER TEST END \n\n");
 }
@@ -153,13 +157,17 @@ bool_t c32SAdaptEr(void* cntx, const uint32_t s, const uint8_t d[], const uint32
     return result;
 }
 
+
+static uint8_t m_txBuff[100u];
+static uint32_t m_txBuffCounter;
+static uint32_t m_send_when;
+
 bool_t sendMsg( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSendLen, uint32_t* const dataSended,
                 const uint32_t timeToSend )
 {
     bool_t result;
     s_eCU_msgSendAdapterCtx* ctxCur;
 
-    (void)dataToSendLen;
     (void)timeToSend;
 
     if( ( NULL == cntx ) || ( NULL == dataToSend ) || ( NULL == dataSended ) )
@@ -170,12 +178,68 @@ bool_t sendMsg( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSen
     {
         ctxCur = (s_eCU_msgSendAdapterCtx*)cntx;
         ctxCur->sendIsError = true;
-        result = true;
+
+
+        if( ( m_txBuffCounter + dataToSendLen ) < sizeof(m_txBuff) )
+        {
+            (void)memcpy(&m_txBuff[m_txBuffCounter], dataToSend, dataToSendLen);
+            m_txBuffCounter += dataToSendLen;
+            *dataSended = dataToSendLen;
+
+            result = true;
+        }
+        else
+        {
+            result = false;
+        }
     }
 
     return result;
 }
 
+bool_t sendMsgOnce( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSendLen, uint32_t* const dataSended,
+                const uint32_t timeToSend )
+{
+    bool_t result;
+    s_eCU_msgSendAdapterCtx* ctxCur;
+
+    (void)timeToSend;
+
+    if( ( NULL == cntx ) || ( NULL == dataToSend ) || ( NULL == dataSended ) )
+    {
+        result = false;
+    }
+    else
+    {
+        ctxCur = (s_eCU_msgSendAdapterCtx*)cntx;
+        ctxCur->sendIsError = true;
+
+
+        if( ( m_txBuffCounter + dataToSendLen ) < sizeof(m_txBuff) )
+        {
+            if( 0u == m_send_when )
+            {
+                (void)memcpy(&m_txBuff[m_txBuffCounter], dataToSend, dataToSendLen);
+                m_txBuffCounter += dataToSendLen;
+                *dataSended = dataToSendLen;
+                m_send_when = 1u;
+            }
+            else
+            {
+                *dataSended = 0u;
+                m_send_when = 0u;
+            }
+
+            result = true;
+        }
+        else
+        {
+            result = false;
+        }
+    }
+
+    return result;
+}
 
 bool_t sendMsgErr( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSendLen, uint32_t* const dataSended,
                 const uint32_t timeToSend )
@@ -1727,6 +1791,12 @@ void msgTransmitterTestBadClBckTim(void)
     {
         (void)printf("msgTransmitterTestBadClBckTim 8  -- FAIL \n");
     }
+
+}
+
+void msgTransmitterTestCornerCase(void)
+{
+
 
 }
 
