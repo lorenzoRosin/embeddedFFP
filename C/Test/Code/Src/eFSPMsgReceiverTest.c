@@ -283,6 +283,7 @@ bool_t receiveMsgErr( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd
 
 static uint32_t m_tim_remainingTime;
 static uint32_t m_tim_timCnt;
+static uint32_t m_tim_timCntInc;
 
 bool_t timStart ( void* cntx, const uint32_t timeoutVal )
 {
@@ -290,7 +291,7 @@ bool_t timStart ( void* cntx, const uint32_t timeoutVal )
     s_eCU_timerAdapterCtx* ctxCur = (s_eCU_timerAdapterCtx*)cntx;
     ctxCur->sendIsError = true;
     m_tim_timCnt = 0u;
-
+    m_tim_timCntInc = 0u;
     m_tim_remainingTime = timeoutVal;
     result = true;
 
@@ -320,7 +321,8 @@ bool_t timGetRemainingCorr ( void* cntx, uint32_t* const remainings )
     s_eCU_timerAdapterCtx* ctxCur = (s_eCU_timerAdapterCtx*)cntx;
     ctxCur->sendIsError = true;
     m_tim_timCnt++;
-    *remainings = m_tim_remainingTime + 1u;
+    *remainings = m_tim_remainingTime + m_tim_timCntInc;
+    m_tim_timCntInc++;
     result = true;
 
     return result;
@@ -3186,10 +3188,6 @@ void msgReceiverTestCornerCase(void)
     }
 }
 
-
-
-
-
 void msgReceiverTestCornerCase2(void)
 {
     /* Local variable */
@@ -3222,21 +3220,21 @@ void msgReceiverTestCornerCase2(void)
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == MSGRX_InitCtx(&ctx, &initData) )
     {
-        (void)printf("msgReceiverTestCornerCase 1  -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 1  -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 1  -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 1  -- FAIL \n");
     }
 
     /* Function */
     if( MSGRX_RES_OK == MSGRX_StartNewMsg(&ctx) )
     {
-        (void)printf("msgReceiverTestCornerCase 2  -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 2  -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 2  -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 2  -- FAIL \n");
     }
 
     /* Fucntion */
@@ -3265,173 +3263,173 @@ void msgReceiverTestCornerCase2(void)
     m_rxPayload[20u] = ECU_EOF;
     if( MSGRX_RES_BADFRAME == MSGRX_ReceiveChunk(&ctx) )
     {
-        (void)printf("msgReceiverTestCornerCase 3  -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 3  -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 3  -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 3  -- FAIL \n");
     }
 
     if( MSGRX_RES_OK == MSGRX_StartNewMsg(&ctx) )
     {
-        (void)printf("msgReceiverTestCornerCase 4  -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 4  -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 4  -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 4  -- FAIL \n");
     }
 
     if( MSGRX_RES_BADFRAME == MSGRX_ReceiveChunk(&ctx) )
     {
-        (void)printf("msgReceiverTestCornerCase 5  -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 5  -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 5  -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 5  -- FAIL \n");
     }
 
     if( MSGRX_RES_OK == MSGRX_StartNewMsg(&ctx) )
     {
-        (void)printf("msgReceiverTestCornerCase 6  -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 6  -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 6  -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 6  -- FAIL \n");
     }
 
     if( MSGRX_RES_BADFRAME == MSGRX_ReceiveChunk(&ctx) )
     {
-        (void)printf("msgReceiverTestCornerCase 7  -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 7  -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 7  -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 7  -- FAIL \n");
     }
 
     if( MSGRX_RES_OK == MSGRX_StartNewMsg(&ctx) )
     {
-        (void)printf("msgReceiverTestCornerCase 8  -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 8  -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 8  -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 8  -- FAIL \n");
     }
 
     if( MSGRX_RES_BADFRAME == MSGRX_ReceiveChunk(&ctx) )
     {
-        (void)printf("msgReceiverTestCornerCase 9  -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 9  -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 9  -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 9  -- FAIL \n");
     }
 
     if( MSGRX_RES_OK == MSGRX_StartNewMsg(&ctx) )
     {
-        (void)printf("msgReceiverTestCornerCase 10 -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 10 -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 10 -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 10 -- FAIL \n");
     }
 
     if( MSGRX_RES_BADFRAME == MSGRX_ReceiveChunk(&ctx) )
     {
-        (void)printf("msgReceiverTestCornerCase 11 -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 11 -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 11 -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 11 -- FAIL \n");
     }
 
     if( MSGRX_RES_OK == MSGRX_StartNewMsg(&ctx) )
     {
-        (void)printf("msgReceiverTestCornerCase 12 -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 12 -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 12 -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 12 -- FAIL \n");
     }
 
     if( MSGRX_RES_BADFRAME == MSGRX_ReceiveChunk(&ctx) )
     {
-        (void)printf("msgReceiverTestCornerCase 13 -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 13 -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 13 -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 13 -- FAIL \n");
     }
 
     if( MSGRX_RES_OK == MSGRX_StartNewMsg(&ctx) )
     {
-        (void)printf("msgReceiverTestCornerCase 14 -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 14 -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 14 -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 14 -- FAIL \n");
     }
 
     if( MSGRX_RES_BADFRAME == MSGRX_ReceiveChunk(&ctx) )
     {
-        (void)printf("msgReceiverTestCornerCase 15 -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 15 -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 15 -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 15 -- FAIL \n");
     }
 
     if( MSGRX_RES_OK == MSGRX_StartNewMsg(&ctx) )
     {
-        (void)printf("msgReceiverTestCornerCase 16 -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 16 -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 16 -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 16 -- FAIL \n");
     }
 
     if( MSGRX_RES_BADFRAME == MSGRX_ReceiveChunk(&ctx) )
     {
-        (void)printf("msgReceiverTestCornerCase 17 -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 17 -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 17 -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 17 -- FAIL \n");
     }
 
     if( MSGRX_RES_OK == MSGRX_StartNewMsg(&ctx) )
     {
-        (void)printf("msgReceiverTestCornerCase 18 -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 18 -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 18 -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 18 -- FAIL \n");
     }
 
     if( MSGRX_RES_BADFRAME == MSGRX_ReceiveChunk(&ctx) )
     {
-        (void)printf("msgReceiverTestCornerCase 19 -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 19 -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 19 -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 19 -- FAIL \n");
     }
 
     if( MSGRX_RES_OK == MSGRX_StartNewMsg(&ctx) )
     {
-        (void)printf("msgReceiverTestCornerCase 20 -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 20 -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 20 -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 20 -- FAIL \n");
     }
 
     if( MSGRX_RES_MESSAGERECEIVED == MSGRX_ReceiveChunk(&ctx) )
     {
-        (void)printf("msgReceiverTestCornerCase 21 -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 21 -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 21 -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 21 -- FAIL \n");
     }
 
     /* Function */
@@ -3451,21 +3449,21 @@ void msgReceiverTestCornerCase2(void)
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == MSGRX_InitCtx(&ctx, &initData) )
     {
-        (void)printf("msgReceiverTestCornerCase 22 -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 22 -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 22 -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 22 -- FAIL \n");
     }
 
     /* Function */
     if( MSGRX_RES_OK == MSGRX_StartNewMsg(&ctx) )
     {
-        (void)printf("msgReceiverTestCornerCase 23 -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 23 -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 23 -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 23 -- FAIL \n");
     }
 
     /* Fucntion */
@@ -3494,35 +3492,30 @@ void msgReceiverTestCornerCase2(void)
     m_rxPayload[20u] = ECU_EOF;
     if( MSGRX_RES_BADFRAME == MSGRX_ReceiveChunk(&ctx) )
     {
-        (void)printf("msgReceiverTestCornerCase 24 -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 24 -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 24 -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 24 -- FAIL \n");
     }
 
     if( MSGRX_RES_OK == MSGRX_StartNewMsgNClean(&ctx) )
     {
-        (void)printf("msgReceiverTestCornerCase 25 -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 25 -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 25 -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 25 -- FAIL \n");
     }
 
     if( MSGRX_RES_MESSAGERECEIVED == MSGRX_ReceiveChunk(&ctx) )
     {
-        (void)printf("msgReceiverTestCornerCase 26 -- OK \n");
+        (void)printf("msgReceiverTestCornerCase2 26 -- OK \n");
     }
     else
     {
-        (void)printf("msgReceiverTestCornerCase 26 -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase2 26 -- FAIL \n");
     }
-
-
-
-
-
 }
 
 
