@@ -243,8 +243,10 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
 
     /* Local variable used for the current time calculation */
     uint32_t sRemRxTime;
-    uint32_t receiveTimeout;
     uint32_t cRemainRxTime;
+    uint32_t sessionRemanTime;
+    uint32_t totalRemanTime;
+
     bool_t isMsgDec;
     bool_t isInit;
 
@@ -277,7 +279,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
 
             /* Init data */
             sRemRxTime = 0u;
-            receiveTimeout = 0u;
+            sessionRemanTime = 0u;
             rxMostEff = 0u;
             cDRxed = 0u;
             isMsgDec = false;
@@ -339,7 +341,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                                         {
                                             /* Ok restarted the timer */
                                             sRemRxTime = ctx->frameTimeoutMs;
-                                            receiveTimeout = ctx->timePerRecMs;
+                                            sessionRemanTime = ctx->timePerRecMs;
 
                                             /* check if we have some data to receive in RX buffer */
                                             stateM = MSGRX_PRV_CHECKHOWMANYDATA;
@@ -366,12 +368,12 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                                             if( sRemRxTime >= ctx->timePerRecMs )
                                             {
                                                 /* Time elapsed */
-                                                receiveTimeout = ctx->timePerRecMs;
+                                                sessionRemanTime = ctx->timePerRecMs;
                                             }
                                             else
                                             {
                                                 /* Session timeout not elapsed, can receive data */
-                                                receiveTimeout = sRemRxTime;
+                                                sessionRemanTime = sRemRxTime;
                                             }
 
                                             /* check if we have some data to receive in RX buffer */
@@ -394,12 +396,12 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                                         if( sRemRxTime >= ctx->timePerRecMs )
                                         {
                                             /* Time elapsed */
-                                            receiveTimeout = ctx->timePerRecMs;
+                                            sessionRemanTime = ctx->timePerRecMs;
                                         }
                                         else
                                         {
                                             /* Session timeout not elapsed, can receive data */
-                                            receiveTimeout = sRemRxTime;
+                                            sessionRemanTime = sRemRxTime;
                                         }
 
                                         /* check if we have some data to receive in RX buffer */
@@ -501,7 +503,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                     {
                         /* Ok, rx buffer is empty and need to be filled with data that we can parse */
                         if( true == (*ctx->cbRxP)(ctx->cbRxCtx, ctx->rxBuff, &ctx->rxBuffFill, rxMostEff,
-                                                  receiveTimeout) )
+                                                  sessionRemanTime) )
                         {
                             /* Check for some strangeness */
                             if( ctx->rxBuffFill > rxMostEff )
@@ -611,7 +613,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                                 {
                                     /* Ok restarted the timer */
                                     sRemRxTime = ctx->frameTimeoutMs;
-                                    receiveTimeout = ctx->timePerRecMs;
+                                    sessionRemanTime = ctx->timePerRecMs;
                                 }
                                 else
                                 {
@@ -624,9 +626,16 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                                 /* Check for timeout */
                                 if( cRemainRxTime <= 0u )
                                 {
-                                    /* Time elapsed */
-                                    result = MSGRX_RES_MESSAGETIMEOUT;
-                                    stateM = MSGRX_PRV_ELABDONE;
+                                    if( true == ctx->needWaitFrameStart )
+                                    {
+
+                                    }
+                                    else
+                                    {
+                                        /* Time elapsed */
+                                        result = MSGRX_RES_MESSAGETIMEOUT;
+                                        stateM = MSGRX_PRV_ELABDONE;
+                                    }
                                 }
                                 else
                                 {
@@ -649,7 +658,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                                         else
                                         {
                                             /* Session timeout not elapsed, if needed can do more elaboration */
-                                            receiveTimeout = ctx->timePerRecMs - ( sRemRxTime - cRemainRxTime );
+                                            sessionRemanTime = ctx->timePerRecMs - ( sRemRxTime - cRemainRxTime );
 
                                             /* Check what to do looking at the previous state result */
                                             if( MSGRX_RES_OK == result )
