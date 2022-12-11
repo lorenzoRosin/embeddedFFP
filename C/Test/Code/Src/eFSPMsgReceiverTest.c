@@ -176,13 +176,13 @@ bool_t receiveMsg( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd, c
     {
         if( ( m_payloadSize - m_payloadCounter ) >= dataRxMax )
         {
-            memcpy(dataToRx, &m_rxPayload[m_payloadCounter], dataRxMax);
+            (void)memcpy(dataToRx, &m_rxPayload[m_payloadCounter], dataRxMax);
             m_payloadCounter += dataRxMax;
             *dataRecevd = dataRxMax;
         }
         else
         {
-            memcpy(dataToRx, &m_rxPayload[m_payloadCounter], ( m_payloadSize - m_payloadCounter ) );
+            (void)memcpy(dataToRx, &m_rxPayload[m_payloadCounter], ( m_payloadSize - m_payloadCounter ) );
             m_payloadCounter += ( m_payloadSize - m_payloadCounter ) ;
             *dataRecevd = ( m_payloadSize - m_payloadCounter );
         }
@@ -209,13 +209,13 @@ bool_t receiveMsgCrrupt (void* cntx, uint8_t dataToRx[], uint32_t* const dataRec
     {
         if( ( m_payloadSize - m_payloadCounter ) >= dataRxMax )
         {
-            memcpy(dataToRx, &m_rxPayload[m_payloadCounter], dataRxMax);
+            (void)memcpy(dataToRx, &m_rxPayload[m_payloadCounter], dataRxMax);
             m_payloadCounter += dataRxMax;
             *dataRecevd = dataRxMax +1u;
         }
         else
         {
-            memcpy(dataToRx, &m_rxPayload[m_payloadCounter], ( m_payloadSize - m_payloadCounter ) );
+            (void)memcpy(dataToRx, &m_rxPayload[m_payloadCounter], ( m_payloadSize - m_payloadCounter ) );
             m_payloadCounter += ( m_payloadSize - m_payloadCounter ) ;
             *dataRecevd = ( m_payloadSize - m_payloadCounter );
         }
@@ -244,13 +244,13 @@ bool_t receiveMsgJump( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecev
         {
             if( ( m_payloadSize - m_payloadCounter ) >= dataRxMax )
             {
-                memcpy(dataToRx, &m_rxPayload[m_payloadCounter], dataRxMax);
+                (void)memcpy(dataToRx, &m_rxPayload[m_payloadCounter], dataRxMax);
                 m_payloadCounter += dataRxMax;
                 *dataRecevd = dataRxMax;
             }
             else
             {
-                memcpy(dataToRx, &m_rxPayload[m_payloadCounter], ( m_payloadSize - m_payloadCounter ) );
+                (void)memcpy(dataToRx, &m_rxPayload[m_payloadCounter], ( m_payloadSize - m_payloadCounter ) );
                 m_payloadCounter += ( m_payloadSize - m_payloadCounter ) ;
                 *dataRecevd = ( m_payloadSize - m_payloadCounter );
             }
@@ -829,8 +829,6 @@ void msgReceiverTestBadParamEntr(void)
     s_eCU_timerAdapterCtx ctxAdapterTim;
     uint8_t  memArea[10u];
     uint8_t  recBuff[10u];
-    uint8_t* dataP;
-    uint32_t dataL;
     bool_t isInit;
 
     /* Function */
@@ -1007,7 +1005,6 @@ void msgReceiverTestCorruptContext(void)
     uint8_t  recBuff[10u];
     uint8_t* dataP;
     uint32_t dataL;
-    bool_t isInit;
 
     /* Function */
     initData.i_memArea = memArea;
@@ -1686,9 +1683,6 @@ void msgReceiverTestBadClBckCrc(void)
     s_eCU_timerAdapterCtx ctxAdapterTim;
     uint8_t  memArea[10u];
     uint8_t  recBuff[10u];
-    uint8_t* dataP;
-    uint32_t dataL;
-    bool_t isInit;
 
     /* Function */
     initData.i_memArea = memArea;
@@ -1728,16 +1722,16 @@ void msgReceiverTestBadClBckCrc(void)
     m_payloadSize = 12u;
     m_payloadCounter = 0u;
     m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = 0x00;
-    m_rxPayload[2u] = 0x00;
-    m_rxPayload[3u] = 0x00;
-    m_rxPayload[4u] = 0x00;
-    m_rxPayload[5u] = 0x02;
-    m_rxPayload[6u] = 0x00;
-    m_rxPayload[7u] = 0x00;
-    m_rxPayload[8u] = 0x00;
-    m_rxPayload[9u] = 0xCC;
-    m_rxPayload[10u] = 0xCC;
+    m_rxPayload[1u] = 0x00u;
+    m_rxPayload[2u] = 0x00u;
+    m_rxPayload[3u] = 0x00u;
+    m_rxPayload[4u] = 0x00u;
+    m_rxPayload[5u] = 0x02u;
+    m_rxPayload[6u] = 0x00u;
+    m_rxPayload[7u] = 0x00u;
+    m_rxPayload[8u] = 0x00u;
+    m_rxPayload[9u] = 0xCCu;
+    m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = ECU_EOF;
     if( MSGRX_RES_CRCCLBKERROR == MSGRX_ReceiveChunk(&ctx) )
     {
@@ -1760,9 +1754,6 @@ void msgReceiverTestBadClBckReceive(void)
     s_eCU_timerAdapterCtx ctxAdapterTim;
     uint8_t  memArea[10u];
     uint8_t  recBuff[10u];
-    uint8_t* dataP;
-    uint32_t dataL;
-    bool_t isInit;
 
     /* Function */
     initData.i_memArea = memArea;
@@ -1812,16 +1803,16 @@ void msgReceiverTestBadClBckReceive(void)
     m_payloadSize = 12u;
     m_payloadCounter = 0u;
     m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = 0x00;
-    m_rxPayload[2u] = 0x00;
-    m_rxPayload[3u] = 0x00;
-    m_rxPayload[4u] = 0x00;
-    m_rxPayload[5u] = 0x02;
-    m_rxPayload[6u] = 0x00;
-    m_rxPayload[7u] = 0x00;
-    m_rxPayload[8u] = 0x00;
-    m_rxPayload[9u] = 0xCC;
-    m_rxPayload[10u] = 0xCC;
+    m_rxPayload[1u] = 0x00u;
+    m_rxPayload[2u] = 0x00u;
+    m_rxPayload[3u] = 0x00u;
+    m_rxPayload[4u] = 0x00u;
+    m_rxPayload[5u] = 0x02u;
+    m_rxPayload[6u] = 0x00u;
+    m_rxPayload[7u] = 0x00u;
+    m_rxPayload[8u] = 0x00u;
+    m_rxPayload[9u] = 0xCCu;
+    m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = ECU_EOF;
     if( MSGRX_RES_RXCLBKERROR == MSGRX_ReceiveChunk(&ctx) )
     {
@@ -1844,9 +1835,6 @@ void msgReceiverTestBadClBckTim(void)
     s_eCU_timerAdapterCtx ctxAdapterTim;
     uint8_t  memArea[10u];
     uint8_t  recBuff[10u];
-    uint8_t* dataP;
-    uint32_t dataL;
-    bool_t isInit;
 
     /* Function */
     initData.i_memArea = memArea;
@@ -1896,16 +1884,16 @@ void msgReceiverTestBadClBckTim(void)
     m_payloadSize = 12u;
     m_payloadCounter = 0u;
     m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = 0x00;
-    m_rxPayload[2u] = 0x00;
-    m_rxPayload[3u] = 0x00;
-    m_rxPayload[4u] = 0x00;
-    m_rxPayload[5u] = 0x02;
-    m_rxPayload[6u] = 0x00;
-    m_rxPayload[7u] = 0x00;
-    m_rxPayload[8u] = 0x00;
-    m_rxPayload[9u] = 0xCC;
-    m_rxPayload[10u] = 0xCC;
+    m_rxPayload[1u] = 0x00u;
+    m_rxPayload[2u] = 0x00u;
+    m_rxPayload[3u] = 0x00u;
+    m_rxPayload[4u] = 0x00u;
+    m_rxPayload[5u] = 0x02u;
+    m_rxPayload[6u] = 0x00u;
+    m_rxPayload[7u] = 0x00u;
+    m_rxPayload[8u] = 0x00u;
+    m_rxPayload[9u] = 0xCCu;
+    m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = ECU_EOF;
     if( MSGRX_RES_TIMCLBKERROR == MSGRX_ReceiveChunk(&ctx) )
     {
@@ -1964,16 +1952,16 @@ void msgReceiverTestBadClBckTim(void)
     m_payloadSize = 12u;
     m_payloadCounter = 0u;
     m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = 0x00;
-    m_rxPayload[2u] = 0x00;
-    m_rxPayload[3u] = 0x00;
-    m_rxPayload[4u] = 0x00;
-    m_rxPayload[5u] = 0x02;
-    m_rxPayload[6u] = 0x00;
-    m_rxPayload[7u] = 0x00;
-    m_rxPayload[8u] = 0x00;
-    m_rxPayload[9u] = 0xCC;
-    m_rxPayload[10u] = 0xCC;
+    m_rxPayload[1u] = 0x00u;
+    m_rxPayload[2u] = 0x00u;
+    m_rxPayload[3u] = 0x00u;
+    m_rxPayload[4u] = 0x00u;
+    m_rxPayload[5u] = 0x02u;
+    m_rxPayload[6u] = 0x00u;
+    m_rxPayload[7u] = 0x00u;
+    m_rxPayload[8u] = 0x00u;
+    m_rxPayload[9u] = 0xCCu;
+    m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = ECU_EOF;
     if( MSGRX_RES_TIMCLBKERROR == MSGRX_ReceiveChunk(&ctx) )
     {
@@ -2022,16 +2010,16 @@ void msgReceiverTestBadClBckTim(void)
     m_payloadSize = 12u;
     m_payloadCounter = 0u;
     m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = 0x00;
-    m_rxPayload[2u] = 0x00;
-    m_rxPayload[3u] = 0x00;
-    m_rxPayload[4u] = 0x00;
-    m_rxPayload[5u] = 0x02;
-    m_rxPayload[6u] = 0x00;
-    m_rxPayload[7u] = 0x00;
-    m_rxPayload[8u] = 0x00;
-    m_rxPayload[9u] = 0xCC;
-    m_rxPayload[10u] = 0xCC;
+    m_rxPayload[1u] = 0x00u;
+    m_rxPayload[2u] = 0x00u;
+    m_rxPayload[3u] = 0x00u;
+    m_rxPayload[4u] = 0x00u;
+    m_rxPayload[5u] = 0x02u;
+    m_rxPayload[6u] = 0x00u;
+    m_rxPayload[7u] = 0x00u;
+    m_rxPayload[8u] = 0x00u;
+    m_rxPayload[9u] = 0xCCu;
+    m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = ECU_EOF;
     if( MSGRX_RES_TIMCLBKERROR == MSGRX_ReceiveChunk(&ctx) )
     {
@@ -2054,9 +2042,6 @@ void msgReceiverTestBadFrame(void)
     s_eCU_timerAdapterCtx ctxAdapterTim;
     uint8_t  memArea[10u];
     uint8_t  recBuff[10u];
-    uint8_t* dataP;
-    uint32_t dataL;
-    bool_t isInit;
 
     /* Function */
     initData.i_memArea = memArea;
@@ -2096,16 +2081,16 @@ void msgReceiverTestBadFrame(void)
     m_payloadSize = 12u;
     m_payloadCounter = 0u;
     m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = 0x00;
-    m_rxPayload[2u] = 0x00;
-    m_rxPayload[3u] = 0x00;
-    m_rxPayload[4u] = 0x00;
-    m_rxPayload[5u] = 0x02;
-    m_rxPayload[6u] = 0x00;
-    m_rxPayload[7u] = 0x00;
-    m_rxPayload[8u] = 0x00;
-    m_rxPayload[9u] = 0xCC;
-    m_rxPayload[10u] = 0xCC;
+    m_rxPayload[1u] = 0x00u;
+    m_rxPayload[2u] = 0x00u;
+    m_rxPayload[3u] = 0x00u;
+    m_rxPayload[4u] = 0x00u;
+    m_rxPayload[5u] = 0x02u;
+    m_rxPayload[6u] = 0x00u;
+    m_rxPayload[7u] = 0x00u;
+    m_rxPayload[8u] = 0x00u;
+    m_rxPayload[9u] = 0xCCu;
+    m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = ECU_EOF;
     if( MSGRX_RES_BADFRAME == MSGRX_ReceiveChunk(&ctx) )
     {
@@ -2155,16 +2140,16 @@ void msgReceiverTestBadFrame(void)
     m_payloadCounter = 0u;
     m_rxPayload[0u] = ECU_SOF;
     m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] = 0x50;
-    m_rxPayload[3u] = 0x7B;
-    m_rxPayload[4u] = 0x0A;
-    m_rxPayload[5u] = 0x68;
-    m_rxPayload[6u] = 0x02;
-    m_rxPayload[7u] = 0x00;
-    m_rxPayload[8u] = 0x00;
-    m_rxPayload[9u] = 0x00;
-    m_rxPayload[10u] = 0xCC;
-    m_rxPayload[11u] = 0xCC;
+    m_rxPayload[2u] = 0x50u;
+    m_rxPayload[3u] = 0x7Bu;
+    m_rxPayload[4u] = 0x0Au;
+    m_rxPayload[5u] = 0x68u;
+    m_rxPayload[6u] = 0x02u;
+    m_rxPayload[7u] = 0x00u;
+    m_rxPayload[8u] = 0x00u;
+    m_rxPayload[9u] = 0x00u;
+    m_rxPayload[10u] = 0xCCu;
+    m_rxPayload[11u] = 0xCCu;
     m_rxPayload[12u] = ECU_EOF;
     if( MSGRX_RES_FRAMERESTART == MSGRX_ReceiveChunk(&ctx) )
     {
@@ -2222,17 +2207,17 @@ void msgReceiverTestBadFrame(void)
     m_payloadSize = 13u;
     m_payloadCounter = 0u;
     m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = 0x00;
-    m_rxPayload[2u] = 0x00;
-    m_rxPayload[3u] = 0x00;
-    m_rxPayload[4u] = 0x00;
-    m_rxPayload[5u] = 0x03;
-    m_rxPayload[6u] = 0x00;
-    m_rxPayload[7u] = 0x00;
-    m_rxPayload[8u] = 0x00;
-    m_rxPayload[9u] = 0xCC;
-    m_rxPayload[10u] = 0xCC;
-    m_rxPayload[11u] = 0xCC;
+    m_rxPayload[1u] = 0x00u;
+    m_rxPayload[2u] = 0x00u;
+    m_rxPayload[3u] = 0x00u;
+    m_rxPayload[4u] = 0x00u;
+    m_rxPayload[5u] = 0x03u;
+    m_rxPayload[6u] = 0x00u;
+    m_rxPayload[7u] = 0x00u;
+    m_rxPayload[8u] = 0x00u;
+    m_rxPayload[9u] = 0xCCu;
+    m_rxPayload[10u] = 0xCCu;
+    m_rxPayload[11u] = 0xCCu;
     m_rxPayload[12u] = ECU_EOF;
     if( MSGRX_RES_OUTOFMEM == MSGRX_ReceiveChunk(&ctx) )
     {
@@ -2281,16 +2266,16 @@ void msgReceiverTestBadFrame(void)
     m_payloadSize = 12u;
     m_payloadCounter = 0u;
     m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = 0x50;
-    m_rxPayload[2u] = 0x7B;
-    m_rxPayload[3u] = 0x0A;
-    m_rxPayload[4u] = 0x68;
-    m_rxPayload[5u] = 0x01;
-    m_rxPayload[6u] = 0x00;
-    m_rxPayload[7u] = 0x00;
-    m_rxPayload[8u] = 0x00;
-    m_rxPayload[9u] = 0xCC;
-    m_rxPayload[10u] = 0xCC;
+    m_rxPayload[1u] = 0x50u;
+    m_rxPayload[2u] = 0x7Bu;
+    m_rxPayload[3u] = 0x0Au;
+    m_rxPayload[4u] = 0x68u;
+    m_rxPayload[5u] = 0x01u;
+    m_rxPayload[6u] = 0x00u;
+    m_rxPayload[7u] = 0x00u;
+    m_rxPayload[8u] = 0x00u;
+    m_rxPayload[9u] = 0xCCu;
+    m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = ECU_EOF;
 
     if( MSGRX_RES_BADFRAME == MSGRX_ReceiveChunk(&ctx) )
@@ -2325,14 +2310,14 @@ void msgReceiverTestBadFrame(void)
     m_payloadSize = 12u;
     m_payloadCounter = 0u;
     m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = 0x50;
-    m_rxPayload[2u] = 0x7B;
-    m_rxPayload[3u] = 0x0A;
-    m_rxPayload[4u] = 0x68;
-    m_rxPayload[5u] = 0x01;
-    m_rxPayload[6u] = 0x00;
-    m_rxPayload[7u] = 0x00;
-    m_rxPayload[8u] = 0x00;
+    m_rxPayload[1u] = 0x50u;
+    m_rxPayload[2u] = 0x7Bu;
+    m_rxPayload[3u] = 0x0Au;
+    m_rxPayload[4u] = 0x68u;
+    m_rxPayload[5u] = 0x01u;
+    m_rxPayload[6u] = 0x00u;
+    m_rxPayload[7u] = 0x00u;
+    m_rxPayload[8u] = 0x00u;
     m_rxPayload[9u] = ECU_EOF;
 
     if( MSGRX_RES_BADFRAME == MSGRX_ReceiveChunk(&ctx) )
@@ -2383,16 +2368,16 @@ void msgReceiverTestBadFrame(void)
     m_payloadCounter = 0u;
     m_rxPayload[0u] = ECU_SOF;
     m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] = 0x50;
-    m_rxPayload[3u] = 0x7B;
-    m_rxPayload[4u] = 0x0A;
-    m_rxPayload[5u] = 0x68;
-    m_rxPayload[6u] = 0x02;
-    m_rxPayload[7u] = 0x00;
-    m_rxPayload[8u] = 0x00;
-    m_rxPayload[9u] = 0x00;
-    m_rxPayload[10u] = 0xCC;
-    m_rxPayload[11u] = 0xCC;
+    m_rxPayload[2u] = 0x50u;
+    m_rxPayload[3u] = 0x7Bu;
+    m_rxPayload[4u] = 0x0Au;
+    m_rxPayload[5u] = 0x68u;
+    m_rxPayload[6u] = 0x02u;
+    m_rxPayload[7u] = 0x00u;
+    m_rxPayload[8u] = 0x00u;
+    m_rxPayload[9u] = 0x00u;
+    m_rxPayload[10u] = 0xCCu;
+    m_rxPayload[11u] = 0xCCu;
     m_rxPayload[12u] = ECU_EOF;
     if( MSGRX_RES_FRAMERESTART == MSGRX_ReceiveChunk(&ctx) )
     {
@@ -2415,9 +2400,6 @@ void msgReceiverTestCornerCase(void)
     s_eCU_timerAdapterCtx ctxAdapterTim;
     uint8_t  memArea[10u];
     uint8_t  recBuff[10u];
-    uint8_t* dataP;
-    uint32_t dataL;
-    bool_t isInit;
 
     /* Function */
     initData.i_memArea = memArea;
@@ -2458,16 +2440,16 @@ void msgReceiverTestCornerCase(void)
     m_payloadCounter = 0u;
     m_rxPayload[0u] = ECU_SOF;
     m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] = 0x50;
-    m_rxPayload[3u] = 0x7B;
-    m_rxPayload[4u] = 0x0A;
-    m_rxPayload[5u] = 0x68;
-    m_rxPayload[6u] = 0x02;
-    m_rxPayload[7u] = 0x00;
-    m_rxPayload[8u] = 0x00;
-    m_rxPayload[9u] = 0x00;
-    m_rxPayload[10u] = 0xCC;
-    m_rxPayload[11u] = 0xCC;
+    m_rxPayload[2u] = 0x50u;
+    m_rxPayload[3u] = 0x7Bu;
+    m_rxPayload[4u] = 0x0Au;
+    m_rxPayload[5u] = 0x68u;
+    m_rxPayload[6u] = 0x02u;
+    m_rxPayload[7u] = 0x00u;
+    m_rxPayload[8u] = 0x00u;
+    m_rxPayload[9u] = 0x00u;
+    m_rxPayload[10u] = 0xCCu;
+    m_rxPayload[11u] = 0xCCu;
     m_rxPayload[12u] = ECU_EOF;
     if( MSGRX_RES_FRAMERESTART == MSGRX_ReceiveChunk(&ctx) )
     {
@@ -2544,16 +2526,16 @@ void msgReceiverTestCornerCase(void)
     m_payloadCounter = 0u;
     m_rxPayload[0u] = ECU_SOF;
     m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] = 0x50;
-    m_rxPayload[3u] = 0x7B;
-    m_rxPayload[4u] = 0x0A;
-    m_rxPayload[5u] = 0x68;
-    m_rxPayload[6u] = 0x02;
-    m_rxPayload[7u] = 0x00;
-    m_rxPayload[8u] = 0x00;
-    m_rxPayload[9u] = 0x00;
-    m_rxPayload[10u] = 0xCC;
-    m_rxPayload[11u] = 0xCC;
+    m_rxPayload[2u] = 0x50u;
+    m_rxPayload[3u] = 0x7Bu;
+    m_rxPayload[4u] = 0x0Au;
+    m_rxPayload[5u] = 0x68u;
+    m_rxPayload[6u] = 0x02u;
+    m_rxPayload[7u] = 0x00u;
+    m_rxPayload[8u] = 0x00u;
+    m_rxPayload[9u] = 0x00u;
+    m_rxPayload[10u] = 0xCCu;
+    m_rxPayload[11u] = 0xCCu;
     m_rxPayload[12u] = ECU_EOF;
     if( MSGRX_RES_FRAMERESTART == MSGRX_ReceiveChunk(&ctx) )
     {
@@ -2630,16 +2612,16 @@ void msgReceiverTestCornerCase(void)
     m_payloadCounter = 0u;
     m_rxPayload[0u] = ECU_SOF;
     m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] = 0x50;
-    m_rxPayload[3u] = 0x7B;
-    m_rxPayload[4u] = 0x0A;
-    m_rxPayload[5u] = 0x68;
-    m_rxPayload[6u] = 0x02;
-    m_rxPayload[7u] = 0x00;
-    m_rxPayload[8u] = 0x00;
-    m_rxPayload[9u] = 0x00;
-    m_rxPayload[10u] = 0xCC;
-    m_rxPayload[11u] = 0xCC;
+    m_rxPayload[2u] = 0x50u;
+    m_rxPayload[3u] = 0x7Bu;
+    m_rxPayload[4u] = 0x0Au;
+    m_rxPayload[5u] = 0x68u;
+    m_rxPayload[6u] = 0x02u;
+    m_rxPayload[7u] = 0x00u;
+    m_rxPayload[8u] = 0x00u;
+    m_rxPayload[9u] = 0x00u;
+    m_rxPayload[10u] = 0xCCu;
+    m_rxPayload[11u] = 0xCCu;
     m_rxPayload[12u] = ECU_EOF;
     if( MSGRX_RES_FRAMERESTART == MSGRX_ReceiveChunk(&ctx) )
     {
@@ -2793,15 +2775,15 @@ void msgReceiverTestCornerCase(void)
     m_payloadCounter = 0u;
     m_rxPayload[0u] = ECU_SOF;
     m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] = 0x50;
-    m_rxPayload[3u] = 0x7B;
-    m_rxPayload[4u] = 0x0A;
-    m_rxPayload[5u] = 0x68;
-    m_rxPayload[6u] = 0x02;
-    m_rxPayload[7u] = 0x00;
-    m_rxPayload[8u] = 0x00;
-    m_rxPayload[9u] = 0x00;
-    m_rxPayload[10u] = 0xCC;
+    m_rxPayload[2u] = 0x50u;
+    m_rxPayload[3u] = 0x7Bu;
+    m_rxPayload[4u] = 0x0Au;
+    m_rxPayload[5u] = 0x68u;
+    m_rxPayload[6u] = 0x02u;
+    m_rxPayload[7u] = 0x00u;
+    m_rxPayload[8u] = 0x00u;
+    m_rxPayload[9u] = 0x00u;
+    m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = ECU_ESC;
     m_rxPayload[12u] = ECU_EOF;
     if( MSGRX_RES_FRAMERESTART == MSGRX_ReceiveChunk(&ctx) )
@@ -2845,7 +2827,6 @@ void msgReceiverTestCornerCase2(void)
     uint8_t  recBuff[10u];
     uint8_t* dataP;
     uint32_t dataL;
-    bool_t isInit;
 
 
     /* Function */
@@ -2887,16 +2868,16 @@ void msgReceiverTestCornerCase2(void)
     m_payloadCounter = 0u;
     m_rxPayload[0u] = ECU_SOF;
     m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] = 0x50;
-    m_rxPayload[3u] = 0x7B;
-    m_rxPayload[4u] = 0x0A;
-    m_rxPayload[5u] = 0x68;
-    m_rxPayload[6u] = 0x02;
-    m_rxPayload[7u] = 0x00;
-    m_rxPayload[8u] = 0x00;
-    m_rxPayload[9u] = 0x00;
-    m_rxPayload[10u] = 0xCC;
-    m_rxPayload[11u] = 0xCC;
+    m_rxPayload[2u] = 0x50u;
+    m_rxPayload[3u] = 0x7Bu;
+    m_rxPayload[4u] = 0x0Au;
+    m_rxPayload[5u] = 0x68u;
+    m_rxPayload[6u] = 0x02u;
+    m_rxPayload[7u] = 0x00u;
+    m_rxPayload[8u] = 0x00u;
+    m_rxPayload[9u] = 0x00u;
+    m_rxPayload[10u] = 0xCCu;
+    m_rxPayload[11u] = 0xCCu;
     m_rxPayload[12u] = ECU_EOF;
     if( MSGRX_RES_FRAMERESTART == MSGRX_ReceiveChunk(&ctx) )
     {
@@ -2964,16 +2945,16 @@ void msgReceiverTestCornerCase2(void)
     m_payloadCounter = 0u;
     m_rxPayload[0u] = ECU_SOF;
     m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] = 0x50;
-    m_rxPayload[3u] = 0x7B;
-    m_rxPayload[4u] = 0x0A;
-    m_rxPayload[5u] = 0x68;
-    m_rxPayload[6u] = 0x02;
-    m_rxPayload[7u] = 0x00;
-    m_rxPayload[8u] = 0x00;
-    m_rxPayload[9u] = 0x00;
-    m_rxPayload[10u] = 0xCC;
-    m_rxPayload[11u] = 0xCC;
+    m_rxPayload[2u] = 0x50u;
+    m_rxPayload[3u] = 0x7Bu;
+    m_rxPayload[4u] = 0x0Au;
+    m_rxPayload[5u] = 0x68u;
+    m_rxPayload[6u] = 0x02u;
+    m_rxPayload[7u] = 0x00u;
+    m_rxPayload[8u] = 0x00u;
+    m_rxPayload[9u] = 0x00u;
+    m_rxPayload[10u] = 0xCCu;
+    m_rxPayload[11u] = 0xCCu;
     m_rxPayload[12u] = ECU_EOF;
     if( MSGRX_RES_FRAMERESTART == MSGRX_ReceiveChunk(&ctx) )
     {
@@ -3041,16 +3022,16 @@ void msgReceiverTestCornerCase2(void)
     m_payloadCounter = 0u;
     m_rxPayload[0u] = ECU_SOF;
     m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] = 0x50;
-    m_rxPayload[3u] = 0x7B;
-    m_rxPayload[4u] = 0x0A;
-    m_rxPayload[5u] = 0x68;
-    m_rxPayload[6u] = 0x02;
-    m_rxPayload[7u] = 0x00;
-    m_rxPayload[8u] = 0x00;
-    m_rxPayload[9u] = 0x00;
-    m_rxPayload[10u] = 0xCC;
-    m_rxPayload[11u] = 0xCC;
+    m_rxPayload[2u] =  0x83u;
+    m_rxPayload[3u] =  0xFDu;
+    m_rxPayload[4u] =  0xC7u;
+    m_rxPayload[5u] =  0x59u;
+    m_rxPayload[6u] =  0x02u;
+    m_rxPayload[7u] =  0x00u;
+    m_rxPayload[8u] =  0x00u;
+    m_rxPayload[9u] =  0x00u;
+    m_rxPayload[10u] = 0xCCu;
+    m_rxPayload[11u] = 0xC1u;
     m_rxPayload[12u] = ECU_EOF;
     if( MSGRX_RES_FRAMERESTART == MSGRX_ReceiveChunk(&ctx) )
     {
@@ -3088,6 +3069,29 @@ void msgReceiverTestCornerCase2(void)
         (void)printf("msgReceiverTestCornerCase2 16 -- FAIL \n");
     }
 
+    if( MSGRX_RES_OK == MSGRX_GetDecodedData(&ctx, &dataP, &dataL) )
+    {
+        if( 2u == dataL )
+        {
+            if( (  0xCC == dataP[0u] ) || (  0xC1 == dataP[1u] ) )
+            {
+                (void)printf("msgReceiverTestCornerCase2 17 -- OK \n");
+            }
+            else
+            {
+                (void)printf("msgReceiverTestCornerCase2 17 -- FAIL \n");
+            }
+        }
+        else
+        {
+            (void)printf("msgReceiverTestCornerCase2 17 -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgReceiverTestCornerCase2 17 -- FAIL \n");
+    }
+
     /* Function */
     initData.i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
@@ -3105,16 +3109,6 @@ void msgReceiverTestCornerCase2(void)
     initData.i_needWaitFrameStart = false;
     if( MSGRX_RES_OK == MSGRX_InitCtx(&ctx, &initData) )
     {
-        (void)printf("msgReceiverTestCornerCase2 17 -- OK \n");
-    }
-    else
-    {
-        (void)printf("msgReceiverTestCornerCase2 17 -- FAIL \n");
-    }
-
-    /* Function */
-    if( MSGRX_RES_OK == MSGRX_StartNewMsg(&ctx) )
-    {
         (void)printf("msgReceiverTestCornerCase2 18 -- OK \n");
     }
     else
@@ -3122,29 +3116,39 @@ void msgReceiverTestCornerCase2(void)
         (void)printf("msgReceiverTestCornerCase2 18 -- FAIL \n");
     }
 
-    /* Fucntion */
-    m_payloadSize = 13u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] = 0x50;
-    m_rxPayload[3u] = 0x7B;
-    m_rxPayload[4u] = 0x0A;
-    m_rxPayload[5u] = 0x68;
-    m_rxPayload[6u] = 0x02;
-    m_rxPayload[7u] = 0x00;
-    m_rxPayload[8u] = 0x00;
-    m_rxPayload[9u] = 0x00;
-    m_rxPayload[10u] = 0xCC;
-    m_rxPayload[11u] = 0xCC;
-    m_rxPayload[12u] = ECU_EOF;
-    if( MSGRX_RES_CORRUPTCTX == MSGRX_ReceiveChunk(&ctx) )
+    /* Function */
+    if( MSGRX_RES_OK == MSGRX_StartNewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase2 19 -- OK \n");
     }
     else
     {
         (void)printf("msgReceiverTestCornerCase2 19 -- FAIL \n");
+    }
+
+    /* Fucntion */
+    m_payloadSize = 13u;
+    m_payloadCounter = 0u;
+    m_rxPayload[0u] = ECU_SOF;
+    m_rxPayload[1u] = ECU_SOF;
+    m_rxPayload[2u] = 0x50u;
+    m_rxPayload[3u] = 0x7Bu;
+    m_rxPayload[4u] = 0x0Au;
+    m_rxPayload[5u] = 0x68u;
+    m_rxPayload[6u] = 0x02u;
+    m_rxPayload[7u] = 0x00u;
+    m_rxPayload[8u] = 0x00u;
+    m_rxPayload[9u] = 0x00u;
+    m_rxPayload[10u] = 0xCCu;
+    m_rxPayload[11u] = 0xCCu;
+    m_rxPayload[12u] = ECU_EOF;
+    if( MSGRX_RES_CORRUPTCTX == MSGRX_ReceiveChunk(&ctx) )
+    {
+        (void)printf("msgReceiverTestCornerCase2 20 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestCornerCase2 20 -- FAIL \n");
     }
 
     /* Function */
@@ -3164,16 +3168,6 @@ void msgReceiverTestCornerCase2(void)
     initData.i_needWaitFrameStart = false;
     if( MSGRX_RES_OK == MSGRX_InitCtx(&ctx, &initData) )
     {
-        (void)printf("msgReceiverTestCornerCase2 20 -- OK \n");
-    }
-    else
-    {
-        (void)printf("msgReceiverTestCornerCase2 20 -- FAIL \n");
-    }
-
-    /* Function */
-    if( MSGRX_RES_OK == MSGRX_StartNewMsg(&ctx) )
-    {
         (void)printf("msgReceiverTestCornerCase2 21 -- OK \n");
     }
     else
@@ -3181,29 +3175,56 @@ void msgReceiverTestCornerCase2(void)
         (void)printf("msgReceiverTestCornerCase2 21 -- FAIL \n");
     }
 
-    /* Fucntion */
-    m_payloadSize = 13u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] = 0x50;
-    m_rxPayload[3u] = 0x7B;
-    m_rxPayload[4u] = 0x0A;
-    m_rxPayload[5u] = 0x68;
-    m_rxPayload[6u] = 0x02;
-    m_rxPayload[7u] = 0x00;
-    m_rxPayload[8u] = 0x00;
-    m_rxPayload[9u] = 0x00;
-    m_rxPayload[10u] = 0xCC;
-    m_rxPayload[11u] = 0xCC;
-    m_rxPayload[12u] = ECU_EOF;
-    if( MSGRX_RES_CORRUPTCTX == MSGRX_ReceiveChunk(&ctx) )
+    /* Function */
+    if( MSGRX_RES_OK == MSGRX_StartNewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase2 22 -- OK \n");
     }
     else
     {
         (void)printf("msgReceiverTestCornerCase2 22 -- FAIL \n");
+    }
+
+    if( MSGRX_RES_OK == MSGRX_GetDecodedData(&ctx, &dataP, &dataL) )
+    {
+        if( 0u == dataL )
+        {
+            (void)printf("msgReceiverTestCornerCase2 23 -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgReceiverTestCornerCase2 23 -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgReceiverTestCornerCase2 23 -- FAIL \n");
+    }
+
+
+    /* Fucntion */
+    m_payloadSize = 13u;
+    m_payloadCounter = 0u;
+    m_rxPayload[0u] = ECU_SOF;
+    m_rxPayload[1u] = ECU_SOF;
+    m_rxPayload[2u] = 0x50u;
+    m_rxPayload[3u] = 0x7Bu;
+    m_rxPayload[4u] = 0x0Au;
+    m_rxPayload[5u] = 0x68u;
+    m_rxPayload[6u] = 0x02u;
+    m_rxPayload[7u] = 0x00u;
+    m_rxPayload[8u] = 0x00u;
+    m_rxPayload[9u] = 0x00u;
+    m_rxPayload[10u] = 0xCCu;
+    m_rxPayload[11u] = 0xCCu;
+    m_rxPayload[12u] = ECU_EOF;
+    if( MSGRX_RES_CORRUPTCTX == MSGRX_ReceiveChunk(&ctx) )
+    {
+        (void)printf("msgReceiverTestCornerCase2 24 -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestCornerCase2 24 -- FAIL \n");
     }
 }
 
@@ -3220,7 +3241,6 @@ void msgReceiverTestCornerCase3(void)
     uint8_t  recBuff[10u];
     uint8_t* dataP;
     uint32_t dataL;
-    bool_t isInit;
 
     /* Function */
     initData.i_memArea = memArea;
@@ -3260,25 +3280,25 @@ void msgReceiverTestCornerCase3(void)
     m_payloadSize = 21u;
     m_payloadCounter = 0u;
     m_rxPayload[0u] = ECU_EOF;
-    m_rxPayload[1u] = 0xFF;
-    m_rxPayload[2u] = 0x50;
-    m_rxPayload[3u] = 0x7B;
-    m_rxPayload[4u] = 0x0A;
-    m_rxPayload[5u] = 0x68;
-    m_rxPayload[6u] = 0x02;
-    m_rxPayload[7u] = 0x00;
-    m_rxPayload[8u] = 0x00;
+    m_rxPayload[1u] = 0xFFu;
+    m_rxPayload[2u] = 0x50u;
+    m_rxPayload[3u] = 0x7Bu;
+    m_rxPayload[4u] = 0x0Au;
+    m_rxPayload[5u] = 0x68u;
+    m_rxPayload[6u] = 0x02u;
+    m_rxPayload[7u] = 0x00u;
+    m_rxPayload[8u] = 0x00u;
     m_rxPayload[9u] = ECU_SOF;
-    m_rxPayload[10u] = 0x83;
-    m_rxPayload[11u] = 0xFD;
-    m_rxPayload[12u] = 0xC7;
-    m_rxPayload[13u] = 0x59;
-    m_rxPayload[14u] = 0x02;
-    m_rxPayload[15u] = 0x00;
-    m_rxPayload[16u] = 0x00;
-    m_rxPayload[17u] = 0x00;
-    m_rxPayload[18u] = 0xCC;
-    m_rxPayload[19u] = 0xC1;
+    m_rxPayload[10u] = 0x83u;
+    m_rxPayload[11u] = 0xFDu;
+    m_rxPayload[12u] = 0xC7u;
+    m_rxPayload[13u] = 0x59u;
+    m_rxPayload[14u] = 0x02u;
+    m_rxPayload[15u] = 0x00u;
+    m_rxPayload[16u] = 0x00u;
+    m_rxPayload[17u] = 0x00u;
+    m_rxPayload[18u] = 0xCCu;
+    m_rxPayload[19u] = 0xC1u;
     m_rxPayload[20u] = ECU_EOF;
     if( MSGRX_RES_BADFRAME == MSGRX_ReceiveChunk(&ctx) )
     {
@@ -3487,7 +3507,7 @@ void msgReceiverTestCornerCase3(void)
     {
         if( 2u == dataL )
         {
-            if( (  0xCC == dataP[0u] ) || (  0xC1 == dataP[1u] ) )
+            if( (  0xCCu == dataP[0u] ) || (  0xC1u == dataP[1u] ) )
             {
                 (void)printf("msgReceiverTestCornerCase3 24 -- OK \n");
             }
@@ -3544,25 +3564,25 @@ void msgReceiverTestCornerCase3(void)
     m_payloadSize = 21u;
     m_payloadCounter = 0u;
     m_rxPayload[0u] = ECU_EOF;
-    m_rxPayload[1u] = 0xFF;
-    m_rxPayload[2u] = 0x50;
-    m_rxPayload[3u] = 0x7B;
-    m_rxPayload[4u] = 0x0A;
-    m_rxPayload[5u] = 0x68;
-    m_rxPayload[6u] = 0x02;
-    m_rxPayload[7u] = 0x00;
-    m_rxPayload[8u] = 0x00;
+    m_rxPayload[1u] = 0xFFu;
+    m_rxPayload[2u] = 0x50u;
+    m_rxPayload[3u] = 0x7Bu;
+    m_rxPayload[4u] = 0x0Au;
+    m_rxPayload[5u] = 0x68u;
+    m_rxPayload[6u] = 0x02u;
+    m_rxPayload[7u] = 0x00u;
+    m_rxPayload[8u] = 0x00u;
     m_rxPayload[9u] = ECU_SOF;
-    m_rxPayload[10u] = 0x83;
-    m_rxPayload[11u] = 0xFD;
-    m_rxPayload[12u] = 0xC7;
-    m_rxPayload[13u] = 0x59;
-    m_rxPayload[14u] = 0x02;
-    m_rxPayload[15u] = 0x00;
-    m_rxPayload[16u] = 0x00;
-    m_rxPayload[17u] = 0x00;
-    m_rxPayload[18u] = 0xCC;
-    m_rxPayload[19u] = 0xC1;
+    m_rxPayload[10u] = 0x83u;
+    m_rxPayload[11u] = 0xFDu;
+    m_rxPayload[12u] = 0xC7u;
+    m_rxPayload[13u] = 0x59u;
+    m_rxPayload[14u] = 0x02u;
+    m_rxPayload[15u] = 0x00u;
+    m_rxPayload[16u] = 0x00u;
+    m_rxPayload[17u] = 0x00u;
+    m_rxPayload[18u] = 0xCCu;
+    m_rxPayload[19u] = 0xC1u;
     m_rxPayload[20u] = ECU_EOF;
     if( MSGRX_RES_BADFRAME == MSGRX_ReceiveChunk(&ctx) )
     {
@@ -3627,7 +3647,7 @@ void msgReceiverTestCornerCase3(void)
     {
         if( 2u == dataL )
         {
-            if( (  0xCC == dataP[0u] ) || (  0xC1 == dataP[1u] ) )
+            if( (  0xCCu == dataP[0u] ) || (  0xC1u == dataP[1u] ) )
             {
                 (void)printf("msgReceiverTestCornerCase3 29 -- OK \n");
             }
