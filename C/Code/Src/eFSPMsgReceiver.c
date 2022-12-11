@@ -280,7 +280,6 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
             /* Init data */
             sRemRxTime = 0u;
             sessionRemanTime = 0u;
-            elapsedFromStart = 0u;
             rxMostEff = 0u;
             cDRxed = 0u;
             isMsgDec = false;
@@ -603,93 +602,133 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                         /* Check if frame timeout is eplased */
                         if( true == ctx->rxTimer.tim_getRemaining(ctx->rxTimer.timerCtx, &cRemainRxTime) )
                         {
-                            /* Do we need to wait start of frame? */
-                            if( ( true == ctx->needWaitFrameStart ) && ( MSGRX_RES_FRAMERESTART == result ) )
+                            /* Check time validity */
+                            if( cRemainRxTime > sRemRxTime )
                             {
-                                /* Timeout dosent occour in this situation */
+                                /* It's not possible to have more time to send the frame now than during
+                                * the begining */
+                                result = MSGRX_RES_CORRUPTCTX;
                                 stateM = MSGRX_PRV_ELABDONE;
-
-                                /* Frame restarted, restart the timer */
-                                if( true == ctx->rxTimer.tim_start( ctx->rxTimer.timerCtx, ctx->frameTimeoutMs ) )
-                                {
-                                    /* Ok restarted the timer */
-                                    sRemRxTime = ctx->frameTimeoutMs;
-                                    sessionRemanTime = ctx->timePerRecMs;
-                                }
-                                else
-                                {
-                                    /* Some error */
-                                    result = MSGRX_RES_TIMCLBKERROR;
-                                }
                             }
                             else
                             {
-                                /* Check for timeout */
-                                if( cRemainRxTime <= 0u )
-                                {
-                                    if( true == ctx->needWaitFrameStart )
-                                    {
+                                /* Calc elapsed time */
+                                elapsedFromStart = sRemRxTime - cRemainRxTime;
 
-                                    }
-                                    else
-                                    {
-                                        /* Time elapsed */
-                                        result = MSGRX_RES_MESSAGETIMEOUT;
-                                        stateM = MSGRX_PRV_ELABDONE;
-                                    }
-                                }
-                                else
+                                /* Are we waiting SOF? */
+                                resultMsgD =  MSGD_IsWaitingSof(&ctx->msgDecoderCtnx, &isWaitingSof);
+                                if( MSGD_RES_OK == resultMsgD )
                                 {
-                                    /* Check time validity */
-                                    if( cRemainRxTime > sRemRxTime )
+                                    /* Do we need to wait start of frame? */
+                                    if( ( true == ctx->needWaitFrameStart ) && ( MSGRX_RES_FRAMERESTART == result ) )
                                     {
-                                        /* It's not possible to have more time to send the frame now than during
-                                        * the begining */
-                                        result = MSGRX_RES_CORRUPTCTX;
+                                        /* Timeout dosent occour in this situation */
                                         stateM = MSGRX_PRV_ELABDONE;
-                                    }
-                                    else
-                                    {
-                                        /* Frame timeout is not elapsed, check current session if expired */
-                                        if( ( sRemRxTime - cRemainRxTime ) >= ctx->timePerRecMs )
+
+                                        /* Frame restarted, restart the timer */
+                                        if( true == ctx->rxTimer.tim_start( ctx->rxTimer.timerCtx, ctx->frameTimeoutMs ) )
                                         {
-                                            /* Session time is elapsed, can return the previous result */
-                                            stateM = MSGRX_PRV_ELABDONE;
+                                            /* Ok restarted the timer */
+                                            sRemRxTime = ctx->frameTimeoutMs;
+                                            sessionRemanTime = ctx->timePerRecMs;
                                         }
                                         else
                                         {
-                                            /* Session timeout not elapsed, if needed can do more elaboration */
-                                            sessionRemanTime = ctx->timePerRecMs - ( sRemRxTime - cRemainRxTime );
+                                            /* Some error */
+                                            result = MSGRX_RES_TIMCLBKERROR;
+                                        }
+                                    }
+                                    else if( ( true == ctx->needWaitFrameStart ) && ( true == isWaitingSof ) && ( MSGRX_RES_OK == result ) )
+                                    {
+                                        /* In this case total time dosen't need to be decreased, only the session */
+                                        /* Frame restarted, restart the timer */
+                                        if( true == ctx->rxTimer.tim_start( ctx->rxTimer.timerCtx, ctx->frameTimeoutMs ) )
+                                        {
+                                            /* Ok restarted the timer */
+                                            sRemRxTime = ctx->frameTimeoutMs;
+                                            cRemainRxTime = sRemRxTime;
 
-                                            /* Check what to do looking at the previous state result */
-                                            if( MSGRX_RES_OK == result )
+                                            /* Update session timeout */
+                                            if( elapsedFromStart >= sessionRemanTime )
                                             {
-                                                /* Can retrive more data */
-                                                stateM = MSGRX_PRV_CHECKHOWMANYDATA;
-                                            }
-                                            else if( MSGRX_RES_MESSAGERECEIVED == result )
-                                            {
-                                                /* Ok we retrived all the possible data */
-                                                stateM = MSGRX_PRV_ELABDONE;
-                                            }
-                                            else if( MSGRX_RES_BADFRAME == result )
-                                            {
-                                                /* Bad frame */
-                                                stateM = MSGRX_PRV_ELABDONE;
-                                            }
-                                            else if( MSGRX_RES_FRAMERESTART == result )
-                                            {
-                                                /* ok frame restarted */
+                                                /* No more time */
+                                                sessionRemanTime = 0u;
                                                 stateM = MSGRX_PRV_ELABDONE;
                                             }
                                             else
                                             {
-                                                /* Some error, But was already handled by previous state */
-                                                result = MSGRX_RES_CORRUPTCTX;
+                                                /* Update remaining session time */
+                                                sessionRemanTime = sessionRemanTime - elapsedFromStart;
+
+                                                /* Can retrive more data */
+                                                stateM = MSGRX_PRV_CHECKHOWMANYDATA;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            /* Some error */
+                                            result = MSGRX_RES_TIMCLBKERROR;
+											stateM = MSGRX_PRV_ELABDONE;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        /* Check for timeout */
+                                        if( cRemainRxTime <= 0u )
+                                        {
+                                            /* Time elapsed */
+                                            result = MSGRX_RES_MESSAGETIMEOUT;
+                                            stateM = MSGRX_PRV_ELABDONE;
+                                        }
+                                        else
+                                        {
+                                            /* Frame timeout is not elapsed, check current session if expired */
+                                            if( elapsedFromStart >= sessionRemanTime )
+                                            {
+                                                /* Session time is elapsed, can return the previous result */
                                                 stateM = MSGRX_PRV_ELABDONE;
+                                            }
+                                            else
+                                            {
+                                                /* Session timeout not elapsed, if needed can do more elaboration */
+                                                sessionRemanTime = sessionRemanTime - elapsedFromStart;
+
+                                                /* Check what to do looking at the previous state result */
+                                                if( MSGRX_RES_OK == result )
+                                                {
+                                                    /* Can retrive more data */
+                                                    stateM = MSGRX_PRV_CHECKHOWMANYDATA;
+                                                }
+                                                else if( MSGRX_RES_MESSAGERECEIVED == result )
+                                                {
+                                                    /* Ok we retrived all the possible data */
+                                                    stateM = MSGRX_PRV_ELABDONE;
+                                                }
+                                                else if( MSGRX_RES_BADFRAME == result )
+                                                {
+                                                    /* Bad frame */
+                                                    stateM = MSGRX_PRV_ELABDONE;
+                                                }
+                                                else if( MSGRX_RES_FRAMERESTART == result )
+                                                {
+                                                    /* ok frame restarted */
+                                                    stateM = MSGRX_PRV_ELABDONE;
+                                                }
+                                                else
+                                                {
+                                                    /* Some error, But was already handled by previous state */
+                                                    result = MSGRX_RES_CORRUPTCTX;
+                                                    stateM = MSGRX_PRV_ELABDONE;
+                                                }
                                             }
                                         }
                                     }
+                                }
+                                else
+                                {
+                                    /* Some error */
+                                    stateM = MSGRX_PRV_ELABDONE;
+                                    result = convertReturnFromMSGDToMSGRX(resultMsgD);
                                 }
                             }
                         }

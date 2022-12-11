@@ -15,8 +15,8 @@ int main(void)
     // msgEncoderTest();
     // msgDecoderTest();
     //msgDeEncoderTest();
-    msgTransmitterTest();
-    // msgReceiverTest();
+    // msgTransmitterTest();
+    msgReceiverTest();
     //msgRxTransmitterTest();
 
     return 0;

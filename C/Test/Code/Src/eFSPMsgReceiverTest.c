@@ -171,6 +171,7 @@ static uint8_t  m_rxPayload[100u];
 static uint32_t m_payloadSize;
 static uint32_t m_payloadCounter;
 static uint32_t m_read_jump;
+static uint32_t m_read_jumpLong;
 
 bool_t receiveMsg( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd, const uint32_t dataRxMax,
                 const uint32_t timeToRx )
