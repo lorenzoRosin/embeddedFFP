@@ -297,7 +297,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                         resultMsgD = MSGD_IsInit(&ctx->msgDecoderCtnx, &isInit);
                         result = convertReturnFromMSGDToMSGRX(resultMsgD);
 
-                        /* Check if frame timeout is eplased */
+                        /* Check if any error is returned */
                         if( MSGRX_RES_OK == result )
                         {
                             if( true == isInit )
@@ -630,7 +630,8 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                                         {
                                             /* Ok restarted the timer */
                                             sRemRxTime = ctx->frameTimeoutMs;
-                                            sessionRemanTime = ctx->timePerRecMs;
+
+                                            /* Dosent care about session imeout because we are returning in any case */
                                         }
                                         else
                                         {
@@ -646,7 +647,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                                         {
                                             /* Ok restarted the timer */
                                             sRemRxTime = ctx->frameTimeoutMs;
-                                            cRemainRxTime = sRemRxTime;
+                                            cRemainRxTime = ctx->frameTimeoutMs;
 
                                             /* Update session timeout */
                                             if( elapsedFromStart >= sessionRemanTime )
