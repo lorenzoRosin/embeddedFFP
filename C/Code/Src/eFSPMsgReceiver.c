@@ -245,7 +245,8 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
     uint32_t sRemRxTime;
     uint32_t cRemainRxTime;
     uint32_t elapsedFromStart;
-    uint32_t sessionRemanTime;
+    uint32_t sSessionRemanTime;
+    uint32_t cSessionRemanTime;
 
     bool_t isMsgDec;
     bool_t isInit;
@@ -279,7 +280,8 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
 
             /* Init data */
             sRemRxTime = 0u;
-            sessionRemanTime = 0u;
+            cSessionRemanTime = 0u;
+            sSessionRemanTime = 0u;
             rxMostEff = 0u;
             cDRxed = 0u;
             isMsgDec = false;
@@ -341,7 +343,8 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                                         {
                                             /* Ok restarted the timer */
                                             sRemRxTime = ctx->frameTimeoutMs;
-                                            sessionRemanTime = ctx->timePerRecMs;
+                                            cSessionRemanTime = ctx->timePerRecMs;
+                                            sSessionRemanTime = ctx->timePerRecMs;
 
                                             /* check if we have some data to receive in RX buffer */
                                             stateM = MSGRX_PRV_CHECKHOWMANYDATA;
@@ -368,12 +371,14 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                                             if( sRemRxTime >= ctx->timePerRecMs )
                                             {
                                                 /* Time elapsed */
-                                                sessionRemanTime = ctx->timePerRecMs;
+                                                cSessionRemanTime = ctx->timePerRecMs;
+                                                sSessionRemanTime = ctx->timePerRecMs;
                                             }
                                             else
                                             {
                                                 /* Session timeout not elapsed, can receive data */
-                                                sessionRemanTime = sRemRxTime;
+                                                cSessionRemanTime = sRemRxTime;
+                                                sSessionRemanTime = sRemRxTime;
                                             }
 
                                             /* check if we have some data to receive in RX buffer */
@@ -396,12 +401,14 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                                         if( sRemRxTime >= ctx->timePerRecMs )
                                         {
                                             /* Time elapsed */
-                                            sessionRemanTime = ctx->timePerRecMs;
+                                            cSessionRemanTime = ctx->timePerRecMs;
+                                            sSessionRemanTime = ctx->timePerRecMs;
                                         }
                                         else
                                         {
                                             /* Session timeout not elapsed, can receive data */
-                                            sessionRemanTime = sRemRxTime;
+                                            cSessionRemanTime = sRemRxTime;
+                                            sSessionRemanTime = sRemRxTime;
                                         }
 
                                         /* check if we have some data to receive in RX buffer */
@@ -503,7 +510,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                     {
                         /* Ok, rx buffer is empty and need to be filled with data that we can parse */
                         if( true == (*ctx->cbRxP)(ctx->cbRxCtx, ctx->rxBuff, &ctx->rxBuffFill, rxMostEff,
-                                                  sessionRemanTime) )
+                                                  cSessionRemanTime) )
                         {
                             /* Check for some strangeness */
                             if( ctx->rxBuffFill > rxMostEff )
@@ -650,16 +657,16 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                                             cRemainRxTime = ctx->frameTimeoutMs;
 
                                             /* Update session timeout */
-                                            if( elapsedFromStart >= sessionRemanTime )
+                                            if( elapsedFromStart >= sSessionRemanTime )
                                             {
                                                 /* No more time */
-                                                sessionRemanTime = 0u;
                                                 stateM = MSGRX_PRV_ELABDONE;
                                             }
                                             else
                                             {
                                                 /* Update remaining session time */
-                                                sessionRemanTime = sessionRemanTime - elapsedFromStart;
+                                                sSessionRemanTime = sSessionRemanTime - elapsedFromStart;
+                                                cSessionRemanTime = sSessionRemanTime;
 
                                                 /* Can retrive more data */
                                                 stateM = MSGRX_PRV_CHECKHOWMANYDATA;
@@ -684,7 +691,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                                         else
                                         {
                                             /* Frame timeout is not elapsed, check current session if expired */
-                                            if( elapsedFromStart >= sessionRemanTime )
+                                            if( elapsedFromStart >= sSessionRemanTime )
                                             {
                                                 /* Session time is elapsed, can return the previous result */
                                                 stateM = MSGRX_PRV_ELABDONE;
@@ -692,7 +699,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                                             else
                                             {
                                                 /* Session timeout not elapsed, if needed can do more elaboration */
-                                                sessionRemanTime = sessionRemanTime - elapsedFromStart;
+                                                cSessionRemanTime = sSessionRemanTime - elapsedFromStart;
 
                                                 /* Check what to do looking at the previous state result */
                                                 if( MSGRX_RES_OK == result )
