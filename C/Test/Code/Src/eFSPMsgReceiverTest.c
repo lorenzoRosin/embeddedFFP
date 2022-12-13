@@ -555,6 +555,10 @@ bool_t timGetRemainingErrCntrl ( void* cntx, uint32_t* const remainings )
  **********************************************************************************************************************/
 void msgReceiverTestBadPointer(void)
 {
+    /* Static var init */
+    m_read_jump = 0u;
+	m_read_jumpLong = 0u;
+
     /* Local variable */
     s_eFSP_MSGRX_Ctx ctx;
     s_eFSP_MSGRX_InitData initData;
@@ -887,6 +891,10 @@ void msgReceiverTestBadPointer(void)
 
 void msgReceiverTestBadInit(void)
 {
+    /* Static var init */
+    m_read_jump = 0u;
+	m_read_jumpLong = 0u;
+
     /* Local variable */
     s_eFSP_MSGRX_Ctx ctx;
     s_eFSP_MSGRX_InitData initData;
@@ -985,6 +993,10 @@ void msgReceiverTestBadInit(void)
 
 void msgReceiverTestBadParamEntr(void)
 {
+    /* Static var init */
+    m_read_jump = 0u;
+	m_read_jumpLong = 0u;
+
     /* Local variable */
     s_eFSP_MSGRX_Ctx ctx;
     s_eFSP_MSGRX_InitData initData;
@@ -1159,6 +1171,10 @@ void msgReceiverTestBadParamEntr(void)
 
 void msgReceiverTestCorruptContext(void)
 {
+    /* Static var init */
+    m_read_jump = 0u;
+	m_read_jumpLong = 0u;
+
     /* Local variable */
     s_eFSP_MSGRX_Ctx ctx;
     s_eFSP_MSGRX_InitData initData;
@@ -1839,6 +1855,10 @@ void msgReceiverTestCorruptContext(void)
 
 void msgReceiverTestBadClBckCrc(void)
 {
+    /* Static var init */
+    m_read_jump = 0u;
+	m_read_jumpLong = 0u;
+
     /* Local variable */
     s_eFSP_MSGRX_Ctx ctx;
     s_eFSP_MSGRX_InitData initData;
@@ -1910,6 +1930,9 @@ void msgReceiverTestBadClBckCrc(void)
 
 void msgReceiverTestBadClBckReceive(void)
 {
+    /* Static var init */
+    m_read_jump = 0u;
+
     /* Local variable */
     s_eFSP_MSGRX_Ctx ctx;
     s_eFSP_MSGRX_InitData initData;
@@ -1991,6 +2014,10 @@ void msgReceiverTestBadClBckReceive(void)
 
 void msgReceiverTestBadClBckTim(void)
 {
+    /* Static var init */
+    m_read_jump = 0u;
+	m_read_jumpLong = 0u;
+
     /* Local variable */
     s_eFSP_MSGRX_Ctx ctx;
     s_eFSP_MSGRX_InitData initData;
@@ -2198,6 +2225,10 @@ void msgReceiverTestBadClBckTim(void)
 
 void msgReceiverTestBadFrame(void)
 {
+    /* Static var init */
+    m_read_jump = 0u;
+	m_read_jumpLong = 0u;
+
     /* Local variable */
     s_eFSP_MSGRX_Ctx ctx;
     s_eFSP_MSGRX_InitData initData;
@@ -2556,6 +2587,10 @@ void msgReceiverTestBadFrame(void)
 
 void msgReceiverTestCornerCase(void)
 {
+    /* Static var init */
+    m_read_jump = 0u;
+	m_read_jumpLong = 0u;
+
     /* Local variable */
     s_eFSP_MSGRX_Ctx ctx;
     s_eFSP_MSGRX_InitData initData;
@@ -2981,6 +3016,10 @@ void msgReceiverTestCornerCase(void)
 
 void msgReceiverTestCornerCase2(void)
 {
+    /* Static var init */
+    m_read_jump = 0u;
+	m_read_jumpLong = 0u;
+
     /* Local variable */
     s_eFSP_MSGRX_Ctx ctx;
     s_eFSP_MSGRX_InitData initData;
@@ -3395,6 +3434,10 @@ void msgReceiverTestCornerCase2(void)
 
 void msgReceiverTestCornerCase3(void)
 {
+    /* Static var init */
+    m_read_jump = 0u;
+	m_read_jumpLong = 0u;
+
     /* Local variable */
     s_eFSP_MSGRX_Ctx ctx;
     s_eFSP_MSGRX_InitData initData;
@@ -3834,6 +3877,10 @@ void msgReceiverTestCornerCase3(void)
 
 void msgReceiverTestCornerCase4(void)
 {
+    /* Static var init */
+    m_read_jump = 0u;
+	m_read_jumpLong = 0u;
+
     /* Local variable */
     s_eFSP_MSGRX_Ctx ctx;
     s_eFSP_MSGRX_InitData initData;
@@ -4111,6 +4158,10 @@ void msgReceiverTestCornerCase4(void)
 
 void msgReceiverTestCornerCase5(void)
 {
+    /* Static var init */
+    m_read_jump = 0u;
+	m_read_jumpLong = 0u;
+
     /* Local variable */
     s_eFSP_MSGRX_Ctx ctx;
     s_eFSP_MSGRX_InitData initData;
