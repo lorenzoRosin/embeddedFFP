@@ -248,6 +248,7 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
     uint32_t sRemainTxTime;
     uint32_t cRemainTxTime;
     uint32_t sessionRemaining;
+    uint32_t elapsedFromStart;
 
     /* Local variable usend for the current data calculation */
     const uint8_t *cDToTxP;
@@ -470,8 +471,10 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
                                     if( sRemainTxTime >= ctx->timePerSendMs )
                                     {
                                         /* Started with a whole time slice */
+                                        elapsedFromStart = sRemainTxTime - cRemainTxTime;
+
                                         /* Frame timeout is not elapsed, check current session if expired */
-                                        if( ( sRemainTxTime - cRemainTxTime ) >= ctx->timePerSendMs )
+                                        if( elapsedFromStart >= ctx->timePerSendMs )
                                         {
                                             /* Time elapsed */
                                             result = MSGTX_RES_OK;
@@ -480,7 +483,7 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
                                         else
                                         {
                                             /* Session timeout not elapsed, can send data */
-                                            sessionRemaining = ctx->timePerSendMs - ( sRemainTxTime - cRemainTxTime );
+                                            sessionRemaining = ctx->timePerSendMs - elapsedFromStart;
 
                                             /* Check if something to send is present */
                                             stateM = MSGTX_PRV_CHECKIFBUFFERTX;
