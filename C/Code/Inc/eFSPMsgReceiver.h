@@ -73,7 +73,7 @@ typedef struct
     uint32_t        rxBuffFill;
     cb_rx_msge      cbRxP;
     void*           cbRxCtx;
-    s_eFSP_RXTIMER  rxTimer;
+    s_eFSP_RXTIMER  rxTim;
     uint32_t        frameTimeoutMs;
     uint32_t        timePerRecMs;
     bool_t          needWaitFrameStart;
@@ -89,7 +89,7 @@ typedef struct
     void*           i_cbCrcCrx;
     cb_rx_msge      i_cbRxP;
     void*           i_cbRxCtx;
-    s_eFSP_RXTIMER  i_rxTimer;
+    s_eFSP_RXTIMER  i_rxTim;
     uint32_t        i_frameTimeoutMs;
     uint32_t        i_timePerRecMs;
     bool_t          i_needWaitFrameStart;

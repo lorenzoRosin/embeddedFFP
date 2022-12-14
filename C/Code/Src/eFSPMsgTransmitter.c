@@ -247,7 +247,7 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
     /* Local variable to keep track of the start, current etc remaining time */
     uint32_t sRemainTxTime;
     uint32_t cRemainTxTime;
-    uint32_t sendTimeout;
+    uint32_t sessionRemaining;
 
     /* Local variable usend for the current data calculation */
     const uint8_t *cDToTxP;
@@ -269,7 +269,7 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
 		else
 		{
             /* Init state machine value */
-            sendTimeout = 0u;
+            sessionRemaining = 0u;
             sRemainTxTime = 0u;
             result = MSGTX_RES_OK;
             stateM = MSGTX_PRV_CHECKINIT;
@@ -326,12 +326,12 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
                                 if( sRemainTxTime >= ctx->timePerSendMs )
                                 {
                                     /* Time elapsed */
-                                    sendTimeout = ctx->timePerSendMs;
+                                    sessionRemaining = ctx->timePerSendMs;
                                 }
                                 else
                                 {
                                     /* Session timeout not elapsed, can send data */
-                                    sendTimeout = sRemainTxTime;
+                                    sessionRemaining = sRemainTxTime;
                                 }
 
                                 /* check if we have some data to send in TX buffer */
@@ -417,7 +417,7 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
                         cDToTxLen = ctx->sendBuffFill - ctx->sendBuffCntr;
 
                         /* Can send data from send buffer */
-                        if( true == (*ctx->cbTxP)(ctx->cbTxCtx, cDToTxP, cDToTxLen, &cDTxed, sendTimeout) )
+                        if( true == (*ctx->cbTxP)(ctx->cbTxCtx, cDToTxP, cDToTxLen, &cDTxed, sessionRemaining) )
                         {
                             /* Check for some strangeness */
                             if( cDTxed > cDToTxLen )
@@ -448,20 +448,20 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
                         /* Check if frame timeout is eplased */
                         if( true == ctx->txTimer.tim_getRemaining(ctx->txTimer.timerCtx, &cRemainTxTime) )
                         {
-                            if( cRemainTxTime <= 0u )
+                            /* Check time validity */
+                            if( cRemainTxTime > sRemainTxTime )
                             {
-                                /* Time elapsed */
-                                result = MSGTX_RES_MESSAGETIMEOUT;
+                                /* It's not possible to have more time to send the frame now than during
+                                 * the begining */
+                                result = MSGTX_RES_CORRUPTCTX;
                                 stateM = MSGTX_PRV_ELABDONE;
                             }
                             else
                             {
-                                /* Check time validity */
-                                if( cRemainTxTime > sRemainTxTime )
+                                if( cRemainTxTime <= 0u )
                                 {
-                                    /* It's not possible to have more time to send the frame now than during
-                                     * the begining */
-                                    result = MSGTX_RES_CORRUPTCTX;
+                                    /* Time elapsed */
+                                    result = MSGTX_RES_MESSAGETIMEOUT;
                                     stateM = MSGTX_PRV_ELABDONE;
                                 }
                                 else
@@ -480,7 +480,7 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
                                         else
                                         {
                                             /* Session timeout not elapsed, can send data */
-                                            sendTimeout = ctx->timePerSendMs - ( sRemainTxTime - cRemainTxTime );
+                                            sessionRemaining = ctx->timePerSendMs - ( sRemainTxTime - cRemainTxTime );
 
                                             /* Check if something to send is present */
                                             stateM = MSGTX_PRV_CHECKIFBUFFERTX;
@@ -489,7 +489,7 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
                                     else
                                     {
                                         /* Started only with remaining time */
-                                        sendTimeout = cRemainTxTime;
+                                        sessionRemaining = cRemainTxTime;
 
                                         /* Check if something to send is present */
                                         stateM = MSGTX_PRV_CHECKIFBUFFERTX;
