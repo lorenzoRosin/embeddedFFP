@@ -172,7 +172,7 @@ bool_t c32SAdaptEr(void* cntx, const uint32_t s, const uint8_t d[], const uint32
     return result;
 }
 
-static uint8_t  m_rxPayload[100u];
+static uint8_t  m_rxPayload[120u];
 static uint32_t m_payloadSize;
 static uint32_t m_payloadCounter;
 static uint32_t m_read_jump;
@@ -3893,8 +3893,6 @@ void msgReceiverTestCornerCase4(void)
     s_eCU_timerAdapterCtx ctxAdapterTim;
     uint8_t  memArea[10u];
     uint8_t  recBuff[5u];
-    uint8_t* dataP;
-    uint32_t dataL;
 
     /* Function */
     initData.i_memArea = memArea;
@@ -4261,7 +4259,7 @@ void msgReceiverTestCornerCase5(void)
         (void)printf("msgReceiverTestCornerCase5 5  -- FAIL \n");
     }
 
-    ctx.cbRxP = receiveMsg;
+    ctx.cbRxP = &receiveMsg;
     if( MSGRX_RES_MESSAGERECEIVED == MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase5 6  -- OK \n");
@@ -4345,6 +4343,7 @@ void msgReceiverTestCornerCase6(void)
     /* Static var init */
     m_read_jump = 0u;
 	m_read_jumpLong = 0u;
+    uint32_t temp;
 
     /* Local variable */
     s_eFSP_MSGRX_Ctx ctx;
@@ -4353,10 +4352,8 @@ void msgReceiverTestCornerCase6(void)
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
     s_eCU_timerAdapterCtx ctxAdapterTim;
-    uint8_t  memArea[20u];
-    uint8_t  recBuff[20u];
-    uint8_t* dataP;
-    uint32_t dataL;
+    uint8_t  memArea[100u];
+    uint8_t  recBuff[100u];
 
     /* Function */
     initData.i_memArea = memArea;
@@ -4365,14 +4362,14 @@ void msgReceiverTestCornerCase6(void)
     initData.i_receiveBuffAreaSize = sizeof(recBuff);
     initData.i_cbCrcP = cbCrcPTest;
     initData.i_cbCrcCrx = &ctxAdapterCrc;
-    initData.i_cbRxP = &receiveMsgJumpLong;
+    initData.i_cbRxP = &receiveMsg;
     initData.i_cbRxCtx = &ctxAdapterRx;
     initData.i_rxTimer.timerCtx = &ctxAdapterTim;
     initData.i_rxTimer.tim_start = &timStart;
     initData.i_rxTimer.tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 8u;
-    initData.i_timePerRecMs = 8u;
-    initData.i_needWaitFrameStart = true;
+    initData.i_frameTimeoutMs = 2000u;
+    initData.i_timePerRecMs = 2000u;
+    initData.i_needWaitFrameStart = false;
     if( MSGRX_RES_OK == MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgReceiverTestCornerCase6 1  -- OK \n");
@@ -4382,6 +4379,81 @@ void msgReceiverTestCornerCase6(void)
         (void)printf("msgReceiverTestCornerCase6 1  -- FAIL \n");
     }
 
+
+    /* Function */
+    if( MSGRX_RES_OK == MSGRX_StartNewMsg(&ctx) )
+    {
+        (void)printf("msgReceiverTestCornerCase6 2  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestCornerCase6 2  -- FAIL \n");
+    }
+
+    /* Fucntion */
+    m_payloadSize = sizeof(m_rxPayload);
+    m_payloadCounter = 0u;
+    for( temp = 0u; temp < sizeof(m_rxPayload) ; temp++ )
+    {
+        m_rxPayload[temp] = ECU_SOF;
+    }
+    m_rxPayload[0u] = ECU_SOF;
+    m_rxPayload[1u] =  0x83u;
+    m_rxPayload[2u] =  0xFDu;
+    m_rxPayload[3u] =  0xC7u;
+    m_rxPayload[4u] =  0x59u;
+    m_rxPayload[5u] =  0x50u;
+    m_rxPayload[6u] =  0x00u;
+    m_rxPayload[7u] =  0x00u;
+    m_rxPayload[8u] =  0x00u;
+    m_rxPayload[9u] =  ECU_SOF;
+    m_rxPayload[10u] = 0x83u;
+    m_rxPayload[11u] = 0xFDu;
+    m_rxPayload[12u] = 0xC7u;
+    m_rxPayload[13u] = 0x59u;
+    m_rxPayload[14u] = 0x02u;
+    m_rxPayload[15u] = 0x00u;
+    m_rxPayload[16u] = 0x00u;
+    m_rxPayload[17u] = 0x00u;
+    m_rxPayload[18u] = 0xCCu;
+    m_rxPayload[19u] = 0xC1u;
+    m_rxPayload[20u] = ECU_EOF;
+
+    if( MSGRX_RES_FRAMERESTART == MSGRX_ReceiveChunk(&ctx) )
+    {
+        (void)printf("msgReceiverTestCornerCase6 3  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestCornerCase6 3  -- FAIL \n");
+    }
+
+    if( ( 81u == ctx.rxBuffFill) || ( 1u == ctx.rxBuffCntr ) )
+    {
+        (void)printf("msgReceiverTestCornerCase6 4  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestCornerCase6 4  -- FAIL \n");
+    }
+
+    if( MSGRX_RES_MESSAGERECEIVED == MSGRX_ReceiveChunk(&ctx) )
+    {
+        (void)printf("msgReceiverTestCornerCase6 5  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestCornerCase6 5  -- FAIL \n");
+    }
+
+    if( ( 81u == ctx.rxBuffFill) || ( 12u == ctx.rxBuffCntr ) )
+    {
+        (void)printf("msgReceiverTestCornerCase6 6  -- FAIL \n");
+    }
+    else
+    {
+        (void)printf("msgReceiverTestCornerCase6 6  -- FAIL \n");
+    }
 }
 
 
