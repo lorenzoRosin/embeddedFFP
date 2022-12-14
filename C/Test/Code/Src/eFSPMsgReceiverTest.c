@@ -4448,7 +4448,7 @@ void msgReceiverTestCornerCase6(void)
 
     if( ( 81u == ctx.rxBuffFill) || ( 12u == ctx.rxBuffCntr ) )
     {
-        (void)printf("msgReceiverTestCornerCase6 6  -- FAIL \n");
+        (void)printf("msgReceiverTestCornerCase6 6  -- OK \n");
     }
     else
     {
