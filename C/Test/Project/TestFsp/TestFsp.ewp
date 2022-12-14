@@ -666,7 +666,7 @@
             <data>
                 <extensions></extensions>
                 <cmdline></cmdline>
-                <hasPrio>160</hasPrio>
+                <hasPrio>1</hasPrio>
                 <buildSequence>inputOutputBased</buildSequence>
             </data>
         </settings>
@@ -1087,9 +1087,6 @@
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgDeEncoderTest.h</name>
-            <excluded>
-                <configuration>Release</configuration>
-            </excluded>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgEncoderTest.h</name>
@@ -1114,9 +1111,6 @@
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgDeEncoderTest.c</name>
-            <excluded>
-                <configuration>Release</configuration>
-            </excluded>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgEncoderTest.c</name>
