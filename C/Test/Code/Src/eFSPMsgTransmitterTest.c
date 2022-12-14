@@ -54,6 +54,8 @@ static bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t d[], const u
 static bool_t c32SAdaptEr(void* cntx, const uint32_t s, const uint8_t d[], const uint32_t dLen, uint32_t* const c32Val);
 static bool_t sendMsg( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSendLen, uint32_t* const dataSended,
                        const uint32_t timeToSend );
+static bool_t sendMsgCorr( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSendLen, uint32_t* const dataSended,
+                       const uint32_t timeToSend );
 static bool_t sendMsgOnce( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSendLen, uint32_t* const dataSended,
                        const uint32_t timeToSend );
 static bool_t sendMsgErr( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSendLen, uint32_t* const dataSended,
@@ -62,6 +64,7 @@ static bool_t timStart ( void* cntx, const uint32_t timeoutVal );
 static bool_t timGetRemaining ( void* cntx, uint32_t* const remainings );
 static bool_t timStartErr ( void* cntx, const uint32_t timeoutVal );
 static bool_t timGetRemainingErr ( void* cntx, uint32_t* const remainings );
+static bool_t timGetRemainingCorr ( void* cntx, uint32_t* const remainings );
 
 
 
@@ -78,6 +81,8 @@ static void msgTransmitterTestBadClBckSend(void);
 static void msgTransmitterTestBadClBckTim(void);
 static void msgTransmitterTestCornerCase(void);
 static void msgTransmitterTestCornerCase2(void);
+static void msgTransmitterTestCornerCase3(void);
+
 
 
 /***********************************************************************************************************************
@@ -97,6 +102,7 @@ void msgTransmitterTest(void)
     msgTransmitterTestBadClBckTim();
     msgTransmitterTestCornerCase();
     msgTransmitterTestCornerCase2();
+    msgTransmitterTestCornerCase3();
 
     (void)printf("\n\nMESSAGE TRANSMITTER TEST END \n\n");
 }
@@ -186,6 +192,42 @@ bool_t sendMsg( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSen
             (void)memcpy(&m_txBuff[m_txBuffCounter], dataToSend, dataToSendLen);
             m_txBuffCounter += dataToSendLen;
             *dataSended = dataToSendLen;
+
+            result = true;
+        }
+        else
+        {
+            result = false;
+        }
+    }
+
+    return result;
+}
+
+
+bool_t sendMsgCorr( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSendLen, uint32_t* const dataSended,
+                const uint32_t timeToSend )
+{
+    bool_t result;
+    s_eCU_msgSendAdapterCtx* ctxCur;
+
+    (void)timeToSend;
+
+    if( ( NULL == cntx ) || ( NULL == dataToSend ) || ( NULL == dataSended ) )
+    {
+        result = false;
+    }
+    else
+    {
+        ctxCur = (s_eCU_msgSendAdapterCtx*)cntx;
+        ctxCur->sendIsError = true;
+
+
+        if( ( m_txBuffCounter + dataToSendLen ) < sizeof(m_txBuff) )
+        {
+            (void)memcpy(&m_txBuff[m_txBuffCounter], dataToSend, dataToSendLen);
+            m_txBuffCounter += dataToSendLen;
+            *dataSended = dataToSendLen + 1u;
 
             result = true;
         }
@@ -357,6 +399,35 @@ bool_t timGetRemainingErr ( void* cntx, uint32_t* const remainings )
 
         *remainings = m_tim_remainingTime;
         result = false;
+    }
+
+    return result;
+}
+
+bool_t timGetRemainingCorr ( void* cntx, uint32_t* const remainings )
+{
+    bool_t result;
+    s_eCU_timerAdapterCtx* ctxCur;
+
+    if( ( NULL == cntx ) || ( NULL == remainings ) )
+    {
+        result = false;
+    }
+    else
+    {
+        ctxCur = (s_eCU_timerAdapterCtx*)cntx;
+        ctxCur->sendIsError = true;
+        if( m_tim_remainingTime < MAX_UINT32VAL )
+        {
+            m_tim_remainingTime++;
+        }
+        *remainings = m_tim_remainingTime + m_tim_remainingTime;
+
+        if( m_tim_remainingTime < MAX_UINT32VAL )
+        {
+            m_tim_remainingTime++;
+        }
+        result = true;
     }
 
     return result;
@@ -2017,7 +2088,7 @@ void msgTransmitterTestCornerCase(void)
     initData.i_txTimer.tim_start = &timStart;
     initData.i_txTimer.tim_getRemaining = &timGetRemaining;
     initData.i_frameTimeoutMs = 1000u;
-    initData.i_timePerSendMs = 1;
+    initData.i_timePerSendMs = 1u;
 
     if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
     {
@@ -2225,7 +2296,7 @@ void msgTransmitterTestCornerCase2(void)
     initData.i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
     initData.i_sendBuffArea = sendBuff;
-    initData.i_sendBuffAreaSize = 5;
+    initData.i_sendBuffAreaSize = 5u;
     initData.i_cbCrcP = cbCrcPTest;
     initData.i_cbCrcCtx = &ctxAdapterCrc;
     initData.i_cbTxP = &sendMsgOnce;
@@ -2289,7 +2360,7 @@ void msgTransmitterTestCornerCase2(void)
     initData.i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
     initData.i_sendBuffArea = sendBuff;
-    initData.i_sendBuffAreaSize = 3;
+    initData.i_sendBuffAreaSize = 3u;
     initData.i_cbCrcP = cbCrcPTest;
     initData.i_cbCrcCtx = &ctxAdapterCrc;
     initData.i_cbTxP = &sendMsgOnce;
@@ -2403,6 +2474,153 @@ void msgTransmitterTestCornerCase2(void)
     }
 }
 
+void msgTransmitterTestCornerCase3()
+{
+    /* Local variable */
+    s_eFSP_MSGTX_Ctx ctx;
+    s_eFSP_MSGTX_InitData initData;
+    cb_crc32_msge cbCrcPTest = &c32SAdapt;
+    s_eCU_crcAdapterCtx ctxAdapterCrc;
+    s_eCU_msgSendAdapterCtx ctxAdapterSend;
+    s_eCU_timerAdapterCtx ctxAdapterTim;
+    uint8_t  memArea[10u];
+    uint8_t  sendBuff[10u];
+    uint8_t* dataP;
+    uint32_t dataL;
+
+    /* Clear */
+    (void)memset(&ctx, 0, sizeof(s_eFSP_MSGTX_Ctx));
+    (void)memset(&initData, 0, sizeof(s_eFSP_MSGTX_InitData));
+
+    /* Init */
+    initData.i_memArea = memArea;
+    initData.i_memAreaSize = sizeof(memArea);
+    initData.i_sendBuffArea = sendBuff;
+    initData.i_sendBuffAreaSize = sizeof(sendBuff);
+    initData.i_cbCrcP = cbCrcPTest;
+    initData.i_cbCrcCtx = &ctxAdapterCrc;
+    initData.i_cbTxP = &sendMsgCorr;
+    initData.i_cbTxCtx = &ctxAdapterSend;
+    initData.i_txTimer.timerCtx = &ctxAdapterTim;
+    initData.i_txTimer.tim_start = &timStart;
+    initData.i_txTimer.tim_getRemaining = &timGetRemaining;
+    initData.i_frameTimeoutMs = 1000u;
+    initData.i_timePerSendMs = 100u;
+
+    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgTransmitterTestCornerCase3 1  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCornerCase3 1  -- FAIL \n");
+    }
+
+    if( MSGTX_RES_OK == MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
+    {
+        if( 2u == dataL )
+        {
+            (void)printf("msgTransmitterTestCornerCase3 2  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgTransmitterTestCornerCase3 2  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCornerCase3 2  -- FAIL \n");
+    }
+
+    /* Function */
+    dataP[0u] = 0x01u;
+    dataP[1u] = 0x02u;
+    if( MSGTX_RES_OK == MSGTX_StartNewMessage(&ctx, 2u) )
+    {
+        (void)printf("msgTransmitterTestCornerCase3 3  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCornerCase3 3  -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGTX_RES_CORRUPTCTX == MSGTX_SendChunk(&ctx) )
+    {
+        (void)printf("msgTransmitterTestCornerCase3 4  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCornerCase3 4  -- FAIL \n");
+    }
+
+    /* Clear */
+    (void)memset(&ctx, 0, sizeof(s_eFSP_MSGTX_Ctx));
+    (void)memset(&initData, 0, sizeof(s_eFSP_MSGTX_InitData));
+
+    /* Init */
+    initData.i_memArea = memArea;
+    initData.i_memAreaSize = sizeof(memArea);
+    initData.i_sendBuffArea = sendBuff;
+    initData.i_sendBuffAreaSize = sizeof(sendBuff);
+    initData.i_cbCrcP = cbCrcPTest;
+    initData.i_cbCrcCtx = &ctxAdapterCrc;
+    initData.i_cbTxP = &sendMsg;
+    initData.i_cbTxCtx = &ctxAdapterSend;
+    initData.i_txTimer.timerCtx = &ctxAdapterTim;
+    initData.i_txTimer.tim_start = &timStart;
+    initData.i_txTimer.tim_getRemaining = &timGetRemainingCorr;
+    initData.i_frameTimeoutMs = 1000u;
+    initData.i_timePerSendMs = 100u;
+
+    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    {
+        (void)printf("msgTransmitterTestCornerCase3 5  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCornerCase3 5  -- FAIL \n");
+    }
+
+    if( MSGTX_RES_OK == MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
+    {
+        if( 2u == dataL )
+        {
+            (void)printf("msgTransmitterTestCornerCase3 6  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgTransmitterTestCornerCase3 6  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCornerCase3 6  -- FAIL \n");
+    }
+
+    /* Function */
+    dataP[0u] = 0x01u;
+    dataP[1u] = 0x02u;
+    if( MSGTX_RES_OK == MSGTX_StartNewMessage(&ctx, 2u) )
+    {
+        (void)printf("msgTransmitterTestCornerCase3 7  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCornerCase3 7  -- FAIL \n");
+    }
+
+    /* Function */
+    if( MSGTX_RES_CORRUPTCTX == MSGTX_SendChunk(&ctx) )
+    {
+        (void)printf("msgTransmitterTestCornerCase3 8  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgTransmitterTestCornerCase3 8  -- FAIL \n");
+    }
+
+}
 
 #ifdef __IAR_SYSTEMS_ICC__
     #pragma cstat_restore = "MISRAC2012-Rule-10.3", "CERT-STR32-C", "MISRAC2012-Rule-11.5", "CERT-EXP36-C_b", \
