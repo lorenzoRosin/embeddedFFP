@@ -29,6 +29,8 @@
     /* Suppressed for code clarity in test execution*/
 #endif
 
+
+
 /***********************************************************************************************************************
  *   PRIVATE TEST FUNCTION DECLARATION
  **********************************************************************************************************************/
@@ -61,6 +63,9 @@ static void msgDecoderTestErrorAndContinue(void);
 static void msgDecoderTestErrorAndContinueEx(void);
 static void msgDecoderTestErrorShortFrame(void);
 static void msgDecoderTestErrorBadStuff(void);
+static void msgDecoderTestCorner(void);
+
+
 
 /***********************************************************************************************************************
  *   GLOBAL FUNCTIONS
@@ -85,6 +90,7 @@ void msgDecoderTest(void)
     msgDecoderTestErrorAndContinueEx();
     msgDecoderTestErrorShortFrame();
     msgDecoderTestErrorBadStuff();
+    msgDecoderTestCorner();
 
     (void)printf("\n\nMESSAGE DECODER TEST END \n\n");
 }
@@ -4300,6 +4306,70 @@ void msgDecoderTestErrorBadStuff(void)
     else
     {
         (void)printf("msgDecoderTestErrorBadStuff 25 -- FAIL \n");
+    }
+}
+
+void msgDecoderTestCorner(void)
+{
+    /* Local variable */
+    s_eFSP_MSGD_Ctx ctx;
+    uint8_t  memArea[10u];
+    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    s_eCU_crcAdapterCtx ctxAdapterCrc;
+    uint32_t var32;
+
+    /* Function */
+    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    {
+        (void)printf("msgDecoderTestCorner 1  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgDecoderTestCorner 1  -- FAIL \n");
+    }
+
+    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
+    {
+        (void)printf("msgDecoderTestCorner 2  -- OK \n");
+    }
+    else
+    {
+        (void)printf("msgDecoderTestCorner 2  -- FAIL \n");
+    }
+
+    /* Decode */
+    uint8_t testData[] = {ECU_SOF, 0xA6u, 0xC1u, 0xDCu, 0x0Au, 0x01, 0x00u, 0x00u, 0x00u, 0x01, ECU_EOF};
+
+    if( MSGD_RES_MESSAGEENDED == MSGD_InsEncChunk(&ctx, testData, sizeof(testData) + 10u, &var32) )
+    {
+        if( sizeof(testData) == var32 )
+        {
+            (void)printf("msgDecoderTestCorner 3  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgDecoderTestCorner 3  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgDecoderTestCorner 3  -- FAIL \n");
+    }
+
+    if( MSGD_RES_MESSAGEENDED == MSGD_InsEncChunk(&ctx, testData, sizeof(testData) + 10u, &var32) )
+    {
+        if( 0u == var32 )
+        {
+            (void)printf("msgDecoderTestCorner 4  -- OK \n");
+        }
+        else
+        {
+            (void)printf("msgDecoderTestCorner 4  -- FAIL \n");
+        }
+    }
+    else
+    {
+        (void)printf("msgDecoderTestCorner 4  -- FAIL \n");
     }
 }
 

@@ -1,23 +1,28 @@
 /**
- * @file eFSPMsgDeEncoderTest.c
+ * @file       eFSPMsgDeEncoderTest.c
  *
- */
-
-
+ * @brief      Message encoder dencoder test
+ *
+ * @author     Lorenzo Rosin
+ *
+ **********************************************************************************************************************/
 
 /***********************************************************************************************************************
  *      INCLUDES
  **********************************************************************************************************************/
 #include "eFSPMsgDeEncoderTest.h"
 #include "eCUCrc.h"
+
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_disable = "MISRAC2004-20.9", "MISRAC2012-Rule-21.6"
+    /* Suppressed for code clarity in test execution*/
+#endif
+
 #include <stdio.h>
 
-
-
-/***********************************************************************************************************************
- *   PRIVATE FUNCTION DECLARATION
- **********************************************************************************************************************/
-static void msgDeEncoderTestCommon(void);
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_restore = "MISRAC2004-20.9", "MISRAC2012-Rule-21.6"
+#endif
 
 
 
@@ -30,6 +35,15 @@ typedef struct
 }s_eCU_crcAdapterCtx;
 
 static bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t d[], const uint32_t dLen, uint32_t* const c32Val);
+
+
+
+/***********************************************************************************************************************
+ *   PRIVATE FUNCTION DECLARATION
+ **********************************************************************************************************************/
+static void msgDeEncoderTestCommon(void);
+
+
 
 
 
@@ -93,6 +107,8 @@ void msgDeEncoderTestCommon(void)
     uint8_t* encPayLoc;
     uint8_t encDataSend[200u];
     uint32_t encToSendSize;
+    e_eFSP_MSGE_Res encoderRet;
+    uint32_t encCounter;
 
     /* Local variable for message ENCODER */
     s_eFSP_MSGD_Ctx ctxDec;
@@ -101,7 +117,6 @@ void msgDeEncoderTestCommon(void)
     uint8_t  memDecoderArea[100u] = {0u};
     uint32_t decTotCounter;
     uint32_t decCurCounter;
-    uint32_t errorFound;
     uint32_t mostEfficientDataExtr;
 
     /* INIT MESSAGE ENCODER */
@@ -141,9 +156,17 @@ void msgDeEncoderTestCommon(void)
         (void)printf("msgDeEncoderTestCommon 3  -- FAIL \n");
     }
 
-    memset(encPayLoc, 0xA5u, encMaxPaySize);
+    /* Inserte data to encode */
+    encPayLoc[0u] = ECU_SOF;
+    encPayLoc[1u] = ECU_ESC;
+    encPayLoc[2u] = ECU_ESC;
+    encPayLoc[3u] = ECU_EOF;
+    encPayLoc[4u] = 0xFFu;
+    encPayLoc[5u] = 0xCCu;
+    encPayLoc[6u] = ECU_SOF;
 
-    if( MSGE_RES_OK == MSGE_StartNewMessage(&ctxEnc, encMaxPaySize) )
+    /* Start encoding a new message */
+    if( MSGE_RES_OK == MSGE_StartNewMessage(&ctxEnc, 0x07u) )
     {
         (void)printf("msgDeEncoderTestCommon 4  -- OK \n");
     }
@@ -152,7 +175,7 @@ void msgDeEncoderTestCommon(void)
         (void)printf("msgDeEncoderTestCommon 4  -- FAIL \n");
     }
 
-    /* RETRIVE DATA USING DECODER */
+    /* Start deconding a new message */
     if( MSGD_RES_OK == MSGD_StartNewMsg(&ctxDec) )
     {
         (void)printf("msgDeEncoderTestCommon 5  -- OK \n");
@@ -163,9 +186,22 @@ void msgDeEncoderTestCommon(void)
     }
 
     /* RETRIVE ENCODED DATA */
-    if( MSGE_RES_MESSAGEENDED == MSGE_RetriveEChunk(&ctxEnc, encDataSend, sizeof(encDataSend), &encToSendSize) )
+    encoderRet = MSGE_RES_OK;
+    encCounter = 0u;
+
+    while( MSGE_RES_OK == encoderRet )
     {
-        if( ( sizeof(memEncoderArea) + 2u ) == encToSendSize )
+        encoderRet = MSGE_RetriveEChunk(&ctxEnc, &encDataSend[encCounter], 1u, &encToSendSize);
+
+        if( ( MSGE_RES_OK == encoderRet ) || ( MSGE_RES_MESSAGEENDED == encoderRet ) )
+        {
+            encCounter += encToSendSize;
+        }
+    }
+
+    if( MSGE_RES_MESSAGEENDED == encoderRet )
+    {
+        if( 22u == encCounter )
         {
             (void)printf("msgDeEncoderTestCommon 6  -- OK \n");
         }
@@ -182,11 +218,10 @@ void msgDeEncoderTestCommon(void)
     /* DECODER DATA */
     decTotCounter = 0u;
     decCurCounter = 0u;
-    errorFound = 0u;
 
     if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctxDec, &mostEfficientDataExtr) )
     {
-        if( 8u == mostEfficientDataExtr )
+        if( 9u == mostEfficientDataExtr )
         {
             (void)printf("msgDeEncoderTestCommon 7  -- OK \n");
         }
@@ -200,7 +235,7 @@ void msgDeEncoderTestCommon(void)
         (void)printf("msgDeEncoderTestCommon 7  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctxDec, encDataSend, mostEfficientDataExtr, &decCurCounter, &errorFound) )
+    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctxDec, encDataSend, 8u, &decCurCounter) )
     {
         (void)printf("msgDeEncoderTestCommon 8  -- OK \n");
     }
@@ -226,7 +261,7 @@ void msgDeEncoderTestCommon(void)
         (void)printf("msgDeEncoderTestCommon 9  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctxDec, &encDataSend[decTotCounter], mostEfficientDataExtr, &decCurCounter, &errorFound) )
+    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctxDec, &encDataSend[decTotCounter], mostEfficientDataExtr, &decCurCounter) )
     {
         (void)printf("msgDeEncoderTestCommon 10 -- OK \n");
     }
@@ -238,7 +273,7 @@ void msgDeEncoderTestCommon(void)
 
     if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctxDec, &mostEfficientDataExtr) )
     {
-        if( 93u == mostEfficientDataExtr )
+        if( 8u == mostEfficientDataExtr )
         {
             (void)printf("msgDeEncoderTestCommon 11 -- OK \n");
         }
@@ -252,9 +287,9 @@ void msgDeEncoderTestCommon(void)
         (void)printf("msgDeEncoderTestCommon 11 -- FAIL \n");
     }
 
-    if( MSGD_RES_MESSAGEENDED == MSGD_InsEncChunk(&ctxDec, &encDataSend[decTotCounter], mostEfficientDataExtr, &decCurCounter, &errorFound) )
+    if( MSGD_RES_MESSAGEENDED == MSGD_InsEncChunk(&ctxDec, &encDataSend[decTotCounter], 30u, &decCurCounter) )
     {
-        if( mostEfficientDataExtr == decCurCounter )
+        if( 13u == decCurCounter )
         {
             (void)printf("msgDeEncoderTestCommon 12 -- OK \n");
         }
