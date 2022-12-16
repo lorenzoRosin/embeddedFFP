@@ -24,7 +24,11 @@
     #pragma cstat_restore = "MISRAC2004-20.9", "MISRAC2012-Rule-21.6"
 #endif
 
-
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_disable = "MISRAC2012-Rule-10.3", "CERT-STR32-C", "MISRAC2012-Rule-11.5", "CERT-EXP36-C_b", \
+                            "CERT-INT30-C_b"
+    /* Suppressed for code clarity in test execution*/
+#endif
 
 /***********************************************************************************************************************
  *   PRIVATE TEST FUNCTION DECLARATION
@@ -302,5 +306,10 @@ void msgDeEncoderTestCommon(void)
     {
         (void)printf("msgDeEncoderTestCommon 12 -- FAIL \n");
     }
-    decTotCounter += decCurCounter;
+
 }
+
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_restore = "MISRAC2012-Rule-10.3", "CERT-STR32-C", "MISRAC2012-Rule-11.5", "CERT-EXP36-C_b", \
+                            "CERT-INT30-C_b"
+#endif
