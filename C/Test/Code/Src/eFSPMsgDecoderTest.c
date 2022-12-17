@@ -111,7 +111,7 @@ bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t d[], const uint32_t
     {
         ctxCur = (s_eCU_crcAdapterCtx*)cntx;
 
-        ctxCur->lastError = CRC_32Seed(s, (const uint8_t*)d, dLen, c32Val);
+        ctxCur->lastError = eCU_CRC_32Seed(s, (const uint8_t*)d, dLen, c32Val);
         if( CRC_RES_OK == ctxCur->lastError )
         {
             result = true;
