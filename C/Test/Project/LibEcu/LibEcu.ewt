@@ -18,7 +18,7 @@
                     <analyzeTimeoutEnabled>1</analyzeTimeoutEnabled>
                     <analyzeTimeout>600</analyzeTimeout>
                     <enableParallel>1</enableParallel>
-                    <parallelThreads>6</parallelThreads>
+                    <parallelThreads>12</parallelThreads>
                     <enableFalsePositives>0</enableFalsePositives>
                     <messagesLimitEnabled>1</messagesLimitEnabled>
                     <messagesLimit>100</messagesLimit>
@@ -736,7 +736,7 @@
                                 <check name="MISRAC2004-17.6_d" enabled="true" />
                             </group>
                             <group name="MISRAC2004-18" enabled="true">
-                                <check name="MISRAC2004-18.1" enabled="true" />
+                                <check name="MISRAC2004-18.1" enabled="false" />
                                 <check name="MISRAC2004-18.2" enabled="true" />
                                 <check name="MISRAC2004-18.4" enabled="true" />
                             </group>
@@ -785,7 +785,7 @@
                                 <check name="MISRAC2012-Dir-4.7_a" enabled="true" />
                                 <check name="MISRAC2012-Dir-4.7_b" enabled="true" />
                                 <check name="MISRAC2012-Dir-4.7_c" enabled="true" />
-                                <check name="MISRAC2012-Dir-4.8" enabled="false" />
+                                <check name="MISRAC2012-Dir-4.8" enabled="true" />
                                 <check name="MISRAC2012-Dir-4.9" enabled="true" />
                                 <check name="MISRAC2012-Dir-4.10" enabled="true" />
                                 <check name="MISRAC2012-Dir-4.11_a" enabled="true" />
