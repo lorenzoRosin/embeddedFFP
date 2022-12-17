@@ -1,7 +1,11 @@
 /**
- * @file eFSPMsgRxTransmitterTest.h
+ * @file       eFSPMsgRxTransmitterTest.h
  *
- */
+ * @brief      Message Tx Rx test
+ *
+ * @author     Lorenzo Rosin
+ *
+ **********************************************************************************************************************/
 
 #ifndef EFSPMSGRXTRANSMITTERTEST_H
 #define EFSPMSGRXTRANSMITTERTEST_H
@@ -27,7 +31,11 @@ extern "C" {
  * GLOBAL PROTOTYPES
  **********************************************************************************************************************/
 /**
- * Test the receiver transmitter module
+ * @brief       Test the message Rx Rx module
+ *
+ * @param[in]   none
+ *
+ * @return      none
  */
 void msgRxTransmitterTest(void);
 
