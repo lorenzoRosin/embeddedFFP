@@ -57,7 +57,7 @@ e_eFSP_MSGE_Res MSGE_InitCtx(s_eFSP_MSGE_Ctx* const ctx, uint8_t memArea[], cons
             ctx->cbCrcCtx = clbCtx;
 
 			/* initialize internal bytestuffer */
-			resultByStuff =  BSTF_InitCtx(&ctx->byteStufferCtnx, memArea, memAreaSize);
+			resultByStuff =  eCU_BSTF_InitCtx(&ctx->byteStufferCtnx, memArea, memAreaSize);
 			result = convertReturnFromBstfToMSGE(resultByStuff);
         }
 	}
@@ -82,7 +82,7 @@ e_eFSP_MSGE_Res MSGE_IsInit(s_eFSP_MSGE_Ctx* const ctx, bool_t* isInit)
 	}
 	else
 	{
-        resultByStuff = BSTF_IsInit(&ctx->byteStufferCtnx, isInit);
+        resultByStuff = eCU_BSTF_IsInit(&ctx->byteStufferCtnx, isInit);
         result = convertReturnFromBstfToMSGE(resultByStuff);
 	}
 
@@ -126,7 +126,7 @@ e_eFSP_MSGE_Res MSGE_StartNewMessage(s_eFSP_MSGE_Ctx* const ctx, const uint32_t 
                 /* Get memory reference of CRC+LEN+DATA, so we can calculate data len and recalculate CRC */
                 maxDataSize = 0u;
                 dataP = NULL;
-				resultByStuff = BSTF_GetUnStufDataLocation(&ctx->byteStufferCtnx, &dataP, &maxDataSize);
+				resultByStuff = eCU_BSTF_GetWherePutData(&ctx->byteStufferCtnx, &dataP, &maxDataSize);
 				result = convertReturnFromBstfToMSGE(resultByStuff);
 
 				if( MSGE_RES_OK == result )
@@ -166,7 +166,7 @@ e_eFSP_MSGE_Res MSGE_StartNewMessage(s_eFSP_MSGE_Ctx* const ctx, const uint32_t 
 								/* the message frame is ready, need to start the bytestuffer with size of crc + size
 								* of len + real number of data */
 								nByteToSf = ( EFSP_MSGEN_HEADERSIZE + messageLen );
-								resultByStuff = BSTF_StartNewFrame(&ctx->byteStufferCtnx, nByteToSf);
+								resultByStuff = eCU_BSTF_NewFrame(&ctx->byteStufferCtnx, nByteToSf);
 								result = convertReturnFromBstfToMSGE(resultByStuff);
 							}
 							else
@@ -214,7 +214,7 @@ e_eFSP_MSGE_Res MSGE_GetPayloadLocation(s_eFSP_MSGE_Ctx* const ctx, uint8_t** da
 			/* Get memory reference of CRC+LEN+DATA, so we can calculate reference of only data payload */
             maxDataSizeP = 0u;
             dataPP = NULL;
-			resultByStuff = BSTF_GetUnStufDataLocation(&ctx->byteStufferCtnx, &dataPP, &maxDataSizeP);
+			resultByStuff = eCU_BSTF_GetWherePutData(&ctx->byteStufferCtnx, &dataPP, &maxDataSizeP);
 			result = convertReturnFromBstfToMSGE(resultByStuff);
 
 			if( MSGE_RES_OK == result )
@@ -262,7 +262,7 @@ e_eFSP_MSGE_Res MSGE_RestartCurrentMessage(s_eFSP_MSGE_Ctx* const ctx)
 		else
 		{
 			/* Restart only the byte stuffer */
-			resultByStuff = BSTF_RestartCurrentFrame(&ctx->byteStufferCtnx);
+			resultByStuff = eCU_BSTF_RestartFrame(&ctx->byteStufferCtnx);
 			result = convertReturnFromBstfToMSGE(resultByStuff);
 		}
 	}
@@ -291,7 +291,7 @@ e_eFSP_MSGE_Res MSGE_GetRemToRetrive(s_eFSP_MSGE_Ctx* const ctx, uint32_t* const
 		else
 		{
 			/* Get memory reference */
-			resultByStuff = BSTF_GetRemToRetrive(&ctx->byteStufferCtnx, retrivedLen);
+			resultByStuff = eCU_BSTF_GetRemByteToGet(&ctx->byteStufferCtnx, retrivedLen);
 			result = convertReturnFromBstfToMSGE(resultByStuff);
 		}
 	}
@@ -326,7 +326,7 @@ e_eFSP_MSGE_Res MSGE_RetriveEChunk(s_eFSP_MSGE_Ctx* const ctx, uint8_t encodeDes
 		else
 		{
 			/* Get memory reference */
-			resultByStuff = BSTF_RetriStufChunk(&ctx->byteStufferCtnx, encodeDest, maxDestLen, filledLen);
+			resultByStuff = eCU_BSTF_GetStufChunk(&ctx->byteStufferCtnx, encodeDest, maxDestLen, filledLen);
 			result = convertReturnFromBstfToMSGE(resultByStuff);
 		}
 	}

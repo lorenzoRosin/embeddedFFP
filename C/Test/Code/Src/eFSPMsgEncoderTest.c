@@ -680,7 +680,7 @@ void msgEncoderTestCorruptContext(void)
         (void)printf("msgEncoderTestCorruptContext 13 -- FAIL \n");
     }
 
-    ctx.byteStufferCtnx.memArea = NULL;
+    ctx.byteStufferCtnx.p_memA = NULL;
     if( MSGE_RES_CORRUPTCTX == MSGE_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgEncoderTestCorruptContext 14 -- OK \n");
@@ -700,7 +700,7 @@ void msgEncoderTestCorruptContext(void)
         (void)printf("msgEncoderTestCorruptContext 15 -- FAIL \n");
     }
 
-    ctx.byteStufferCtnx.memArea = NULL;
+    ctx.byteStufferCtnx.p_memA = NULL;
     if( MSGE_RES_CORRUPTCTX == MSGE_GetPayloadLocation(&ctx, &dataP, &var32) )
     {
         (void)printf("msgEncoderTestCorruptContext 16 -- OK \n");
@@ -729,7 +729,7 @@ void msgEncoderTestCorruptContext(void)
         (void)printf("msgEncoderTestCorruptContext 18 -- FAIL \n");
     }
 
-    ctx.byteStufferCtnx.memArea = NULL;
+    ctx.byteStufferCtnx.p_memA = NULL;
     if( MSGE_RES_CORRUPTCTX == MSGE_RestartCurrentMessage(&ctx) )
     {
         (void)printf("msgEncoderTestCorruptContext 19 -- OK \n");
@@ -758,7 +758,7 @@ void msgEncoderTestCorruptContext(void)
         (void)printf("msgEncoderTestCorruptContext 21 -- FAIL \n");
     }
 
-    ctx.byteStufferCtnx.memArea = NULL;
+    ctx.byteStufferCtnx.p_memA = NULL;
     if( MSGE_RES_CORRUPTCTX == MSGE_GetRemToRetrive(&ctx, &var32) )
     {
         (void)printf("msgEncoderTestCorruptContext 22 -- OK \n");
@@ -787,7 +787,7 @@ void msgEncoderTestCorruptContext(void)
         (void)printf("msgEncoderTestCorruptContext 24 -- FAIL \n");
     }
 
-    ctx.byteStufferCtnx.memArea = NULL;
+    ctx.byteStufferCtnx.p_memA = NULL;
     if( MSGE_RES_CORRUPTCTX == MSGE_RetriveEChunk(&ctx, memArea, 2u, &var32) )
     {
         (void)printf("msgEncoderTestCorruptContext 25 -- OK \n");
@@ -953,7 +953,7 @@ void msgEncoderTestGeneral(void)
         (void)printf("msgEncoderTestGeneral 1  -- FAIL \n");
     }
 
-    ctx.byteStufferCtnx.memAreaSize = 3u;
+    ctx.byteStufferCtnx.memASize = 3u;
     if( MSGE_RES_CORRUPTCTX == MSGE_StartNewMessage(&ctx, sizeof(memArea)) )
     {
         (void)printf("msgEncoderTestGeneral 2  -- OK \n");
@@ -1196,7 +1196,7 @@ void msgEncoderTestGeneral(void)
         (void)printf("msgEncoderTestGeneral 16 -- FAIL \n");
     }
 
-    ctx.byteStufferCtnx.memAreaSize = 3u;
+    ctx.byteStufferCtnx.memASize = 3u;
     if( MSGE_RES_CORRUPTCTX == MSGE_GetPayloadLocation(&ctx, &dataP, &var32) )
     {
         (void)printf("msgEncoderTestGeneral 17 -- OK \n");
