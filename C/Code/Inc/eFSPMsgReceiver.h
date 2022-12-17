@@ -110,7 +110,7 @@ typedef struct
  *		        MSGRX_RES_BADPARAM       - In case of an invalid parameter passed to the function
  *              MSGRX_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGRX_Res MSGRX_InitCtx(s_eFSP_MSGRX_Ctx* const ctx, const s_eFSP_MSGRX_InitData* initData);
+e_eFSP_MSGRX_Res eFSP_MSGRX_InitCtx(s_eFSP_MSGRX_Ctx* const ctx, const s_eFSP_MSGRX_InitData* initData);
 
 /**
  * @brief       Check if the lib is initialized
@@ -121,7 +121,7 @@ e_eFSP_MSGRX_Res MSGRX_InitCtx(s_eFSP_MSGRX_Ctx* const ctx, const s_eFSP_MSGRX_I
  * @return      MSGRX_RES_BADPOINTER    - In case of bad pointer passed to the function
  *              MSGRX_RES_OK            - Operation ended correctly
  */
-e_eFSP_MSGRX_Res MSGRX_IsInit(s_eFSP_MSGRX_Ctx* const ctx, bool_t* isInit);
+e_eFSP_MSGRX_Res eFSP_MSGRX_IsInit(s_eFSP_MSGRX_Ctx* const ctx, bool_t* isInit);
 
 /**
  * @brief       Start receiving a new message, loosing the previous stored decoded msg frame, but not the data in rx
@@ -137,7 +137,7 @@ e_eFSP_MSGRX_Res MSGRX_IsInit(s_eFSP_MSGRX_Ctx* const ctx, bool_t* isInit);
  *              MSGRX_RES_TIMCLBKERROR  - The timer function returned an error
  *              MSGRX_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGRX_Res MSGRX_StartNewMsg(s_eFSP_MSGRX_Ctx* const ctx);
+e_eFSP_MSGRX_Res eFSP_MSGRX_StartNewMsg(s_eFSP_MSGRX_Ctx* const ctx);
 
 /**
  * @brief       Start receiving a new message, loosing the previous stored decoded msg frame, and cleaning rx buffer.
@@ -152,7 +152,7 @@ e_eFSP_MSGRX_Res MSGRX_StartNewMsg(s_eFSP_MSGRX_Ctx* const ctx);
  *              MSGRX_RES_TIMCLBKERROR  - The timer function returned an error
  *              MSGRX_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGRX_Res MSGRX_StartNewMsgNClean(s_eFSP_MSGRX_Ctx* const ctx);
+e_eFSP_MSGRX_Res eFSP_MSGRX_StartNewMsgNClean(s_eFSP_MSGRX_Ctx* const ctx);
 
 /**
  * @brief       Retrive the pointer to the stored decoded data payload ( NO HEADER ), and the data size of the frame.
@@ -169,7 +169,7 @@ e_eFSP_MSGRX_Res MSGRX_StartNewMsgNClean(s_eFSP_MSGRX_Ctx* const ctx);
  *		        MSGRX_RES_CORRUPTCTX   	- In case of an corrupted context
  *              MSGRX_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGRX_Res MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const ctx, uint8_t** dataP, uint32_t* const retrivedLen);
+e_eFSP_MSGRX_Res eFSP_MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const ctx, uint8_t** dataP, uint32_t* const retrivedLen);
 
 /**
  * @brief       Receive encoded chunk that the alg will decode byte per byte.
@@ -218,7 +218,7 @@ e_eFSP_MSGRX_Res MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const ctx, uint8_t** dat
  *                                        finished yet. This function return OK when the i_timePerRecMs timeout is
  *                                        reached, but i_frameTimeoutMs is not elapsed.
  */
-e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx);
+e_eFSP_MSGRX_Res eFSP_MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx);
 #ifdef __cplusplus
 } /* extern "C" */
 #endif

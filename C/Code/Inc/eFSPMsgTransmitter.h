@@ -106,7 +106,7 @@ typedef struct
  *		        MSGTX_RES_BADPARAM     - In case of an invalid parameter passed to the function
  *              MSGTX_RES_OK           - Operation ended correctly
  */
-e_eFSP_MSGTX_Res MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const ctx, const s_eFSP_MSGTX_InitData* initData);
+e_eFSP_MSGTX_Res eFSP_MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const ctx, const s_eFSP_MSGTX_InitData* initData);
 
 /**
  * @brief       Check if the lib is initialized
@@ -117,7 +117,7 @@ e_eFSP_MSGTX_Res MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const ctx, const s_eFSP_MSGTX_I
  * @return      MSGTX_RES_BADPOINTER    - In case of bad pointer passed to the function
  *              MSGTX_RES_OK            - Operation ended correctly
  */
-e_eFSP_MSGTX_Res MSGTX_IsInit(s_eFSP_MSGTX_Ctx* const ctx, bool_t* isInit);
+e_eFSP_MSGTX_Res eFSP_MSGTX_IsInit(s_eFSP_MSGTX_Ctx* const ctx, bool_t* isInit);
 
 /**
  * @brief       Start to encode a new msg given the dimension of raw payload it self. This function suppouse that
@@ -135,7 +135,7 @@ e_eFSP_MSGTX_Res MSGTX_IsInit(s_eFSP_MSGTX_Ctx* const ctx, bool_t* isInit);
  *              MSGTX_RES_TIMCLBKERROR   - The timer function returned an error
  *              MSGTX_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGTX_Res MSGTX_StartNewMessage(s_eFSP_MSGTX_Ctx* const ctx, const uint32_t messageLen);
+e_eFSP_MSGTX_Res eFSP_MSGTX_StartNewMessage(s_eFSP_MSGTX_Ctx* const ctx, const uint32_t messageLen);
 
 /**
  * @brief       Retrive the pointer of the buffer that the user can use to insert data payload that need to be encoded
@@ -150,7 +150,7 @@ e_eFSP_MSGTX_Res MSGTX_StartNewMessage(s_eFSP_MSGTX_Ctx* const ctx, const uint32
  *		        MSGTX_RES_CORRUPTCTX     - In case of an corrupted context
  *              MSGTX_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGTX_Res MSGTX_GetPayloadLocation(s_eFSP_MSGTX_Ctx* const ctx, uint8_t** dataP, uint32_t* const maxDataSize);
+e_eFSP_MSGTX_Res eFSP_MSGTX_GetPayloadLocation(s_eFSP_MSGTX_Ctx* const ctx, uint8_t** dataP, uint32_t* const maxDataSize);
 
 /**
  * @brief       Restart to encode and send the already passed payload/the current frame
@@ -164,7 +164,7 @@ e_eFSP_MSGTX_Res MSGTX_GetPayloadLocation(s_eFSP_MSGTX_Ctx* const ctx, uint8_t**
  *              MSGTX_RES_TIMCLBKERROR   - The timer function returned an error
  *              MSGTX_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGTX_Res MSGTX_RestartCurrentMessage(s_eFSP_MSGTX_Ctx* const ctx);
+e_eFSP_MSGTX_Res eFSP_MSGTX_RestartCurrentMessage(s_eFSP_MSGTX_Ctx* const ctx);
 
 /**
  * @brief       Send encoded data chunk. The raw data copied in the buffer by using the function
@@ -192,7 +192,7 @@ e_eFSP_MSGTX_Res MSGTX_RestartCurrentMessage(s_eFSP_MSGTX_Ctx* const ctx);
  *                                         the "i_frameTimeoutMs" timeout is still not reached. Call this function again
  *                                         to send another chunk of data.
  */
-e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx);
+e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx);
 
 
 

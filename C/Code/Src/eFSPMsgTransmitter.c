@@ -31,7 +31,7 @@ static e_eFSP_MSGTX_Res convertReturnFromMSGEToMSGTX(e_eFSP_MSGE_Res returnedEve
     /* Suppressed because this warning is not working */
 #endif
 
-e_eFSP_MSGTX_Res MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const ctx, const s_eFSP_MSGTX_InitData* initData)
+e_eFSP_MSGTX_Res eFSP_MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const ctx, const s_eFSP_MSGTX_InitData* initData)
 {
 	/* Local variable */
 	e_eFSP_MSGTX_Res result;
@@ -74,7 +74,7 @@ e_eFSP_MSGTX_Res MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const ctx, const s_eFSP_MSGTX_I
                 ctx->timePerSendMs = initData->i_timePerSendMs;
 
                 /* initialize internal message encoder */
-                resultMsgE =  MSGE_InitCtx(&ctx->msgEncoderCtnx, initData->i_memArea, initData->i_memAreaSize,
+                resultMsgE =  eFSP_MSGE_InitCtx(&ctx->msgEncoderCtnx, initData->i_memArea, initData->i_memAreaSize,
                                            initData->i_cbCrcP, initData->i_cbCrcCtx);
                 result = convertReturnFromMSGEToMSGTX(resultMsgE);
             }
@@ -88,7 +88,7 @@ e_eFSP_MSGTX_Res MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const ctx, const s_eFSP_MSGTX_I
     #pragma cstat_restore = "MISRAC2012-Rule-10.3"
 #endif
 
-e_eFSP_MSGTX_Res MSGTX_IsInit(s_eFSP_MSGTX_Ctx* const ctx, bool_t* isInit)
+e_eFSP_MSGTX_Res eFSP_MSGTX_IsInit(s_eFSP_MSGTX_Ctx* const ctx, bool_t* isInit)
 {
 	/* Local variable */
 	e_eFSP_MSGTX_Res result;
@@ -101,14 +101,14 @@ e_eFSP_MSGTX_Res MSGTX_IsInit(s_eFSP_MSGTX_Ctx* const ctx, bool_t* isInit)
 	}
 	else
 	{
-        resultMsgE = MSGE_IsInit(&ctx->msgEncoderCtnx, isInit);
+        resultMsgE = eFSP_MSGE_IsInit(&ctx->msgEncoderCtnx, isInit);
         result = convertReturnFromMSGEToMSGTX(resultMsgE);
 	}
 
 	return result;
 }
 
-e_eFSP_MSGTX_Res MSGTX_StartNewMessage(s_eFSP_MSGTX_Ctx* const ctx, const uint32_t messageLen)
+e_eFSP_MSGTX_Res eFSP_MSGTX_StartNewMessage(s_eFSP_MSGTX_Ctx* const ctx, const uint32_t messageLen)
 {
 	/* Local variable */
 	e_eFSP_MSGTX_Res result;
@@ -140,7 +140,7 @@ e_eFSP_MSGTX_Res MSGTX_StartNewMessage(s_eFSP_MSGTX_Ctx* const ctx, const uint32
                 ctx->sendBuffFill = 0u;
 
                 /* Init message encoder */
-                resultMsgE = MSGE_StartNewMessage(&ctx->msgEncoderCtnx, messageLen);
+                resultMsgE = eFSP_MSGE_StartNewMessage(&ctx->msgEncoderCtnx, messageLen);
                 result = convertReturnFromMSGEToMSGTX(resultMsgE);
 
                 /* Start timer */
@@ -158,7 +158,7 @@ e_eFSP_MSGTX_Res MSGTX_StartNewMessage(s_eFSP_MSGTX_Ctx* const ctx, const uint32
 	return result;
 }
 
-e_eFSP_MSGTX_Res MSGTX_GetPayloadLocation(s_eFSP_MSGTX_Ctx* const ctx, uint8_t** dataP, uint32_t* const maxDataSize)
+e_eFSP_MSGTX_Res eFSP_MSGTX_GetPayloadLocation(s_eFSP_MSGTX_Ctx* const ctx, uint8_t** dataP, uint32_t* const maxDataSize)
 {
 	/* Local variable */
 	e_eFSP_MSGTX_Res result;
@@ -179,7 +179,7 @@ e_eFSP_MSGTX_Res MSGTX_GetPayloadLocation(s_eFSP_MSGTX_Ctx* const ctx, uint8_t**
 		else
 		{
 			/* Get only the payload data reference */
-			resultMsgE = MSGE_GetPayloadLocation(&ctx->msgEncoderCtnx, dataP, maxDataSize);
+			resultMsgE = eFSP_MSGE_GetPayloadLocation(&ctx->msgEncoderCtnx, dataP, maxDataSize);
 			result = convertReturnFromMSGEToMSGTX(resultMsgE);
 		}
 	}
@@ -187,7 +187,7 @@ e_eFSP_MSGTX_Res MSGTX_GetPayloadLocation(s_eFSP_MSGTX_Ctx* const ctx, uint8_t**
 	return result;
 }
 
-e_eFSP_MSGTX_Res MSGTX_RestartCurrentMessage(s_eFSP_MSGTX_Ctx* const ctx)
+e_eFSP_MSGTX_Res eFSP_MSGTX_RestartCurrentMessage(s_eFSP_MSGTX_Ctx* const ctx)
 {
 	/* Local variable */
 	e_eFSP_MSGTX_Res result;
@@ -212,7 +212,7 @@ e_eFSP_MSGTX_Res MSGTX_RestartCurrentMessage(s_eFSP_MSGTX_Ctx* const ctx)
             ctx->sendBuffFill = 0u;
 
 			/* Restart only the byte stuffer */
-			resultMsgE = MSGE_RestartCurrentMessage(&ctx->msgEncoderCtnx);
+			resultMsgE = eFSP_MSGE_RestartCurrentMessage(&ctx->msgEncoderCtnx);
 			result = convertReturnFromMSGEToMSGTX(resultMsgE);
 
             /* Start timer */
@@ -234,7 +234,7 @@ e_eFSP_MSGTX_Res MSGTX_RestartCurrentMessage(s_eFSP_MSGTX_Ctx* const ctx)
     /* Suppressed because this warning is not working */
 #endif
 
-e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
+e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
 {
 	/* Local variable of the operation result */
 	e_eFSP_MSGTX_Res result;
@@ -284,7 +284,7 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
                     {
                         /* Check if lib is initialized */
                         isInit = false;
-                        resultMsgE = MSGE_IsInit(&ctx->msgEncoderCtnx, &isInit);
+                        resultMsgE = eFSP_MSGE_IsInit(&ctx->msgEncoderCtnx, &isInit);
                         result = convertReturnFromMSGEToMSGTX(resultMsgE);
 
                         /* Check if frame timeout is eplased */
@@ -376,7 +376,7 @@ e_eFSP_MSGTX_Res MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
                         ctx->sendBuffFill = 0u;
 
                         /* Is data present in message encoder buffer? */
-                        resultMsgE = MSGE_RetriveEChunk(&ctx->msgEncoderCtnx, ctx->sendBuff, ctx->sendBuffSize,
+                        resultMsgE = eFSP_MSGE_RetriveEChunk(&ctx->msgEncoderCtnx, ctx->sendBuff, ctx->sendBuffSize,
                                                         &ctx->sendBuffFill);
                         result = convertReturnFromMSGEToMSGTX(resultMsgE);
 

@@ -38,7 +38,7 @@ static uint32_t composeU32LE(uint8_t v1, uint8_t v2, uint8_t v3, uint8_t v4);
     /* Suppressed for code clarity */
 #endif
 
-e_eFSP_MSGD_Res MSGD_InitCtx(s_eFSP_MSGD_Ctx* const ctx, uint8_t memArea[], const uint32_t memAreaSize,
+e_eFSP_MSGD_Res eFSP_MSGD_InitCtx(s_eFSP_MSGD_Ctx* const ctx, uint8_t memArea[], const uint32_t memAreaSize,
 								 cb_crc32_msgd cbCrcP, void* const clbCtx)
 {
 	/* Local variable */
@@ -76,7 +76,7 @@ e_eFSP_MSGD_Res MSGD_InitCtx(s_eFSP_MSGD_Ctx* const ctx, uint8_t memArea[], cons
     #pragma cstat_restore = "MISRAC2012-Rule-10.3"
 #endif
 
-e_eFSP_MSGD_Res MSGD_IsInit(s_eFSP_MSGD_Ctx* const ctx, bool_t* isInit)
+e_eFSP_MSGD_Res eFSP_MSGD_IsInit(s_eFSP_MSGD_Ctx* const ctx, bool_t* isInit)
 {
 	/* Local variable */
 	e_eFSP_MSGD_Res result;
@@ -96,7 +96,7 @@ e_eFSP_MSGD_Res MSGD_IsInit(s_eFSP_MSGD_Ctx* const ctx, bool_t* isInit)
 	return result;
 }
 
-e_eFSP_MSGD_Res MSGD_StartNewMsg(s_eFSP_MSGD_Ctx* const ctx)
+e_eFSP_MSGD_Res eFSP_MSGD_StartNewMsg(s_eFSP_MSGD_Ctx* const ctx)
 {
 	/* Local variable */
 	e_eFSP_MSGD_Res result;
@@ -131,7 +131,7 @@ e_eFSP_MSGD_Res MSGD_StartNewMsg(s_eFSP_MSGD_Ctx* const ctx)
     /* Suppressed for code clarity */
 #endif
 
-e_eFSP_MSGD_Res MSGD_GetDecodedData(s_eFSP_MSGD_Ctx* const ctx, uint8_t** dataP, uint32_t* const retrivedLen)
+e_eFSP_MSGD_Res eFSP_MSGD_GetDecodedData(s_eFSP_MSGD_Ctx* const ctx, uint8_t** dataP, uint32_t* const retrivedLen)
 {
 	/* Local variable */
 	e_eFSP_MSGD_Res result;
@@ -189,7 +189,7 @@ e_eFSP_MSGD_Res MSGD_GetDecodedData(s_eFSP_MSGD_Ctx* const ctx, uint8_t** dataP,
                             "MISRAC2012-Rule-18.6_d", "CERT-DCL30-C_e"
 #endif
 
-e_eFSP_MSGD_Res MSGD_GetDecodedLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* const retrivedLen)
+e_eFSP_MSGD_Res eFSP_MSGD_GetDecodedLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* const retrivedLen)
 {
 	/* Local variable */
 	e_eFSP_MSGD_Res result;
@@ -237,7 +237,7 @@ e_eFSP_MSGD_Res MSGD_GetDecodedLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* const r
 	return result;
 }
 
-e_eFSP_MSGD_Res MSGD_IsWaitingSof(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isWaitingSof)
+e_eFSP_MSGD_Res eFSP_MSGD_IsWaitingSof(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isWaitingSof)
 {
 	/* Local variable */
 	e_eFSP_MSGD_Res result;
@@ -265,7 +265,7 @@ e_eFSP_MSGD_Res MSGD_IsWaitingSof(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isWa
 	return result;
 }
 
-e_eFSP_MSGD_Res MSGD_IsAFullMsgDecoded(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isMsgDec)
+e_eFSP_MSGD_Res eFSP_MSGD_IsAFullMsgDecoded(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isMsgDec)
 {
 	/* Local variable */
 	e_eFSP_MSGD_Res result;
@@ -291,7 +291,7 @@ e_eFSP_MSGD_Res MSGD_IsAFullMsgDecoded(s_eFSP_MSGD_Ctx* const ctx, bool_t* const
 	return result;
 }
 
-e_eFSP_MSGD_Res MSGD_IsCurrentFrameBad(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isFrameBad)
+e_eFSP_MSGD_Res eFSP_MSGD_IsCurrentFrameBad(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isFrameBad)
 {
 	/* Local variable */
 	e_eFSP_MSGD_Res result;
@@ -317,7 +317,7 @@ e_eFSP_MSGD_Res MSGD_IsCurrentFrameBad(s_eFSP_MSGD_Ctx* const ctx, bool_t* const
 	return result;
 }
 
-e_eFSP_MSGD_Res MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* const mostEffPayload)
+e_eFSP_MSGD_Res eFSP_MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* const mostEffPayload)
 {
 	/* Local variable */
 	e_eFSP_MSGD_Res result;
@@ -458,7 +458,7 @@ e_eFSP_MSGD_Res MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* cons
     /* Suppressed for code clarity */
 #endif
 
-e_eFSP_MSGD_Res MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const ctx, uint8_t encArea[], const uint32_t encLen,
+e_eFSP_MSGD_Res eFSP_MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const ctx, uint8_t encArea[], const uint32_t encLen,
                                  uint32_t* const consumedEncData)
 {
 	/* Local return  */

@@ -72,7 +72,7 @@ typedef struct
  *		        MSGE_RES_BADPARAM       - In case of an invalid parameter passed to the function
  *              MSGE_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGE_Res MSGE_InitCtx(s_eFSP_MSGE_Ctx* const ctx, uint8_t memArea[], const uint32_t memAreaSize,
+e_eFSP_MSGE_Res eFSP_MSGE_InitCtx(s_eFSP_MSGE_Ctx* const ctx, uint8_t memArea[], const uint32_t memAreaSize,
 								  cb_crc32_msge cbCrcP, void* const clbCtx);
 
 /**
@@ -84,7 +84,7 @@ e_eFSP_MSGE_Res MSGE_InitCtx(s_eFSP_MSGE_Ctx* const ctx, uint8_t memArea[], cons
  * @return      MSGE_RES_BADPOINTER    - In case of bad pointer passed to the function
  *              MSGE_RES_OK            - Operation ended correctly
  */
-e_eFSP_MSGE_Res MSGE_IsInit(s_eFSP_MSGE_Ctx* const ctx, bool_t* isInit);
+e_eFSP_MSGE_Res eFSP_MSGE_IsInit(s_eFSP_MSGE_Ctx* const ctx, bool_t* isInit);
 
 /**
  * @brief       Start to encode a new msg given the dimension of raw payload it self. This function suppouse that
@@ -102,7 +102,7 @@ e_eFSP_MSGE_Res MSGE_IsInit(s_eFSP_MSGE_Ctx* const ctx, bool_t* isInit);
  *				MSGE_RES_CRCCLBKERROR   - The crc callback function returned an error
  *              MSGE_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGE_Res MSGE_StartNewMessage(s_eFSP_MSGE_Ctx* const ctx, const uint32_t messageLen);
+e_eFSP_MSGE_Res eFSP_MSGE_StartNewMessage(s_eFSP_MSGE_Ctx* const ctx, const uint32_t messageLen);
 
 /**
  * @brief       Retrive the pointer of the buffer that the user can use to insert data payload that need to be encoded
@@ -117,7 +117,7 @@ e_eFSP_MSGE_Res MSGE_StartNewMessage(s_eFSP_MSGE_Ctx* const ctx, const uint32_t 
  *		        MSGE_RES_CORRUPTCTX     - In case of an corrupted context
  *              MSGE_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGE_Res MSGE_GetPayloadLocation(s_eFSP_MSGE_Ctx* const ctx, uint8_t** dataP, uint32_t* const maxDataSize);
+e_eFSP_MSGE_Res eFSP_MSGE_GetPayloadLocation(s_eFSP_MSGE_Ctx* const ctx, uint8_t** dataP, uint32_t* const maxDataSize);
 
 /**
  * @brief       Restart to encode the already passed payload/the current frame
@@ -130,7 +130,7 @@ e_eFSP_MSGE_Res MSGE_GetPayloadLocation(s_eFSP_MSGE_Ctx* const ctx, uint8_t** da
  *		        MSGE_RES_CORRUPTCTX     - In case of an corrupted context
  *              MSGE_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGE_Res MSGE_RestartCurrentMessage(s_eFSP_MSGE_Ctx* const ctx);
+e_eFSP_MSGE_Res eFSP_MSGE_RestartCurrentMessage(s_eFSP_MSGE_Ctx* const ctx);
 
 /**
  * @brief       Retrive the numbers of stuffed bytes + header that can be retrived using MSGE_RetriveEChunk
@@ -145,7 +145,7 @@ e_eFSP_MSGE_Res MSGE_RestartCurrentMessage(s_eFSP_MSGE_Ctx* const ctx);
  *		        MSGE_RES_CORRUPTCTX     - In case of an corrupted context
  *              MSGE_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGE_Res MSGE_GetRemToRetrive(s_eFSP_MSGE_Ctx* const ctx, uint32_t* const retrivedLen);
+e_eFSP_MSGE_Res eFSP_MSGE_GetRemToRetrive(s_eFSP_MSGE_Ctx* const ctx, uint32_t* const retrivedLen);
 
 /**
  * @brief       Retrive encoded data chunk. The raw data copied in the buffer using the function
@@ -171,7 +171,7 @@ e_eFSP_MSGE_Res MSGE_GetRemToRetrive(s_eFSP_MSGE_Ctx* const ctx, uint32_t* const
  *                                        completed, but we can be sure that filledLen will have the same value of
  *                                        maxDestLen
  */
-e_eFSP_MSGE_Res MSGE_RetriveEChunk(s_eFSP_MSGE_Ctx* const ctx, uint8_t encodeDest[], const uint32_t maxDestLen,
+e_eFSP_MSGE_Res eFSP_MSGE_RetriveEChunk(s_eFSP_MSGE_Ctx* const ctx, uint8_t encodeDest[], const uint32_t maxDestLen,
                                    uint32_t* const filledLen);
 
 #ifdef __cplusplus

@@ -31,7 +31,7 @@ static e_eFSP_MSGE_Res convertReturnFromBstfToMSGE(e_eCU_BSTF_Res returnedEvent)
     /* Suppressed because this warning is not working */
 #endif
 
-e_eFSP_MSGE_Res MSGE_InitCtx(s_eFSP_MSGE_Ctx* const ctx, uint8_t memArea[], const uint32_t memAreaSize,
+e_eFSP_MSGE_Res eFSP_MSGE_InitCtx(s_eFSP_MSGE_Ctx* const ctx, uint8_t memArea[], const uint32_t memAreaSize,
 								  cb_crc32_msge cbCrcP, void* const clbCtx)
 {
 	/* Local variable */
@@ -69,7 +69,7 @@ e_eFSP_MSGE_Res MSGE_InitCtx(s_eFSP_MSGE_Ctx* const ctx, uint8_t memArea[], cons
     #pragma cstat_restore = "MISRAC2012-Rule-10.3"
 #endif
 
-e_eFSP_MSGE_Res MSGE_IsInit(s_eFSP_MSGE_Ctx* const ctx, bool_t* isInit)
+e_eFSP_MSGE_Res eFSP_MSGE_IsInit(s_eFSP_MSGE_Ctx* const ctx, bool_t* isInit)
 {
 	/* Local variable */
 	e_eFSP_MSGE_Res result;
@@ -89,7 +89,7 @@ e_eFSP_MSGE_Res MSGE_IsInit(s_eFSP_MSGE_Ctx* const ctx, bool_t* isInit)
 	return result;
 }
 
-e_eFSP_MSGE_Res MSGE_StartNewMessage(s_eFSP_MSGE_Ctx* const ctx, const uint32_t messageLen)
+e_eFSP_MSGE_Res eFSP_MSGE_StartNewMessage(s_eFSP_MSGE_Ctx* const ctx, const uint32_t messageLen)
 {
 	/* Local variable */
 	e_eFSP_MSGE_Res result;
@@ -189,7 +189,7 @@ e_eFSP_MSGE_Res MSGE_StartNewMessage(s_eFSP_MSGE_Ctx* const ctx, const uint32_t 
     /* Suppressed for code clarity */
 #endif
 
-e_eFSP_MSGE_Res MSGE_GetPayloadLocation(s_eFSP_MSGE_Ctx* const ctx, uint8_t** dataP, uint32_t* const maxDataSize)
+e_eFSP_MSGE_Res eFSP_MSGE_GetPayloadLocation(s_eFSP_MSGE_Ctx* const ctx, uint8_t** dataP, uint32_t* const maxDataSize)
 {
 	/* Local variable */
 	e_eFSP_MSGE_Res result;
@@ -241,7 +241,7 @@ e_eFSP_MSGE_Res MSGE_GetPayloadLocation(s_eFSP_MSGE_Ctx* const ctx, uint8_t** da
                             "CERT-DCL30-C_e"
 #endif
 
-e_eFSP_MSGE_Res MSGE_RestartCurrentMessage(s_eFSP_MSGE_Ctx* const ctx)
+e_eFSP_MSGE_Res eFSP_MSGE_RestartCurrentMessage(s_eFSP_MSGE_Ctx* const ctx)
 {
 	/* Local variable */
 	e_eFSP_MSGE_Res result;
@@ -270,7 +270,7 @@ e_eFSP_MSGE_Res MSGE_RestartCurrentMessage(s_eFSP_MSGE_Ctx* const ctx)
 	return result;
 }
 
-e_eFSP_MSGE_Res MSGE_GetRemToRetrive(s_eFSP_MSGE_Ctx* const ctx, uint32_t* const retrivedLen)
+e_eFSP_MSGE_Res eFSP_MSGE_GetRemToRetrive(s_eFSP_MSGE_Ctx* const ctx, uint32_t* const retrivedLen)
 {
 	/* Local variable */
 	e_eFSP_MSGE_Res result;
@@ -304,7 +304,7 @@ e_eFSP_MSGE_Res MSGE_GetRemToRetrive(s_eFSP_MSGE_Ctx* const ctx, uint32_t* const
     /* Suppressed because this warning is not working */
 #endif
 
-e_eFSP_MSGE_Res MSGE_RetriveEChunk(s_eFSP_MSGE_Ctx* const ctx, uint8_t encodeDest[], const uint32_t maxDestLen,
+e_eFSP_MSGE_Res eFSP_MSGE_RetriveEChunk(s_eFSP_MSGE_Ctx* const ctx, uint8_t encodeDest[], const uint32_t maxDestLen,
                                    uint32_t* const filledLen)
 {
 	/* Local variable */

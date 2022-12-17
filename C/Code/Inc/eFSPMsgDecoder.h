@@ -74,7 +74,7 @@ typedef struct
  *		        MSGD_RES_BADPARAM       - In case of an invalid parameter passed to the function
  *              MSGD_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGD_Res MSGD_InitCtx(s_eFSP_MSGD_Ctx* const ctx, uint8_t memArea[], const uint32_t memAreaSize,
+e_eFSP_MSGD_Res eFSP_MSGD_InitCtx(s_eFSP_MSGD_Ctx* const ctx, uint8_t memArea[], const uint32_t memAreaSize,
 								 cb_crc32_msgd cbCrcP, void* const clbCtx);
 
 /**
@@ -86,7 +86,7 @@ e_eFSP_MSGD_Res MSGD_InitCtx(s_eFSP_MSGD_Ctx* const ctx, uint8_t memArea[], cons
  * @return      MSGD_RES_BADPOINTER    - In case of bad pointer passed to the function
  *              MSGD_RES_OK            - Operation ended correctly
  */
-e_eFSP_MSGD_Res MSGD_IsInit(s_eFSP_MSGD_Ctx* const ctx, bool_t* isInit);
+e_eFSP_MSGD_Res eFSP_MSGD_IsInit(s_eFSP_MSGD_Ctx* const ctx, bool_t* isInit);
 
 /**
  * @brief       Start receiving a new message, loosing the previous stored decoded msg frame. Clear even error state
@@ -98,7 +98,7 @@ e_eFSP_MSGD_Res MSGD_IsInit(s_eFSP_MSGD_Ctx* const ctx, bool_t* isInit);
  *		        MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
  *              MSGD_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGD_Res MSGD_StartNewMsg(s_eFSP_MSGD_Ctx* const ctx);
+e_eFSP_MSGD_Res eFSP_MSGD_StartNewMsg(s_eFSP_MSGD_Ctx* const ctx);
 
 /**
  * @brief       Retrive the pointer to the stored decoded data payload ( NO HEADER ), and the data size of the frame.
@@ -116,7 +116,7 @@ e_eFSP_MSGD_Res MSGD_StartNewMsg(s_eFSP_MSGD_Ctx* const ctx);
  *		        MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
  *              MSGD_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGD_Res MSGD_GetDecodedData(s_eFSP_MSGD_Ctx* const ctx, uint8_t** dataP, uint32_t* const retrivedLen);
+e_eFSP_MSGD_Res eFSP_MSGD_GetDecodedData(s_eFSP_MSGD_Ctx* const ctx, uint8_t** dataP, uint32_t* const retrivedLen);
 
 /**
  * @brief       Retrive the size of encoded data payload frame. Keep in mind that the message parsing could be ongoing,
@@ -132,7 +132,7 @@ e_eFSP_MSGD_Res MSGD_GetDecodedData(s_eFSP_MSGD_Ctx* const ctx, uint8_t** dataP,
  *		        MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
  *              MSGD_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGD_Res MSGD_GetDecodedLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* const retrivedLen);
+e_eFSP_MSGD_Res eFSP_MSGD_GetDecodedLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* const retrivedLen);
 
 /**
  * @brief       Retrive if the MsgDecoder is currently waiting for the Start of frame.
@@ -145,7 +145,7 @@ e_eFSP_MSGD_Res MSGD_GetDecodedLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* const r
  *		        MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
  *              MSGD_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGD_Res MSGD_IsWaitingSof(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isWaitingSof);
+e_eFSP_MSGD_Res eFSP_MSGD_IsWaitingSof(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isWaitingSof);
 
 /**
  * @brief       Check if the current message is finished or if we need to decode some more data to have the full frame.
@@ -160,7 +160,7 @@ e_eFSP_MSGD_Res MSGD_IsWaitingSof(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isWa
  *				MSGD_RES_CRCCLBKERROR   - The crc callback returned an error when the decoder here verifing CRC
  *              MSGD_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGD_Res MSGD_IsAFullMsgDecoded(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isMsgDec);
+e_eFSP_MSGD_Res eFSP_MSGD_IsAFullMsgDecoded(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isMsgDec);
 
 /**
  * @brief       Check if the current received data compose a bad frame. If a bad frame is detected we can only
@@ -175,7 +175,7 @@ e_eFSP_MSGD_Res MSGD_IsAFullMsgDecoded(s_eFSP_MSGD_Ctx* const ctx, bool_t* const
  *				MSGD_RES_CRCCLBKERROR   - The crc callback returned an error when the decoder were verifing CRC
  *              MSGD_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGD_Res MSGD_IsCurrentFrameBad(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isFrameBad);
+e_eFSP_MSGD_Res eFSP_MSGD_IsCurrentFrameBad(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isFrameBad);
 
 /**
  * @brief       Return the most efficient numbers of data that needs to be passed to MSGD_InsEncChunk in the next
@@ -191,7 +191,7 @@ e_eFSP_MSGD_Res MSGD_IsCurrentFrameBad(s_eFSP_MSGD_Ctx* const ctx, bool_t* const
  *		        MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
  *              MSGD_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGD_Res MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* const mostEffPayload);
+e_eFSP_MSGD_Res eFSP_MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* const mostEffPayload);
 
 /**
  * @brief       Insert the encoded data chunk that the alg will decode byte per byte
@@ -236,7 +236,7 @@ e_eFSP_MSGD_Res MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const ctx, uint32_t* cons
  *                                        finished yet. In this situation consumedEncData is always reported with a
  *                                        value equals to encLen.
  */
-e_eFSP_MSGD_Res MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const ctx, uint8_t encArea[], const uint32_t encLen,
+e_eFSP_MSGD_Res eFSP_MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const ctx, uint8_t encArea[], const uint32_t encLen,
                                  uint32_t* const consumedEncData);
 
 #ifdef __cplusplus

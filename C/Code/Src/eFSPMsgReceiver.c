@@ -32,7 +32,7 @@ static e_eFSP_MSGRX_Res convertReturnFromMSGDToMSGRX(e_eFSP_MSGD_Res returnedEve
     /* Suppressed because this warning is not working */
 #endif
 
-e_eFSP_MSGRX_Res MSGRX_InitCtx(s_eFSP_MSGRX_Ctx* const ctx, const s_eFSP_MSGRX_InitData* initData)
+e_eFSP_MSGRX_Res eFSP_MSGRX_InitCtx(s_eFSP_MSGRX_Ctx* const ctx, const s_eFSP_MSGRX_InitData* initData)
 {
 	/* Local variable */
 	e_eFSP_MSGRX_Res result;
@@ -83,7 +83,7 @@ e_eFSP_MSGRX_Res MSGRX_InitCtx(s_eFSP_MSGRX_Ctx* const ctx, const s_eFSP_MSGRX_I
                     ctx->needWaitFrameStart = initData->i_needWaitFrameStart;
 
                     /* initialize internal bytestuffer */
-                    resultMsgD =  MSGD_InitCtx(&ctx->msgDecoderCtnx, initData->i_memArea, initData->i_memAreaSize,
+                    resultMsgD =  eFSP_MSGD_InitCtx(&ctx->msgDecoderCtnx, initData->i_memArea, initData->i_memAreaSize,
                                                initData->i_cbCrcP, initData->i_cbCrcCrx);
                     result = convertReturnFromMSGDToMSGRX(resultMsgD);
                 }
@@ -98,7 +98,7 @@ e_eFSP_MSGRX_Res MSGRX_InitCtx(s_eFSP_MSGRX_Ctx* const ctx, const s_eFSP_MSGRX_I
     #pragma cstat_restore = "MISRAC2012-Rule-10.3"
 #endif
 
-e_eFSP_MSGRX_Res MSGRX_IsInit(s_eFSP_MSGRX_Ctx* const ctx, bool_t* isInit)
+e_eFSP_MSGRX_Res eFSP_MSGRX_IsInit(s_eFSP_MSGRX_Ctx* const ctx, bool_t* isInit)
 {
 	/* Local variable */
 	e_eFSP_MSGRX_Res result;
@@ -111,14 +111,14 @@ e_eFSP_MSGRX_Res MSGRX_IsInit(s_eFSP_MSGRX_Ctx* const ctx, bool_t* isInit)
 	}
 	else
 	{
-        resultMsgD = MSGD_IsInit(&ctx->msgDecoderCtnx, isInit);
+        resultMsgD = eFSP_MSGD_IsInit(&ctx->msgDecoderCtnx, isInit);
         result = convertReturnFromMSGDToMSGRX(resultMsgD);
 	}
 
 	return result;
 }
 
-e_eFSP_MSGRX_Res MSGRX_StartNewMsg(s_eFSP_MSGRX_Ctx* const ctx)
+e_eFSP_MSGRX_Res eFSP_MSGRX_StartNewMsg(s_eFSP_MSGRX_Ctx* const ctx)
 {
 	/* Local variable */
 	e_eFSP_MSGRX_Res result;
@@ -139,7 +139,7 @@ e_eFSP_MSGRX_Res MSGRX_StartNewMsg(s_eFSP_MSGRX_Ctx* const ctx)
         else
         {
             /* Init message encoder */
-            resultMsgD = MSGD_StartNewMsg(&ctx->msgDecoderCtnx);
+            resultMsgD = eFSP_MSGD_StartNewMsg(&ctx->msgDecoderCtnx);
             result = convertReturnFromMSGDToMSGRX(resultMsgD);
 
             if( MSGRX_RES_OK == result )
@@ -156,7 +156,7 @@ e_eFSP_MSGRX_Res MSGRX_StartNewMsg(s_eFSP_MSGRX_Ctx* const ctx)
 	return result;
 }
 
-e_eFSP_MSGRX_Res MSGRX_StartNewMsgNClean(s_eFSP_MSGRX_Ctx* const ctx)
+e_eFSP_MSGRX_Res eFSP_MSGRX_StartNewMsgNClean(s_eFSP_MSGRX_Ctx* const ctx)
 {
 	/* Local variable for result */
 	e_eFSP_MSGRX_Res result;
@@ -181,7 +181,7 @@ e_eFSP_MSGRX_Res MSGRX_StartNewMsgNClean(s_eFSP_MSGRX_Ctx* const ctx)
             ctx->rxBuffFill = 0u;
 
             /* Init message encoder */
-            resultMsgD = MSGD_StartNewMsg(&ctx->msgDecoderCtnx);
+            resultMsgD = eFSP_MSGD_StartNewMsg(&ctx->msgDecoderCtnx);
             result = convertReturnFromMSGDToMSGRX(resultMsgD);
 
             if( MSGRX_RES_OK == result )
@@ -198,7 +198,7 @@ e_eFSP_MSGRX_Res MSGRX_StartNewMsgNClean(s_eFSP_MSGRX_Ctx* const ctx)
 	return result;
 }
 
-e_eFSP_MSGRX_Res MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const ctx, uint8_t** dataP, uint32_t* const retrivedLen)
+e_eFSP_MSGRX_Res eFSP_MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const ctx, uint8_t** dataP, uint32_t* const retrivedLen)
 {
 	/* Local variable */
 	e_eFSP_MSGRX_Res result;
@@ -219,7 +219,7 @@ e_eFSP_MSGRX_Res MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const ctx, uint8_t** dat
 		else
 		{
 			/* Get memory reference of CRC+LEN+DATA, so we can calculate reference of only data payload */
-			resultMsgD = MSGD_GetDecodedData(&ctx->msgDecoderCtnx, dataP, retrivedLen);
+			resultMsgD = eFSP_MSGD_GetDecodedData(&ctx->msgDecoderCtnx, dataP, retrivedLen);
 			result = convertReturnFromMSGDToMSGRX(resultMsgD);
 		}
 	}
@@ -232,7 +232,7 @@ e_eFSP_MSGRX_Res MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const ctx, uint8_t** dat
     /* Suppressed because this warning is not working */
 #endif
 
-e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
+e_eFSP_MSGRX_Res eFSP_MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
 {
 	/* Local variable of the operation result */
 	e_eFSP_MSGRX_Res result;
@@ -296,7 +296,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                     {
                         /* Check if lib is initialized */
                         isInit = false;
-                        resultMsgD = MSGD_IsInit(&ctx->msgDecoderCtnx, &isInit);
+                        resultMsgD = eFSP_MSGD_IsInit(&ctx->msgDecoderCtnx, &isInit);
                         result = convertReturnFromMSGDToMSGRX(resultMsgD);
 
                         /* Check if any error is returned */
@@ -328,7 +328,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                         if( true == ctx->rxTim.tim_getRemaining(ctx->rxTim.timerCtx, &sRemRxTime) )
                         {
                             /* Check also if we are still waiting start of frame to be received */
-                            resultMsgD =  MSGD_IsWaitingSof(&ctx->msgDecoderCtnx, &isWaitingSof);
+                            resultMsgD =  eFSP_MSGD_IsWaitingSof(&ctx->msgDecoderCtnx, &isWaitingSof);
                             result = convertReturnFromMSGDToMSGRX(resultMsgD);
 
                             if( MSGRX_RES_OK == result )
@@ -434,7 +434,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                     case MSGRX_PRV_CHECKHOWMANYDATA:
                     {
                         /* How many byte do we need to receive? */
-                        resultMsgD = MSGD_GetMostEffDatLen(&ctx->msgDecoderCtnx, &rxMostEff);
+                        resultMsgD = eFSP_MSGD_GetMostEffDatLen(&ctx->msgDecoderCtnx, &rxMostEff);
                         result = convertReturnFromMSGDToMSGRX(resultMsgD);
                         if( MSGRX_RES_OK == result )
                         {
@@ -453,7 +453,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                             else
                             {
                                 /* Could be because the message is received or an error occoured */
-                                resultMsgD = MSGD_IsAFullMsgDecoded(&ctx->msgDecoderCtnx, &isMsgDec);
+                                resultMsgD = eFSP_MSGD_IsAFullMsgDecoded(&ctx->msgDecoderCtnx, &isMsgDec);
                                 result = convertReturnFromMSGDToMSGRX(resultMsgD);
 
                                 if( MSGRX_RES_OK == result )
@@ -547,7 +547,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                         {
                             /* We can try to decode data event if we already finished cuz the function
                             * MSGD_InsEncChunk is well maden */
-                            resultMsgD = MSGD_InsEncChunk(&ctx->msgDecoderCtnx, cDToRxP, cDToRxLen, &cDRxed );
+                            resultMsgD = eFSP_MSGD_InsEncChunk(&ctx->msgDecoderCtnx, cDToRxP, cDToRxLen, &cDRxed );
                             result = convertReturnFromMSGDToMSGRX(resultMsgD);
 
                             if( MSGRX_RES_OK == result )
@@ -623,7 +623,7 @@ e_eFSP_MSGRX_Res MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                                 elapsedFromStart = sRemRxTime - cRemainRxTime;
 
                                 /* Are we waiting SOF? */
-                                resultMsgD =  MSGD_IsWaitingSof(&ctx->msgDecoderCtnx, &isWaitingSof);
+                                resultMsgD =  eFSP_MSGD_IsWaitingSof(&ctx->msgDecoderCtnx, &isWaitingSof);
                                 if( MSGD_RES_OK == resultMsgD )
                                 {
                                     /* Do we need to wait start of frame? */

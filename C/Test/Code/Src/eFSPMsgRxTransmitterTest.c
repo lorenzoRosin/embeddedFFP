@@ -312,7 +312,7 @@ void msgRxTransmitterTestCommon(void)
     initDataTx.i_frameTimeoutMs = 1000u;
     initDataTx.i_timePerSendMs = 100u;
 
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctxTx, &initDataTx) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctxTx, &initDataTx) )
     {
         (void)printf("msgRxTransmitterTestCommon 1  -- OK \n");
     }
@@ -335,7 +335,7 @@ void msgRxTransmitterTestCommon(void)
     initDataRX.i_frameTimeoutMs = 1000u;
     initDataRX.i_timePerRecMs = 100u;
     initDataRX.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == MSGRX_InitCtx(&ctxRX, &initDataRX) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctxRX, &initDataRX) )
     {
         (void)printf("msgRxTransmitterTestCommon 2  -- OK \n");
     }
@@ -345,7 +345,7 @@ void msgRxTransmitterTestCommon(void)
     }
 
     /* Fill data */
-    if( MSGTX_RES_OK == MSGTX_GetPayloadLocation(&ctxTx, &dataP, &dataL) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_GetPayloadLocation(&ctxTx, &dataP, &dataL) )
     {
         if( 12u == dataL )
         {
@@ -370,7 +370,7 @@ void msgRxTransmitterTestCommon(void)
     dataP[6u] = ECU_SOF;
 
     /* Start TX message */
-    if( MSGTX_RES_OK == MSGTX_StartNewMessage(&ctxTx, 7u) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_StartNewMessage(&ctxTx, 7u) )
     {
         (void)printf("msgTransmitterTestCornerCase 4  -- OK \n");
     }
@@ -380,7 +380,7 @@ void msgRxTransmitterTestCommon(void)
     }
 
     /* Start RX message */
-    if( MSGRX_RES_OK == MSGRX_StartNewMsg(&ctxRX) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctxRX) )
     {
         (void)printf("msgTransmitterTestCornerCase 5  -- OK \n");
     }
@@ -390,7 +390,7 @@ void msgRxTransmitterTestCommon(void)
     }
 
     /* Send data  */
-    if( MSGTX_RES_MESSAGESENDED == MSGTX_SendChunk(&ctxTx) )
+    if( MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&ctxTx) )
     {
         (void)printf("msgTransmitterTestCornerCase 6  -- OK \n");
     }
@@ -400,7 +400,7 @@ void msgRxTransmitterTestCommon(void)
     }
 
     /* Receive data */
-    if( MSGRX_RES_MESSAGERECEIVED == MSGRX_ReceiveChunk(&ctxRX) )
+    if( MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctxRX) )
     {
         (void)printf("msgTransmitterTestCornerCase 7  -- OK \n");
     }
@@ -410,7 +410,7 @@ void msgRxTransmitterTestCommon(void)
     }
 
     /* Get RX data */
-    if( MSGRX_RES_OK == MSGRX_GetDecodedData(&ctxRX, &dataP, &dataL) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&ctxRX, &dataP, &dataL) )
     {
         if( 7u == dataL )
         {

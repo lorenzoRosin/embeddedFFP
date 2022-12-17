@@ -454,7 +454,7 @@ void msgTransmitterTestBadPointer(void)
     bool_t isInit;
 
     /* Function */
-    if( MSGTX_RES_BADPOINTER == MSGTX_InitCtx(NULL, &initData) )
+    if( MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(NULL, &initData) )
     {
         (void)printf("msgTransmitterTestBadPointer 1  -- OK \n");
     }
@@ -464,7 +464,7 @@ void msgTransmitterTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGTX_RES_BADPOINTER == MSGTX_InitCtx(&ctx, NULL) )
+    if( MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, NULL) )
     {
         (void)printf("msgTransmitterTestBadPointer 2  -- OK \n");
     }
@@ -487,7 +487,7 @@ void msgTransmitterTestBadPointer(void)
     initData.i_txTimer.tim_getRemaining = &timGetRemaining;
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 100u;
-    if( MSGTX_RES_BADPOINTER == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestBadPointer 3  -- OK \n");
     }
@@ -510,7 +510,7 @@ void msgTransmitterTestBadPointer(void)
     initData.i_txTimer.tim_getRemaining = &timGetRemaining;
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 100u;
-    if( MSGTX_RES_BADPOINTER == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestBadPointer 4  -- OK \n");
     }
@@ -533,7 +533,7 @@ void msgTransmitterTestBadPointer(void)
     initData.i_txTimer.tim_getRemaining = &timGetRemaining;
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 100u;
-    if( MSGTX_RES_BADPOINTER == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestBadPointer 5  -- OK \n");
     }
@@ -556,7 +556,7 @@ void msgTransmitterTestBadPointer(void)
     initData.i_txTimer.tim_getRemaining = &timGetRemaining;
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 100u;
-    if( MSGTX_RES_BADPOINTER == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestBadPointer 6  -- OK \n");
     }
@@ -579,7 +579,7 @@ void msgTransmitterTestBadPointer(void)
     initData.i_txTimer.tim_getRemaining = &timGetRemaining;
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 100u;
-    if( MSGTX_RES_BADPOINTER == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestBadPointer 7  -- OK \n");
     }
@@ -602,7 +602,7 @@ void msgTransmitterTestBadPointer(void)
     initData.i_txTimer.tim_getRemaining = &timGetRemaining;
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 100u;
-    if( MSGTX_RES_BADPOINTER == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestBadPointer 8  -- OK \n");
     }
@@ -625,7 +625,7 @@ void msgTransmitterTestBadPointer(void)
     initData.i_txTimer.tim_getRemaining = &timGetRemaining;
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 100u;
-    if( MSGTX_RES_BADPOINTER == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestBadPointer 9  -- OK \n");
     }
@@ -648,7 +648,7 @@ void msgTransmitterTestBadPointer(void)
     initData.i_txTimer.tim_getRemaining = &timGetRemaining;
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 100u;
-    if( MSGTX_RES_BADPOINTER == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestBadPointer 10 -- OK \n");
     }
@@ -671,7 +671,7 @@ void msgTransmitterTestBadPointer(void)
     initData.i_txTimer.tim_getRemaining = NULL;
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 100u;
-    if( MSGTX_RES_BADPOINTER == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestBadPointer 11 -- OK \n");
     }
@@ -694,7 +694,7 @@ void msgTransmitterTestBadPointer(void)
     initData.i_txTimer.tim_getRemaining = &timGetRemaining;
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 100u;
-    if( MSGTX_RES_BADPOINTER == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestBadPointer 12 -- OK \n");
     }
@@ -717,7 +717,7 @@ void msgTransmitterTestBadPointer(void)
     initData.i_txTimer.tim_getRemaining = &timGetRemaining;
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 100u;
-    if( MSGTX_RES_BADPOINTER == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestBadPointer 13 -- OK \n");
     }
@@ -740,7 +740,7 @@ void msgTransmitterTestBadPointer(void)
     initData.i_txTimer.tim_getRemaining = &timGetRemaining;
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 100u;
-    if( MSGTX_RES_BADPOINTER == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestBadPointer 14 -- OK \n");
     }
@@ -750,7 +750,7 @@ void msgTransmitterTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGTX_RES_BADPOINTER == MSGTX_IsInit(NULL, &isInit) )
+    if( MSGTX_RES_BADPOINTER == eFSP_MSGTX_IsInit(NULL, &isInit) )
     {
         (void)printf("msgTransmitterTestBadPointer 15 -- OK \n");
     }
@@ -760,7 +760,7 @@ void msgTransmitterTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGTX_RES_BADPOINTER == MSGTX_IsInit(&ctx, NULL) )
+    if( MSGTX_RES_BADPOINTER == eFSP_MSGTX_IsInit(&ctx, NULL) )
     {
         (void)printf("msgTransmitterTestBadPointer 16 -- OK \n");
     }
@@ -770,7 +770,7 @@ void msgTransmitterTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGTX_RES_BADPOINTER == MSGTX_StartNewMessage(NULL, 10u) )
+    if( MSGTX_RES_BADPOINTER == eFSP_MSGTX_StartNewMessage(NULL, 10u) )
     {
         (void)printf("msgTransmitterTestBadPointer 17 -- OK \n");
     }
@@ -780,7 +780,7 @@ void msgTransmitterTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGTX_RES_BADPOINTER == MSGTX_GetPayloadLocation(NULL, &dataP, &dataL) )
+    if( MSGTX_RES_BADPOINTER == eFSP_MSGTX_GetPayloadLocation(NULL, &dataP, &dataL) )
     {
         (void)printf("msgTransmitterTestBadPointer 18 -- OK \n");
     }
@@ -790,7 +790,7 @@ void msgTransmitterTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGTX_RES_BADPOINTER == MSGTX_GetPayloadLocation(&ctx, NULL, &dataL) )
+    if( MSGTX_RES_BADPOINTER == eFSP_MSGTX_GetPayloadLocation(&ctx, NULL, &dataL) )
     {
         (void)printf("msgTransmitterTestBadPointer 19 -- OK \n");
     }
@@ -800,7 +800,7 @@ void msgTransmitterTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGTX_RES_BADPOINTER == MSGTX_GetPayloadLocation(&ctx, &dataP, NULL) )
+    if( MSGTX_RES_BADPOINTER == eFSP_MSGTX_GetPayloadLocation(&ctx, &dataP, NULL) )
     {
         (void)printf("msgTransmitterTestBadPointer 20 -- OK \n");
     }
@@ -810,7 +810,7 @@ void msgTransmitterTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGTX_RES_BADPOINTER == MSGTX_RestartCurrentMessage(NULL) )
+    if( MSGTX_RES_BADPOINTER == eFSP_MSGTX_RestartCurrentMessage(NULL) )
     {
         (void)printf("msgTransmitterTestBadPointer 21 -- OK \n");
     }
@@ -820,7 +820,7 @@ void msgTransmitterTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGTX_RES_BADPOINTER == MSGTX_SendChunk(NULL) )
+    if( MSGTX_RES_BADPOINTER == eFSP_MSGTX_SendChunk(NULL) )
     {
         (void)printf("msgTransmitterTestBadPointer 22 -- OK \n");
     }
@@ -861,7 +861,7 @@ void msgTransmitterTestBadInit(void)
     ctx.timePerSendMs = 100u;
 
     /* Function */
-    if( MSGTX_RES_OK == MSGTX_IsInit(&ctx, &isInit) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_IsInit(&ctx, &isInit) )
     {
         if( false == isInit )
         {
@@ -878,7 +878,7 @@ void msgTransmitterTestBadInit(void)
     }
 
     /* Function */
-    if( MSGTX_RES_NOINITLIB == MSGTX_StartNewMessage(&ctx, 10u) )
+    if( MSGTX_RES_NOINITLIB == eFSP_MSGTX_StartNewMessage(&ctx, 10u) )
     {
         (void)printf("msgTransmitterTestBadInit 2  -- OK \n");
     }
@@ -888,7 +888,7 @@ void msgTransmitterTestBadInit(void)
     }
 
     /* Function */
-    if( MSGTX_RES_NOINITLIB == MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
+    if( MSGTX_RES_NOINITLIB == eFSP_MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
     {
         (void)printf("msgTransmitterTestBadInit 3  -- OK \n");
     }
@@ -898,7 +898,7 @@ void msgTransmitterTestBadInit(void)
     }
 
     /* Function */
-    if( MSGTX_RES_NOINITLIB == MSGTX_RestartCurrentMessage(&ctx) )
+    if( MSGTX_RES_NOINITLIB == eFSP_MSGTX_RestartCurrentMessage(&ctx) )
     {
         (void)printf("msgTransmitterTestBadInit 4  -- OK \n");
     }
@@ -908,7 +908,7 @@ void msgTransmitterTestBadInit(void)
     }
 
     /* Function */
-    if( MSGTX_RES_NOINITLIB == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_NOINITLIB == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestBadInit 5  -- OK \n");
     }
@@ -949,7 +949,7 @@ void msgTransmitterTestBadIniMsg(void)
     initData.i_txTimer.tim_getRemaining = &timGetRemaining;
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 100u;
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestBadIniMsg 1  -- OK \n");
     }
@@ -958,7 +958,7 @@ void msgTransmitterTestBadIniMsg(void)
         (void)printf("msgTransmitterTestBadIniMsg 1  -- FAIL \n");
     }
 
-    if( MSGTX_RES_NOINITMESSAGE == MSGTX_RestartCurrentMessage(&ctx) )
+    if( MSGTX_RES_NOINITMESSAGE == eFSP_MSGTX_RestartCurrentMessage(&ctx) )
     {
         (void)printf("msgTransmitterTestBadIniMsg 2  -- OK \n");
     }
@@ -968,7 +968,7 @@ void msgTransmitterTestBadIniMsg(void)
     }
 
     m_tim_remainingTime = 100u;
-    if( MSGTX_RES_NOINITMESSAGE == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_NOINITMESSAGE == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestBadIniMsg 3  -- OK \n");
     }
@@ -978,7 +978,7 @@ void msgTransmitterTestBadIniMsg(void)
     }
 
     /* Function */
-    if( MSGTX_RES_OK == MSGTX_IsInit(&ctx, &isInit) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_IsInit(&ctx, &isInit) )
     {
         if( true == isInit )
         {
@@ -1025,7 +1025,7 @@ void msgTransmitterTestBadParamEntr(void)
     initData.i_txTimer.tim_getRemaining = &timGetRemaining;
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 100u;
-    if( MSGTX_RES_BADPARAM == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_BADPARAM == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestBadParamEntr 1  -- OK \n");
     }
@@ -1048,7 +1048,7 @@ void msgTransmitterTestBadParamEntr(void)
     initData.i_txTimer.tim_getRemaining = &timGetRemaining;
     initData.i_frameTimeoutMs = 0u;
     initData.i_timePerSendMs = 100u;
-    if( MSGTX_RES_BADPARAM == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_BADPARAM == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestBadParamEntr 2  -- OK \n");
     }
@@ -1071,7 +1071,7 @@ void msgTransmitterTestBadParamEntr(void)
     initData.i_txTimer.tim_getRemaining = &timGetRemaining;
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 0u;
-    if( MSGTX_RES_BADPARAM == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_BADPARAM == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestBadParamEntr 3  -- OK \n");
     }
@@ -1094,7 +1094,7 @@ void msgTransmitterTestBadParamEntr(void)
     initData.i_txTimer.tim_getRemaining = &timGetRemaining;
     initData.i_frameTimeoutMs = 100u;
     initData.i_timePerSendMs = 1000u;
-    if( MSGTX_RES_BADPARAM == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_BADPARAM == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestBadParamEntr 4  -- OK \n");
     }
@@ -1117,7 +1117,7 @@ void msgTransmitterTestBadParamEntr(void)
     initData.i_txTimer.tim_getRemaining = &timGetRemaining;
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 100u;
-    if( MSGTX_RES_BADPARAM == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_BADPARAM == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestBadParamEntr 5  -- OK \n");
     }
@@ -1140,7 +1140,7 @@ void msgTransmitterTestBadParamEntr(void)
     initData.i_txTimer.tim_getRemaining = &timGetRemaining;
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 100u;
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestBadParamEntr 6  -- OK \n");
     }
@@ -1150,7 +1150,7 @@ void msgTransmitterTestBadParamEntr(void)
     }
 
     /* Function */
-    if( MSGTX_RES_BADPARAM == MSGTX_StartNewMessage(&ctx, 0u) )
+    if( MSGTX_RES_BADPARAM == eFSP_MSGTX_StartNewMessage(&ctx, 0u) )
     {
         (void)printf("msgTransmitterTestBadParamEntr 2  -- OK \n");
     }
@@ -1192,7 +1192,7 @@ void msgTransmitterTestCorruptContext(void)
     initData.i_txTimer.tim_getRemaining = &timGetRemaining;
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 100u;
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestCorruptContext 1  -- OK \n");
     }
@@ -1203,7 +1203,7 @@ void msgTransmitterTestCorruptContext(void)
 
     /* Function */
     ctx.sendBuff = NULL;
-    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCorruptContext 2  -- OK \n");
     }
@@ -1213,7 +1213,7 @@ void msgTransmitterTestCorruptContext(void)
     }
 
     /* Function */
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestCorruptContext 3  -- OK \n");
     }
@@ -1224,7 +1224,7 @@ void msgTransmitterTestCorruptContext(void)
 
     /* Function */
     ctx.cbTxP = NULL;
-    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCorruptContext 4  -- OK \n");
     }
@@ -1234,7 +1234,7 @@ void msgTransmitterTestCorruptContext(void)
     }
 
     /* Function */
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestCorruptContext 5  -- OK \n");
     }
@@ -1245,7 +1245,7 @@ void msgTransmitterTestCorruptContext(void)
 
     /* Function */
     ctx.cbTxCtx = NULL;
-    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCorruptContext 6  -- OK \n");
     }
@@ -1255,7 +1255,7 @@ void msgTransmitterTestCorruptContext(void)
     }
 
     /* Function */
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestCorruptContext 7  -- OK \n");
     }
@@ -1266,7 +1266,7 @@ void msgTransmitterTestCorruptContext(void)
 
     /* Function */
     ctx.txTimer.timerCtx = NULL;
-    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCorruptContext 8  -- OK \n");
     }
@@ -1276,7 +1276,7 @@ void msgTransmitterTestCorruptContext(void)
     }
 
     /* Function */
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestCorruptContext 9  -- OK \n");
     }
@@ -1287,7 +1287,7 @@ void msgTransmitterTestCorruptContext(void)
 
     /* Function */
     ctx.txTimer.tim_start = NULL;
-    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCorruptContext 10 -- OK \n");
     }
@@ -1298,7 +1298,7 @@ void msgTransmitterTestCorruptContext(void)
 
 
     /* Function */
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestCorruptContext 11 -- OK \n");
     }
@@ -1309,7 +1309,7 @@ void msgTransmitterTestCorruptContext(void)
 
     /* Function */
     ctx.txTimer.tim_getRemaining = NULL;
-    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCorruptContext 12 -- OK \n");
     }
@@ -1319,7 +1319,7 @@ void msgTransmitterTestCorruptContext(void)
     }
 
     /* Function */
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestCorruptContext 13 -- OK \n");
     }
@@ -1330,7 +1330,7 @@ void msgTransmitterTestCorruptContext(void)
 
     /* Function */
     ctx.sendBuffSize = 0u;
-    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCorruptContext 14 -- OK \n");
     }
@@ -1340,7 +1340,7 @@ void msgTransmitterTestCorruptContext(void)
     }
 
     /* Function */
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestCorruptContext 15 -- OK \n");
     }
@@ -1351,7 +1351,7 @@ void msgTransmitterTestCorruptContext(void)
 
     /* Function */
     ctx.sendBuffFill = ctx.sendBuffSize + 1u;
-    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCorruptContext 16 -- OK \n");
     }
@@ -1361,7 +1361,7 @@ void msgTransmitterTestCorruptContext(void)
     }
 
     /* Function */
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestCorruptContext 17 -- OK \n");
     }
@@ -1372,7 +1372,7 @@ void msgTransmitterTestCorruptContext(void)
 
     /* Function */
     ctx.sendBuffCntr = ctx.sendBuffFill + 1u;
-    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCorruptContext 18 -- OK \n");
     }
@@ -1382,7 +1382,7 @@ void msgTransmitterTestCorruptContext(void)
     }
 
     /* Function */
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestCorruptContext 19 -- OK \n");
     }
@@ -1393,7 +1393,7 @@ void msgTransmitterTestCorruptContext(void)
 
     /* Function */
     ctx.frameTimeoutMs = 0u;
-    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCorruptContext 20 -- OK \n");
     }
@@ -1403,7 +1403,7 @@ void msgTransmitterTestCorruptContext(void)
     }
 
     /* Function */
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestCorruptContext 21 -- OK \n");
     }
@@ -1414,7 +1414,7 @@ void msgTransmitterTestCorruptContext(void)
 
     /* Function */
     ctx.timePerSendMs = 0u;
-    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCorruptContext 22 -- OK \n");
     }
@@ -1424,7 +1424,7 @@ void msgTransmitterTestCorruptContext(void)
     }
 
     /* Function */
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestCorruptContext 23 -- OK \n");
     }
@@ -1435,7 +1435,7 @@ void msgTransmitterTestCorruptContext(void)
 
     /* Function */
     ctx.timePerSendMs = ctx.frameTimeoutMs + 1u;
-    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCorruptContext 24 -- OK \n");
     }
@@ -1445,7 +1445,7 @@ void msgTransmitterTestCorruptContext(void)
     }
 
     /* Function */
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestCorruptContext 25 -- OK \n");
     }
@@ -1456,7 +1456,7 @@ void msgTransmitterTestCorruptContext(void)
 
     /* Function */
     ctx.timePerSendMs = 0u;
-    if( MSGTX_RES_CORRUPTCTX == MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
+    if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
     {
         (void)printf("msgTransmitterTestCorruptContext 26 -- OK \n");
     }
@@ -1466,7 +1466,7 @@ void msgTransmitterTestCorruptContext(void)
     }
 
     /* Function */
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestCorruptContext 27 -- OK \n");
     }
@@ -1477,7 +1477,7 @@ void msgTransmitterTestCorruptContext(void)
 
     /* Function */
     ctx.timePerSendMs = 0u;
-    if( MSGTX_RES_CORRUPTCTX == MSGTX_RestartCurrentMessage(&ctx) )
+    if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_RestartCurrentMessage(&ctx) )
     {
         (void)printf("msgTransmitterTestCorruptContext 28 -- OK \n");
     }
@@ -1487,7 +1487,7 @@ void msgTransmitterTestCorruptContext(void)
     }
 
     /* Function */
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestCorruptContext 29 -- OK \n");
     }
@@ -1498,7 +1498,7 @@ void msgTransmitterTestCorruptContext(void)
 
     /* Function */
     ctx.timePerSendMs = 0u;
-    if( MSGTX_RES_CORRUPTCTX == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCorruptContext 30 -- OK \n");
     }
@@ -1509,7 +1509,7 @@ void msgTransmitterTestCorruptContext(void)
 
     /* Function */
     ctx.msgEncoderCtnx.cbCrcCtx = NULL;
-    if( MSGTX_RES_CORRUPTCTX == MSGTX_StartNewMessage(&ctx, 2u) )
+    if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCorruptContext 31 -- OK \n");
     }
@@ -1519,7 +1519,7 @@ void msgTransmitterTestCorruptContext(void)
     }
 
     /* Function */
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestCorruptContext 32 -- OK \n");
     }
@@ -1530,7 +1530,7 @@ void msgTransmitterTestCorruptContext(void)
 
     /* Function */
     ctx.msgEncoderCtnx.cbCrcCtx = NULL;
-    if( MSGTX_RES_CORRUPTCTX == MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
+    if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
     {
         (void)printf("msgTransmitterTestCorruptContext 33 -- OK \n");
     }
@@ -1540,7 +1540,7 @@ void msgTransmitterTestCorruptContext(void)
     }
 
     /* Function */
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestCorruptContext 34 -- OK \n");
     }
@@ -1551,7 +1551,7 @@ void msgTransmitterTestCorruptContext(void)
 
     /* Function */
     ctx.msgEncoderCtnx.cbCrcCtx = NULL;
-    if( MSGTX_RES_CORRUPTCTX == MSGTX_RestartCurrentMessage(&ctx) )
+    if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_RestartCurrentMessage(&ctx) )
     {
         (void)printf("msgTransmitterTestCorruptContext 35 -- OK \n");
     }
@@ -1561,7 +1561,7 @@ void msgTransmitterTestCorruptContext(void)
     }
 
     /* Function */
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestCorruptContext 36 -- OK \n");
     }
@@ -1572,7 +1572,7 @@ void msgTransmitterTestCorruptContext(void)
 
     /* Function */
     ctx.msgEncoderCtnx.cbCrcCtx = NULL;
-    if( MSGTX_RES_CORRUPTCTX == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCorruptContext 37 -- OK \n");
     }
@@ -1612,7 +1612,7 @@ void msgTransmitterTestBadClBckCrc(void)
     initData.i_txTimer.tim_getRemaining = &timGetRemaining;
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 100u;
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestBadClBckCrc 1  -- OK \n");
     }
@@ -1622,7 +1622,7 @@ void msgTransmitterTestBadClBckCrc(void)
     }
 
     /* Function */
-    if( MSGTX_RES_CRCCLBKERROR == MSGTX_StartNewMessage(&ctx, 2u) )
+    if( MSGTX_RES_CRCCLBKERROR == eFSP_MSGTX_StartNewMessage(&ctx, 2u) )
     {
         if( CRC_RES_BADPOINTER == ctxAdapterCrc.lastError )
         {
@@ -1672,7 +1672,7 @@ void msgTransmitterTestBadClBckSend(void)
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 100u;
 
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestBadClBckSend 1  -- OK \n");
     }
@@ -1681,7 +1681,7 @@ void msgTransmitterTestBadClBckSend(void)
         (void)printf("msgTransmitterTestBadClBckSend 1  -- FAIL \n");
     }
 
-    if( MSGTX_RES_OK == MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
     {
         if( 2u == dataL )
         {
@@ -1700,7 +1700,7 @@ void msgTransmitterTestBadClBckSend(void)
     /* Function */
     dataP[0u] = 0x01u;
     dataP[1u] = 0x02u;
-    if( MSGTX_RES_OK == MSGTX_StartNewMessage(&ctx, 2u) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestBadClBckSend 3  -- OK \n");
     }
@@ -1710,7 +1710,7 @@ void msgTransmitterTestBadClBckSend(void)
     }
 
     /* Function */
-    if( MSGTX_RES_TXCLBKERROR == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_TXCLBKERROR == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestBadClBckSend 4  -- OK \n");
     }
@@ -1753,7 +1753,7 @@ void msgTransmitterTestBadClBckTim(void)
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 100u;
 
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestBadClBckTim 1  -- OK \n");
     }
@@ -1762,7 +1762,7 @@ void msgTransmitterTestBadClBckTim(void)
         (void)printf("msgTransmitterTestBadClBckTim 1  -- FAIL \n");
     }
 
-    if( MSGTX_RES_OK == MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
     {
         if( 2u == dataL )
         {
@@ -1781,7 +1781,7 @@ void msgTransmitterTestBadClBckTim(void)
     /* Function */
     dataP[0u] = 0x01u;
     dataP[1u] = 0x02u;
-    if( MSGTX_RES_TIMCLBKERROR == MSGTX_StartNewMessage(&ctx, 2u) )
+    if( MSGTX_RES_TIMCLBKERROR == eFSP_MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestBadClBckTim 3  -- OK \n");
     }
@@ -1791,7 +1791,7 @@ void msgTransmitterTestBadClBckTim(void)
     }
 
      /* Function */
-    if( MSGTX_RES_TIMCLBKERROR == MSGTX_RestartCurrentMessage(&ctx) )
+    if( MSGTX_RES_TIMCLBKERROR == eFSP_MSGTX_RestartCurrentMessage(&ctx) )
     {
         (void)printf("msgTransmitterTestBadClBckTim 4  -- OK \n");
     }
@@ -1819,7 +1819,7 @@ void msgTransmitterTestBadClBckTim(void)
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 100u;
 
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestBadClBckTim 5  -- OK \n");
     }
@@ -1828,7 +1828,7 @@ void msgTransmitterTestBadClBckTim(void)
         (void)printf("msgTransmitterTestBadClBckTim 5  -- FAIL \n");
     }
 
-    if( MSGTX_RES_OK == MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
     {
         if( 2u == dataL )
         {
@@ -1847,7 +1847,7 @@ void msgTransmitterTestBadClBckTim(void)
     /* Function */
     dataP[0u] = 0x01u;
     dataP[1u] = 0x02u;
-    if( MSGTX_RES_OK == MSGTX_StartNewMessage(&ctx, 2u) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestBadClBckTim 7  -- OK \n");
     }
@@ -1857,7 +1857,7 @@ void msgTransmitterTestBadClBckTim(void)
     }
 
     /* Function */
-    if( MSGTX_RES_TIMCLBKERROR == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_TIMCLBKERROR == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestBadClBckTim 8  -- OK \n");
     }
@@ -1905,7 +1905,7 @@ void msgTransmitterTestCornerCase(void)
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 100u;
 
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestCornerCase 1  -- OK \n");
     }
@@ -1914,7 +1914,7 @@ void msgTransmitterTestCornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 1  -- FAIL \n");
     }
 
-    if( MSGTX_RES_OK == MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
     {
         if( 2u == dataL )
         {
@@ -1935,7 +1935,7 @@ void msgTransmitterTestCornerCase(void)
     dataP[1u] = 0x02u;
     m_txBuffCounter = 0u;
     m_send_when = 0u;
-    if( MSGTX_RES_OK == MSGTX_StartNewMessage(&ctx, 2u) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCornerCase 3  -- OK \n");
     }
@@ -1945,7 +1945,7 @@ void msgTransmitterTestCornerCase(void)
     }
 
     /* Function */
-    if( MSGTX_RES_MESSAGESENDED == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase 4  -- OK \n");
     }
@@ -1970,7 +1970,7 @@ void msgTransmitterTestCornerCase(void)
     /* Function */
     m_txBuffCounter = 0u;
     m_send_when = 0u;
-    if( MSGTX_RES_OK == MSGTX_RestartCurrentMessage(&ctx) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_RestartCurrentMessage(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase 6  -- OK \n");
     }
@@ -1980,7 +1980,7 @@ void msgTransmitterTestCornerCase(void)
     }
 
     /* Function */
-    if( MSGTX_RES_MESSAGESENDED == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase 7  -- OK \n");
     }
@@ -2016,7 +2016,7 @@ void msgTransmitterTestCornerCase(void)
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 100u;
 
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestCornerCase 9  -- OK \n");
     }
@@ -2025,7 +2025,7 @@ void msgTransmitterTestCornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 9  -- FAIL \n");
     }
 
-    if( MSGTX_RES_OK == MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
     {
         if( 2u == dataL )
         {
@@ -2046,7 +2046,7 @@ void msgTransmitterTestCornerCase(void)
     dataP[1u] = 0x02u;
     m_txBuffCounter = 0u;
     m_send_when = 0u;
-    if( MSGTX_RES_OK == MSGTX_StartNewMessage(&ctx, 2u) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCornerCase 11 -- OK \n");
     }
@@ -2056,7 +2056,7 @@ void msgTransmitterTestCornerCase(void)
     }
 
     /* Function */
-    if( MSGTX_RES_MESSAGESENDED == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase 12 -- OK \n");
     }
@@ -2092,7 +2092,7 @@ void msgTransmitterTestCornerCase(void)
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 1u;
 
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestCornerCase 14 -- OK \n");
     }
@@ -2101,7 +2101,7 @@ void msgTransmitterTestCornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 14 -- FAIL \n");
     }
 
-    if( MSGTX_RES_OK == MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
     {
         if( 2u == dataL )
         {
@@ -2122,7 +2122,7 @@ void msgTransmitterTestCornerCase(void)
     dataP[1u] = 0x02u;
     m_txBuffCounter = 0u;
     m_send_when = 0u;
-    if( MSGTX_RES_OK == MSGTX_StartNewMessage(&ctx, 2u) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCornerCase 16 -- OK \n");
     }
@@ -2132,7 +2132,7 @@ void msgTransmitterTestCornerCase(void)
     }
 
     /* Function */
-    if( MSGTX_RES_OK == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase 17 -- OK \n");
     }
@@ -2141,7 +2141,7 @@ void msgTransmitterTestCornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 17 -- FAIL \n");
     }
 
-    if( MSGTX_RES_OK == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase 18 -- OK \n");
     }
@@ -2150,7 +2150,7 @@ void msgTransmitterTestCornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 18 -- FAIL \n");
     }
 
-    if( MSGTX_RES_OK == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase 19 -- OK \n");
     }
@@ -2159,7 +2159,7 @@ void msgTransmitterTestCornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 19 -- FAIL \n");
     }
 
-    if( MSGTX_RES_OK == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase 20 -- OK \n");
     }
@@ -2168,7 +2168,7 @@ void msgTransmitterTestCornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 20 -- FAIL \n");
     }
 
-    if( MSGTX_RES_OK == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase 21 -- OK \n");
     }
@@ -2177,7 +2177,7 @@ void msgTransmitterTestCornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 21 -- FAIL \n");
     }
 
-    if( MSGTX_RES_OK == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase 22 -- OK \n");
     }
@@ -2186,7 +2186,7 @@ void msgTransmitterTestCornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 22 -- FAIL \n");
     }
 
-    if( MSGTX_RES_OK == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase 23 -- OK \n");
     }
@@ -2195,7 +2195,7 @@ void msgTransmitterTestCornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 23 -- FAIL \n");
     }
 
-    if( MSGTX_RES_OK == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase 24 -- OK \n");
     }
@@ -2204,7 +2204,7 @@ void msgTransmitterTestCornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 24 -- FAIL \n");
     }
 
-    if( MSGTX_RES_OK == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase 25 -- OK \n");
     }
@@ -2213,7 +2213,7 @@ void msgTransmitterTestCornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 25 -- FAIL \n");
     }
 
-    if( MSGTX_RES_OK == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase 26 -- OK \n");
     }
@@ -2222,7 +2222,7 @@ void msgTransmitterTestCornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 26 -- FAIL \n");
     }
 
-    if( MSGTX_RES_OK == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase 27 -- OK \n");
     }
@@ -2231,7 +2231,7 @@ void msgTransmitterTestCornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 27 -- FAIL \n");
     }
 
-    if( MSGTX_RES_OK == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase 28 -- OK \n");
     }
@@ -2240,7 +2240,7 @@ void msgTransmitterTestCornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 28 -- FAIL \n");
     }
 
-    if( MSGTX_RES_MESSAGESENDED == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase 29 -- OK \n");
     }
@@ -2250,7 +2250,7 @@ void msgTransmitterTestCornerCase(void)
     }
 
 
-    if( MSGTX_RES_MESSAGESENDED == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase 30 -- OK \n");
     }
@@ -2309,7 +2309,7 @@ void msgTransmitterTestCornerCase2(void)
     initData.i_frameTimeoutMs = 3u;
     initData.i_timePerSendMs = 3u;
 
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestCornerCase2 1  -- OK \n");
     }
@@ -2318,7 +2318,7 @@ void msgTransmitterTestCornerCase2(void)
         (void)printf("msgTransmitterTestCornerCase2 1  -- FAIL \n");
     }
 
-    if( MSGTX_RES_OK == MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
     {
         if( 2u == dataL )
         {
@@ -2339,7 +2339,7 @@ void msgTransmitterTestCornerCase2(void)
     dataP[1u] = 0x02u;
     m_txBuffCounter = 0u;
     m_send_when = 0u;
-    if( MSGTX_RES_OK == MSGTX_StartNewMessage(&ctx, 2u) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCornerCase2 3  -- OK \n");
     }
@@ -2349,7 +2349,7 @@ void msgTransmitterTestCornerCase2(void)
     }
 
     /* Function */
-    if( MSGTX_RES_MESSAGETIMEOUT == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_MESSAGETIMEOUT == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase2 4  -- OK \n");
     }
@@ -2373,7 +2373,7 @@ void msgTransmitterTestCornerCase2(void)
     initData.i_frameTimeoutMs = 12u;
     initData.i_timePerSendMs = 5u;
 
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestCornerCase2 6  -- OK \n");
     }
@@ -2382,7 +2382,7 @@ void msgTransmitterTestCornerCase2(void)
         (void)printf("msgTransmitterTestCornerCase2 6  -- FAIL \n");
     }
 
-    if( MSGTX_RES_OK == MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
     {
         if( 2u == dataL )
         {
@@ -2403,7 +2403,7 @@ void msgTransmitterTestCornerCase2(void)
     dataP[1u] = 0x02u;
     m_txBuffCounter = 0u;
     m_send_when = 0u;
-    if( MSGTX_RES_OK == MSGTX_StartNewMessage(&ctx, 2u) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCornerCase2 8  -- OK \n");
     }
@@ -2413,7 +2413,7 @@ void msgTransmitterTestCornerCase2(void)
     }
 
     /* Function */
-    if( MSGTX_RES_OK == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase2 9  -- OK \n");
     }
@@ -2423,7 +2423,7 @@ void msgTransmitterTestCornerCase2(void)
     }
 
     /* Function */
-    if( MSGTX_RES_MESSAGESENDED == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase2 10 -- OK \n");
     }
@@ -2433,7 +2433,7 @@ void msgTransmitterTestCornerCase2(void)
     }
 
     /* Function */
-    if( MSGTX_RES_MESSAGESENDED == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase2 11 -- OK \n");
     }
@@ -2444,7 +2444,7 @@ void msgTransmitterTestCornerCase2(void)
 
 
     /* Function */
-    if( MSGTX_RES_MESSAGESENDED == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase2 12 -- OK \n");
     }
@@ -2454,7 +2454,7 @@ void msgTransmitterTestCornerCase2(void)
     }
 
     /* Function */
-    if( MSGTX_RES_MESSAGETIMEOUT == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_MESSAGETIMEOUT == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase2 13 -- OK \n");
     }
@@ -2509,7 +2509,7 @@ void msgTransmitterTestCornerCase3()
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 100u;
 
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestCornerCase3 1  -- OK \n");
     }
@@ -2518,7 +2518,7 @@ void msgTransmitterTestCornerCase3()
         (void)printf("msgTransmitterTestCornerCase3 1  -- FAIL \n");
     }
 
-    if( MSGTX_RES_OK == MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
     {
         if( 2u == dataL )
         {
@@ -2537,7 +2537,7 @@ void msgTransmitterTestCornerCase3()
     /* Function */
     dataP[0u] = 0x01u;
     dataP[1u] = 0x02u;
-    if( MSGTX_RES_OK == MSGTX_StartNewMessage(&ctx, 2u) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCornerCase3 3  -- OK \n");
     }
@@ -2547,7 +2547,7 @@ void msgTransmitterTestCornerCase3()
     }
 
     /* Function */
-    if( MSGTX_RES_CORRUPTCTX == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase3 4  -- OK \n");
     }
@@ -2575,7 +2575,7 @@ void msgTransmitterTestCornerCase3()
     initData.i_frameTimeoutMs = 1000u;
     initData.i_timePerSendMs = 100u;
 
-    if( MSGTX_RES_OK == MSGTX_InitCtx(&ctx, &initData) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("msgTransmitterTestCornerCase3 5  -- OK \n");
     }
@@ -2584,7 +2584,7 @@ void msgTransmitterTestCornerCase3()
         (void)printf("msgTransmitterTestCornerCase3 5  -- FAIL \n");
     }
 
-    if( MSGTX_RES_OK == MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_GetPayloadLocation(&ctx, &dataP, &dataL) )
     {
         if( 2u == dataL )
         {
@@ -2603,7 +2603,7 @@ void msgTransmitterTestCornerCase3()
     /* Function */
     dataP[0u] = 0x01u;
     dataP[1u] = 0x02u;
-    if( MSGTX_RES_OK == MSGTX_StartNewMessage(&ctx, 2u) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_StartNewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCornerCase3 7  -- OK \n");
     }
@@ -2613,7 +2613,7 @@ void msgTransmitterTestCornerCase3()
     }
 
     /* Function */
-    if( MSGTX_RES_CORRUPTCTX == MSGTX_SendChunk(&ctx) )
+    if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCornerCase3 8  -- OK \n");
     }

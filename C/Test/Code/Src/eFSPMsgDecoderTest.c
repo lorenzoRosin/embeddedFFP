@@ -166,7 +166,7 @@ void msgDecoderTestBadPointer(void)
     bool_t isInit;
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == MSGD_InitCtx(NULL, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_InitCtx(NULL, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestBadPointer 1  -- OK \n");
     }
@@ -176,7 +176,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == MSGD_InitCtx(&ctx, NULL, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_InitCtx(&ctx, NULL, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestBadPointer 2  -- OK \n");
     }
@@ -186,7 +186,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), NULL, &ctxAdapterCrc) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), NULL, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestBadPointer 3  -- OK \n");
     }
@@ -196,7 +196,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, NULL) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, NULL) )
     {
         (void)printf("msgDecoderTestBadPointer 4  -- OK \n");
     }
@@ -206,7 +206,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == MSGD_StartNewMsg(NULL) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_StartNewMsg(NULL) )
     {
         (void)printf("msgDecoderTestBadPointer 5  -- OK \n");
     }
@@ -216,7 +216,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == MSGD_GetDecodedData(NULL, &dataP, &var32) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_GetDecodedData(NULL, &dataP, &var32) )
     {
         (void)printf("msgDecoderTestBadPointer 6  -- OK \n");
     }
@@ -226,7 +226,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == MSGD_GetDecodedData(&ctx, NULL, &var32) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_GetDecodedData(&ctx, NULL, &var32) )
     {
         (void)printf("msgDecoderTestBadPointer 7  -- OK \n");
     }
@@ -236,7 +236,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == MSGD_GetDecodedData(&ctx, &dataP, NULL) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_GetDecodedData(&ctx, &dataP, NULL) )
     {
         (void)printf("msgDecoderTestBadPointer 8  -- OK \n");
     }
@@ -246,7 +246,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == MSGD_GetDecodedLen(NULL, &var32) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_GetDecodedLen(NULL, &var32) )
     {
         (void)printf("msgDecoderTestBadPointer 9  -- OK \n");
     }
@@ -256,7 +256,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == MSGD_GetDecodedLen(&ctx, NULL) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_GetDecodedLen(&ctx, NULL) )
     {
         (void)printf("msgDecoderTestBadPointer 10 -- OK \n");
     }
@@ -266,7 +266,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == MSGD_IsWaitingSof(NULL, &isMsgDec) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_IsWaitingSof(NULL, &isMsgDec) )
     {
         (void)printf("msgDecoderTestBadPointer 11 -- OK \n");
     }
@@ -276,7 +276,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == MSGD_IsWaitingSof(&ctx, NULL) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_IsWaitingSof(&ctx, NULL) )
     {
         (void)printf("msgDecoderTestBadPointer 12 -- OK \n");
     }
@@ -286,7 +286,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == MSGD_IsAFullMsgDecoded(NULL, &isMsgDec) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_IsAFullMsgDecoded(NULL, &isMsgDec) )
     {
         (void)printf("msgDecoderTestBadPointer 13 -- OK \n");
     }
@@ -296,7 +296,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == MSGD_IsAFullMsgDecoded(&ctx, NULL) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_IsAFullMsgDecoded(&ctx, NULL) )
     {
         (void)printf("msgDecoderTestBadPointer 14 -- OK \n");
     }
@@ -306,7 +306,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == MSGD_IsCurrentFrameBad(NULL, &isMsgDec) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_IsCurrentFrameBad(NULL, &isMsgDec) )
     {
         (void)printf("msgDecoderTestBadPointer 15 -- OK \n");
     }
@@ -316,7 +316,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == MSGD_IsCurrentFrameBad(&ctx, NULL) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_IsCurrentFrameBad(&ctx, NULL) )
     {
         (void)printf("msgDecoderTestBadPointer 16 -- OK \n");
     }
@@ -326,7 +326,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == MSGD_GetMostEffDatLen(NULL, &var32) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_GetMostEffDatLen(NULL, &var32) )
     {
         (void)printf("msgDecoderTestBadPointer 17 -- OK \n");
     }
@@ -336,7 +336,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == MSGD_GetMostEffDatLen(&ctx, NULL) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_GetMostEffDatLen(&ctx, NULL) )
     {
         (void)printf("msgDecoderTestBadPointer 18 -- OK \n");
     }
@@ -346,7 +346,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == MSGD_InsEncChunk(NULL, memArea, sizeof(memArea), &var32) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_InsEncChunk(NULL, memArea, sizeof(memArea), &var32) )
     {
         (void)printf("msgDecoderTestBadPointer 19 -- OK \n");
     }
@@ -356,7 +356,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == MSGD_InsEncChunk(&ctx, NULL, sizeof(memArea), &var32) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_InsEncChunk(&ctx, NULL, sizeof(memArea), &var32) )
     {
         (void)printf("msgDecoderTestBadPointer 20 -- OK \n");
     }
@@ -366,7 +366,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == MSGD_InsEncChunk(&ctx, memArea, sizeof(memArea), NULL) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_InsEncChunk(&ctx, memArea, sizeof(memArea), NULL) )
     {
         (void)printf("msgDecoderTestBadPointer 21 -- OK \n");
     }
@@ -375,7 +375,7 @@ void msgDecoderTestBadPointer(void)
         (void)printf("msgDecoderTestBadPointer 21 -- FAIL \n");
     }
 
-    if( MSGD_RES_BADPOINTER == MSGD_IsInit( NULL, &isInit ) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_IsInit( NULL, &isInit ) )
     {
         (void)printf("msgDecoderTestBadPointer 22 -- OK \n");
     }
@@ -384,7 +384,7 @@ void msgDecoderTestBadPointer(void)
         (void)printf("msgDecoderTestBadPointer 22 -- FAIL \n");
     }
 
-    if( MSGD_RES_BADPOINTER == MSGD_IsInit( &ctx, NULL ) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_IsInit( &ctx, NULL ) )
     {
         (void)printf("msgDecoderTestBadPointer 23 -- OK \n");
     }
@@ -412,7 +412,7 @@ void msgDecoderTestBadInit(void)
     ctx.cbCrcCtx = &ctxAdapterCrc;
     ctx.cbCrcPtr = cbCrcPTest;
 
-    if( MSGD_RES_NOINITLIB == MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_NOINITLIB == eFSP_MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestBadInit 1  -- OK \n");
     }
@@ -422,7 +422,7 @@ void msgDecoderTestBadInit(void)
     }
 
     /* Function */
-    if( MSGD_RES_NOINITLIB == MSGD_GetDecodedData(&ctx, &dataP, &var32) )
+    if( MSGD_RES_NOINITLIB == eFSP_MSGD_GetDecodedData(&ctx, &dataP, &var32) )
     {
         (void)printf("msgDecoderTestBadInit 2  -- OK \n");
     }
@@ -432,7 +432,7 @@ void msgDecoderTestBadInit(void)
     }
 
     /* Function */
-    if( MSGD_RES_NOINITLIB == MSGD_GetDecodedLen(&ctx, &var32) )
+    if( MSGD_RES_NOINITLIB == eFSP_MSGD_GetDecodedLen(&ctx, &var32) )
     {
         (void)printf("msgDecoderTestBadInit 3  -- OK \n");
     }
@@ -442,7 +442,7 @@ void msgDecoderTestBadInit(void)
     }
 
     /* Function */
-    if( MSGD_RES_NOINITLIB == MSGD_IsWaitingSof(&ctx, &isMsgDec) )
+    if( MSGD_RES_NOINITLIB == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestBadInit 4  -- OK \n");
     }
@@ -452,7 +452,7 @@ void msgDecoderTestBadInit(void)
     }
 
     /* Function */
-    if( MSGD_RES_NOINITLIB == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_NOINITLIB == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestBadInit 5  -- OK \n");
     }
@@ -462,7 +462,7 @@ void msgDecoderTestBadInit(void)
     }
 
     /* Function */
-    if( MSGD_RES_NOINITLIB == MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_NOINITLIB == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
     {
         if( CRC_RES_OK == ctxAdapterCrc.lastError )
         {
@@ -479,7 +479,7 @@ void msgDecoderTestBadInit(void)
     }
 
     /* Function */
-    if( MSGD_RES_NOINITLIB == MSGD_GetMostEffDatLen(&ctx, &var32) )
+    if( MSGD_RES_NOINITLIB == eFSP_MSGD_GetMostEffDatLen(&ctx, &var32) )
     {
         (void)printf("msgDecoderTestBadInit 7  -- OK \n");
     }
@@ -489,7 +489,7 @@ void msgDecoderTestBadInit(void)
     }
 
     /* Function */
-    if( MSGD_RES_NOINITLIB == MSGD_InsEncChunk(&ctx, memArea, sizeof(memArea), &var32) )
+    if( MSGD_RES_NOINITLIB == eFSP_MSGD_InsEncChunk(&ctx, memArea, sizeof(memArea), &var32) )
     {
         (void)printf("msgDecoderTestBadInit 8  -- OK \n");
     }
@@ -498,7 +498,7 @@ void msgDecoderTestBadInit(void)
         (void)printf("msgDecoderTestBadInit 8  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsInit( &ctx, &isInit ) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsInit( &ctx, &isInit ) )
     {
         if( false == isInit )
         {
@@ -526,7 +526,7 @@ void msgDecoderTestBadParamEntr(void)
     bool_t isInit;
 
     /* Function */
-    if( MSGD_RES_BADPARAM == MSGD_InitCtx(&ctx, memArea, 8u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_BADPARAM == eFSP_MSGD_InitCtx(&ctx, memArea, 8u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestBadParamEntr 1  -- OK \n");
     }
@@ -536,7 +536,7 @@ void msgDecoderTestBadParamEntr(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestBadParamEntr 2  -- OK \n");
     }
@@ -546,7 +546,7 @@ void msgDecoderTestBadParamEntr(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPARAM == MSGD_InsEncChunk(&ctx, memArea, 0u, &var32) )
+    if( MSGD_RES_BADPARAM == eFSP_MSGD_InsEncChunk(&ctx, memArea, 0u, &var32) )
     {
         (void)printf("msgDecoderTestBadParamEntr 3  -- OK \n");
     }
@@ -555,7 +555,7 @@ void msgDecoderTestBadParamEntr(void)
         (void)printf("msgDecoderTestBadParamEntr 3  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsInit( &ctx, &isInit ) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsInit( &ctx, &isInit ) )
     {
         if( true == isInit )
         {
@@ -584,7 +584,7 @@ void msgDecoderTestCorruptedCtx(void)
     bool_t isMsgDec;
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 1  -- OK \n");
     }
@@ -594,7 +594,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     ctx.cbCrcPtr = NULL;
-    if( MSGD_RES_CORRUPTCTX == MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 2  -- OK \n");
     }
@@ -604,7 +604,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 3  -- OK \n");
     }
@@ -614,7 +614,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     ctx.cbCrcCtx = NULL;
-    if( MSGD_RES_CORRUPTCTX == MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 4  -- OK \n");
     }
@@ -624,7 +624,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 5  -- OK \n");
     }
@@ -634,7 +634,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     ctx.cbCrcCtx = NULL;
-    if( MSGD_RES_CORRUPTCTX == MSGD_GetDecodedData(&ctx, &dataP, &var32) )
+    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_GetDecodedData(&ctx, &dataP, &var32) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 6  -- OK \n");
     }
@@ -644,7 +644,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 7  -- OK \n");
     }
@@ -654,7 +654,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     ctx.cbCrcCtx = NULL;
-    if( MSGD_RES_CORRUPTCTX == MSGD_GetDecodedLen(&ctx,&var32) )
+    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_GetDecodedLen(&ctx,&var32) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 8  -- OK \n");
     }
@@ -664,7 +664,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 9  -- OK \n");
     }
@@ -674,7 +674,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     ctx.cbCrcCtx = NULL;
-    if( MSGD_RES_CORRUPTCTX == MSGD_IsWaitingSof(&ctx, &isMsgDec) )
+    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 10 -- OK \n");
     }
@@ -684,7 +684,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 11 -- OK \n");
     }
@@ -694,7 +694,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     ctx.cbCrcCtx = NULL;
-    if( MSGD_RES_CORRUPTCTX == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 12 -- OK \n");
     }
@@ -704,7 +704,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 13 -- OK \n");
     }
@@ -714,7 +714,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     ctx.cbCrcCtx = NULL;
-    if( MSGD_RES_CORRUPTCTX == MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 14 -- OK \n");
     }
@@ -724,7 +724,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 15 -- OK \n");
     }
@@ -734,7 +734,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     ctx.cbCrcCtx = NULL;
-    if( MSGD_RES_CORRUPTCTX == MSGD_GetMostEffDatLen(&ctx, &var32) )
+    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_GetMostEffDatLen(&ctx, &var32) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 16 -- OK \n");
     }
@@ -744,7 +744,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 17 -- OK \n");
     }
@@ -754,7 +754,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     ctx.cbCrcCtx = NULL;
-    if( MSGD_RES_CORRUPTCTX == MSGD_InsEncChunk(&ctx, memArea, 10u, &var32) )
+    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_InsEncChunk(&ctx, memArea, 10u, &var32) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 18 -- OK \n");
     }
@@ -764,7 +764,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 19 -- OK \n");
     }
@@ -774,7 +774,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     ctx.byteUStufferCtnx.p_memA = NULL;
-    if( MSGD_RES_CORRUPTCTX == MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 20 -- OK \n");
     }
@@ -784,7 +784,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 21 -- OK \n");
     }
@@ -794,7 +794,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     ctx.byteUStufferCtnx.p_memA = NULL;
-    if( MSGD_RES_CORRUPTCTX == MSGD_GetDecodedData(&ctx, &dataP, &var32) )
+    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_GetDecodedData(&ctx, &dataP, &var32) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 22 -- OK \n");
     }
@@ -804,7 +804,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 23 -- OK \n");
     }
@@ -814,7 +814,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     ctx.byteUStufferCtnx.p_memA = NULL;
-    if( MSGD_RES_CORRUPTCTX == MSGD_GetDecodedLen(&ctx, &var32) )
+    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_GetDecodedLen(&ctx, &var32) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 24 -- OK \n");
     }
@@ -824,7 +824,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 25 -- OK \n");
     }
@@ -834,7 +834,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     ctx.byteUStufferCtnx.p_memA = NULL;
-    if( MSGD_RES_CORRUPTCTX == MSGD_IsWaitingSof(&ctx, &isMsgDec) )
+    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 26 -- OK \n");
     }
@@ -844,7 +844,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 27 -- OK \n");
     }
@@ -854,7 +854,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     ctx.byteUStufferCtnx.p_memA = NULL;
-    if( MSGD_RES_CORRUPTCTX == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 28 -- OK \n");
     }
@@ -864,7 +864,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 29 -- OK \n");
     }
@@ -874,7 +874,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     ctx.byteUStufferCtnx.p_memA = NULL;
-    if( MSGD_RES_CORRUPTCTX == MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 30 -- OK \n");
     }
@@ -884,7 +884,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 31 -- OK \n");
     }
@@ -894,7 +894,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     ctx.byteUStufferCtnx.p_memA = NULL;
-    if( MSGD_RES_CORRUPTCTX == MSGD_GetMostEffDatLen(&ctx, &var32) )
+    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_GetMostEffDatLen(&ctx, &var32) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 32 -- OK \n");
     }
@@ -904,7 +904,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 33 -- OK \n");
     }
@@ -914,7 +914,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     ctx.byteUStufferCtnx.p_memA = NULL;
-    if( MSGD_RES_CORRUPTCTX == MSGD_InsEncChunk(&ctx, memArea, 10u, &var32) )
+    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_InsEncChunk(&ctx, memArea, 10u, &var32) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 34 -- OK \n");
     }
@@ -935,7 +935,7 @@ void msgDecoderTestBadClBck(void)
     bool_t isMsgDec;
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestBadClBck 1  -- OK \n");
     }
@@ -944,7 +944,7 @@ void msgDecoderTestBadClBck(void)
         (void)printf("msgDecoderTestBadClBck 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestBadClBck 2  -- OK \n");
     }
@@ -956,7 +956,7 @@ void msgDecoderTestBadClBck(void)
     /* Decode */
     uint8_t testData[] = {ECU_SOF, 0x00u, 0x00u, 0x00u, 0x00u, 0x01, 0x00u, 0x00u, 0x00u, 0x01, ECU_EOF};
 
-    if( MSGD_RES_CRCCLBKERROR == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &var32) )
+    if( MSGD_RES_CRCCLBKERROR == eFSP_MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &var32) )
     {
         if( CRC_RES_BADPOINTER == ctxAdapterCrc.lastError )
         {
@@ -972,7 +972,7 @@ void msgDecoderTestBadClBck(void)
         (void)printf("msgDecoderTestBadClBck 3  -- FAIL \n");
     }
 
-    if( MSGD_RES_CRCCLBKERROR == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_CRCCLBKERROR == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestBadClBck 4  -- OK \n");
     }
@@ -981,7 +981,7 @@ void msgDecoderTestBadClBck(void)
         (void)printf("msgDecoderTestBadClBck 4  -- FAIL \n");
     }
 
-    if( MSGD_RES_CRCCLBKERROR == MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_CRCCLBKERROR == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestBadClBck 5  -- OK \n");
     }
@@ -1001,7 +1001,7 @@ void msgDecoderTestMsgEnd(void)
     uint32_t var32;
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestMsgEnd 1  -- OK \n");
     }
@@ -1010,7 +1010,7 @@ void msgDecoderTestMsgEnd(void)
         (void)printf("msgDecoderTestMsgEnd 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestMsgEnd 2  -- OK \n");
     }
@@ -1022,7 +1022,7 @@ void msgDecoderTestMsgEnd(void)
     /* Decode */
     uint8_t testData[] = {ECU_SOF, 0xA6u, 0xC1u, 0xDCu, 0x0Au, 0x01, 0x00u, 0x00u, 0x00u, 0x01, ECU_EOF};
 
-    if( MSGD_RES_MESSAGEENDED == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &var32) )
+    if( MSGD_RES_MESSAGEENDED == eFSP_MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &var32) )
     {
         (void)printf("msgDecoderTestMsgEnd 3  -- OK \n");
     }
@@ -1042,7 +1042,7 @@ void msgDecoderTestOutOfMem(void)
     uint32_t var32;
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestOutOfMem 1  -- OK \n");
     }
@@ -1051,7 +1051,7 @@ void msgDecoderTestOutOfMem(void)
         (void)printf("msgDecoderTestOutOfMem 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestOutOfMem 2  -- OK \n");
     }
@@ -1063,7 +1063,7 @@ void msgDecoderTestOutOfMem(void)
     /* Decode */
     uint8_t testData[] = {ECU_SOF, 0xE9u, 0x7Au, 0xF2u, 0xDAu, 0x02, 0x00u, 0x00u, 0x00u, 0x01, 0x01, ECU_EOF};
 
-    if( MSGD_RES_OUTOFMEM == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &var32) )
+    if( MSGD_RES_OUTOFMEM == eFSP_MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &var32) )
     {
         (void)printf("msgDecoderTestOutOfMem 3  -- OK \n");
     }
@@ -1083,7 +1083,7 @@ void msgDecoderTestBadFrame(void)
     uint32_t var32;
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestBadFrame 1  -- OK \n");
     }
@@ -1092,7 +1092,7 @@ void msgDecoderTestBadFrame(void)
         (void)printf("msgDecoderTestBadFrame 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestBadFrame 2  -- OK \n");
     }
@@ -1104,7 +1104,7 @@ void msgDecoderTestBadFrame(void)
     /* Decode */
     uint8_t testData[] = {ECU_SOF, 0x00u, 0x00u, 0x00u, 0x00u, 0x01, 0x00u, 0x00u, 0x00u, 0x01, ECU_EOF};
 
-    if( MSGD_RES_BADFRAME == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &var32) )
+    if( MSGD_RES_BADFRAME == eFSP_MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &var32) )
     {
         (void)printf("msgDecoderTestBadFrame 3  -- OK \n");
     }
@@ -1124,7 +1124,7 @@ void msgDecoderTestFrameRestart(void)
     uint32_t var32;
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestFrameRestart 1  -- OK \n");
     }
@@ -1133,7 +1133,7 @@ void msgDecoderTestFrameRestart(void)
         (void)printf("msgDecoderTestFrameRestart 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestFrameRestart 2  -- OK \n");
     }
@@ -1145,7 +1145,7 @@ void msgDecoderTestFrameRestart(void)
     /* Decode */
     uint8_t testData[] = {ECU_SOF, 0x00u, ECU_SOF, 0x00u, 0x00u, 0x01, 0x00u, 0x00u, 0x00u, 0x01, ECU_EOF};
 
-    if( MSGD_RES_FRAMERESTART == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &var32) )
+    if( MSGD_RES_FRAMERESTART == eFSP_MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &var32) )
     {
         (void)printf("msgDecoderTestFrameRestart 3  -- OK \n");
     }
@@ -1169,7 +1169,7 @@ void msgDecoderTestGeneral(void)
     bool_t isMsgDec;
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestGeneral 1  -- OK \n");
     }
@@ -1178,7 +1178,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestGeneral 2  -- OK \n");
     }
@@ -1187,7 +1187,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 2  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -1203,7 +1203,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 3  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -1219,7 +1219,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 4  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsWaitingSof(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
@@ -1235,7 +1235,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 5  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1251,7 +1251,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 6  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1267,7 +1267,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 7  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 9u == mostEfficient )
         {
@@ -1287,7 +1287,7 @@ void msgDecoderTestGeneral(void)
     uint8_t testData[] = {ECU_SOF, 0x80u, 0xE4u, 0xB1u, 0x84u, 0x02, 0x00u, 0x00u, 0x00u, ECU_ESC, (uint8_t)(~ECU_SOF),
                           ECU_ESC, (uint8_t)(~ECU_EOF), ECU_EOF};
 
-    if( MSGD_RES_MESSAGEENDED == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &consumed) )
+    if( MSGD_RES_MESSAGEENDED == eFSP_MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &consumed) )
     {
         if( 14u == consumed )
         {
@@ -1303,7 +1303,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 9  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 0u == mostEfficient )
         {
@@ -1319,7 +1319,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 10 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsWaitingSof(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1335,7 +1335,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 11 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
@@ -1351,7 +1351,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 12 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1367,7 +1367,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 13 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
@@ -1383,7 +1383,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 14 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
@@ -1408,7 +1408,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 16 -- FAIL \n");
     }
 
-    if( MSGD_RES_MESSAGEENDED == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &consumed) )
+    if( MSGD_RES_MESSAGEENDED == eFSP_MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &consumed) )
     {
         if( 0u == consumed )
         {
@@ -1439,7 +1439,7 @@ void msgDecoderTestGeneral2(void)
     bool_t isMsgDec;
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestGeneral2 1  -- OK \n");
     }
@@ -1448,7 +1448,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestGeneral2 2  -- OK \n");
     }
@@ -1457,7 +1457,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 2  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -1473,7 +1473,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 3  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -1489,7 +1489,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 4  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsWaitingSof(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
@@ -1505,7 +1505,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 5  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1521,7 +1521,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 6  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1537,7 +1537,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 7  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 9u == mostEfficient )
         {
@@ -1557,7 +1557,7 @@ void msgDecoderTestGeneral2(void)
     uint8_t testData[] = {ECU_SOF, 0x80u, 0xE4u, 0xB1u, 0x84u, 0x02, 0x00u, 0x00u, 0x00u, ECU_ESC, (uint8_t)(~ECU_SOF),
                           ECU_ESC, (uint8_t)(~ECU_EOF), ECU_EOF};
 
-    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctx, testData, 1u, &consumed) )
+    if( MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&ctx, testData, 1u, &consumed) )
     {
         if( 1u == consumed )
         {
@@ -1573,7 +1573,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 9  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 8u == mostEfficient )
         {
@@ -1589,7 +1589,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 10 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsWaitingSof(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1605,7 +1605,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 11 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1621,7 +1621,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 12 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1637,7 +1637,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 13 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -1653,7 +1653,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 14 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -1669,7 +1669,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 15 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctx, &testData[1], 4u, &consumed) )
+    if( MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&ctx, &testData[1], 4u, &consumed) )
     {
         if( 4u == consumed )
         {
@@ -1685,7 +1685,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 16 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 4u == mostEfficient )
         {
@@ -1701,7 +1701,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 17 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsWaitingSof(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1717,7 +1717,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 18 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1733,7 +1733,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 19 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1749,7 +1749,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 20 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -1765,7 +1765,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 21 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -1781,7 +1781,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 22 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctx, &testData[5], 4u, &consumed) )
+    if( MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&ctx, &testData[5], 4u, &consumed) )
     {
         if( 4u == consumed )
         {
@@ -1797,7 +1797,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 23 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 3u == mostEfficient )
         {
@@ -1813,7 +1813,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 24 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsWaitingSof(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1829,7 +1829,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 25 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1845,7 +1845,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 26 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1861,7 +1861,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 27 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -1877,7 +1877,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 28 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -1893,7 +1893,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 29 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctx, &testData[9], 3u, &consumed) )
+    if( MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&ctx, &testData[9], 3u, &consumed) )
     {
         if( 3u == consumed )
         {
@@ -1909,7 +1909,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 30 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 2u == mostEfficient )
         {
@@ -1925,7 +1925,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 31 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsWaitingSof(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1941,7 +1941,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 32 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1957,7 +1957,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 33 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1973,7 +1973,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 34 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x01u == payLoadLen )
         {
@@ -1989,7 +1989,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 35 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x01u == payLoadLen )
         {
@@ -2005,7 +2005,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 36 -- FAIL \n");
     }
 
-    if( MSGD_RES_MESSAGEENDED == MSGD_InsEncChunk(&ctx, &testData[12], 2u, &consumed) )
+    if( MSGD_RES_MESSAGEENDED == eFSP_MSGD_InsEncChunk(&ctx, &testData[12], 2u, &consumed) )
     {
         if( 2u == consumed )
         {
@@ -2021,7 +2021,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 37 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 0u == mostEfficient )
         {
@@ -2037,7 +2037,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 38 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsWaitingSof(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2053,7 +2053,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 39 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
@@ -2069,7 +2069,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 40 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2085,7 +2085,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 41 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
@@ -2101,7 +2101,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 42 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
@@ -2132,7 +2132,7 @@ void msgDecoderTestCorernerMulti(void)
     bool_t isMsgDec;
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestCorernerMulti 1  -- OK \n");
     }
@@ -2141,7 +2141,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestCorernerMulti 2  -- OK \n");
     }
@@ -2150,7 +2150,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 2  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -2166,7 +2166,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 3  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -2182,7 +2182,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 4  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2198,7 +2198,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 5  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 9u == mostEfficient )
         {
@@ -2218,7 +2218,7 @@ void msgDecoderTestCorernerMulti(void)
     uint8_t testData[] = {ECU_SOF, 0x73u, 0x9Fu, 0x52u, 0xD9u, 0x07, 0x00u, 0x00u, 0x00u, ECU_ESC, (uint8_t)(~ECU_SOF),
                           ECU_ESC, (uint8_t)(~ECU_EOF), 0x01, 0x02, 0x03, 0x04, 0x05, ECU_EOF};
 
-    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctx, testData, 4u, &consumed) )
+    if( MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&ctx, testData, 4u, &consumed) )
     {
         if( 4u == consumed )
         {
@@ -2234,7 +2234,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 7  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 5u == mostEfficient )
         {
@@ -2250,7 +2250,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 8  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2266,7 +2266,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 9  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -2282,7 +2282,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 10 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -2299,7 +2299,7 @@ void msgDecoderTestCorernerMulti(void)
     }
 
     consumed = 0u;
-    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctx, &testData[4u], 4u, &consumed) )
+    if( MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&ctx, &testData[4u], 4u, &consumed) )
     {
         if( 4u == consumed)
         {
@@ -2315,7 +2315,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 12 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 1u == mostEfficient )
         {
@@ -2331,7 +2331,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 13 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2347,7 +2347,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 14 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -2363,7 +2363,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 15 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -2380,7 +2380,7 @@ void msgDecoderTestCorernerMulti(void)
     }
 
     consumed = 0u;
-    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctx, &testData[8u], 2u, &consumed) )
+    if( MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&ctx, &testData[8u], 2u, &consumed) )
     {
         if( 2u == consumed )
         {
@@ -2396,7 +2396,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 17 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 8u == mostEfficient )
         {
@@ -2412,7 +2412,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 18 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2428,7 +2428,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 19 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -2444,7 +2444,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 20 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -2461,7 +2461,7 @@ void msgDecoderTestCorernerMulti(void)
     }
 
     consumed = 0u;
-    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctx, &testData[10u], 4u, &consumed) )
+    if( MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&ctx, &testData[10u], 4u, &consumed) )
     {
         if( 4u == consumed )
         {
@@ -2477,7 +2477,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 22 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 5u == mostEfficient )
         {
@@ -2493,7 +2493,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 23 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2509,7 +2509,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 24 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x03u == payLoadLen )
         {
@@ -2525,7 +2525,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 25 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x03u == payLoadLen )
         {
@@ -2542,7 +2542,7 @@ void msgDecoderTestCorernerMulti(void)
     }
 
     consumed = 0u;
-    if( MSGD_RES_MESSAGEENDED == MSGD_InsEncChunk(&ctx, &testData[14u], 10u, &consumed) )
+    if( MSGD_RES_MESSAGEENDED == eFSP_MSGD_InsEncChunk(&ctx, &testData[14u], 10u, &consumed) )
     {
         if( 5u == consumed )
         {
@@ -2558,7 +2558,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 27 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 0u == mostEfficient )
         {
@@ -2574,7 +2574,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 28 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
@@ -2590,7 +2590,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 29 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x07u == payLoadLen )
         {
@@ -2606,7 +2606,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 30 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x07u == payLoadLen )
         {
@@ -2648,7 +2648,7 @@ void msgDecoderTestErrorAndContinue(void)
     bool_t isMsgDec;
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestErrorAndContinue 1  -- OK \n");
     }
@@ -2657,7 +2657,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestErrorAndContinue 2  -- OK \n");
     }
@@ -2666,7 +2666,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 2  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -2682,7 +2682,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 3  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -2698,7 +2698,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 4  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2714,7 +2714,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 5  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 9u == mostEfficient )
         {
@@ -2734,7 +2734,7 @@ void msgDecoderTestErrorAndContinue(void)
     uint8_t testData[] = { ECU_SOF, ECU_SOF, 0xA0u, 0xE6u, 0xDCu, 0x0Du, 0x02, 0x00u, 0x00u, 0x00u, ECU_ESC,
                            (uint8_t)(~ECU_SOF), ECU_ESC, (uint8_t)(~ECU_EOF), 0x01, ECU_EOF};
 
-    if( MSGD_RES_FRAMERESTART == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &consumed) )
+    if( MSGD_RES_FRAMERESTART == eFSP_MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &consumed) )
     {
         if( 2u == consumed )
         {
@@ -2750,7 +2750,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 7  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctx, &testData[2u], 12u, &consumed) )
+    if( MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&ctx, &testData[2u], 12u, &consumed) )
     {
         if( 12u == consumed )
         {
@@ -2766,7 +2766,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 8  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 1u == mostEfficient )
         {
@@ -2782,7 +2782,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 9  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsWaitingSof(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2798,7 +2798,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 10 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2814,7 +2814,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 11 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2830,7 +2830,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 12 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
@@ -2846,7 +2846,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 13 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
@@ -2862,7 +2862,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 14 -- FAIL \n");
     }
 
-    if( MSGD_RES_BADFRAME == MSGD_InsEncChunk(&ctx, &testData[14u], 1u, &consumed) )
+    if( MSGD_RES_BADFRAME == eFSP_MSGD_InsEncChunk(&ctx, &testData[14u], 1u, &consumed) )
     {
         if( 1u == consumed )
         {
@@ -2878,7 +2878,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 15 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 0u == mostEfficient )
         {
@@ -2894,7 +2894,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 17 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsWaitingSof(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2910,7 +2910,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 18 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2926,7 +2926,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 19 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
@@ -2942,7 +2942,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 20 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x03u == payLoadLen )
         {
@@ -2958,7 +2958,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 21 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x03u == payLoadLen )
         {
@@ -2974,7 +2974,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 22 -- FAIL \n");
     }
 
-    if( MSGD_RES_BADFRAME == MSGD_InsEncChunk(&ctx, &testData[14u], 1u, &consumed) )
+    if( MSGD_RES_BADFRAME == eFSP_MSGD_InsEncChunk(&ctx, &testData[14u], 1u, &consumed) )
     {
         if( 0u == consumed )
         {
@@ -2991,7 +2991,7 @@ void msgDecoderTestErrorAndContinue(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestErrorAndContinue 24 -- OK \n");
     }
@@ -3001,7 +3001,7 @@ void msgDecoderTestErrorAndContinue(void)
     }
 
     /* Remove */
-    if( MSGD_RES_BADFRAME == MSGD_InsEncChunk(&ctx, &testData[1u], sizeof(testData) - 1u, &consumed) )
+    if( MSGD_RES_BADFRAME == eFSP_MSGD_InsEncChunk(&ctx, &testData[1u], sizeof(testData) - 1u, &consumed) )
     {
         if( (sizeof(testData) - 1u) == consumed )
         {
@@ -3032,7 +3032,7 @@ void msgDecoderTestErrorAndContinueEx(void)
     bool_t isMsgDec;
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestErrorAndContinueEx 1  -- OK \n");
     }
@@ -3041,7 +3041,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestErrorAndContinueEx 2  -- OK \n");
     }
@@ -3050,7 +3050,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 2  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -3066,7 +3066,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 3  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -3082,7 +3082,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 4  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -3098,7 +3098,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 5  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 9u == mostEfficient )
         {
@@ -3118,7 +3118,7 @@ void msgDecoderTestErrorAndContinueEx(void)
     uint8_t testData[] = { ECU_SOF, ECU_SOF, 0xAAu, 0xAAu, 0xAAu, 0xAAu, 0x02, 0x00u, 0x00u, 0x00u, ECU_ESC,
                            (uint8_t)(~ECU_SOF), ECU_ESC, (uint8_t)(~ECU_EOF), ECU_EOF};
 
-    if( MSGD_RES_FRAMERESTART == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &consumed) )
+    if( MSGD_RES_FRAMERESTART == eFSP_MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &consumed) )
     {
         if( 2u == consumed )
         {
@@ -3134,7 +3134,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 7  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctx, &testData[2u], 12u, &consumed) )
+    if( MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&ctx, &testData[2u], 12u, &consumed) )
     {
         if( 12u == consumed )
         {
@@ -3150,7 +3150,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 8  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 1u == mostEfficient )
         {
@@ -3166,7 +3166,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 9  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsWaitingSof(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -3182,7 +3182,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 10 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -3198,7 +3198,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 11 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -3214,7 +3214,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 12 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
@@ -3230,7 +3230,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 13 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
@@ -3246,7 +3246,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 14 -- FAIL \n");
     }
 
-    if( MSGD_RES_BADFRAME == MSGD_InsEncChunk(&ctx, &testData[14u], 1u, &consumed) )
+    if( MSGD_RES_BADFRAME == eFSP_MSGD_InsEncChunk(&ctx, &testData[14u], 1u, &consumed) )
     {
         if( 1u == consumed )
         {
@@ -3262,7 +3262,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 15 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 0u == mostEfficient )
         {
@@ -3278,7 +3278,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 17 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsWaitingSof(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -3294,7 +3294,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 18 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -3310,7 +3310,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 19 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
@@ -3326,7 +3326,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 20 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
@@ -3342,7 +3342,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 21 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
@@ -3358,7 +3358,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 22 -- FAIL \n");
     }
 
-    if( MSGD_RES_BADFRAME == MSGD_InsEncChunk(&ctx, &testData[14u], 1u, &consumed) )
+    if( MSGD_RES_BADFRAME == eFSP_MSGD_InsEncChunk(&ctx, &testData[14u], 1u, &consumed) )
     {
         if( 0u == consumed )
         {
@@ -3375,7 +3375,7 @@ void msgDecoderTestErrorAndContinueEx(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestErrorAndContinueEx 24 -- OK \n");
     }
@@ -3385,7 +3385,7 @@ void msgDecoderTestErrorAndContinueEx(void)
     }
 
     /* Remove */
-    if( MSGD_RES_BADFRAME == MSGD_InsEncChunk(&ctx, &testData[1u], sizeof(testData) - 1u, &consumed) )
+    if( MSGD_RES_BADFRAME == eFSP_MSGD_InsEncChunk(&ctx, &testData[1u], sizeof(testData) - 1u, &consumed) )
     {
         if( (sizeof(testData) - 1u) == consumed )
         {
@@ -3416,7 +3416,7 @@ void msgDecoderTestErrorShortFrame(void)
     bool_t isMsgDec;
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestErrorShortFrame 1  -- OK \n");
     }
@@ -3425,7 +3425,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestErrorShortFrame 2  -- OK \n");
     }
@@ -3434,7 +3434,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 2  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -3450,7 +3450,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 3  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -3466,7 +3466,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 4  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -3482,7 +3482,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 5  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 9u == mostEfficient )
         {
@@ -3501,7 +3501,7 @@ void msgDecoderTestErrorShortFrame(void)
     /* Remove */
     uint8_t testData[] = { ECU_SOF, ECU_SOF, 0xAAu, 0xAAu, 0xAAu, 0xAAu, 0x04, 0x00u, 0x00u, 0x00u, 0x01, ECU_EOF};
 
-    if( MSGD_RES_FRAMERESTART == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &consumed) )
+    if( MSGD_RES_FRAMERESTART == eFSP_MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &consumed) )
     {
         if( 2u == consumed )
         {
@@ -3517,7 +3517,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 7  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctx, &testData[2u], 9u, &consumed) )
+    if( MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&ctx, &testData[2u], 9u, &consumed) )
     {
         if( 9u == consumed )
         {
@@ -3533,7 +3533,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 8  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 4u == mostEfficient )
         {
@@ -3549,7 +3549,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 9  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsWaitingSof(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -3565,7 +3565,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 10 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -3581,7 +3581,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 11 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -3597,7 +3597,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 12 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x01u == payLoadLen )
         {
@@ -3613,7 +3613,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 13 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x01u == payLoadLen )
         {
@@ -3629,7 +3629,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 14 -- FAIL \n");
     }
 
-    if( MSGD_RES_BADFRAME == MSGD_InsEncChunk(&ctx, &testData[11u], 1u, &consumed) )
+    if( MSGD_RES_BADFRAME == eFSP_MSGD_InsEncChunk(&ctx, &testData[11u], 1u, &consumed) )
     {
         if( 1u == consumed )
         {
@@ -3645,7 +3645,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 15 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 0u == mostEfficient )
         {
@@ -3661,7 +3661,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 17 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsWaitingSof(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -3677,7 +3677,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 18 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -3693,7 +3693,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 19 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
@@ -3709,7 +3709,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 20 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x01u == payLoadLen )
         {
@@ -3725,7 +3725,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 21 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x01u == payLoadLen )
         {
@@ -3741,7 +3741,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 22 -- FAIL \n");
     }
 
-    if( MSGD_RES_BADFRAME == MSGD_InsEncChunk(&ctx, &testData[11u], 1u, &consumed) )
+    if( MSGD_RES_BADFRAME == eFSP_MSGD_InsEncChunk(&ctx, &testData[11u], 1u, &consumed) )
     {
         if( 0u == consumed )
         {
@@ -3758,7 +3758,7 @@ void msgDecoderTestErrorShortFrame(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestErrorShortFrame 24 -- OK \n");
     }
@@ -3768,7 +3768,7 @@ void msgDecoderTestErrorShortFrame(void)
     }
 
     /* Remove */
-    if( MSGD_RES_BADFRAME == MSGD_InsEncChunk(&ctx, &testData[1u], sizeof(testData) - 1u, &consumed) )
+    if( MSGD_RES_BADFRAME == eFSP_MSGD_InsEncChunk(&ctx, &testData[1u], sizeof(testData) - 1u, &consumed) )
     {
         if( (sizeof(testData) - 1u) == consumed )
         {
@@ -3785,7 +3785,7 @@ void msgDecoderTestErrorShortFrame(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestErrorShortFrame 26 -- OK \n");
     }
@@ -3796,7 +3796,7 @@ void msgDecoderTestErrorShortFrame(void)
 
     uint8_t testData2[] = { ECU_SOF, 0xAAu, 0xAAu, ECU_EOF};
 
-    if( MSGD_RES_BADFRAME == MSGD_InsEncChunk(&ctx, testData2, sizeof(testData2), &consumed) )
+    if( MSGD_RES_BADFRAME == eFSP_MSGD_InsEncChunk(&ctx, testData2, sizeof(testData2), &consumed) )
     {
         if( 4u == consumed )
         {
@@ -3812,7 +3812,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 27 -- FAIL \n");
     }
 
-    if( MSGD_RES_BADFRAME == MSGD_InsEncChunk(&ctx, testData2, sizeof(testData2), &consumed) )
+    if( MSGD_RES_BADFRAME == eFSP_MSGD_InsEncChunk(&ctx, testData2, sizeof(testData2), &consumed) )
     {
         if( 0u == consumed )
         {
@@ -3828,7 +3828,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 28 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 0u == mostEfficient )
         {
@@ -3844,7 +3844,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 29 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsWaitingSof(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -3860,7 +3860,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 30 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -3876,7 +3876,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 31 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
@@ -3892,7 +3892,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 32 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -3908,7 +3908,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 33 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -3939,7 +3939,7 @@ void msgDecoderTestErrorBadStuff(void)
     bool_t isMsgDec;
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestErrorBadStuff 1  -- OK \n");
     }
@@ -3948,7 +3948,7 @@ void msgDecoderTestErrorBadStuff(void)
         (void)printf("msgDecoderTestErrorBadStuff 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestErrorBadStuff 2  -- OK \n");
     }
@@ -3957,7 +3957,7 @@ void msgDecoderTestErrorBadStuff(void)
         (void)printf("msgDecoderTestErrorBadStuff 2  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -3973,7 +3973,7 @@ void msgDecoderTestErrorBadStuff(void)
         (void)printf("msgDecoderTestErrorBadStuff 3  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
@@ -3989,7 +3989,7 @@ void msgDecoderTestErrorBadStuff(void)
         (void)printf("msgDecoderTestErrorBadStuff 4  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -4005,7 +4005,7 @@ void msgDecoderTestErrorBadStuff(void)
         (void)printf("msgDecoderTestErrorBadStuff 5  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 9u == mostEfficient )
         {
@@ -4025,7 +4025,7 @@ void msgDecoderTestErrorBadStuff(void)
     uint8_t testData[] = { ECU_SOF, ECU_SOF, 0xAAu, 0xAAu, 0xAAu, 0xAAu, 0x04, 0x00u, 0x00u, 0x00u, 0x01, ECU_ESC,
                            0x02, 0x03, ECU_EOF};
 
-    if( MSGD_RES_FRAMERESTART == MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &consumed) )
+    if( MSGD_RES_FRAMERESTART == eFSP_MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &consumed) )
     {
         if( 2u == consumed )
         {
@@ -4041,7 +4041,7 @@ void msgDecoderTestErrorBadStuff(void)
         (void)printf("msgDecoderTestErrorBadStuff 7  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_InsEncChunk(&ctx, &testData[2u], 9u, &consumed) )
+    if( MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&ctx, &testData[2u], 9u, &consumed) )
     {
         if( 9u == consumed )
         {
@@ -4057,7 +4057,7 @@ void msgDecoderTestErrorBadStuff(void)
         (void)printf("msgDecoderTestErrorBadStuff 8  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 4u == mostEfficient )
         {
@@ -4073,7 +4073,7 @@ void msgDecoderTestErrorBadStuff(void)
         (void)printf("msgDecoderTestErrorBadStuff 9  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsWaitingSof(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -4089,7 +4089,7 @@ void msgDecoderTestErrorBadStuff(void)
         (void)printf("msgDecoderTestErrorBadStuff 10 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -4105,7 +4105,7 @@ void msgDecoderTestErrorBadStuff(void)
         (void)printf("msgDecoderTestErrorBadStuff 11 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -4121,7 +4121,7 @@ void msgDecoderTestErrorBadStuff(void)
         (void)printf("msgDecoderTestErrorBadStuff 12 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x01u == payLoadLen )
         {
@@ -4137,7 +4137,7 @@ void msgDecoderTestErrorBadStuff(void)
         (void)printf("msgDecoderTestErrorBadStuff 13 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x01u == payLoadLen )
         {
@@ -4153,7 +4153,7 @@ void msgDecoderTestErrorBadStuff(void)
         (void)printf("msgDecoderTestErrorBadStuff 14 -- FAIL \n");
     }
 
-    if( MSGD_RES_BADFRAME == MSGD_InsEncChunk(&ctx, &testData[11u], 2u, &consumed) )
+    if( MSGD_RES_BADFRAME == eFSP_MSGD_InsEncChunk(&ctx, &testData[11u], 2u, &consumed) )
     {
         if( 2u == consumed )
         {
@@ -4169,7 +4169,7 @@ void msgDecoderTestErrorBadStuff(void)
         (void)printf("msgDecoderTestErrorBadStuff 15 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 0u == mostEfficient )
         {
@@ -4185,7 +4185,7 @@ void msgDecoderTestErrorBadStuff(void)
         (void)printf("msgDecoderTestErrorBadStuff 17 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsWaitingSof(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -4201,7 +4201,7 @@ void msgDecoderTestErrorBadStuff(void)
         (void)printf("msgDecoderTestErrorBadStuff 18 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -4217,7 +4217,7 @@ void msgDecoderTestErrorBadStuff(void)
         (void)printf("msgDecoderTestErrorBadStuff 19 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
@@ -4233,7 +4233,7 @@ void msgDecoderTestErrorBadStuff(void)
         (void)printf("msgDecoderTestErrorBadStuff 20 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedLen(&ctx, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x01u == payLoadLen )
         {
@@ -4249,7 +4249,7 @@ void msgDecoderTestErrorBadStuff(void)
         (void)printf("msgDecoderTestErrorBadStuff 21 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
+    if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x01u == payLoadLen )
         {
@@ -4265,7 +4265,7 @@ void msgDecoderTestErrorBadStuff(void)
         (void)printf("msgDecoderTestErrorBadStuff 22 -- FAIL \n");
     }
 
-    if( MSGD_RES_BADFRAME == MSGD_InsEncChunk(&ctx, &testData[11u], 2u, &consumed) )
+    if( MSGD_RES_BADFRAME == eFSP_MSGD_InsEncChunk(&ctx, &testData[11u], 2u, &consumed) )
     {
         if( 0u == consumed )
         {
@@ -4282,7 +4282,7 @@ void msgDecoderTestErrorBadStuff(void)
     }
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestErrorBadStuff 24 -- OK \n");
     }
@@ -4292,7 +4292,7 @@ void msgDecoderTestErrorBadStuff(void)
     }
 
     /* Remove */
-    if( MSGD_RES_BADFRAME == MSGD_InsEncChunk(&ctx, &testData[1u], sizeof(testData) - 1u, &consumed) )
+    if( MSGD_RES_BADFRAME == eFSP_MSGD_InsEncChunk(&ctx, &testData[1u], sizeof(testData) - 1u, &consumed) )
     {
         if( 12u == consumed )
         {
@@ -4319,7 +4319,7 @@ void msgDecoderTestCorner(void)
     uint32_t var32;
 
     /* Function */
-    if( MSGD_RES_OK == MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("msgDecoderTestCorner 1  -- OK \n");
     }
@@ -4328,7 +4328,7 @@ void msgDecoderTestCorner(void)
         (void)printf("msgDecoderTestCorner 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestCorner 2  -- OK \n");
     }
@@ -4340,7 +4340,7 @@ void msgDecoderTestCorner(void)
     /* Decode */
     uint8_t testData[] = {ECU_SOF, 0xA6u, 0xC1u, 0xDCu, 0x0Au, 0x01, 0x00u, 0x00u, 0x00u, 0x01, ECU_EOF};
 
-    if( MSGD_RES_MESSAGEENDED == MSGD_InsEncChunk(&ctx, testData, sizeof(testData) + 10u, &var32) )
+    if( MSGD_RES_MESSAGEENDED == eFSP_MSGD_InsEncChunk(&ctx, testData, sizeof(testData) + 10u, &var32) )
     {
         if( sizeof(testData) == var32 )
         {
@@ -4356,7 +4356,7 @@ void msgDecoderTestCorner(void)
         (void)printf("msgDecoderTestCorner 3  -- FAIL \n");
     }
 
-    if( MSGD_RES_MESSAGEENDED == MSGD_InsEncChunk(&ctx, testData, sizeof(testData) + 10u, &var32) )
+    if( MSGD_RES_MESSAGEENDED == eFSP_MSGD_InsEncChunk(&ctx, testData, sizeof(testData) + 10u, &var32) )
     {
         if( 0u == var32 )
         {
