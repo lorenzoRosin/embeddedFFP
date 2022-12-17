@@ -18,8 +18,8 @@
 /***********************************************************************************************************************
  *  PRIVATE STATIC FUNCTION DECLARATION
  **********************************************************************************************************************/
-static bool_t isMsgEncStatusStillCoherent(const s_eFSP_MSGE_Ctx* ctx);
-static e_eFSP_MSGE_Res convertReturnFromBstfToMSGE(e_eCU_BSTF_Res returnedEvent);
+static bool_t eFSP_MSGE_isStatusStillCoherent(const s_eFSP_MSGE_Ctx* ctx);
+static e_eFSP_MSGE_Res eFSP_MSGE_convertReturnFromBstf(e_eCU_BSTF_Res returnedEvent);
 
 
 
@@ -58,7 +58,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_InitCtx(s_eFSP_MSGE_Ctx* const ctx, uint8_t memArea[],
 
 			/* initialize internal bytestuffer */
 			resultByStuff =  eCU_BSTF_InitCtx(&ctx->byteStufferCtnx, memArea, memAreaSize);
-			result = convertReturnFromBstfToMSGE(resultByStuff);
+			result = eFSP_MSGE_convertReturnFromBstf(resultByStuff);
         }
 	}
 
@@ -83,7 +83,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_IsInit(s_eFSP_MSGE_Ctx* const ctx, bool_t* isInit)
 	else
 	{
         resultByStuff = eCU_BSTF_IsInit(&ctx->byteStufferCtnx, isInit);
-        result = convertReturnFromBstfToMSGE(resultByStuff);
+        result = eFSP_MSGE_convertReturnFromBstf(resultByStuff);
 	}
 
 	return result;
@@ -109,7 +109,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_StartNewMessage(s_eFSP_MSGE_Ctx* const ctx, const uint
 	else
 	{
         /* Check internal status validity */
-        if( false == isMsgEncStatusStillCoherent(ctx) )
+        if( false == eFSP_MSGE_isStatusStillCoherent(ctx) )
         {
             result = MSGE_RES_CORRUPTCTX;
         }
@@ -127,7 +127,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_StartNewMessage(s_eFSP_MSGE_Ctx* const ctx, const uint
                 maxDataSize = 0u;
                 dataP = NULL;
 				resultByStuff = eCU_BSTF_GetWherePutData(&ctx->byteStufferCtnx, &dataP, &maxDataSize);
-				result = convertReturnFromBstfToMSGE(resultByStuff);
+				result = eFSP_MSGE_convertReturnFromBstf(resultByStuff);
 
 				if( MSGE_RES_OK == result )
 				{
@@ -167,7 +167,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_StartNewMessage(s_eFSP_MSGE_Ctx* const ctx, const uint
 								* of len + real number of data */
 								nByteToSf = ( EFSP_MSGEN_HEADERSIZE + messageLen );
 								resultByStuff = eCU_BSTF_NewFrame(&ctx->byteStufferCtnx, nByteToSf);
-								result = convertReturnFromBstfToMSGE(resultByStuff);
+								result = eFSP_MSGE_convertReturnFromBstf(resultByStuff);
 							}
 							else
 							{
@@ -205,7 +205,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetPayloadLocation(s_eFSP_MSGE_Ctx* const ctx, uint8_t
 	else
 	{
 		/* Check internal status validity */
-		if( false == isMsgEncStatusStillCoherent(ctx) )
+		if( false == eFSP_MSGE_isStatusStillCoherent(ctx) )
 		{
 			result = MSGE_RES_CORRUPTCTX;
 		}
@@ -215,7 +215,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetPayloadLocation(s_eFSP_MSGE_Ctx* const ctx, uint8_t
             maxDataSizeP = 0u;
             dataPP = NULL;
 			resultByStuff = eCU_BSTF_GetWherePutData(&ctx->byteStufferCtnx, &dataPP, &maxDataSizeP);
-			result = convertReturnFromBstfToMSGE(resultByStuff);
+			result = eFSP_MSGE_convertReturnFromBstf(resultByStuff);
 
 			if( MSGE_RES_OK == result )
 			{
@@ -255,7 +255,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_RestartCurrentMessage(s_eFSP_MSGE_Ctx* const ctx)
 	else
 	{
 		/* Check internal status validity */
-		if( false == isMsgEncStatusStillCoherent(ctx) )
+		if( false == eFSP_MSGE_isStatusStillCoherent(ctx) )
 		{
 			result = MSGE_RES_CORRUPTCTX;
 		}
@@ -263,7 +263,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_RestartCurrentMessage(s_eFSP_MSGE_Ctx* const ctx)
 		{
 			/* Restart only the byte stuffer */
 			resultByStuff = eCU_BSTF_RestartFrame(&ctx->byteStufferCtnx);
-			result = convertReturnFromBstfToMSGE(resultByStuff);
+			result = eFSP_MSGE_convertReturnFromBstf(resultByStuff);
 		}
 	}
 
@@ -284,7 +284,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetRemToRetrive(s_eFSP_MSGE_Ctx* const ctx, uint32_t* 
 	else
 	{
 		/* Check internal status validity */
-		if( false == isMsgEncStatusStillCoherent(ctx) )
+		if( false == eFSP_MSGE_isStatusStillCoherent(ctx) )
 		{
 			result = MSGE_RES_CORRUPTCTX;
 		}
@@ -292,7 +292,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetRemToRetrive(s_eFSP_MSGE_Ctx* const ctx, uint32_t* 
 		{
 			/* Get memory reference */
 			resultByStuff = eCU_BSTF_GetRemByteToGet(&ctx->byteStufferCtnx, retrivedLen);
-			result = convertReturnFromBstfToMSGE(resultByStuff);
+			result = eFSP_MSGE_convertReturnFromBstf(resultByStuff);
 		}
 	}
 
@@ -319,7 +319,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_RetriveEChunk(s_eFSP_MSGE_Ctx* const ctx, uint8_t enco
 	else
 	{
 		/* Check internal status validity */
-		if( false == isMsgEncStatusStillCoherent(ctx) )
+		if( false == eFSP_MSGE_isStatusStillCoherent(ctx) )
 		{
 			result = MSGE_RES_CORRUPTCTX;
 		}
@@ -327,7 +327,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_RetriveEChunk(s_eFSP_MSGE_Ctx* const ctx, uint8_t enco
 		{
 			/* Get memory reference */
 			resultByStuff = eCU_BSTF_GetStufChunk(&ctx->byteStufferCtnx, encodeDest, maxDestLen, filledLen);
-			result = convertReturnFromBstfToMSGE(resultByStuff);
+			result = eFSP_MSGE_convertReturnFromBstf(resultByStuff);
 		}
 	}
 
@@ -343,7 +343,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_RetriveEChunk(s_eFSP_MSGE_Ctx* const ctx, uint8_t enco
 /***********************************************************************************************************************
  *  PRIVATE FUNCTION
  **********************************************************************************************************************/
-bool_t isMsgEncStatusStillCoherent(const s_eFSP_MSGE_Ctx* ctx)
+static bool_t eFSP_MSGE_isStatusStillCoherent(const s_eFSP_MSGE_Ctx* ctx)
 {
     bool_t result;
 
@@ -360,7 +360,7 @@ bool_t isMsgEncStatusStillCoherent(const s_eFSP_MSGE_Ctx* ctx)
     return result;
 }
 
-e_eFSP_MSGE_Res convertReturnFromBstfToMSGE(e_eCU_BSTF_Res returnedEvent)
+static e_eFSP_MSGE_Res eFSP_MSGE_convertReturnFromBstf(e_eCU_BSTF_Res returnedEvent)
 {
 	e_eFSP_MSGE_Res result;
 

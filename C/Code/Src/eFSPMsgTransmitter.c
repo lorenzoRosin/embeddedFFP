@@ -18,8 +18,8 @@
 /***********************************************************************************************************************
  *  PRIVATE STATIC FUNCTION DECLARATION
  **********************************************************************************************************************/
-static bool_t isMsgTransStatusStillCoherent(const s_eFSP_MSGTX_Ctx* ctx);
-static e_eFSP_MSGTX_Res convertReturnFromMSGEToMSGTX(e_eFSP_MSGE_Res returnedEvent);
+static bool_t eFSP_MSGTX_isStatusStillCoherent(const s_eFSP_MSGTX_Ctx* ctx);
+static e_eFSP_MSGTX_Res eFSP_MSGTX_convertReturnFromMSGE(e_eFSP_MSGE_Res returnedEvent);
 
 
 
@@ -76,7 +76,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const ctx, const s_eFSP_MS
                 /* initialize internal message encoder */
                 resultMsgE =  eFSP_MSGE_InitCtx(&ctx->msgEncoderCtnx, initData->i_memArea, initData->i_memAreaSize,
                                            initData->i_cbCrcP, initData->i_cbCrcCtx);
-                result = convertReturnFromMSGEToMSGTX(resultMsgE);
+                result = eFSP_MSGTX_convertReturnFromMSGE(resultMsgE);
             }
         }
 	}
@@ -102,7 +102,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_IsInit(s_eFSP_MSGTX_Ctx* const ctx, bool_t* isInit)
 	else
 	{
         resultMsgE = eFSP_MSGE_IsInit(&ctx->msgEncoderCtnx, isInit);
-        result = convertReturnFromMSGEToMSGTX(resultMsgE);
+        result = eFSP_MSGTX_convertReturnFromMSGE(resultMsgE);
 	}
 
 	return result;
@@ -122,7 +122,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_StartNewMessage(s_eFSP_MSGTX_Ctx* const ctx, const u
 	else
 	{
         /* Check internal status validity */
-        if( false == isMsgTransStatusStillCoherent(ctx) )
+        if( false == eFSP_MSGTX_isStatusStillCoherent(ctx) )
         {
             result = MSGTX_RES_CORRUPTCTX;
         }
@@ -141,7 +141,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_StartNewMessage(s_eFSP_MSGTX_Ctx* const ctx, const u
 
                 /* Init message encoder */
                 resultMsgE = eFSP_MSGE_StartNewMessage(&ctx->msgEncoderCtnx, messageLen);
-                result = convertReturnFromMSGEToMSGTX(resultMsgE);
+                result = eFSP_MSGTX_convertReturnFromMSGE(resultMsgE);
 
                 /* Start timer */
                 if( MSGTX_RES_OK == result )
@@ -172,7 +172,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_GetPayloadLocation(s_eFSP_MSGTX_Ctx* const ctx, uint
 	else
 	{
 		/* Check internal status validity */
-		if( false == isMsgTransStatusStillCoherent(ctx) )
+		if( false == eFSP_MSGTX_isStatusStillCoherent(ctx) )
 		{
 			result = MSGTX_RES_CORRUPTCTX;
 		}
@@ -180,7 +180,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_GetPayloadLocation(s_eFSP_MSGTX_Ctx* const ctx, uint
 		{
 			/* Get only the payload data reference */
 			resultMsgE = eFSP_MSGE_GetPayloadLocation(&ctx->msgEncoderCtnx, dataP, maxDataSize);
-			result = convertReturnFromMSGEToMSGTX(resultMsgE);
+			result = eFSP_MSGTX_convertReturnFromMSGE(resultMsgE);
 		}
 	}
 
@@ -201,7 +201,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_RestartCurrentMessage(s_eFSP_MSGTX_Ctx* const ctx)
 	else
 	{
 		/* Check internal status validity */
-		if( false == isMsgTransStatusStillCoherent(ctx) )
+		if( false == eFSP_MSGTX_isStatusStillCoherent(ctx) )
 		{
 			result = MSGTX_RES_CORRUPTCTX;
 		}
@@ -213,7 +213,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_RestartCurrentMessage(s_eFSP_MSGTX_Ctx* const ctx)
 
 			/* Restart only the byte stuffer */
 			resultMsgE = eFSP_MSGE_RestartCurrentMessage(&ctx->msgEncoderCtnx);
-			result = convertReturnFromMSGEToMSGTX(resultMsgE);
+			result = eFSP_MSGTX_convertReturnFromMSGE(resultMsgE);
 
             /* Start timer */
             if( MSGTX_RES_OK == result )
@@ -263,7 +263,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
 	else
 	{
 		/* Check internal status validity */
-		if( false == isMsgTransStatusStillCoherent(ctx) )
+		if( false == eFSP_MSGTX_isStatusStillCoherent(ctx) )
 		{
 			result = MSGTX_RES_CORRUPTCTX;
 		}
@@ -285,7 +285,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
                         /* Check if lib is initialized */
                         isInit = false;
                         resultMsgE = eFSP_MSGE_IsInit(&ctx->msgEncoderCtnx, &isInit);
-                        result = convertReturnFromMSGEToMSGTX(resultMsgE);
+                        result = eFSP_MSGTX_convertReturnFromMSGE(resultMsgE);
 
                         /* Check if frame timeout is eplased */
                         if( MSGTX_RES_OK == result )
@@ -378,7 +378,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
                         /* Is data present in message encoder buffer? */
                         resultMsgE = eFSP_MSGE_RetriveEChunk(&ctx->msgEncoderCtnx, ctx->sendBuff, ctx->sendBuffSize,
                                                         &ctx->sendBuffFill);
-                        result = convertReturnFromMSGEToMSGTX(resultMsgE);
+                        result = eFSP_MSGTX_convertReturnFromMSGE(resultMsgE);
 
                         if( MSGTX_RES_OK == result )
                         {
@@ -533,7 +533,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
 /***********************************************************************************************************************
  *  PRIVATE FUNCTION
  **********************************************************************************************************************/
-bool_t isMsgTransStatusStillCoherent(const s_eFSP_MSGTX_Ctx* ctx)
+static bool_t eFSP_MSGTX_isStatusStillCoherent(const s_eFSP_MSGTX_Ctx* ctx)
 {
     bool_t result;
 
@@ -584,7 +584,7 @@ bool_t isMsgTransStatusStillCoherent(const s_eFSP_MSGTX_Ctx* ctx)
     return result;
 }
 
-e_eFSP_MSGTX_Res convertReturnFromMSGEToMSGTX(e_eFSP_MSGE_Res returnedEvent)
+static e_eFSP_MSGTX_Res eFSP_MSGTX_convertReturnFromMSGE(e_eFSP_MSGE_Res returnedEvent)
 {
 	e_eFSP_MSGTX_Res result;
 

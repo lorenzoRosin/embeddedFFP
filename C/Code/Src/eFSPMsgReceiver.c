@@ -18,8 +18,8 @@
 /***********************************************************************************************************************
  *  PRIVATE STATIC FUNCTION DECLARATION
  **********************************************************************************************************************/
-static bool_t isMsgReceStatusStillCoherent(const s_eFSP_MSGRX_Ctx* ctx);
-static e_eFSP_MSGRX_Res convertReturnFromMSGDToMSGRX(e_eFSP_MSGD_Res returnedEvent);
+static bool_t eFSP_MSGRX_isStatusStillCoherent(const s_eFSP_MSGRX_Ctx* ctx);
+static e_eFSP_MSGRX_Res eFSP_MSGRX_convertReturnFromMSGD(e_eFSP_MSGD_Res returnedEvent);
 
 
 
@@ -85,7 +85,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_InitCtx(s_eFSP_MSGRX_Ctx* const ctx, const s_eFSP_MS
                     /* initialize internal bytestuffer */
                     resultMsgD =  eFSP_MSGD_InitCtx(&ctx->msgDecoderCtnx, initData->i_memArea, initData->i_memAreaSize,
                                                initData->i_cbCrcP, initData->i_cbCrcCrx);
-                    result = convertReturnFromMSGDToMSGRX(resultMsgD);
+                    result = eFSP_MSGRX_convertReturnFromMSGD(resultMsgD);
                 }
             }
         }
@@ -112,7 +112,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_IsInit(s_eFSP_MSGRX_Ctx* const ctx, bool_t* isInit)
 	else
 	{
         resultMsgD = eFSP_MSGD_IsInit(&ctx->msgDecoderCtnx, isInit);
-        result = convertReturnFromMSGDToMSGRX(resultMsgD);
+        result = eFSP_MSGRX_convertReturnFromMSGD(resultMsgD);
 	}
 
 	return result;
@@ -132,7 +132,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_StartNewMsg(s_eFSP_MSGRX_Ctx* const ctx)
 	else
 	{
         /* Check internal status validity */
-        if( false == isMsgReceStatusStillCoherent(ctx) )
+        if( false == eFSP_MSGRX_isStatusStillCoherent(ctx) )
         {
             result = MSGRX_RES_CORRUPTCTX;
         }
@@ -140,7 +140,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_StartNewMsg(s_eFSP_MSGRX_Ctx* const ctx)
         {
             /* Init message encoder */
             resultMsgD = eFSP_MSGD_StartNewMsg(&ctx->msgDecoderCtnx);
-            result = convertReturnFromMSGDToMSGRX(resultMsgD);
+            result = eFSP_MSGRX_convertReturnFromMSGD(resultMsgD);
 
             if( MSGRX_RES_OK == result )
             {
@@ -170,7 +170,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_StartNewMsgNClean(s_eFSP_MSGRX_Ctx* const ctx)
 	else
 	{
         /* Check internal status validity */
-        if( false == isMsgReceStatusStillCoherent(ctx) )
+        if( false == eFSP_MSGRX_isStatusStillCoherent(ctx) )
         {
             result = MSGRX_RES_CORRUPTCTX;
         }
@@ -182,7 +182,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_StartNewMsgNClean(s_eFSP_MSGRX_Ctx* const ctx)
 
             /* Init message encoder */
             resultMsgD = eFSP_MSGD_StartNewMsg(&ctx->msgDecoderCtnx);
-            result = convertReturnFromMSGDToMSGRX(resultMsgD);
+            result = eFSP_MSGRX_convertReturnFromMSGD(resultMsgD);
 
             if( MSGRX_RES_OK == result )
             {
@@ -212,7 +212,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const ctx, uint8_t*
 	else
 	{
 		/* Check internal status validity */
-		if( false == isMsgReceStatusStillCoherent(ctx) )
+		if( false == eFSP_MSGRX_isStatusStillCoherent(ctx) )
 		{
 			result = MSGRX_RES_CORRUPTCTX;
 		}
@@ -220,7 +220,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const ctx, uint8_t*
 		{
 			/* Get memory reference of CRC+LEN+DATA, so we can calculate reference of only data payload */
 			resultMsgD = eFSP_MSGD_GetDecodedData(&ctx->msgDecoderCtnx, dataP, retrivedLen);
-			result = convertReturnFromMSGDToMSGRX(resultMsgD);
+			result = eFSP_MSGRX_convertReturnFromMSGD(resultMsgD);
 		}
 	}
 
@@ -268,7 +268,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
 	else
 	{
 		/* Check internal status validity */
-		if( false == isMsgReceStatusStillCoherent(ctx) )
+		if( false == eFSP_MSGRX_isStatusStillCoherent(ctx) )
 		{
 			result = MSGRX_RES_CORRUPTCTX;
 		}
@@ -297,7 +297,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                         /* Check if lib is initialized */
                         isInit = false;
                         resultMsgD = eFSP_MSGD_IsInit(&ctx->msgDecoderCtnx, &isInit);
-                        result = convertReturnFromMSGDToMSGRX(resultMsgD);
+                        result = eFSP_MSGRX_convertReturnFromMSGD(resultMsgD);
 
                         /* Check if any error is returned */
                         if( MSGRX_RES_OK == result )
@@ -329,7 +329,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                         {
                             /* Check also if we are still waiting start of frame to be received */
                             resultMsgD =  eFSP_MSGD_IsWaitingSof(&ctx->msgDecoderCtnx, &isWaitingSof);
-                            result = convertReturnFromMSGDToMSGRX(resultMsgD);
+                            result = eFSP_MSGRX_convertReturnFromMSGD(resultMsgD);
 
                             if( MSGRX_RES_OK == result )
                             {
@@ -435,7 +435,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                     {
                         /* How many byte do we need to receive? */
                         resultMsgD = eFSP_MSGD_GetMostEffDatLen(&ctx->msgDecoderCtnx, &rxMostEff);
-                        result = convertReturnFromMSGDToMSGRX(resultMsgD);
+                        result = eFSP_MSGRX_convertReturnFromMSGD(resultMsgD);
                         if( MSGRX_RES_OK == result )
                         {
                             if( rxMostEff > 0u )
@@ -454,7 +454,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                             {
                                 /* Could be because the message is received or an error occoured */
                                 resultMsgD = eFSP_MSGD_IsAFullMsgDecoded(&ctx->msgDecoderCtnx, &isMsgDec);
-                                result = convertReturnFromMSGDToMSGRX(resultMsgD);
+                                result = eFSP_MSGRX_convertReturnFromMSGD(resultMsgD);
 
                                 if( MSGRX_RES_OK == result )
                                 {
@@ -548,7 +548,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                             /* We can try to decode data event if we already finished cuz the function
                             * MSGD_InsEncChunk is well maden */
                             resultMsgD = eFSP_MSGD_InsEncChunk(&ctx->msgDecoderCtnx, cDToRxP, cDToRxLen, &cDRxed );
-                            result = convertReturnFromMSGDToMSGRX(resultMsgD);
+                            result = eFSP_MSGRX_convertReturnFromMSGD(resultMsgD);
 
                             if( MSGRX_RES_OK == result )
                             {
@@ -737,7 +737,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
                                 {
                                     /* Some error */
                                     stateM = MSGRX_PRV_ELABDONE;
-                                    result = convertReturnFromMSGDToMSGRX(resultMsgD);
+                                    result = eFSP_MSGRX_convertReturnFromMSGD(resultMsgD);
                                 }
                             }
                         }
@@ -772,7 +772,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const ctx)
 /***********************************************************************************************************************
  *  PRIVATE FUNCTION
  **********************************************************************************************************************/
-bool_t isMsgReceStatusStillCoherent(const s_eFSP_MSGRX_Ctx* ctx)
+static bool_t eFSP_MSGRX_isStatusStillCoherent(const s_eFSP_MSGRX_Ctx* ctx)
 {
     bool_t result;
 
@@ -809,7 +809,7 @@ bool_t isMsgReceStatusStillCoherent(const s_eFSP_MSGRX_Ctx* ctx)
     return result;
 }
 
-e_eFSP_MSGRX_Res convertReturnFromMSGDToMSGRX(e_eFSP_MSGD_Res returnedEvent)
+static e_eFSP_MSGRX_Res eFSP_MSGRX_convertReturnFromMSGD(e_eFSP_MSGD_Res returnedEvent)
 {
 	e_eFSP_MSGRX_Res result;
 
