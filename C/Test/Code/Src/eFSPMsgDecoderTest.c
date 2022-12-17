@@ -773,7 +773,7 @@ void msgDecoderTestCorruptedCtx(void)
         (void)printf("msgDecoderTestCorruptedCtx 19 -- FAIL \n");
     }
 
-    ctx.byteUStufferCtnx.memArea = NULL;
+    ctx.byteUStufferCtnx.p_memA = NULL;
     if( MSGD_RES_CORRUPTCTX == MSGD_StartNewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 20 -- OK \n");
@@ -793,7 +793,7 @@ void msgDecoderTestCorruptedCtx(void)
         (void)printf("msgDecoderTestCorruptedCtx 21 -- FAIL \n");
     }
 
-    ctx.byteUStufferCtnx.memArea = NULL;
+    ctx.byteUStufferCtnx.p_memA = NULL;
     if( MSGD_RES_CORRUPTCTX == MSGD_GetDecodedData(&ctx, &dataP, &var32) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 22 -- OK \n");
@@ -813,7 +813,7 @@ void msgDecoderTestCorruptedCtx(void)
         (void)printf("msgDecoderTestCorruptedCtx 23 -- FAIL \n");
     }
 
-    ctx.byteUStufferCtnx.memArea = NULL;
+    ctx.byteUStufferCtnx.p_memA = NULL;
     if( MSGD_RES_CORRUPTCTX == MSGD_GetDecodedLen(&ctx, &var32) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 24 -- OK \n");
@@ -833,7 +833,7 @@ void msgDecoderTestCorruptedCtx(void)
         (void)printf("msgDecoderTestCorruptedCtx 25 -- FAIL \n");
     }
 
-    ctx.byteUStufferCtnx.memArea = NULL;
+    ctx.byteUStufferCtnx.p_memA = NULL;
     if( MSGD_RES_CORRUPTCTX == MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 26 -- OK \n");
@@ -853,7 +853,7 @@ void msgDecoderTestCorruptedCtx(void)
         (void)printf("msgDecoderTestCorruptedCtx 27 -- FAIL \n");
     }
 
-    ctx.byteUStufferCtnx.memArea = NULL;
+    ctx.byteUStufferCtnx.p_memA = NULL;
     if( MSGD_RES_CORRUPTCTX == MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 28 -- OK \n");
@@ -873,7 +873,7 @@ void msgDecoderTestCorruptedCtx(void)
         (void)printf("msgDecoderTestCorruptedCtx 29 -- FAIL \n");
     }
 
-    ctx.byteUStufferCtnx.memArea = NULL;
+    ctx.byteUStufferCtnx.p_memA = NULL;
     if( MSGD_RES_CORRUPTCTX == MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 30 -- OK \n");
@@ -893,7 +893,7 @@ void msgDecoderTestCorruptedCtx(void)
         (void)printf("msgDecoderTestCorruptedCtx 31 -- FAIL \n");
     }
 
-    ctx.byteUStufferCtnx.memArea = NULL;
+    ctx.byteUStufferCtnx.p_memA = NULL;
     if( MSGD_RES_CORRUPTCTX == MSGD_GetMostEffDatLen(&ctx, &var32) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 32 -- OK \n");
@@ -913,7 +913,7 @@ void msgDecoderTestCorruptedCtx(void)
         (void)printf("msgDecoderTestCorruptedCtx 33 -- FAIL \n");
     }
 
-    ctx.byteUStufferCtnx.memArea = NULL;
+    ctx.byteUStufferCtnx.p_memA = NULL;
     if( MSGD_RES_CORRUPTCTX == MSGD_InsEncChunk(&ctx, memArea, 10u, &var32) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 34 -- OK \n");
