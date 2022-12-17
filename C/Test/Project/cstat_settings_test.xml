@@ -713,7 +713,7 @@
                     <check name="MISRAC2004-17.6_d" enabled="true" />
                 </group>
                 <group name="MISRAC2004-18" enabled="true">
-                    <check name="MISRAC2004-18.1" enabled="true" />
+                    <check name="MISRAC2004-18.1" enabled="false" />
                     <check name="MISRAC2004-18.2" enabled="true" />
                     <check name="MISRAC2004-18.4" enabled="true" />
                 </group>
@@ -746,7 +746,7 @@
                     <check name="MISRAC2004-20.6" enabled="true" />
                     <check name="MISRAC2004-20.7" enabled="true" />
                     <check name="MISRAC2004-20.8" enabled="true" />
-                    <check name="MISRAC2004-20.9" enabled="true" />
+                    <check name="MISRAC2004-20.9" enabled="false" />
                     <check name="MISRAC2004-20.10" enabled="true" />
                     <check name="MISRAC2004-20.11" enabled="true" />
                     <check name="MISRAC2004-20.12" enabled="true" />
@@ -762,7 +762,7 @@
                     <check name="MISRAC2012-Dir-4.7_a" enabled="true" />
                     <check name="MISRAC2012-Dir-4.7_b" enabled="true" />
                     <check name="MISRAC2012-Dir-4.7_c" enabled="true" />
-                    <check name="MISRAC2012-Dir-4.8" enabled="false" />
+                    <check name="MISRAC2012-Dir-4.8" enabled="true" />
                     <check name="MISRAC2012-Dir-4.9" enabled="true" />
                     <check name="MISRAC2012-Dir-4.10" enabled="true" />
                     <check name="MISRAC2012-Dir-4.11_a" enabled="true" />
@@ -1019,7 +1019,7 @@
                     <check name="MISRAC2012-Rule-21.3" enabled="true" />
                     <check name="MISRAC2012-Rule-21.4" enabled="true" />
                     <check name="MISRAC2012-Rule-21.5" enabled="true" />
-                    <check name="MISRAC2012-Rule-21.6" enabled="true" />
+                    <check name="MISRAC2012-Rule-21.6" enabled="false" />
                     <check name="MISRAC2012-Rule-21.7" enabled="true" />
                     <check name="MISRAC2012-Rule-21.8" enabled="true" />
                     <check name="MISRAC2012-Rule-21.9" enabled="true" />
