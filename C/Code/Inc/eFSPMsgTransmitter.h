@@ -124,8 +124,8 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_IsInit(s_eFSP_MSGTX_Ctx* const p_ctx, bool_t* p_isIn
  *
  * @param[in]   p_ctx         - Message Transmitter context
  * @param[out]  pp_data       - Pointer to a Pointer where the raw data needs to be copied before starting a message
- * @param[out]  p_maxDL       - Pointer to a uint32_t variable where the max number of data that can be copied in pp_data
- *                              will be placed
+ * @param[out]  p_maxDL       - Pointer to a uint32_t variable where the max number of data that can be copied in
+ *                              pp_data will be placed
  *
  * @return      MSGTX_RES_BADPOINTER     - In case of bad pointer passed to the function
  *		        MSGTX_RES_NOINITLIB      - Need to init the data encoder context before taking some action

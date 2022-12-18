@@ -91,8 +91,8 @@ e_eFSP_MSGE_Res eFSP_MSGE_IsInit(s_eFSP_MSGE_Ctx* const p_ctx, bool_t* p_isInit)
  *
  * @param[in]   p_ctx         - Message Encoder context
  * @param[out]  pp_data       - Pointer to a Pointer where the raw data needs to be copied before starting a message
- * @param[out]  p_maxDataL    - Pointer to a uint32_t variable where the max number of data that can be copied in pp_data
- *                              will be placed
+ * @param[out]  p_maxDataL    - Pointer to a uint32_t variable where the max number of data that can be copied in
+ *                              pp_data will be placed
  *
  * @return      MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
  *		        MSGE_RES_NOINITLIB      - Need to init the data encoder context before taking some action
@@ -137,7 +137,8 @@ e_eFSP_MSGE_Res eFSP_MSGE_RestartMessage(s_eFSP_MSGE_Ctx* const p_ctx);
  *              (e.g. if the value of the returned value is zero it's means that the message encoding is ended ).
  *
  * @param[in]   p_ctx         - Message Encoder context
- * @param[out]  p_retrivedLen - Pointer to a uint32_t variable where the numbers of retrivable encoded data will be placed
+ * @param[out]  p_retrivedLen - Pointer to a uint32_t variable where the numbers of retrivable encoded data will be
+ *                              placed
  *
  * @return      MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
  *		        MSGE_RES_NOINITLIB      - Need to init the data encoder context before taking some action
@@ -153,11 +154,11 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetRemByteToGet(s_eFSP_MSGE_Ctx* const p_ctx, uint32_t
  *
  * @param[in]   p_ctx         - Message Encoder context
  * @param[in]   p_encodeDest  - Pointer to the destination area of encoded data that will be placed by this function
- * @param[in]   maxDestLen  - Max fillable size of the destination area
- * @param[out]  p_filledLen   - Pointer to an uint32_t were we will store the number encoded data inserted in p_encodeDest.
- *                            Note that if the function return MSGE_RES_OK the value of p_filledLen will be equals to
- *                            maxDestLen. The value p_filledLen infact could be lower than max dest size only if
- *                            some error is returned or if the frame is ended ( MSGE_RES_MESSAGEENDED )
+ * @param[in]   maxDestLen    - Max fillable size of the destination area
+ * @param[out]  p_filledLen   - Pointer to an uint32_t were we will store the number encoded data inserted in
+ *                              p_encodeDest. Note that if the function return MSGE_RES_OK the value of p_filledLen
+ *                              will be equals to maxDestLen. The value p_filledLen infact could be lower than max dest
+ *                              size only if some error is returned or if the frame is ended ( MSGE_RES_MESSAGEENDED )
  *
  * @return      MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
  *		        MSGE_RES_NOINITLIB      - Need to init the data encoder context before taking some action
