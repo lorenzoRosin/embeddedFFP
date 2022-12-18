@@ -211,7 +211,8 @@ e_eFSP_MSGE_Res eFSP_MSGE_NewMessage(s_eFSP_MSGE_Ctx* const p_ctx, const uint32_
 
 							/* Calculate the CRC of data payload and messageLen */
 							l_nBToCrc = messageLen + 4u;
-							l_crcRes = (*(p_ctx->f_Crc))( p_ctx->p_crcCtx, ECU_CRC_BASE_SEED, &lp_data[4u], l_nBToCrc, &l_cR32 );
+							l_crcRes = (*(p_ctx->f_Crc))( p_ctx->p_crcCtx, ECU_CRC_BASE_SEED, &lp_data[4u], l_nBToCrc,
+                                                          &l_cR32 );
 
 							if( true == l_crcRes )
 							{
