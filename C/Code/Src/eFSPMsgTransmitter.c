@@ -108,6 +108,35 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_IsInit(s_eFSP_MSGTX_Ctx* const p_ctx, bool_t* p_isIn
 	return result;
 }
 
+e_eFSP_MSGTX_Res eFSP_MSGTX_GetWherePutData(s_eFSP_MSGTX_Ctx* const p_ctx, uint8_t** pp_data, uint32_t* const p_maxDataL)
+{
+	/* Local variable */
+	e_eFSP_MSGTX_Res result;
+	e_eFSP_MSGE_Res resultMsgE;
+
+	/* Check pointer validity */
+	if( ( NULL == p_ctx ) || ( NULL == pp_data ) || ( NULL == p_maxDataL ) )
+	{
+		result = MSGTX_RES_BADPOINTER;
+	}
+	else
+	{
+		/* Check internal status validity */
+		if( false == eFSP_MSGTX_isStatusStillCoherent(p_ctx) )
+		{
+			result = MSGTX_RES_CORRUPTCTX;
+		}
+		else
+		{
+			/* Get only the payload data reference */
+			resultMsgE = eFSP_MSGE_GetWherePutData(&p_ctx->msgEncoderCtnx, pp_data, p_maxDataL);
+			result = eFSP_MSGTX_convertReturnFromMSGE(resultMsgE);
+		}
+	}
+
+	return result;
+}
+
 e_eFSP_MSGTX_Res eFSP_MSGTX_NewMessage(s_eFSP_MSGTX_Ctx* const p_ctx, const uint32_t messageLen)
 {
 	/* Local variable */
@@ -152,35 +181,6 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_NewMessage(s_eFSP_MSGTX_Ctx* const p_ctx, const uint
                     }
                 }
             }
-		}
-	}
-
-	return result;
-}
-
-e_eFSP_MSGTX_Res eFSP_MSGTX_GetWherePutData(s_eFSP_MSGTX_Ctx* const p_ctx, uint8_t** pp_data, uint32_t* const p_maxDataL)
-{
-	/* Local variable */
-	e_eFSP_MSGTX_Res result;
-	e_eFSP_MSGE_Res resultMsgE;
-
-	/* Check pointer validity */
-	if( ( NULL == p_ctx ) || ( NULL == pp_data ) || ( NULL == p_maxDataL ) )
-	{
-		result = MSGTX_RES_BADPOINTER;
-	}
-	else
-	{
-		/* Check internal status validity */
-		if( false == eFSP_MSGTX_isStatusStillCoherent(p_ctx) )
-		{
-			result = MSGTX_RES_CORRUPTCTX;
-		}
-		else
-		{
-			/* Get only the payload data reference */
-			resultMsgE = eFSP_MSGE_GetWherePutData(&p_ctx->msgEncoderCtnx, pp_data, p_maxDataL);
-			result = eFSP_MSGTX_convertReturnFromMSGE(resultMsgE);
 		}
 	}
 

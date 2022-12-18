@@ -120,6 +120,21 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const p_ctx, const s_eFSP_
 e_eFSP_MSGTX_Res eFSP_MSGTX_IsInit(s_eFSP_MSGTX_Ctx* const p_ctx, bool_t* p_isInit);
 
 /**
+ * @brief       Retrive the pointer of the buffer that the user can use to insert data payload that need to be encoded
+ *
+ * @param[in]   p_ctx         - Message Transmitter context
+ * @param[out]  pp_data       - Pointer to a Pointer where the raw data needs to be copied before starting a message
+ * @param[out]  p_maxDataL    - Pointer to a uint32_t variable where the max number of data that can be copied in pp_data
+ *                              will be placed
+ *
+ * @return      MSGTX_RES_BADPOINTER     - In case of bad pointer passed to the function
+ *		        MSGTX_RES_NOINITLIB      - Need to init the data encoder context before taking some action
+ *		        MSGTX_RES_CORRUPTCTX     - In case of an corrupted context
+ *              MSGTX_RES_OK             - Operation ended correctly
+ */
+e_eFSP_MSGTX_Res eFSP_MSGTX_GetWherePutData(s_eFSP_MSGTX_Ctx* const p_ctx, uint8_t** pp_data, uint32_t* const p_maxDataL);
+
+/**
  * @brief       Start to encode a new msg given the dimension of raw payload it self. This function suppouse that
  *              data payload that need to be encoded were already copied in memory.( see MSGTX_GetPayloadLocation
  *              in order to know how get the data pointer, and copy the data )
@@ -136,21 +151,6 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_IsInit(s_eFSP_MSGTX_Ctx* const p_ctx, bool_t* p_isIn
  *              MSGTX_RES_OK             - Operation ended correctly
  */
 e_eFSP_MSGTX_Res eFSP_MSGTX_NewMessage(s_eFSP_MSGTX_Ctx* const p_ctx, const uint32_t messageLen);
-
-/**
- * @brief       Retrive the pointer of the buffer that the user can use to insert data payload that need to be encoded
- *
- * @param[in]   p_ctx         - Message Transmitter context
- * @param[out]  pp_data       - Pointer to a Pointer where the raw data needs to be copied before starting a message
- * @param[out]  p_maxDataL    - Pointer to a uint32_t variable where the max number of data that can be copied in pp_data
- *                              will be placed
- *
- * @return      MSGTX_RES_BADPOINTER     - In case of bad pointer passed to the function
- *		        MSGTX_RES_NOINITLIB      - Need to init the data encoder context before taking some action
- *		        MSGTX_RES_CORRUPTCTX     - In case of an corrupted context
- *              MSGTX_RES_OK             - Operation ended correctly
- */
-e_eFSP_MSGTX_Res eFSP_MSGTX_GetWherePutData(s_eFSP_MSGTX_Ctx* const p_ctx, uint8_t** pp_data, uint32_t* const p_maxDataL);
 
 /**
  * @brief       Restart to encode and send the already passed payload/the current frame
