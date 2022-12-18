@@ -99,32 +99,32 @@ typedef struct
 /**
  * @brief       Initialize the message transmitter context
  *
- * @param[in]   ctx         - Message transmitter context
- * @param[in]   initData    - Init data
+ * @param[in]   p_ctx         - Message transmitter context
+ * @param[in]   p_initData    - Init data
  *
  * @return      MSGTX_RES_BADPOINTER   - In case of bad pointer passed to the function
  *		        MSGTX_RES_BADPARAM     - In case of an invalid parameter passed to the function
  *              MSGTX_RES_OK           - Operation ended correctly
  */
-e_eFSP_MSGTX_Res eFSP_MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const ctx, const s_eFSP_MSGTX_InitData* initData);
+e_eFSP_MSGTX_Res eFSP_MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const p_ctx, const s_eFSP_MSGTX_InitData* p_initData);
 
 /**
  * @brief       Check if the lib is initialized
  *
- * @param[in]   ctx         - Message transmitter context
- * @param[out]  isInit      - Pointer to a bool_t variable that will be filled with true if the lib is initialized
+ * @param[in]   p_ctx         - Message transmitter context
+ * @param[out]  p_isInit      - Pointer to a bool_t variable that will be filled with true if the lib is initialized
  *
  * @return      MSGTX_RES_BADPOINTER    - In case of bad pointer passed to the function
  *              MSGTX_RES_OK            - Operation ended correctly
  */
-e_eFSP_MSGTX_Res eFSP_MSGTX_IsInit(s_eFSP_MSGTX_Ctx* const ctx, bool_t* isInit);
+e_eFSP_MSGTX_Res eFSP_MSGTX_IsInit(s_eFSP_MSGTX_Ctx* const p_ctx, bool_t* p_isInit);
 
 /**
  * @brief       Start to encode a new msg given the dimension of raw payload it self. This function suppouse that
  *              data payload that need to be encoded were already copied in memory.( see MSGTX_GetPayloadLocation
  *              in order to know how get the data pointer, and copy the data )
  *
- * @param[in]   ctx         - Message Transmitter context
+ * @param[in]   p_ctx         - Message Transmitter context
  * @param[in]   messageLen  - lenght of the raw payload present in the frame that we need to encode ( no header )
  *
  * @return      MSGTX_RES_BADPOINTER     - In case of bad pointer passed to the function
@@ -135,14 +135,14 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_IsInit(s_eFSP_MSGTX_Ctx* const ctx, bool_t* isInit);
  *              MSGTX_RES_TIMCLBKERROR   - The timer function returned an error
  *              MSGTX_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGTX_Res eFSP_MSGTX_StartNewMessage(s_eFSP_MSGTX_Ctx* const ctx, const uint32_t messageLen);
+e_eFSP_MSGTX_Res eFSP_MSGTX_StartNewMessage(s_eFSP_MSGTX_Ctx* const p_ctx, const uint32_t messageLen);
 
 /**
  * @brief       Retrive the pointer of the buffer that the user can use to insert data payload that need to be encoded
  *
- * @param[in]   ctx         - Message Transmitter context
+ * @param[in]   p_ctx         - Message Transmitter context
  * @param[out]  dataP       - Pointer to a Pointer where the raw data needs to be copied before starting a message
- * @param[out]  maxDataSize - Pointer to a uint32_t variable where the max number of data that can be copied in dataP
+ * @param[out]  p_maxDataSize - Pointer to a uint32_t variable where the max number of data that can be copied in dataP
  *                            will be placed
  *
  * @return      MSGTX_RES_BADPOINTER     - In case of bad pointer passed to the function
@@ -150,12 +150,12 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_StartNewMessage(s_eFSP_MSGTX_Ctx* const ctx, const u
  *		        MSGTX_RES_CORRUPTCTX     - In case of an corrupted context
  *              MSGTX_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGTX_Res eFSP_MSGTX_GetPayloadLocation(s_eFSP_MSGTX_Ctx* const ctx, uint8_t** dataP, uint32_t* const maxDataSize);
+e_eFSP_MSGTX_Res eFSP_MSGTX_GetPayloadLocation(s_eFSP_MSGTX_Ctx* const p_ctx, uint8_t** dataP, uint32_t* const p_maxDataSize);
 
 /**
  * @brief       Restart to encode and send the already passed payload/the current frame
  *
- * @param[in]   ctx         - Message Transmitter context
+ * @param[in]   p_ctx         - Message Transmitter context
  *
  * @return      MSGTX_RES_BADPOINTER     - In case of bad pointer passed to the function
  *		        MSGTX_RES_NOINITLIB      - Need to init the data encoder context before taking some action
@@ -164,7 +164,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_GetPayloadLocation(s_eFSP_MSGTX_Ctx* const ctx, uint
  *              MSGTX_RES_TIMCLBKERROR   - The timer function returned an error
  *              MSGTX_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGTX_Res eFSP_MSGTX_RestartCurrentMessage(s_eFSP_MSGTX_Ctx* const ctx);
+e_eFSP_MSGTX_Res eFSP_MSGTX_RestartCurrentMessage(s_eFSP_MSGTX_Ctx* const p_ctx);
 
 /**
  * @brief       Send encoded data chunk. The raw data copied in the buffer by using the function
@@ -174,7 +174,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_RestartCurrentMessage(s_eFSP_MSGTX_Ctx* const ctx);
  *              in "i_frameTimeoutMs" milliseconds. This function can return different status, but if we keep call
  *              this function even after i_frameTimeoutMs it will start returning only MSGTX_RES_MESSAGETIMEOUT.
  *
- * @param[in]   ctx         - Message Transmitter context
+ * @param[in]   p_ctx         - Message Transmitter context
  *
  * @return      MSGTX_RES_BADPOINTER     - In case of bad pointer passed to the function
  *		        MSGTX_RES_NOINITLIB      - Need to init the data encoder context before taking some action
@@ -192,7 +192,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_RestartCurrentMessage(s_eFSP_MSGTX_Ctx* const ctx);
  *                                         the "i_frameTimeoutMs" timeout is still not reached. Call this function again
  *                                         to send another chunk of data.
  */
-e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx);
+e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const p_ctx);
 
 
 
