@@ -23,7 +23,8 @@ static bool_t eFSP_MSGD_isStatusStillCoherent(const s_eFSP_MSGD_Ctx* p_ctx);
 static e_eFSP_MSGD_Res eFSP_MSGD_convertReturnFromBstf(s_eCU_BUNSTF_Res returnedEvent);
 static e_eFSP_MSGD_Res eFSP_MSGD_IsFullMsgDec(s_eFSP_MSGD_Ctx* const p_ctx, bool_t* const p_isMsgDec);
 static e_eFSP_MSGD_Res eFSP_MSGD_IsFrmBad(s_eFSP_MSGD_Ctx* const p_ctx, bool_t* const p_isFrameBad);
-static e_eFSP_MSGD_Res eFSP_MSGD_isMsgCorr(s_eCU_BUNSTF_Ctx* p_ctx, bool_t* p_isCorrect, cb_crc32_msgd f_Crc, void* p_cbCrcCtx);
+static e_eFSP_MSGD_Res eFSP_MSGD_isMsgCorr(s_eCU_BUNSTF_Ctx* p_ctx, bool_t* p_isCor, cb_crc32_msgd f_Crc,
+                                           void* p_crcCtx);
 static e_eFSP_MSGD_Res eFSP_MSGD_isMsgCohe(s_eCU_BUNSTF_Ctx* p_ctx, bool_t* p_isCoherent);
 static uint32_t eFSP_MSGD_composeU32LE(uint8_t v1, uint8_t v2, uint8_t v3, uint8_t v4);
 
@@ -60,11 +61,11 @@ e_eFSP_MSGD_Res eFSP_MSGD_InitCtx(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t a_memAre
         else
         {
             /* Initialize internal status clbck */
-            p_ctx->f_cbCrc = f_Crc;
-            p_ctx->p_cbCrcCtx = p_clbCtx;
+            p_ctx->f_Crc = f_Crc;
+            p_ctx->p_crcCtx = p_clbCtx;
 
 			/* initialize internal bytestuffer */
-			l_resByStuff =  eCU_BUNSTF_InitCtx(&p_ctx->byteUStufferCtnx, a_memArea, memAreaSize);
+			l_resByStuff =  eCU_BUNSTF_InitCtx(&p_ctx->bunstf_Ctx, a_memArea, memAreaSize);
 			l_result = eFSP_MSGD_convertReturnFromBstf(l_resByStuff);
         }
 	}
@@ -89,7 +90,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_IsInit(s_eFSP_MSGD_Ctx* const p_ctx, bool_t* p_isInit)
 	}
 	else
 	{
-        l_resByStuff = eCU_BUNSTF_IsInit(&p_ctx->byteUStufferCtnx, p_isInit);
+        l_resByStuff = eCU_BUNSTF_IsInit(&p_ctx->bunstf_Ctx, p_isInit);
         l_result = eFSP_MSGD_convertReturnFromBstf(l_resByStuff);
 	}
 
@@ -117,7 +118,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_NewMsg(s_eFSP_MSGD_Ctx* const p_ctx)
 		else
 		{
 			/* Update index */
-			l_resByStuff = eCU_BUNSTF_NewFrame(&p_ctx->byteUStufferCtnx);
+			l_resByStuff = eCU_BUNSTF_NewFrame(&p_ctx->bunstf_Ctx);
 			l_result = eFSP_MSGD_convertReturnFromBstf(l_resByStuff);
 		}
 	}
@@ -156,7 +157,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_GetDecodedData(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t**
 			/* Get memory reference of CRC+LEN+DATA, so we can calculate reference of only data payload */
             l_dataSizeP = 0u;
             lp_dataP = NULL;
-			l_resByStuff = eCU_BUNSTF_GetUnstufData(&p_ctx->byteUStufferCtnx, &lp_dataP, &l_dataSizeP);
+			l_resByStuff = eCU_BUNSTF_GetUnstufData(&p_ctx->bunstf_Ctx, &lp_dataP, &l_dataSizeP);
 			l_result = eFSP_MSGD_convertReturnFromBstf(l_resByStuff);
 
 			if( MSGD_RES_OK == l_result )
@@ -212,7 +213,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_GetDecodedLen(s_eFSP_MSGD_Ctx* const p_ctx, uint32_t* 
 		{
 			/* Get memory reference of CRC+LEN+DATA, so we can calculate reference of only data payload */
             l_dataSizeP = 0u;
-			l_resByStuff = eCU_BUNSTF_GetUnstufLen(&p_ctx->byteUStufferCtnx, &l_dataSizeP);
+			l_resByStuff = eCU_BUNSTF_GetUnstufLen(&p_ctx->bunstf_Ctx, &l_dataSizeP);
 			l_result = eFSP_MSGD_convertReturnFromBstf(l_resByStuff);
 
 			if( MSGD_RES_OK == l_result )
@@ -257,7 +258,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_IsWaitingSof(s_eFSP_MSGD_Ctx* const p_ctx, bool_t* con
 		}
 		else
 		{
-			l_resByStuff = eCU_BUNSTF_IsWaitingSof(&p_ctx->byteUStufferCtnx, p_isWaitingSof);
+			l_resByStuff = eCU_BUNSTF_IsWaitingSof(&p_ctx->bunstf_Ctx, p_isWaitingSof);
 			l_result = eFSP_MSGD_convertReturnFromBstf(l_resByStuff);
 		}
 	}
@@ -327,7 +328,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const p_ctx, uint32_
     bool_t l_isFrameBad;
     uint32_t l_dataSizeRemaings;
 	uint32_t l_dPayRxed;
-    uint32_t dataSizeRaw;
+    uint32_t l_dataSizeRaw;
 	uint8_t* lp_data;
     uint32_t l_dPayToRx;
 
@@ -347,7 +348,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const p_ctx, uint32_
 		{
             /* Check if the frame is already ended */
             l_isFullUnstuffed = false;
-            l_resByStuff = eCU_BUNSTF_IsAFullFrameUnstuff(&p_ctx->byteUStufferCtnx, &l_isFullUnstuffed);
+            l_resByStuff = eCU_BUNSTF_IsAFullFrameUnstuff(&p_ctx->bunstf_Ctx, &l_isFullUnstuffed);
             l_result = eFSP_MSGD_convertReturnFromBstf(l_resByStuff);
 
             if( MSGD_RES_OK == l_result )
@@ -361,7 +362,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const p_ctx, uint32_
                 {
                     /* Check for error */
                     l_isFrameBad = true;
-                    l_resByStuff = eCU_BUNSTF_IsFrameBad(&p_ctx->byteUStufferCtnx, &l_isFrameBad);
+                    l_resByStuff = eCU_BUNSTF_IsFrameBad(&p_ctx->bunstf_Ctx, &l_isFrameBad);
                     l_result = eFSP_MSGD_convertReturnFromBstf(l_resByStuff);
 
                     if( MSGD_RES_OK == l_result )
@@ -374,19 +375,19 @@ e_eFSP_MSGD_Res eFSP_MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const p_ctx, uint32_
                         else
                         {
                             /* How many byte do we have decoded? */
-                            dataSizeRaw = 0u;
+                            l_dataSizeRaw = 0u;
                             lp_data = NULL;
-                            l_resByStuff = eCU_BUNSTF_GetUnstufData(&p_ctx->byteUStufferCtnx, &lp_data, &dataSizeRaw);
+                            l_resByStuff = eCU_BUNSTF_GetUnstufData(&p_ctx->bunstf_Ctx, &lp_data, &l_dataSizeRaw);
                             l_result = eFSP_MSGD_convertReturnFromBstf(l_resByStuff);
 
                             if( MSGD_RES_OK == l_result )
                             {
                                 /* Do we have enough data?  */
-                                if( 0u == dataSizeRaw )
+                                if( 0u == l_dataSizeRaw )
                                 {
                                     /* No data, are we still waiting SOF? */
                                     l_isWaitingSof = false;
-                                    l_resByStuff = eCU_BUNSTF_IsWaitingSof(&p_ctx->byteUStufferCtnx, &l_isWaitingSof);
+                                    l_resByStuff = eCU_BUNSTF_IsWaitingSof(&p_ctx->bunstf_Ctx, &l_isWaitingSof);
                                     l_result = eFSP_MSGD_convertReturnFromBstf(l_resByStuff);
 
                                     if( MSGD_RES_OK == l_result )
@@ -403,18 +404,19 @@ e_eFSP_MSGD_Res eFSP_MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const p_ctx, uint32_
                                         }
                                     }
                                 }
-                                else if( dataSizeRaw < EFSP_MSGDE_HEADERSIZE )
+                                else if( l_dataSizeRaw < EFSP_MSGDE_HEADERSIZE )
                                 {
                                     /* Need to receive all the header before estimating data size */
-                                    *p_mostEffPayload = EFSP_MSGDE_HEADERSIZE - dataSizeRaw;
+                                    *p_mostEffPayload = EFSP_MSGDE_HEADERSIZE - l_dataSizeRaw;
                                 }
                                 else
                                 {
                                     /* Enough data! Start remaining data estimation */
-                                    l_dPayToRx = eFSP_MSGD_composeU32LE(lp_data[0x04u], lp_data[0x05u], lp_data[0x06u], lp_data[0x07u]);
+                                    l_dPayToRx = eFSP_MSGD_composeU32LE(lp_data[0x04u], lp_data[0x05u],
+                                                                        lp_data[0x06u], lp_data[0x07u]);
 
                                     /* How much payload do we have */
-                                    l_dPayRxed = dataSizeRaw - EFSP_MSGDE_HEADERSIZE;
+                                    l_dPayRxed = l_dataSizeRaw - EFSP_MSGDE_HEADERSIZE;
 
                                     /* A correct frame payload must have less lenght than the size reported in frame
                                      * header */
@@ -459,23 +461,23 @@ e_eFSP_MSGD_Res eFSP_MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const p_ctx, uint32_
 #endif
 
 e_eFSP_MSGD_Res eFSP_MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t a_encArea[], const uint32_t encLen,
-                                      uint32_t* const p_consumedEncData)
+                                      uint32_t* const p_usedEncByt)
 {
 	/* Local return  */
 	e_eFSP_MSGD_Res l_result;
-    e_eFSP_MSGD_Res l_resMsgCorrect;
+    e_eFSP_MSGD_Res l_resMsgCor;
     e_eFSP_MSGD_Res l_resultMsgCoherent;
-	s_eCU_BUNSTF_Res l_resByStuff;
+	s_eCU_BUNSTF_Res l_resBStuf;
 
     /* Local coherence */
-    bool_t l_isMCorrect;
+    bool_t l_isMCor;
     bool_t l_isMCoherent;
 
     /* Redo loop var */
     e_eFSP_MSGD_Priv_state l_insertEncState;
 
 	/* Check pointer validity */
-	if( ( NULL == p_ctx ) || ( NULL == a_encArea ) || ( NULL == p_consumedEncData ) )
+	if( ( NULL == p_ctx ) || ( NULL == a_encArea ) || ( NULL == p_usedEncByt ) )
 	{
 		l_result = MSGD_RES_BADPOINTER;
 	}
@@ -489,7 +491,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t a_en
 		else
 		{
             /* Init data */
-            *p_consumedEncData = 0u;
+            *p_usedEncByt = 0u;
 
             /* Elaborate */
             l_insertEncState = MSGD_PRV_PRECHECK;
@@ -502,7 +504,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t a_en
                     case MSGD_PRV_PRECHECK:
                     {
                         /* Before inserting data check if the current message is coherent */
-                        l_resultMsgCoherent = eFSP_MSGD_isMsgCohe(&p_ctx->byteUStufferCtnx, &l_isMCoherent);
+                        l_resultMsgCoherent = eFSP_MSGD_isMsgCohe(&p_ctx->bunstf_Ctx, &l_isMCoherent);
 
                         if( MSGD_RES_OK == l_resultMsgCoherent )
                         {
@@ -532,8 +534,8 @@ e_eFSP_MSGD_Res eFSP_MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t a_en
                     case MSGD_PRV_INSERTCHUNK:
                     {
                         /* Insert data */
-                        l_resByStuff = eCU_BUNSTF_InsStufChunk(&p_ctx->byteUStufferCtnx, a_encArea, encLen, p_consumedEncData);
-                        l_result = eFSP_MSGD_convertReturnFromBstf(l_resByStuff);
+                        l_resBStuf = eCU_BUNSTF_InsStufChunk(&p_ctx->bunstf_Ctx, a_encArea, encLen, p_usedEncByt);
+                        l_result = eFSP_MSGD_convertReturnFromBstf(l_resBStuf);
 
                         if( MSGD_RES_MESSAGEENDED == l_result )
                         {
@@ -567,12 +569,12 @@ e_eFSP_MSGD_Res eFSP_MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t a_en
                     case MSGD_PRV_MSG_END_CHECK:
                     {
                         /* Verify message integrity */
-                        l_resMsgCorrect = eFSP_MSGD_isMsgCorr(&p_ctx->byteUStufferCtnx, &l_isMCorrect, p_ctx->f_cbCrc, p_ctx->p_cbCrcCtx);
+                        l_resMsgCor = eFSP_MSGD_isMsgCorr(&p_ctx->bunstf_Ctx, &l_isMCor, p_ctx->f_Crc, p_ctx->p_crcCtx);
 
-                        if( MSGD_RES_OK == l_resMsgCorrect )
+                        if( MSGD_RES_OK == l_resMsgCor )
                         {
                             /* no strange error found, check message correctness */
-                            if( true != l_isMCorrect )
+                            if( true != l_isMCor )
                             {
                                 /* Message ended but something about CRC or length is not rigth, restart a frame */
                                 l_insertEncState = MSGD_PRV_ELABDONE;
@@ -587,7 +589,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t a_en
                         else
                         {
                             /* Some error */
-                            l_result = l_resMsgCorrect;
+                            l_result = l_resMsgCor;
                             l_insertEncState = MSGD_PRV_ELABDONE;
                         }
 
@@ -597,7 +599,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t a_en
                     case MSGD_PRV_MSG_OK_CHECK:
                     {
                         /* Still parsing but we can check if data len is coherent */
-                        l_resultMsgCoherent = eFSP_MSGD_isMsgCohe(&p_ctx->byteUStufferCtnx, &l_isMCoherent);
+                        l_resultMsgCoherent = eFSP_MSGD_isMsgCohe(&p_ctx->bunstf_Ctx, &l_isMCoherent);
 
                         if( MSGD_RES_OK == l_resultMsgCoherent )
                         {
@@ -651,7 +653,7 @@ static bool_t eFSP_MSGD_isStatusStillCoherent(const s_eFSP_MSGD_Ctx* p_ctx)
     bool_t l_result;
 
 	/* Check context validity */
-	if( ( NULL == p_ctx->f_cbCrc ) || ( NULL == p_ctx->p_cbCrcCtx ) )
+	if( ( NULL == p_ctx->f_Crc ) || ( NULL == p_ctx->p_crcCtx ) )
 	{
 		l_result = false;
 	}
@@ -742,7 +744,7 @@ static e_eFSP_MSGD_Res eFSP_MSGD_IsFullMsgDec(s_eFSP_MSGD_Ctx* const p_ctx, bool
     bool_t l_isFullUnstuffed;
 
     l_isFullUnstuffed = false;
-    l_resByStuff = eCU_BUNSTF_IsAFullFrameUnstuff(&p_ctx->byteUStufferCtnx, &l_isFullUnstuffed);
+    l_resByStuff = eCU_BUNSTF_IsAFullFrameUnstuff(&p_ctx->bunstf_Ctx, &l_isFullUnstuffed);
     l_result = eFSP_MSGD_convertReturnFromBstf(l_resByStuff);
 
     if( MSGD_RES_OK == l_result )
@@ -756,7 +758,7 @@ static e_eFSP_MSGD_Res eFSP_MSGD_IsFullMsgDec(s_eFSP_MSGD_Ctx* const p_ctx, bool
         else
         {
             /* Full frame received at unstuffer level, check if it is valid message at this level */
-            l_result = eFSP_MSGD_isMsgCorr(&p_ctx->byteUStufferCtnx, p_isMsgDec, p_ctx->f_cbCrc, p_ctx->p_cbCrcCtx);
+            l_result = eFSP_MSGD_isMsgCorr(&p_ctx->bunstf_Ctx, p_isMsgDec, p_ctx->f_Crc, p_ctx->p_crcCtx);
         }
     }
 
@@ -773,7 +775,7 @@ static e_eFSP_MSGD_Res eFSP_MSGD_IsFrmBad(s_eFSP_MSGD_Ctx* const p_ctx, bool_t* 
     bool_t l_isFrameBadloc;
 
     l_isFrameBadloc = true;
-    l_resByStuff = eCU_BUNSTF_IsFrameBad(&p_ctx->byteUStufferCtnx, &l_isFrameBadloc);
+    l_resByStuff = eCU_BUNSTF_IsFrameBad(&p_ctx->bunstf_Ctx, &l_isFrameBadloc);
     l_result = eFSP_MSGD_convertReturnFromBstf(l_resByStuff);
 
     if( MSGD_RES_OK == l_result )
@@ -788,7 +790,7 @@ static e_eFSP_MSGD_Res eFSP_MSGD_IsFrmBad(s_eFSP_MSGD_Ctx* const p_ctx, bool_t* 
             /* Frame seems ok, no error found. It could be ended on in receiving state. If ended check CRC,
              * if still in receiving state check coherence with datalen */
             l_isFullUnstuffed = false;
-            l_resByStuff = eCU_BUNSTF_IsAFullFrameUnstuff(&p_ctx->byteUStufferCtnx, &l_isFullUnstuffed);
+            l_resByStuff = eCU_BUNSTF_IsAFullFrameUnstuff(&p_ctx->bunstf_Ctx, &l_isFullUnstuffed);
             l_result = eFSP_MSGD_convertReturnFromBstf(l_resByStuff);
 
             if( MSGD_RES_OK == l_result )
@@ -796,7 +798,7 @@ static e_eFSP_MSGD_Res eFSP_MSGD_IsFrmBad(s_eFSP_MSGD_Ctx* const p_ctx, bool_t* 
                 if( false == l_isFullUnstuffed )
                 {
                     /* Check ongoing coherence */
-                    l_result = eFSP_MSGD_isMsgCohe(&p_ctx->byteUStufferCtnx, &l_isCorrect);
+                    l_result = eFSP_MSGD_isMsgCohe(&p_ctx->bunstf_Ctx, &l_isCorrect);
 
                     if( MSGD_RES_OK == l_result )
                     {
@@ -816,7 +818,7 @@ static e_eFSP_MSGD_Res eFSP_MSGD_IsFrmBad(s_eFSP_MSGD_Ctx* const p_ctx, bool_t* 
                 else
                 {
                     /* Check complete frame coherence */
-                    l_result = eFSP_MSGD_isMsgCorr(&p_ctx->byteUStufferCtnx, &l_isCorrect, p_ctx->f_cbCrc, p_ctx->p_cbCrcCtx);
+                    l_result = eFSP_MSGD_isMsgCorr(&p_ctx->bunstf_Ctx, &l_isCorrect, p_ctx->f_Crc, p_ctx->p_crcCtx);
 
                     if( MSGD_RES_OK == l_result )
                     {
@@ -845,7 +847,8 @@ static e_eFSP_MSGD_Res eFSP_MSGD_IsFrmBad(s_eFSP_MSGD_Ctx* const p_ctx, bool_t* 
     /* Suppressed for code clarity */
 #endif
 
-static e_eFSP_MSGD_Res eFSP_MSGD_isMsgCorr(s_eCU_BUNSTF_Ctx* p_ctx, bool_t* p_isCorrect, cb_crc32_msgd f_Crc, void* p_cbCrcCtx)
+static e_eFSP_MSGD_Res eFSP_MSGD_isMsgCorr(s_eCU_BUNSTF_Ctx* p_ctx, bool_t* p_isCor, cb_crc32_msgd f_Crc,
+                                           void* p_crcCtx)
 {
     e_eFSP_MSGD_Res l_result;
     s_eCU_BUNSTF_Res l_byteUnstuffRes;
@@ -857,7 +860,7 @@ static e_eFSP_MSGD_Res eFSP_MSGD_isMsgCorr(s_eCU_BUNSTF_Ctx* p_ctx, bool_t* p_is
 	uint8_t* lp_data;
 
     /* Check NULL */
-    if( ( NULL == p_ctx ) || ( NULL == p_isCorrect) || ( NULL == f_Crc) || ( NULL == p_cbCrcCtx ) )
+    if( ( NULL == p_ctx ) || ( NULL == p_isCor) || ( NULL == f_Crc) || ( NULL == p_crcCtx ) )
     {
         l_result = MSGD_RES_BADPOINTER;
     }
@@ -878,7 +881,7 @@ static e_eFSP_MSGD_Res eFSP_MSGD_isMsgCorr(s_eCU_BUNSTF_Ctx* p_ctx, bool_t* p_is
             if( l_dataSize < EFSP_MIN_MSGDE_BUFFLEN )
             {
                 /* Too small frame, discharge */
-                *p_isCorrect = false;
+                *p_isCor = false;
             }
             else
             {
@@ -894,19 +897,19 @@ static e_eFSP_MSGD_Res eFSP_MSGD_isMsgCorr(s_eCU_BUNSTF_Ctx* p_ctx, bool_t* p_is
                     l_crcInMsg = eFSP_MSGD_composeU32LE(lp_data[0x00u], lp_data[0x01u], lp_data[0x02u], lp_data[0x03u]);
 
                     /* Calculate CRC */
-                    l_crcRes = (*(f_Crc))( p_cbCrcCtx, ECU_CRC_BASE_SEED, &lp_data[4u], l_dPayToRx + 4u,  &l_crcExp );
+                    l_crcRes = (*(f_Crc))( p_crcCtx, ECU_CRC_BASE_SEED, &lp_data[4u], l_dPayToRx + 4u,  &l_crcExp );
 
                     if( true == l_crcRes )
                     {
                         if( l_crcInMsg == l_crcExp )
                         {
                             /* All ok */
-                            *p_isCorrect = true;
+                            *p_isCor = true;
                         }
                         else
                         {
                             /* Data Crc is wrong, discharge */
-                            *p_isCorrect = false;
+                            *p_isCor = false;
                         }
                     }
                     else
@@ -917,7 +920,7 @@ static e_eFSP_MSGD_Res eFSP_MSGD_isMsgCorr(s_eCU_BUNSTF_Ctx* p_ctx, bool_t* p_is
                 else
                 {
                     /* Data len is wrong, discharge */
-                    *p_isCorrect = false;
+                    *p_isCor = false;
                 }
             }
         }

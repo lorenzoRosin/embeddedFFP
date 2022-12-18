@@ -51,9 +51,9 @@ typedef enum
 
 typedef struct
 {
-    s_eCU_BUNSTF_Ctx byteUStufferCtnx;
-    cb_crc32_msgd    f_cbCrc;
-    void*            p_cbCrcCtx;
+    s_eCU_BUNSTF_Ctx bunstf_Ctx;
+    cb_crc32_msgd    f_Crc;
+    void*            p_crcCtx;
 }s_eFSP_MSGD_Ctx;
 
 
@@ -199,7 +199,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const p_ctx, uint32_
  * @param[in]   p_ctx         	 - Msg decoder context
  * @param[in]   a_encArea     	 - Pointer to the encoded Data that we will decode
  * @param[in]   encLen      	 - Size of the a_encArea
- * @param[out]  p_consumedEncData  - Pointer to an uint32_t were we will store how many encoded data has been
+ * @param[out]  p_usedEncByt  - Pointer to an uint32_t were we will store how many encoded data has been
  *                                 analized. keep in mind that unalized data were not decoded and will need to be
  *                                 be reparsed. Un parsed data happens when the frame ended earlier
  *                                 ( MSGD_RES_MESSAGEENDED, MSGD_RES_BADFRAME or MSGD_RES_FRAMERESTART is returned ) or
@@ -233,11 +233,11 @@ e_eFSP_MSGD_Res eFSP_MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const p_ctx, uint32_
  *                                        eFSP_MSGD_InsEncChunk.
  *				MSGD_RES_CRCCLBKERROR   - The crc callback returned an error when the decoder were verifing CRC
  *              MSGD_RES_OK           	- Operation ended correctly. The chunk is parsed correclty but the frame is not
- *                                        finished yet. In this situation p_consumedEncData is always reported with a
+ *                                        finished yet. In this situation p_usedEncByt is always reported with a
  *                                        value equals to encLen.
  */
 e_eFSP_MSGD_Res eFSP_MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t a_encArea[], const uint32_t encLen,
-                                      uint32_t* const p_consumedEncData);
+                                      uint32_t* const p_usedEncByt);
 
 #ifdef __cplusplus
 } /* extern "C" */

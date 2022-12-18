@@ -408,9 +408,9 @@ void msgDecoderTestBadInit(void)
     bool_t isInit;
 
     /* Function */
-    ctx.byteUStufferCtnx.isInit = false;
-    ctx.p_cbCrcCtx = &ctxAdapterCrc;
-    ctx.f_cbCrc = cbCrcPTest;
+    ctx.bunstf_Ctx.isInit = false;
+    ctx.p_crcCtx = &ctxAdapterCrc;
+    ctx.f_Crc = cbCrcPTest;
 
     if( MSGD_RES_NOINITLIB == eFSP_MSGD_NewMsg(&ctx) )
     {
@@ -593,7 +593,7 @@ void msgDecoderTestCorruptedCtx(void)
         (void)printf("msgDecoderTestCorruptedCtx 1  -- FAIL \n");
     }
 
-    ctx.f_cbCrc = NULL;
+    ctx.f_Crc = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_NewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 2  -- OK \n");
@@ -613,7 +613,7 @@ void msgDecoderTestCorruptedCtx(void)
         (void)printf("msgDecoderTestCorruptedCtx 3  -- FAIL \n");
     }
 
-    ctx.p_cbCrcCtx = NULL;
+    ctx.p_crcCtx = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_NewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 4  -- OK \n");
@@ -633,7 +633,7 @@ void msgDecoderTestCorruptedCtx(void)
         (void)printf("msgDecoderTestCorruptedCtx 5  -- FAIL \n");
     }
 
-    ctx.p_cbCrcCtx = NULL;
+    ctx.p_crcCtx = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_GetDecodedData(&ctx, &dataP, &var32) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 6  -- OK \n");
@@ -653,7 +653,7 @@ void msgDecoderTestCorruptedCtx(void)
         (void)printf("msgDecoderTestCorruptedCtx 7  -- FAIL \n");
     }
 
-    ctx.p_cbCrcCtx = NULL;
+    ctx.p_crcCtx = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_GetDecodedLen(&ctx,&var32) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 8  -- OK \n");
@@ -673,7 +673,7 @@ void msgDecoderTestCorruptedCtx(void)
         (void)printf("msgDecoderTestCorruptedCtx 9  -- FAIL \n");
     }
 
-    ctx.p_cbCrcCtx = NULL;
+    ctx.p_crcCtx = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 10 -- OK \n");
@@ -693,7 +693,7 @@ void msgDecoderTestCorruptedCtx(void)
         (void)printf("msgDecoderTestCorruptedCtx 11 -- FAIL \n");
     }
 
-    ctx.p_cbCrcCtx = NULL;
+    ctx.p_crcCtx = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 12 -- OK \n");
@@ -713,7 +713,7 @@ void msgDecoderTestCorruptedCtx(void)
         (void)printf("msgDecoderTestCorruptedCtx 13 -- FAIL \n");
     }
 
-    ctx.p_cbCrcCtx = NULL;
+    ctx.p_crcCtx = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 14 -- OK \n");
@@ -733,7 +733,7 @@ void msgDecoderTestCorruptedCtx(void)
         (void)printf("msgDecoderTestCorruptedCtx 15 -- FAIL \n");
     }
 
-    ctx.p_cbCrcCtx = NULL;
+    ctx.p_crcCtx = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_GetMostEffDatLen(&ctx, &var32) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 16 -- OK \n");
@@ -753,7 +753,7 @@ void msgDecoderTestCorruptedCtx(void)
         (void)printf("msgDecoderTestCorruptedCtx 17 -- FAIL \n");
     }
 
-    ctx.p_cbCrcCtx = NULL;
+    ctx.p_crcCtx = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_InsEncChunk(&ctx, memArea, 10u, &var32) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 18 -- OK \n");
@@ -773,7 +773,7 @@ void msgDecoderTestCorruptedCtx(void)
         (void)printf("msgDecoderTestCorruptedCtx 19 -- FAIL \n");
     }
 
-    ctx.byteUStufferCtnx.p_memA = NULL;
+    ctx.bunstf_Ctx.p_memA = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_NewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 20 -- OK \n");
@@ -793,7 +793,7 @@ void msgDecoderTestCorruptedCtx(void)
         (void)printf("msgDecoderTestCorruptedCtx 21 -- FAIL \n");
     }
 
-    ctx.byteUStufferCtnx.p_memA = NULL;
+    ctx.bunstf_Ctx.p_memA = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_GetDecodedData(&ctx, &dataP, &var32) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 22 -- OK \n");
@@ -813,7 +813,7 @@ void msgDecoderTestCorruptedCtx(void)
         (void)printf("msgDecoderTestCorruptedCtx 23 -- FAIL \n");
     }
 
-    ctx.byteUStufferCtnx.p_memA = NULL;
+    ctx.bunstf_Ctx.p_memA = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_GetDecodedLen(&ctx, &var32) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 24 -- OK \n");
@@ -833,7 +833,7 @@ void msgDecoderTestCorruptedCtx(void)
         (void)printf("msgDecoderTestCorruptedCtx 25 -- FAIL \n");
     }
 
-    ctx.byteUStufferCtnx.p_memA = NULL;
+    ctx.bunstf_Ctx.p_memA = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 26 -- OK \n");
@@ -853,7 +853,7 @@ void msgDecoderTestCorruptedCtx(void)
         (void)printf("msgDecoderTestCorruptedCtx 27 -- FAIL \n");
     }
 
-    ctx.byteUStufferCtnx.p_memA = NULL;
+    ctx.bunstf_Ctx.p_memA = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 28 -- OK \n");
@@ -873,7 +873,7 @@ void msgDecoderTestCorruptedCtx(void)
         (void)printf("msgDecoderTestCorruptedCtx 29 -- FAIL \n");
     }
 
-    ctx.byteUStufferCtnx.p_memA = NULL;
+    ctx.bunstf_Ctx.p_memA = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 30 -- OK \n");
@@ -893,7 +893,7 @@ void msgDecoderTestCorruptedCtx(void)
         (void)printf("msgDecoderTestCorruptedCtx 31 -- FAIL \n");
     }
 
-    ctx.byteUStufferCtnx.p_memA = NULL;
+    ctx.bunstf_Ctx.p_memA = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_GetMostEffDatLen(&ctx, &var32) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 32 -- OK \n");
@@ -913,7 +913,7 @@ void msgDecoderTestCorruptedCtx(void)
         (void)printf("msgDecoderTestCorruptedCtx 33 -- FAIL \n");
     }
 
-    ctx.byteUStufferCtnx.p_memA = NULL;
+    ctx.bunstf_Ctx.p_memA = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_InsEncChunk(&ctx, memArea, 10u, &var32) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 34 -- OK \n");

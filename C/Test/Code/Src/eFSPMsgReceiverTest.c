@@ -936,7 +936,7 @@ void msgReceiverTestBadInit(void)
         (void)printf("msgReceiverTestBadInit 1  -- FAIL \n");
     }
 
-    ctx.msgDecoderCtnx.byteUStufferCtnx.isInit = false;
+    ctx.msgd_Ctx.bunstf_Ctx.isInit = false;
     if( MSGRX_RES_OK == eFSP_MSGRX_IsInit(&ctx, &isInit) )
     {
         if( false == isInit )
@@ -1740,7 +1740,7 @@ void msgReceiverTestCorruptContext(void)
     }
 
     /* Function */
-    ctx.msgDecoderCtnx.p_cbCrcCtx = NULL;
+    ctx.msgd_Ctx.p_crcCtx = NULL;
     if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCorruptContext 32 -- OK \n");
@@ -1775,7 +1775,7 @@ void msgReceiverTestCorruptContext(void)
     }
 
     /* Function */
-    ctx.msgDecoderCtnx.p_cbCrcCtx = NULL;
+    ctx.msgd_Ctx.p_crcCtx = NULL;
     if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsgNClean(&ctx) )
     {
         (void)printf("msgReceiverTestCorruptContext 34 -- OK \n");
@@ -1810,7 +1810,7 @@ void msgReceiverTestCorruptContext(void)
     }
 
     /* Function */
-    ctx.msgDecoderCtnx.p_cbCrcCtx = NULL;
+    ctx.msgd_Ctx.p_crcCtx = NULL;
     if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL ) )
     {
         (void)printf("msgReceiverTestCorruptContext 36 -- OK \n");
@@ -1845,7 +1845,7 @@ void msgReceiverTestCorruptContext(void)
     }
 
     /* Function */
-    ctx.msgDecoderCtnx.p_cbCrcCtx = NULL;
+    ctx.msgd_Ctx.p_crcCtx = NULL;
     if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("msgReceiverTestCorruptContext 38 -- OK \n");

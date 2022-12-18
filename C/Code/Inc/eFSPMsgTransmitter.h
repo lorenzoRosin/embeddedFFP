@@ -64,14 +64,14 @@ typedef enum
 
 typedef struct
 {
-    s_eFSP_MSGE_Ctx msgEncoderCtnx;
+    s_eFSP_MSGE_Ctx msge_Ctx;
 	uint8_t*        sendBuff;
 	uint32_t        sendBuffSize;
 	uint32_t        sendBuffCntr;
     uint32_t        sendBuffFill;
-    cb_tx_msge      cbTxP;
-    void*           cbTxCtx;
-    s_eFSP_TXTIMER  txTimer;
+    cb_tx_msge      f_Tx;
+    void*           p_TxCtx;
+    s_eFSP_TXTIMER  txTim;
     uint32_t        frameTimeoutMs;
     uint32_t        timePerSendMs;
 }s_eFSP_MSGTX_Ctx;

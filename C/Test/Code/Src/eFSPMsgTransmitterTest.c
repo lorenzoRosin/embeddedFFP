@@ -845,18 +845,18 @@ void msgTransmitterTestBadInit(void)
 
     /* Function */
     (void)memset(&ctx, 0, sizeof(s_eFSP_MSGTX_Ctx));
-    ctx.msgEncoderCtnx.byteStufferCtnx.isInit = false;
-    ctx.msgEncoderCtnx.p_cbCrcCtx = &ctxAdapterCrc;
-    ctx.msgEncoderCtnx.f_cbCrc = cbCrcPTest;
+    ctx.msge_Ctx.bstf_Ctx.isInit = false;
+    ctx.msge_Ctx.p_crcCtx = &ctxAdapterCrc;
+    ctx.msge_Ctx.f_Crc = cbCrcPTest;
     ctx.sendBuff = sendBuff;
     ctx.sendBuffSize = sizeof(sendBuff);
     ctx.sendBuffCntr = 0u;
     ctx.sendBuffFill = 0u;
-    ctx.cbTxP = &sendMsg;
-    ctx.cbTxCtx = &ctxAdapterSend;
-    ctx.txTimer.p_timerCtx = &ctxAdapterTim;
-    ctx.txTimer.f_tim_start = &timStart;
-    ctx.txTimer.f_tim_getRemaining = &timGetRemaining;
+    ctx.f_Tx = &sendMsg;
+    ctx.p_TxCtx = &ctxAdapterSend;
+    ctx.txTim.p_timerCtx = &ctxAdapterTim;
+    ctx.txTim.f_tim_start = &timStart;
+    ctx.txTim.f_tim_getRemaining = &timGetRemaining;
     ctx.frameTimeoutMs = 1000u;
     ctx.timePerSendMs = 100u;
 
@@ -1223,7 +1223,7 @@ void msgTransmitterTestCorruptContext(void)
     }
 
     /* Function */
-    ctx.cbTxP = NULL;
+    ctx.f_Tx = NULL;
     if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCorruptContext 4  -- OK \n");
@@ -1244,7 +1244,7 @@ void msgTransmitterTestCorruptContext(void)
     }
 
     /* Function */
-    ctx.cbTxCtx = NULL;
+    ctx.p_TxCtx = NULL;
     if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCorruptContext 6  -- OK \n");
@@ -1265,7 +1265,7 @@ void msgTransmitterTestCorruptContext(void)
     }
 
     /* Function */
-    ctx.txTimer.p_timerCtx = NULL;
+    ctx.txTim.p_timerCtx = NULL;
     if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCorruptContext 8  -- OK \n");
@@ -1286,7 +1286,7 @@ void msgTransmitterTestCorruptContext(void)
     }
 
     /* Function */
-    ctx.txTimer.f_tim_start = NULL;
+    ctx.txTim.f_tim_start = NULL;
     if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCorruptContext 10 -- OK \n");
@@ -1308,7 +1308,7 @@ void msgTransmitterTestCorruptContext(void)
     }
 
     /* Function */
-    ctx.txTimer.f_tim_getRemaining = NULL;
+    ctx.txTim.f_tim_getRemaining = NULL;
     if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCorruptContext 12 -- OK \n");
@@ -1508,7 +1508,7 @@ void msgTransmitterTestCorruptContext(void)
     }
 
     /* Function */
-    ctx.msgEncoderCtnx.p_cbCrcCtx = NULL;
+    ctx.msge_Ctx.p_crcCtx = NULL;
     if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&ctx, 2u) )
     {
         (void)printf("msgTransmitterTestCorruptContext 31 -- OK \n");
@@ -1529,7 +1529,7 @@ void msgTransmitterTestCorruptContext(void)
     }
 
     /* Function */
-    ctx.msgEncoderCtnx.p_cbCrcCtx = NULL;
+    ctx.msge_Ctx.p_crcCtx = NULL;
     if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_GetWherePutData(&ctx, &dataP, &dataL) )
     {
         (void)printf("msgTransmitterTestCorruptContext 33 -- OK \n");
@@ -1550,7 +1550,7 @@ void msgTransmitterTestCorruptContext(void)
     }
 
     /* Function */
-    ctx.msgEncoderCtnx.p_cbCrcCtx = NULL;
+    ctx.msge_Ctx.p_crcCtx = NULL;
     if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_RestartMessage(&ctx) )
     {
         (void)printf("msgTransmitterTestCorruptContext 35 -- OK \n");
@@ -1571,7 +1571,7 @@ void msgTransmitterTestCorruptContext(void)
     }
 
     /* Function */
-    ctx.msgEncoderCtnx.p_cbCrcCtx = NULL;
+    ctx.msge_Ctx.p_crcCtx = NULL;
     if( MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_SendChunk(&ctx) )
     {
         (void)printf("msgTransmitterTestCorruptContext 37 -- OK \n");
