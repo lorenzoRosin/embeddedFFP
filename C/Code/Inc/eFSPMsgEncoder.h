@@ -64,8 +64,8 @@ typedef struct
  *
  * @param[in]   p_ctx         - Message Encoder context
  * @param[in]   a_memArea     - Pointer to a memory area that we will use to encode message
- * @param[in]   memAreaSize - Dimension in byte of the a_memArea
- * @param[in]   f_Crc      - Pointer to a CRC 32 seed callback function
+ * @param[in]   memAreaSize   - Dimension in byte of the a_memArea
+ * @param[in]   f_Crc         - Pointer to a CRC 32 seed callback function
  * @param[in]   p_clbCtx      - Custom context passed to the callback function
  *
  * @return      MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
@@ -91,24 +91,24 @@ e_eFSP_MSGE_Res eFSP_MSGE_IsInit(s_eFSP_MSGE_Ctx* const p_ctx, bool_t* p_isInit)
  *
  * @param[in]   p_ctx         - Message Encoder context
  * @param[out]  pp_data       - Pointer to a Pointer where the raw data needs to be copied before starting a message
- * @param[out]  p_maxDataSize - Pointer to a uint32_t variable where the max number of data that can be copied in pp_data
- *                            will be placed
+ * @param[out]  p_maxDataL    - Pointer to a uint32_t variable where the max number of data that can be copied in pp_data
+ *                              will be placed
  *
  * @return      MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
  *		        MSGE_RES_NOINITLIB      - Need to init the data encoder context before taking some action
  *		        MSGE_RES_CORRUPTCTX     - In case of an corrupted context
  *              MSGE_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGE_Res eFSP_MSGE_GetWherePutData(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t** pp_data, uint32_t* const p_maxDataSize);
+e_eFSP_MSGE_Res eFSP_MSGE_GetWherePutData(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t** pp_data, uint32_t* const p_maxDataL);
 
 /**
  * @brief       Start to encode a new msg given the dimension of raw payload it self. This function suppouse that
- *              data payload that need to be encoded were already copied in memory.( see MSGE_GetPayloadLocation
+ *              data payload that need to be encoded were already copied in memory.( see eFSP_MSGE_GetWherePutData
  *              in order to know how get the data pointer, and copy the data )
  *
  * @param[in]   p_ctx         - Message Encoder context
- * @param[in]   messageLen  - lenght of the raw payload present in the frame that we need to encode ( no header, only
- *                            raw data )
+ * @param[in]   messageLen    - lenght of the raw payload present in the frame that we need to encode ( no header, only
+ *                              raw data )
  *
  * @return      MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
  *		        MSGE_RES_BADPARAM       - In case of an invalid parameter passed to the function
@@ -172,7 +172,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetRemByteToGet(s_eFSP_MSGE_Ctx* const p_ctx, uint32_t
  *                                        maxDestLen
  */
 e_eFSP_MSGE_Res eFSP_MSGE_GetEncChunk(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t p_encodeDest[], const uint32_t maxDestLen,
-                                   uint32_t* const p_filledLen);
+                                      uint32_t* const p_filledLen);
 
 #ifdef __cplusplus
 } /* extern "C" */

@@ -39,7 +39,7 @@ static uint32_t eFSP_MSGD_composeU32LE(uint8_t v1, uint8_t v2, uint8_t v3, uint8
 #endif
 
 e_eFSP_MSGD_Res eFSP_MSGD_InitCtx(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t a_memArea[], const uint32_t memAreaSize,
-								 cb_crc32_msgd f_Crc, void* const p_clbCtx)
+								  cb_crc32_msgd f_Crc, void* const p_clbCtx)
 {
 	/* Local variable */
 	e_eFSP_MSGD_Res result;
@@ -131,7 +131,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_NewMsg(s_eFSP_MSGD_Ctx* const p_ctx)
     /* Suppressed for code clarity */
 #endif
 
-e_eFSP_MSGD_Res eFSP_MSGD_GetDecodedData(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t** pp_data, uint32_t* const p_retrivedLen)
+e_eFSP_MSGD_Res eFSP_MSGD_GetDecodedData(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t** pp_data, uint32_t* const p_gettedLen)
 {
 	/* Local variable */
 	e_eFSP_MSGD_Res result;
@@ -140,7 +140,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_GetDecodedData(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t**
 	uint32_t dataSizeP;
 
 	/* Check pointer validity */
-	if( ( NULL == p_ctx ) || ( NULL == pp_data ) || ( NULL == p_retrivedLen ) )
+	if( ( NULL == p_ctx ) || ( NULL == pp_data ) || ( NULL == p_gettedLen ) )
 	{
 		result = MSGD_RES_BADPOINTER;
 	}
@@ -168,12 +168,12 @@ e_eFSP_MSGD_Res eFSP_MSGD_GetDecodedData(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t**
                 if( dataSizeP < EFSP_MIN_MSGDE_BUFFLEN )
                 {
 					/* No memory free */
-                    *p_retrivedLen = 0u;
+                    *p_gettedLen = 0u;
                 }
                 else
                 {
                     /* Return reference of only the raw payload */
-                    *p_retrivedLen = dataSizeP - EFSP_MSGDE_HEADERSIZE;
+                    *p_gettedLen = dataSizeP - EFSP_MSGDE_HEADERSIZE;
                 }
 
 				result = MSGD_RES_OK;
@@ -459,7 +459,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const p_ctx, uint32_
 #endif
 
 e_eFSP_MSGD_Res eFSP_MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t a_encArea[], const uint32_t encLen,
-                                 uint32_t* const p_consumedEncData)
+                                      uint32_t* const p_consumedEncData)
 {
 	/* Local return  */
 	e_eFSP_MSGD_Res result;

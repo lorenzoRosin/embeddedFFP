@@ -118,7 +118,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_IsInit(s_eFSP_MSGRX_Ctx* const p_ctx, bool_t* p_isIn
 	return result;
 }
 
-e_eFSP_MSGRX_Res eFSP_MSGRX_StartNewMsg(s_eFSP_MSGRX_Ctx* const p_ctx)
+e_eFSP_MSGRX_Res eFSP_MSGRX_NewMsg(s_eFSP_MSGRX_Ctx* const p_ctx)
 {
 	/* Local variable */
 	e_eFSP_MSGRX_Res result;
@@ -156,7 +156,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_StartNewMsg(s_eFSP_MSGRX_Ctx* const p_ctx)
 	return result;
 }
 
-e_eFSP_MSGRX_Res eFSP_MSGRX_StartNewMsgNClean(s_eFSP_MSGRX_Ctx* const p_ctx)
+e_eFSP_MSGRX_Res eFSP_MSGRX_NewMsgNClean(s_eFSP_MSGRX_Ctx* const p_ctx)
 {
 	/* Local variable for result */
 	e_eFSP_MSGRX_Res result;
@@ -198,14 +198,14 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_StartNewMsgNClean(s_eFSP_MSGRX_Ctx* const p_ctx)
 	return result;
 }
 
-e_eFSP_MSGRX_Res eFSP_MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const p_ctx, uint8_t** dataP, uint32_t* const retrivedLen)
+e_eFSP_MSGRX_Res eFSP_MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const p_ctx, uint8_t** pp_data, uint32_t* const p_GetLen)
 {
 	/* Local variable */
 	e_eFSP_MSGRX_Res result;
 	e_eFSP_MSGD_Res resultMsgD;
 
 	/* Check pointer validity */
-	if( ( NULL == p_ctx ) || ( NULL == dataP ) || ( NULL == retrivedLen ) )
+	if( ( NULL == p_ctx ) || ( NULL == pp_data ) || ( NULL == p_GetLen ) )
 	{
 		result = MSGRX_RES_BADPOINTER;
 	}
@@ -219,7 +219,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const p_ctx, uint8_
 		else
 		{
 			/* Get memory reference of CRC+LEN+DATA, so we can calculate reference of only data payload */
-			resultMsgD = eFSP_MSGD_GetDecodedData(&p_ctx->msgDecoderCtnx, dataP, retrivedLen);
+			resultMsgD = eFSP_MSGD_GetDecodedData(&p_ctx->msgDecoderCtnx, pp_data, p_GetLen);
 			result = eFSP_MSGRX_convertReturnFromMSGD(resultMsgD);
 		}
 	}

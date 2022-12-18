@@ -345,7 +345,7 @@ void msgRxTransmitterTestCommon(void)
     }
 
     /* Fill data */
-    if( MSGTX_RES_OK == eFSP_MSGTX_GetPayloadLocation(&ctxTx, &dataP, &dataL) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_GetWherePutData(&ctxTx, &dataP, &dataL) )
     {
         if( 12u == dataL )
         {
@@ -370,7 +370,7 @@ void msgRxTransmitterTestCommon(void)
     dataP[6u] = ECU_SOF;
 
     /* Start TX message */
-    if( MSGTX_RES_OK == eFSP_MSGTX_StartNewMessage(&ctxTx, 7u) )
+    if( MSGTX_RES_OK == eFSP_MSGTX_NewMessage(&ctxTx, 7u) )
     {
         (void)printf("msgTransmitterTestCornerCase 4  -- OK \n");
     }
@@ -380,7 +380,7 @@ void msgRxTransmitterTestCommon(void)
     }
 
     /* Start RX message */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctxRX) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctxRX) )
     {
         (void)printf("msgTransmitterTestCornerCase 5  -- OK \n");
     }

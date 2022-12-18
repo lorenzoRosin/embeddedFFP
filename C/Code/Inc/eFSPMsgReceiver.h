@@ -137,7 +137,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_IsInit(s_eFSP_MSGRX_Ctx* const p_ctx, bool_t* p_isIn
  *              MSGRX_RES_TIMCLBKERROR  - The timer function returned an error
  *              MSGRX_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGRX_Res eFSP_MSGRX_StartNewMsg(s_eFSP_MSGRX_Ctx* const p_ctx);
+e_eFSP_MSGRX_Res eFSP_MSGRX_NewMsg(s_eFSP_MSGRX_Ctx* const p_ctx);
 
 /**
  * @brief       Start receiving a new message, loosing the previous stored decoded msg frame, and cleaning rx buffer.
@@ -152,24 +152,24 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_StartNewMsg(s_eFSP_MSGRX_Ctx* const p_ctx);
  *              MSGRX_RES_TIMCLBKERROR  - The timer function returned an error
  *              MSGRX_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGRX_Res eFSP_MSGRX_StartNewMsgNClean(s_eFSP_MSGRX_Ctx* const p_ctx);
+e_eFSP_MSGRX_Res eFSP_MSGRX_NewMsgNClean(s_eFSP_MSGRX_Ctx* const p_ctx);
 
 /**
  * @brief       Retrive the pointer to the stored decoded data payload ( NO HEADER ), and the data size of the frame.
  *              Keep in mind that the message parsing could be ongoing, and if an error in the frame occour the
- *              retrivedLen could be setted to 0 again. We will retrive only payload size and no CRC + LEN header
+ *              p_GetLen could be setted to 0 again. We will retrive only payload size and no CRC + LEN header
  *
  * @param[in]   p_ctx         - Msg receiver context
- * @param[out]  dataP       - Pointer to a Pointer pointing to the decoded data payload ( NO CRC NO DATA SIZE )
- * @param[out]  retrivedLen - Pointer to a uint32_t variable where the size of the decoded data will be placed ( raw
- *                            paylod data len )
+ * @param[out]  pp_data       - Pointer to a Pointer pointing to the decoded data payload ( NO CRC NO DATA SIZE )
+ * @param[out]  p_GetLen      - Pointer to a uint32_t variable where the size of the decoded data will be placed ( raw
+ *                              paylod data len )
  *
  * @return      MSGRX_RES_BADPOINTER   	- In case of bad pointer passed to the function
  *		        MSGRX_RES_NOINITLIB    	- Need to init context before taking some action
  *		        MSGRX_RES_CORRUPTCTX   	- In case of an corrupted context
  *              MSGRX_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGRX_Res eFSP_MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const p_ctx, uint8_t** dataP, uint32_t* const retrivedLen);
+e_eFSP_MSGRX_Res eFSP_MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const p_ctx, uint8_t** pp_data, uint32_t* const p_GetLen);
 
 /**
  * @brief       Receive encoded chunk that the alg will decode byte per byte.
@@ -179,7 +179,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const p_ctx, uint8_
  *              this function even after i_frameTimeoutMs it will start returning only MSGRX_RES_MESSAGETIMEOUT.
  *              If the flag i_needWaitFrameStart is true the timeout is started in the moment we receive the
  *              start of frame (if another SOF is received the timeout is reloaded). If the flag i_needWaitFrameStart
- *              is false the timeout is started in the moment we call the function MSGRX_StartNewMsg or
+ *              is false the timeout is started in the moment we call the function eFSP_MSGRX_NewMsg or
  *              MSGRX_StartNewMsgNClean is called.
  *
  * @param[in]   p_ctx         	 - Msg receiver context
@@ -196,7 +196,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const p_ctx, uint8_
  *                                        So this status could be due to a transmissione error, but it's not possible
  *                                        to know the reason of the error without storing all the data and checking CRC.
  *		    MSGRX_RES_MESSAGERECEIVED   - Frame ended, restart context in order to parse a new frame. Every other call
- *                                        to this function will not have effect until we call MSGRX_StartNewMsg,
+ *                                        to this function will not have effect until we call eFSP_MSGRX_NewMsg,
  *                                        MSGRX_StartNewMsgNClean or timeout elapse. In this situation bear in mind
  *                                        that some data could be left out the parsing and can remain saved inside a
  *                                        RX buffer. The onlyway to completly clean RX buffer is calling
@@ -204,7 +204,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const p_ctx, uint8_
  *          MSGRX_RES_MESSAGETIMEOUT    - The message is not received before "i_frameTimeoutMs". Restart to continue.
  *          MSGRX_RES_BADFRAME          - Found an error while parsing, the frame passed is invalid.
  *                                        Restart context in order to parse a new frame. Every other call
- *                                        to this function will not have effect until we call MSGRX_StartNewMsg or
+ *                                        to this function will not have effect until we call eFSP_MSGRX_NewMsg or
  *                                        timeout elapse. In this situation bear in mind that some data could be left
  *                                        out the parsing and can remain saved inside a RX buffer.
  *          MSGRX_RES_FRAMERESTART      - During frame receiving another start of frame is received. In this situation

@@ -832,7 +832,7 @@ void msgReceiverTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_StartNewMsg(NULL) )
+    if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_NewMsg(NULL) )
     {
         (void)printf("msgReceiverTestBadPointer 14 -- OK \n");
     }
@@ -842,7 +842,7 @@ void msgReceiverTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_StartNewMsgNClean(NULL) )
+    if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_NewMsgNClean(NULL) )
     {
         (void)printf("msgReceiverTestBadPointer 15 -- OK \n");
     }
@@ -954,7 +954,7 @@ void msgReceiverTestBadInit(void)
     }
 
     /* Function */
-    if( MSGRX_RES_NOINITLIB == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_NOINITLIB == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestBadInit 3  -- OK \n");
     }
@@ -964,7 +964,7 @@ void msgReceiverTestBadInit(void)
     }
 
     /* Function */
-    if( MSGRX_RES_NOINITLIB == eFSP_MSGRX_StartNewMsgNClean(&ctx) )
+    if( MSGRX_RES_NOINITLIB == eFSP_MSGRX_NewMsgNClean(&ctx) )
     {
         (void)printf("msgReceiverTestBadInit 4  -- OK \n");
     }
@@ -1216,7 +1216,7 @@ void msgReceiverTestCorruptContext(void)
 
     /* Function */
     ctx.rxBuff = NULL;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCorruptContext 2  -- OK \n");
     }
@@ -1251,7 +1251,7 @@ void msgReceiverTestCorruptContext(void)
 
     /* Function */
     ctx.cbRxP = NULL;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCorruptContext 4  -- OK \n");
     }
@@ -1286,7 +1286,7 @@ void msgReceiverTestCorruptContext(void)
 
     /* Function */
     ctx.cbRxCtx = NULL;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCorruptContext 6  -- OK \n");
     }
@@ -1321,7 +1321,7 @@ void msgReceiverTestCorruptContext(void)
 
     /* Function */
     ctx.rxTim.timerCtx = NULL;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCorruptContext 8  -- OK \n");
     }
@@ -1356,7 +1356,7 @@ void msgReceiverTestCorruptContext(void)
 
     /* Function */
     ctx.rxTim.tim_start = NULL;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCorruptContext 10 -- OK \n");
     }
@@ -1391,7 +1391,7 @@ void msgReceiverTestCorruptContext(void)
 
     /* Function */
     ctx.rxTim.tim_getRemaining = NULL;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCorruptContext 12 -- OK \n");
     }
@@ -1426,7 +1426,7 @@ void msgReceiverTestCorruptContext(void)
 
     /* Function */
     ctx.rxBuffSize = 0u;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCorruptContext 14 -- OK \n");
     }
@@ -1461,7 +1461,7 @@ void msgReceiverTestCorruptContext(void)
 
     /* Function */
     ctx.rxBuffFill = ctx.rxBuffSize + 1u;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCorruptContext 16 -- OK \n");
     }
@@ -1496,7 +1496,7 @@ void msgReceiverTestCorruptContext(void)
 
     /* Function */
     ctx.rxBuffCntr = ctx.rxBuffFill + 1u;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCorruptContext 18 -- OK \n");
     }
@@ -1531,7 +1531,7 @@ void msgReceiverTestCorruptContext(void)
 
     /* Function */
     ctx.frameTimeoutMs = 0u;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCorruptContext 20 -- OK \n");
     }
@@ -1566,7 +1566,7 @@ void msgReceiverTestCorruptContext(void)
 
     /* Function */
     ctx.timePerRecMs = 0u;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCorruptContext 22 -- OK \n");
     }
@@ -1601,7 +1601,7 @@ void msgReceiverTestCorruptContext(void)
 
     /* Function */
     ctx.timePerRecMs = ctx.frameTimeoutMs + 1u;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCorruptContext 24 -- OK \n");
     }
@@ -1636,7 +1636,7 @@ void msgReceiverTestCorruptContext(void)
 
     /* Function */
     ctx.timePerRecMs = ctx.frameTimeoutMs + 1u;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_StartNewMsgNClean(&ctx) )
+    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsgNClean(&ctx) )
     {
         (void)printf("msgReceiverTestCorruptContext 26 -- OK \n");
     }
@@ -1741,7 +1741,7 @@ void msgReceiverTestCorruptContext(void)
 
     /* Function */
     ctx.msgDecoderCtnx.cbCrcCtx = NULL;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCorruptContext 32 -- OK \n");
     }
@@ -1776,7 +1776,7 @@ void msgReceiverTestCorruptContext(void)
 
     /* Function */
     ctx.msgDecoderCtnx.cbCrcCtx = NULL;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_StartNewMsgNClean(&ctx) )
+    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsgNClean(&ctx) )
     {
         (void)printf("msgReceiverTestCorruptContext 34 -- OK \n");
     }
@@ -1897,7 +1897,7 @@ void msgReceiverTestBadClBckCrc(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestBadClBckCrc 2  -- OK \n");
     }
@@ -1971,7 +1971,7 @@ void msgReceiverTestBadClBckReceive(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestBadClBckReceive 2  -- OK \n");
     }
@@ -1981,7 +1981,7 @@ void msgReceiverTestBadClBckReceive(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsgNClean(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsgNClean(&ctx) )
     {
         (void)printf("msgReceiverTestBadClBckReceive 3  -- OK \n");
     }
@@ -2056,7 +2056,7 @@ void msgReceiverTestBadClBckTim(void)
     }
 
     /* Function */
-    if( MSGRX_RES_TIMCLBKERROR == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_TIMCLBKERROR == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestBadClBckTim 2  -- OK \n");
     }
@@ -2066,7 +2066,7 @@ void msgReceiverTestBadClBckTim(void)
     }
 
     /* Function */
-    if( MSGRX_RES_TIMCLBKERROR == eFSP_MSGRX_StartNewMsgNClean(&ctx) )
+    if( MSGRX_RES_TIMCLBKERROR == eFSP_MSGRX_NewMsgNClean(&ctx) )
     {
         (void)printf("msgReceiverTestBadClBckTim 3  -- OK \n");
     }
@@ -2124,7 +2124,7 @@ void msgReceiverTestBadClBckTim(void)
     }
 
     /* Function */
-    if( MSGRX_RES_TIMCLBKERROR == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_TIMCLBKERROR == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestBadClBckTim 6  -- OK \n");
     }
@@ -2134,7 +2134,7 @@ void msgReceiverTestBadClBckTim(void)
     }
 
     /* Function */
-    if( MSGRX_RES_TIMCLBKERROR == eFSP_MSGRX_StartNewMsgNClean(&ctx) )
+    if( MSGRX_RES_TIMCLBKERROR == eFSP_MSGRX_NewMsgNClean(&ctx) )
     {
         (void)printf("msgReceiverTestBadClBckTim 7  -- OK \n");
     }
@@ -2192,7 +2192,7 @@ void msgReceiverTestBadClBckTim(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestBadClBckTim 10 -- OK \n");
     }
@@ -2267,7 +2267,7 @@ void msgReceiverTestBadFrame(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestBadFrame 2  -- OK \n");
     }
@@ -2325,7 +2325,7 @@ void msgReceiverTestBadFrame(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestBadFrame 5  -- OK \n");
     }
@@ -2393,7 +2393,7 @@ void msgReceiverTestBadFrame(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestBadFrame 8  -- OK \n");
     }
@@ -2452,7 +2452,7 @@ void msgReceiverTestBadFrame(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestBadFrame 11 -- OK \n");
     }
@@ -2496,7 +2496,7 @@ void msgReceiverTestBadFrame(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestBadFrame 14 -- OK \n");
     }
@@ -2553,7 +2553,7 @@ void msgReceiverTestBadFrame(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestBadFrame 17 -- OK \n");
     }
@@ -2629,7 +2629,7 @@ void msgReceiverTestCornerCase(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase 2  -- OK \n");
     }
@@ -2715,7 +2715,7 @@ void msgReceiverTestCornerCase(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase 8  -- OK \n");
     }
@@ -2801,7 +2801,7 @@ void msgReceiverTestCornerCase(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase 14 -- OK \n");
     }
@@ -2887,7 +2887,7 @@ void msgReceiverTestCornerCase(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase 20 -- OK \n");
     }
@@ -2964,7 +2964,7 @@ void msgReceiverTestCornerCase(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase 25 -- OK \n");
     }
@@ -3061,7 +3061,7 @@ void msgReceiverTestCornerCase2(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase2 2  -- OK \n");
     }
@@ -3138,7 +3138,7 @@ void msgReceiverTestCornerCase2(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase2 7  -- OK \n");
     }
@@ -3215,7 +3215,7 @@ void msgReceiverTestCornerCase2(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase2 12 -- OK \n");
     }
@@ -3324,7 +3324,7 @@ void msgReceiverTestCornerCase2(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase2 19 -- OK \n");
     }
@@ -3383,7 +3383,7 @@ void msgReceiverTestCornerCase2(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase2 22 -- OK \n");
     }
@@ -3478,7 +3478,7 @@ void msgReceiverTestCornerCase3(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase3 2  -- OK \n");
     }
@@ -3520,7 +3520,7 @@ void msgReceiverTestCornerCase3(void)
         (void)printf("msgReceiverTestCornerCase3 3  -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase3 4  -- OK \n");
     }
@@ -3538,7 +3538,7 @@ void msgReceiverTestCornerCase3(void)
         (void)printf("msgReceiverTestCornerCase3 5  -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase3 6  -- OK \n");
     }
@@ -3556,7 +3556,7 @@ void msgReceiverTestCornerCase3(void)
         (void)printf("msgReceiverTestCornerCase3 7  -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase3 8  -- OK \n");
     }
@@ -3574,7 +3574,7 @@ void msgReceiverTestCornerCase3(void)
         (void)printf("msgReceiverTestCornerCase3 9  -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase3 10 -- OK \n");
     }
@@ -3592,7 +3592,7 @@ void msgReceiverTestCornerCase3(void)
         (void)printf("msgReceiverTestCornerCase3 11 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase3 12 -- OK \n");
     }
@@ -3610,7 +3610,7 @@ void msgReceiverTestCornerCase3(void)
         (void)printf("msgReceiverTestCornerCase3 13 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase3 14 -- OK \n");
     }
@@ -3628,7 +3628,7 @@ void msgReceiverTestCornerCase3(void)
         (void)printf("msgReceiverTestCornerCase3 15 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase3 16 -- OK \n");
     }
@@ -3646,7 +3646,7 @@ void msgReceiverTestCornerCase3(void)
         (void)printf("msgReceiverTestCornerCase3 17 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase3 18 -- OK \n");
     }
@@ -3680,7 +3680,7 @@ void msgReceiverTestCornerCase3(void)
         (void)printf("msgReceiverTestCornerCase3 20 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase3 21 -- OK \n");
     }
@@ -3762,7 +3762,7 @@ void msgReceiverTestCornerCase3(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase3 26 -- OK \n");
     }
@@ -3820,7 +3820,7 @@ void msgReceiverTestCornerCase3(void)
         (void)printf("msgReceiverTestCornerCase3 25 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsgNClean(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsgNClean(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase3 26 -- OK \n");
     }
@@ -3919,7 +3919,7 @@ void msgReceiverTestCornerCase4(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase4 2  -- OK \n");
     }
@@ -4014,7 +4014,7 @@ void msgReceiverTestCornerCase4(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase4 9  -- OK \n");
     }
@@ -4200,7 +4200,7 @@ void msgReceiverTestCornerCase5(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase5 2  -- OK \n");
     }
@@ -4303,7 +4303,7 @@ void msgReceiverTestCornerCase5(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase5 8  -- OK \n");
     }
@@ -4381,7 +4381,7 @@ void msgReceiverTestCornerCase6(void)
 
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_StartNewMsg(&ctx) )
+    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCornerCase6 2  -- OK \n");
     }

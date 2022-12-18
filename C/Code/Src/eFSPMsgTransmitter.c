@@ -108,7 +108,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_IsInit(s_eFSP_MSGTX_Ctx* const p_ctx, bool_t* p_isIn
 	return result;
 }
 
-e_eFSP_MSGTX_Res eFSP_MSGTX_StartNewMessage(s_eFSP_MSGTX_Ctx* const p_ctx, const uint32_t messageLen)
+e_eFSP_MSGTX_Res eFSP_MSGTX_NewMessage(s_eFSP_MSGTX_Ctx* const p_ctx, const uint32_t messageLen)
 {
 	/* Local variable */
 	e_eFSP_MSGTX_Res result;
@@ -158,14 +158,14 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_StartNewMessage(s_eFSP_MSGTX_Ctx* const p_ctx, const
 	return result;
 }
 
-e_eFSP_MSGTX_Res eFSP_MSGTX_GetPayloadLocation(s_eFSP_MSGTX_Ctx* const p_ctx, uint8_t** dataP, uint32_t* const p_maxDataSize)
+e_eFSP_MSGTX_Res eFSP_MSGTX_GetWherePutData(s_eFSP_MSGTX_Ctx* const p_ctx, uint8_t** pp_data, uint32_t* const p_maxDataL)
 {
 	/* Local variable */
 	e_eFSP_MSGTX_Res result;
 	e_eFSP_MSGE_Res resultMsgE;
 
 	/* Check pointer validity */
-	if( ( NULL == p_ctx ) || ( NULL == dataP ) || ( NULL == p_maxDataSize ) )
+	if( ( NULL == p_ctx ) || ( NULL == pp_data ) || ( NULL == p_maxDataL ) )
 	{
 		result = MSGTX_RES_BADPOINTER;
 	}
@@ -179,7 +179,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_GetPayloadLocation(s_eFSP_MSGTX_Ctx* const p_ctx, ui
 		else
 		{
 			/* Get only the payload data reference */
-			resultMsgE = eFSP_MSGE_GetWherePutData(&p_ctx->msgEncoderCtnx, dataP, p_maxDataSize);
+			resultMsgE = eFSP_MSGE_GetWherePutData(&p_ctx->msgEncoderCtnx, pp_data, p_maxDataL);
 			result = eFSP_MSGTX_convertReturnFromMSGE(resultMsgE);
 		}
 	}
@@ -187,7 +187,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_GetPayloadLocation(s_eFSP_MSGTX_Ctx* const p_ctx, ui
 	return result;
 }
 
-e_eFSP_MSGTX_Res eFSP_MSGTX_RestartCurrentMessage(s_eFSP_MSGTX_Ctx* const p_ctx)
+e_eFSP_MSGTX_Res eFSP_MSGTX_RestartMessage(s_eFSP_MSGTX_Ctx* const p_ctx)
 {
 	/* Local variable */
 	e_eFSP_MSGTX_Res result;

@@ -95,7 +95,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_IsInit(s_eFSP_MSGE_Ctx* const p_ctx, bool_t* p_isInit)
     /* Suppressed for code clarity */
 #endif
 
-e_eFSP_MSGE_Res eFSP_MSGE_GetWherePutData(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t** pp_data, uint32_t* const p_maxDataSize)
+e_eFSP_MSGE_Res eFSP_MSGE_GetWherePutData(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t** pp_data, uint32_t* const p_maxDataL)
 {
 	/* Local variable */
 	e_eFSP_MSGE_Res result;
@@ -104,7 +104,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetWherePutData(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t*
 	uint32_t maxDataSizeP;
 
 	/* Check pointer validity */
-	if( ( NULL == p_ctx ) || ( NULL == pp_data ) || ( NULL == p_maxDataSize ) )
+	if( ( NULL == p_ctx ) || ( NULL == pp_data ) || ( NULL == p_maxDataL ) )
 	{
 		result = MSGE_RES_BADPOINTER;
 	}
@@ -133,7 +133,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetWherePutData(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t*
                 {
                     /* Return reference of only the raw payload */
                     *pp_data = &dataPP[EFSP_MSGEN_HEADERSIZE];
-                    *p_maxDataSize = maxDataSizeP - EFSP_MSGEN_HEADERSIZE;
+                    *p_maxDataL = maxDataSizeP - EFSP_MSGEN_HEADERSIZE;
                 }
 			}
 		}
@@ -305,7 +305,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetRemByteToGet(s_eFSP_MSGE_Ctx* const p_ctx, uint32_t
 #endif
 
 e_eFSP_MSGE_Res eFSP_MSGE_GetEncChunk(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t p_encodeDest[], const uint32_t maxDestLen,
-                                   uint32_t* const p_filledLen)
+                                      uint32_t* const p_filledLen)
 {
 	/* Local variable */
 	e_eFSP_MSGE_Res result;
