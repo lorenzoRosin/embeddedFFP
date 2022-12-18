@@ -32,7 +32,7 @@ extern "C" {
 /* Call back to a function that will calculate the CRC for this modules
  * the p_ctx parameter is a custom pointer that can be used by the creator of this CRC callback, and will not be used
  * by the MSG DECODER module */
-typedef bool_t (*cb_crc32_msgd) ( void* p_ctx, const uint32_t seed, const uint8_t a_data[], const uint32_t dataLen,
+typedef bool_t (*cb_crc32_msgd) ( void* p_ctx, const uint32_t seed, const uint8_t* p_data, const uint32_t dataLen,
                                   uint32_t* const p_crc32Val );
 
 typedef enum
@@ -65,7 +65,7 @@ typedef struct
  * @brief       Initialize the data decoder context
  *
  * @param[in]   p_ctx           - Msg decoder context
- * @param[in]   a_memArea       - Pointer to a memory area that we will use to save decoded data
+ * @param[in]   p_memArea       - Pointer to a memory area that we will use to save decoded data
  * @param[in]   memAreaSize     - Dimension in byte of the memory area
  * @param[in]   f_Crc           - Pointer to a CRC 32 seed callback function
  * @param[in]   p_clbCtx        - Custom context passed to the callback function
@@ -74,7 +74,7 @@ typedef struct
  *		        MSGD_RES_BADPARAM       - In case of an invalid parameter passed to the function
  *              MSGD_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGD_Res eFSP_MSGD_InitCtx(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t a_memArea[], const uint32_t memAreaSize,
+e_eFSP_MSGD_Res eFSP_MSGD_InitCtx(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t* p_memArea, const uint32_t memAreaSize,
                                   cb_crc32_msgd f_Crc, void* const p_clbCtx);
 
 /**
@@ -197,8 +197,8 @@ e_eFSP_MSGD_Res eFSP_MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const p_ctx, uint32_
  * @brief       Insert the encoded data chunk that the alg will decode byte per byte
  *
  * @param[in]   p_ctx         	 - Msg decoder context
- * @param[in]   a_encArea     	 - Pointer to the encoded Data that we will decode
- * @param[in]   encLen      	 - Size of the a_encArea
+ * @param[in]   p_encArea     	 - Pointer to the encoded Data that we will decode
+ * @param[in]   encLen      	 - Size of the p_encArea
  * @param[out]  p_usedEncByt     - Pointer to an uint32_t were we will store how many encoded data has been
  *                                 analized. keep in mind that unalized data were not decoded and will need to be
  *                                 be reparsed. Un parsed data happens when the frame ended earlier
@@ -236,7 +236,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const p_ctx, uint32_
  *                                        finished yet. In this situation p_usedEncByt is always reported with a
  *                                        value equals to encLen.
  */
-e_eFSP_MSGD_Res eFSP_MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t a_encArea[], const uint32_t encLen,
+e_eFSP_MSGD_Res eFSP_MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t* p_encArea, const uint32_t encLen,
                                       uint32_t* const p_usedEncByt);
 
 #ifdef __cplusplus

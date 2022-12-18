@@ -34,7 +34,7 @@ static uint32_t eFSP_MSGD_composeU32LE(uint8_t v1, uint8_t v2, uint8_t v3, uint8
  *   GLOBAL FUNCTIONS
  **********************************************************************************************************************/
 
-e_eFSP_MSGD_Res eFSP_MSGD_InitCtx(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t a_memArea[], const uint32_t memAreaSize,
+e_eFSP_MSGD_Res eFSP_MSGD_InitCtx(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t* p_memArea, const uint32_t memAreaSize,
 								  cb_crc32_msgd f_Crc, void* const p_clbCtx)
 {
 	/* Local variable */
@@ -42,7 +42,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_InitCtx(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t a_memAre
 	s_eCU_BUNSTF_Res l_resByStuff;
 
 	/* Check pointer validity */
-	if( ( NULL == p_ctx ) || ( NULL == a_memArea ) || ( NULL == f_Crc ) || ( NULL == p_clbCtx ) )
+	if( ( NULL == p_ctx ) || ( NULL == p_memArea ) || ( NULL == f_Crc ) || ( NULL == p_clbCtx ) )
 	{
 		l_result = MSGD_RES_BADPOINTER;
 	}
@@ -60,7 +60,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_InitCtx(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t a_memAre
             p_ctx->p_crcCtx = p_clbCtx;
 
 			/* initialize internal bytestuffer */
-			l_resByStuff =  eCU_BUNSTF_InitCtx(&p_ctx->bunstf_Ctx, &a_memArea[0u], memAreaSize);
+			l_resByStuff =  eCU_BUNSTF_InitCtx(&p_ctx->bunstf_Ctx, &p_memArea[0u], memAreaSize);
 			l_result = eFSP_MSGD_convertReturnFromBstf(l_resByStuff);
         }
 	}
@@ -435,7 +435,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_GetMostEffDatLen(s_eFSP_MSGD_Ctx* const p_ctx, uint32_
 	return l_result;
 }
 
-e_eFSP_MSGD_Res eFSP_MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t a_encArea[], const uint32_t encLen,
+e_eFSP_MSGD_Res eFSP_MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t* p_encArea, const uint32_t encLen,
                                       uint32_t* const p_usedEncByt)
 {
 	/* Local return  */
@@ -452,7 +452,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t a_en
     e_eFSP_MSGD_Priv_state l_insertEncState;
 
 	/* Check pointer validity */
-	if( ( NULL == p_ctx ) || ( NULL == a_encArea ) || ( NULL == p_usedEncByt ) )
+	if( ( NULL == p_ctx ) || ( NULL == p_encArea ) || ( NULL == p_usedEncByt ) )
 	{
 		l_result = MSGD_RES_BADPOINTER;
 	}
@@ -509,7 +509,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t a_en
                     case MSGD_PRV_INSERTCHUNK:
                     {
                         /* Insert data */
-                        l_resBStuf = eCU_BUNSTF_InsStufChunk(&p_ctx->bunstf_Ctx, a_encArea, encLen, p_usedEncByt);
+                        l_resBStuf = eCU_BUNSTF_InsStufChunk(&p_ctx->bunstf_Ctx, p_encArea, encLen, p_usedEncByt);
                         l_result = eFSP_MSGD_convertReturnFromBstf(l_resBStuf);
 
                         if( MSGD_RES_MESSAGEENDED == l_result )

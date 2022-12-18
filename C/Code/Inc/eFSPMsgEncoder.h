@@ -32,7 +32,7 @@ extern "C" {
 /* Call back to a function that will calculate the CRC for this modules
  * the p_ctx parameter is a custom pointer that can be used by the creator of this CRC callback, and will not be used
  * by the MSG ENCODER module */
-typedef bool_t (*cb_crc32_msge) ( void* p_ctx, const uint32_t seed, const uint8_t a_data[], const uint32_t dataLen,
+typedef bool_t (*cb_crc32_msge) ( void* p_ctx, const uint32_t seed, const uint8_t* p_data, const uint32_t dataLen,
                                   uint32_t* const p_crc32Val );
 
 typedef enum
@@ -63,8 +63,8 @@ typedef struct
  * @brief       Initialize the message encoder context
  *
  * @param[in]   p_ctx         - Message Encoder context
- * @param[in]   a_memArea     - Pointer to a memory area that we will use to encode message
- * @param[in]   memAreaSize   - Dimension in byte of the a_memArea
+ * @param[in]   p_memArea     - Pointer to a memory area that we will use to encode message
+ * @param[in]   memAreaSize   - Dimension in byte of the p_memArea
  * @param[in]   f_Crc         - Pointer to a CRC 32 seed callback function
  * @param[in]   p_clbCtx      - Custom context passed to the callback function
  *
@@ -72,7 +72,7 @@ typedef struct
  *		        MSGE_RES_BADPARAM       - In case of an invalid parameter passed to the function
  *              MSGE_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGE_Res eFSP_MSGE_InitCtx(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t a_memArea[], const uint32_t memAreaSize,
+e_eFSP_MSGE_Res eFSP_MSGE_InitCtx(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_memArea, const uint32_t memAreaSize,
 								  cb_crc32_msge f_Crc, void* const p_clbCtx);
 
 /**
@@ -172,7 +172,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetRemByteToGet(s_eFSP_MSGE_Ctx* const p_ctx, uint32_t
  *                                        completed, but we can be sure that p_filledLen will have the same value of
  *                                        maxDestLen
  */
-e_eFSP_MSGE_Res eFSP_MSGE_GetEncChunk(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t p_encodeDest[], const uint32_t maxDestLen,
+e_eFSP_MSGE_Res eFSP_MSGE_GetEncChunk(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_encodeDest, const uint32_t maxDestLen,
                                       uint32_t* const p_filledLen);
 
 #ifdef __cplusplus

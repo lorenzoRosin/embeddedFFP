@@ -40,7 +40,7 @@ typedef struct
     e_eCU_CRC_Res lastError;
 }s_eCU_crcAdapterCtx;
 
-static bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t d[], const uint32_t dLen, uint32_t* const c32Val);
+static bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
 
 
 
@@ -68,7 +68,7 @@ void msgDeEncoderTest(void)
 /***********************************************************************************************************************
  *   PRIVATE TEST FUNCTION IMPLEMENTATION
  **********************************************************************************************************************/
-bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t d[], const uint32_t dLen, uint32_t* const c32Val)
+bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
 {
     bool_t result;
     s_eCU_crcAdapterCtx* ctxCur;

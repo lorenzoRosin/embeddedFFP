@@ -52,15 +52,15 @@ typedef struct
     bool sendIsError;
 }s_eCU_timerAdapterCtx;
 
-static bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t d[], const uint32_t dLen, uint32_t* const c32Val);
-static bool_t c32SAdaptEr(void* cntx, const uint32_t s, const uint8_t d[], const uint32_t dLen, uint32_t* const c32Val);
-static bool_t sendMsg( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSendLen, uint32_t* const dataSended,
+static bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
+static bool_t c32SAdaptEr(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
+static bool_t sendMsg( void* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
                        const uint32_t timeToSend );
-static bool_t sendMsgCorr( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSendLen, uint32_t* const dataSended,
+static bool_t sendMsgCorr( void* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
                        const uint32_t timeToSend );
-static bool_t sendMsgOnce( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSendLen, uint32_t* const dataSended,
+static bool_t sendMsgOnce( void* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
                        const uint32_t timeToSend );
-static bool_t sendMsgErr( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSendLen, uint32_t* const dataSended,
+static bool_t sendMsgErr( void* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
                           const uint32_t timeToSend );
 static bool_t timStart ( void* cntx, const uint32_t timeoutVal );
 static bool_t timGetRemaining ( void* cntx, uint32_t* const remainings );
@@ -114,7 +114,7 @@ void msgTransmitterTest(void)
 /***********************************************************************************************************************
  *   PRIVATE TEST FUNCTION DECLARATION
  **********************************************************************************************************************/
-bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t d[], const uint32_t dLen, uint32_t* const c32Val)
+bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
 {
     bool_t result;
     s_eCU_crcAdapterCtx* ctxCur;
@@ -141,7 +141,7 @@ bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t d[], const uint32_t
     return result;
 }
 
-bool_t c32SAdaptEr(void* cntx, const uint32_t s, const uint8_t d[], const uint32_t dLen, uint32_t* const c32Val)
+bool_t c32SAdaptEr(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
 {
     bool_t result;
     s_eCU_crcAdapterCtx* ctxCur;
@@ -171,7 +171,7 @@ static uint8_t m_txBuff[100u];
 static uint32_t m_txBuffCounter;
 static uint32_t m_send_when;
 
-bool_t sendMsg( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSendLen, uint32_t* const dataSended,
+bool_t sendMsg( void* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
                 const uint32_t timeToSend )
 {
     bool_t result;
@@ -207,7 +207,7 @@ bool_t sendMsg( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSen
 }
 
 
-bool_t sendMsgCorr( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSendLen, uint32_t* const dataSended,
+bool_t sendMsgCorr( void* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
                 const uint32_t timeToSend )
 {
     bool_t result;
@@ -242,7 +242,7 @@ bool_t sendMsgCorr( void* cntx, const uint8_t dataToSend[], const uint32_t dataT
     return result;
 }
 
-bool_t sendMsgOnce( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSendLen, uint32_t* const dataSended,
+bool_t sendMsgOnce( void* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
                 const uint32_t timeToSend )
 {
     bool_t result;
@@ -286,7 +286,7 @@ bool_t sendMsgOnce( void* cntx, const uint8_t dataToSend[], const uint32_t dataT
     return result;
 }
 
-bool_t sendMsgErr( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSendLen, uint32_t* const dataSended,
+bool_t sendMsgErr( void* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
                 const uint32_t timeToSend )
 {
     bool_t result;

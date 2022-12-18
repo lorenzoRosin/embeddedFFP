@@ -31,7 +31,7 @@ static e_eFSP_MSGE_Res eFSP_MSGE_convertReturnFromBstf(e_eCU_BSTF_Res returnedEv
     /* Suppressed because this warning is not working */
 #endif
 
-e_eFSP_MSGE_Res eFSP_MSGE_InitCtx(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t a_memArea[], const uint32_t memAreaSize,
+e_eFSP_MSGE_Res eFSP_MSGE_InitCtx(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_memArea, const uint32_t memAreaSize,
 								  cb_crc32_msge f_Crc, void* const p_clbCtx)
 {
 	/* Local variable */
@@ -39,7 +39,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_InitCtx(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t a_memAre
 	e_eCU_BSTF_Res l_resultByStuff;
 
 	/* Check pointer validity */
-	if( ( NULL == p_ctx ) || ( NULL == a_memArea ) || ( NULL == f_Crc ) || ( NULL == p_clbCtx ) )
+	if( ( NULL == p_ctx ) || ( NULL == p_memArea ) || ( NULL == f_Crc ) || ( NULL == p_clbCtx ) )
 	{
 		l_result = MSGE_RES_BADPOINTER;
 	}
@@ -57,7 +57,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_InitCtx(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t a_memAre
             p_ctx->p_crcCtx = p_clbCtx;
 
 			/* initialize internal bytestuffer */
-			l_resultByStuff =  eCU_BSTF_InitCtx(&p_ctx->bstf_Ctx, a_memArea, memAreaSize);
+			l_resultByStuff =  eCU_BSTF_InitCtx(&p_ctx->bstf_Ctx, p_memArea, memAreaSize);
 			l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
         }
 	}
@@ -305,7 +305,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetRemByteToGet(s_eFSP_MSGE_Ctx* const p_ctx, uint32_t
     /* Suppressed because this warning is not working */
 #endif
 
-e_eFSP_MSGE_Res eFSP_MSGE_GetEncChunk(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t p_encodeDest[], const uint32_t maxDestLen,
+e_eFSP_MSGE_Res eFSP_MSGE_GetEncChunk(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_encodeDest, const uint32_t maxDestLen,
                                       uint32_t* const p_filledLen)
 {
 	/* Local variable */

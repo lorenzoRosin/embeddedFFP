@@ -37,12 +37,12 @@
 /***********************************************************************************************************************
  *   PRIVATE TEST FUNCTION DECLARATION
  **********************************************************************************************************************/
-static bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t d[], const uint32_t dLen, uint32_t* const c32Val);
+static bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
 
-static bool_t sendMsg( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSendLen, uint32_t* const dataSended,
+static bool_t sendMsg( void* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
                        const uint32_t timeToSend );
 
-static bool_t receiveMsg( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd, const uint32_t dataRxMax,
+static bool_t receiveMsg( void* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                        const uint32_t timeToRx );
 
 static bool_t timStart ( void* cntx, const uint32_t timeoutVal );
@@ -94,7 +94,7 @@ static uint8_t m_BufferCom[1000u];
 static uint32_t m_BufferComCounterInsert;
 static uint32_t m_BufferComCounterRetrive;
 
-bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t d[], const uint32_t dLen, uint32_t* const c32Val)
+bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
 {
     bool_t result;
     s_eCU_crcAdapterCtx* ctxCur;
@@ -121,7 +121,7 @@ bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t d[], const uint32_t
     return result;
 }
 
-bool_t sendMsg( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSendLen, uint32_t* const dataSended,
+bool_t sendMsg( void* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
                 const uint32_t timeToSend )
 {
     bool_t result;
@@ -156,7 +156,7 @@ bool_t sendMsg( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSen
 }
 
 
-bool_t receiveMsg( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd, const uint32_t dataRxMax,
+bool_t receiveMsg( void* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                 const uint32_t timeToRx )
 {
     bool_t result;

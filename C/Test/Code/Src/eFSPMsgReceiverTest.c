@@ -49,17 +49,17 @@ typedef struct
     bool sendIsError;
 }s_eCU_timerAdapterCtx;
 
-static bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t d[], const uint32_t dLen, uint32_t* const c32Val);
-static bool_t c32SAdaptEr(void* cntx, const uint32_t s, const uint8_t d[], const uint32_t dLen, uint32_t* const c32Val);
-static bool_t receiveMsg( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd, const uint32_t dataRxMax,
+static bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
+static bool_t c32SAdaptEr(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
+static bool_t receiveMsg( void* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                        const uint32_t timeToRx );
-static bool_t receiveMsgCrrupt( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd, const uint32_t dataRxMax,
+static bool_t receiveMsgCrrupt( void* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                        const uint32_t timeToRx );
-static bool_t receiveMsgJump( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd, const uint32_t dataRxMax,
+static bool_t receiveMsgJump( void* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                        const uint32_t timeToRx );
-static bool_t receiveMsgJumpLong( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd, const uint32_t dataRxMax,
+static bool_t receiveMsgJumpLong( void* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                        const uint32_t timeToRx );
-static bool_t receiveMsgErr( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd, const uint32_t dataRxMax,
+static bool_t receiveMsgErr( void* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                           const uint32_t timeToRx );
 static bool_t timStart ( void* cntx, const uint32_t timeoutVal );
 static bool_t timGetRemaining ( void* cntx, uint32_t* const remainings );
@@ -120,7 +120,7 @@ void msgReceiverTest(void)
 /***********************************************************************************************************************
  *   PRIVATE TEST FUNCTION DECLARATION
  **********************************************************************************************************************/
-bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t d[], const uint32_t dLen, uint32_t* const c32Val)
+bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
 {
     bool_t result;
     s_eCU_crcAdapterCtx* ctxCur;
@@ -147,7 +147,7 @@ bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t d[], const uint32_t
     return result;
 }
 
-bool_t c32SAdaptEr(void* cntx, const uint32_t s, const uint8_t d[], const uint32_t dLen, uint32_t* const c32Val)
+bool_t c32SAdaptEr(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
 {
     bool_t result;
     s_eCU_crcAdapterCtx* ctxCur;
@@ -178,7 +178,7 @@ static uint32_t m_payloadCounter;
 static uint32_t m_read_jump;
 static uint32_t m_read_jumpLong;
 
-bool_t receiveMsg( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd, const uint32_t dataRxMax,
+bool_t receiveMsg( void* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                 const uint32_t timeToRx )
 {
     bool_t result;
@@ -219,7 +219,7 @@ bool_t receiveMsg( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd, c
     return result;
 }
 
-bool_t receiveMsgCrrupt (void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd, const uint32_t dataRxMax,
+bool_t receiveMsgCrrupt (void* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                 const uint32_t timeToRx )
 {
     bool_t result;
@@ -259,7 +259,7 @@ bool_t receiveMsgCrrupt (void* cntx, uint8_t dataToRx[], uint32_t* const dataRec
     return result;
 }
 
-bool_t receiveMsgJump( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd, const uint32_t dataRxMax,
+bool_t receiveMsgJump( void* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                 const uint32_t timeToRx )
 {
     bool_t result;
@@ -308,7 +308,7 @@ bool_t receiveMsgJump( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecev
     return result;
 }
 
-bool_t receiveMsgJumpLong( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd, const uint32_t dataRxMax,
+bool_t receiveMsgJumpLong( void* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                 const uint32_t timeToRx )
 {
     bool_t result;
@@ -357,7 +357,7 @@ bool_t receiveMsgJumpLong( void* cntx, uint8_t dataToRx[], uint32_t* const dataR
     return result;
 }
 
-bool_t receiveMsgErr( void* cntx, uint8_t dataToRx[], uint32_t* const dataRecevd, const uint32_t dataRxMax,
+bool_t receiveMsgErr( void* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                 const uint32_t timeToRx )
 {
     bool_t result;

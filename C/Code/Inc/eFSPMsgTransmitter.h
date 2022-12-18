@@ -33,7 +33,7 @@ extern "C" {
 /* Call back to a function that will trasmit the passed data.
  * the p_ctx parameter is a custom pointer that can be used by the creator of this TX callback, and will not be used
  * by the MSG TRANSMITTER module */
-typedef bool_t (*cb_tx_msge) ( void* p_ctx, const uint8_t a_dataToSend[], const uint32_t dataToSendLen,
+typedef bool_t (*cb_tx_msge) ( void* p_ctx, const uint8_t* p_dataToSend, const uint32_t dataToSendLen,
                                uint32_t* const p_dataSended, const uint32_t timeToSend );
 
 /* Call backs to functions that act as a timer */

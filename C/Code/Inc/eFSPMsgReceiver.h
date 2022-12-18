@@ -33,7 +33,7 @@ extern "C" {
 /* Call back to a function that will receive data.
  * the p_ctx parameter is a custom pointer that can be used by the creator of this TX callback, and will not be used
  * by the MSG RECEIVER module */
-typedef bool_t (*cb_rx_msge) ( void* p_ctx, uint8_t a_dataReceived[], uint32_t* const p_receivedLen,
+typedef bool_t (*cb_rx_msge) ( void* p_ctx, uint8_t* p_dataReceived, uint32_t* const p_receivedLen,
                                const uint32_t maxDataRxSize, const uint32_t timeToReceive);
 
 /* Call backs to functions that act as a timer */
