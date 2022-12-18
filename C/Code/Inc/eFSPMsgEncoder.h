@@ -87,6 +87,21 @@ e_eFSP_MSGE_Res eFSP_MSGE_InitCtx(s_eFSP_MSGE_Ctx* const ctx, uint8_t memArea[],
 e_eFSP_MSGE_Res eFSP_MSGE_IsInit(s_eFSP_MSGE_Ctx* const ctx, bool_t* isInit);
 
 /**
+ * @brief       Retrive the pointer of the buffer that the user can use to insert data payload that need to be encoded
+ *
+ * @param[in]   ctx         - Message Encoder context
+ * @param[out]  dataP       - Pointer to a Pointer where the raw data needs to be copied before starting a message
+ * @param[out]  maxDataSize - Pointer to a uint32_t variable where the max number of data that can be copied in dataP
+ *                            will be placed
+ *
+ * @return      MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
+ *		        MSGE_RES_NOINITLIB      - Need to init the data encoder context before taking some action
+ *		        MSGE_RES_CORRUPTCTX     - In case of an corrupted context
+ *              MSGE_RES_OK             - Operation ended correctly
+ */
+e_eFSP_MSGE_Res eFSP_MSGE_GetWherePutData(s_eFSP_MSGE_Ctx* const ctx, uint8_t** dataP, uint32_t* const maxDataSize);
+
+/**
  * @brief       Start to encode a new msg given the dimension of raw payload it self. This function suppouse that
  *              data payload that need to be encoded were already copied in memory.( see MSGE_GetPayloadLocation
  *              in order to know how get the data pointer, and copy the data )
@@ -103,21 +118,6 @@ e_eFSP_MSGE_Res eFSP_MSGE_IsInit(s_eFSP_MSGE_Ctx* const ctx, bool_t* isInit);
  *              MSGE_RES_OK             - Operation ended correctly
  */
 e_eFSP_MSGE_Res eFSP_MSGE_NewMessage(s_eFSP_MSGE_Ctx* const ctx, const uint32_t messageLen);
-
-/**
- * @brief       Retrive the pointer of the buffer that the user can use to insert data payload that need to be encoded
- *
- * @param[in]   ctx         - Message Encoder context
- * @param[out]  dataP       - Pointer to a Pointer where the raw data needs to be copied before starting a message
- * @param[out]  maxDataSize - Pointer to a uint32_t variable where the max number of data that can be copied in dataP
- *                            will be placed
- *
- * @return      MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
- *		        MSGE_RES_NOINITLIB      - Need to init the data encoder context before taking some action
- *		        MSGE_RES_CORRUPTCTX     - In case of an corrupted context
- *              MSGE_RES_OK             - Operation ended correctly
- */
-e_eFSP_MSGE_Res eFSP_MSGE_GetWherePutData(s_eFSP_MSGE_Ctx* const ctx, uint8_t** dataP, uint32_t* const maxDataSize);
 
 /**
  * @brief       Restart to encode the already passed payload/the current frame

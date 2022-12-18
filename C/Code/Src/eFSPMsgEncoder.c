@@ -89,6 +89,64 @@ e_eFSP_MSGE_Res eFSP_MSGE_IsInit(s_eFSP_MSGE_Ctx* const ctx, bool_t* isInit)
 	return result;
 }
 
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_disable = "MEM-stack-param", "MISRAC2004-17.6_d", "MISRAC2012-Rule-1.3_s", "MISRAC2012-Rule-18.6_d", \
+                            "CERT-DCL30-C_e"
+    /* Suppressed for code clarity */
+#endif
+
+e_eFSP_MSGE_Res eFSP_MSGE_GetWherePutData(s_eFSP_MSGE_Ctx* const ctx, uint8_t** dataP, uint32_t* const maxDataSize)
+{
+	/* Local variable */
+	e_eFSP_MSGE_Res result;
+	e_eCU_BSTF_Res resultByStuff;
+	uint8_t* dataPP;
+	uint32_t maxDataSizeP;
+
+	/* Check pointer validity */
+	if( ( NULL == ctx ) || ( NULL == dataP ) || ( NULL == maxDataSize ) )
+	{
+		result = MSGE_RES_BADPOINTER;
+	}
+	else
+	{
+		/* Check internal status validity */
+		if( false == eFSP_MSGE_isStatusStillCoherent(ctx) )
+		{
+			result = MSGE_RES_CORRUPTCTX;
+		}
+		else
+		{
+			/* Get memory reference of CRC+LEN+DATA, so we can calculate reference of only data payload */
+            maxDataSizeP = 0u;
+            dataPP = NULL;
+			resultByStuff = eCU_BSTF_GetWherePutData(&ctx->byteStufferCtnx, &dataPP, &maxDataSizeP);
+			result = eFSP_MSGE_convertReturnFromBstf(resultByStuff);
+
+			if( MSGE_RES_OK == result )
+			{
+                if( maxDataSizeP < EFSP_MIN_MSGEN_BUFFLEN )
+                {
+                    result = MSGE_RES_CORRUPTCTX;
+                }
+                else
+                {
+                    /* Return reference of only the raw payload */
+                    *dataP = &dataPP[EFSP_MSGEN_HEADERSIZE];
+                    *maxDataSize = maxDataSizeP - EFSP_MSGEN_HEADERSIZE;
+                }
+			}
+		}
+	}
+
+	return result;
+}
+
+#ifdef __IAR_SYSTEMS_ICC__
+    #pragma cstat_restore = "MEM-stack-param", "MISRAC2004-17.6_d", "MISRAC2012-Rule-1.3_s", "MISRAC2012-Rule-18.6_d", \
+                            "CERT-DCL30-C_e"
+#endif
+
 e_eFSP_MSGE_Res eFSP_MSGE_NewMessage(s_eFSP_MSGE_Ctx* const ctx, const uint32_t messageLen)
 {
 	/* Local variable */
@@ -182,64 +240,6 @@ e_eFSP_MSGE_Res eFSP_MSGE_NewMessage(s_eFSP_MSGE_Ctx* const ctx, const uint32_t 
 
 	return result;
 }
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_disable = "MEM-stack-param", "MISRAC2004-17.6_d", "MISRAC2012-Rule-1.3_s", "MISRAC2012-Rule-18.6_d", \
-                            "CERT-DCL30-C_e"
-    /* Suppressed for code clarity */
-#endif
-
-e_eFSP_MSGE_Res eFSP_MSGE_GetWherePutData(s_eFSP_MSGE_Ctx* const ctx, uint8_t** dataP, uint32_t* const maxDataSize)
-{
-	/* Local variable */
-	e_eFSP_MSGE_Res result;
-	e_eCU_BSTF_Res resultByStuff;
-	uint8_t* dataPP;
-	uint32_t maxDataSizeP;
-
-	/* Check pointer validity */
-	if( ( NULL == ctx ) || ( NULL == dataP ) || ( NULL == maxDataSize ) )
-	{
-		result = MSGE_RES_BADPOINTER;
-	}
-	else
-	{
-		/* Check internal status validity */
-		if( false == eFSP_MSGE_isStatusStillCoherent(ctx) )
-		{
-			result = MSGE_RES_CORRUPTCTX;
-		}
-		else
-		{
-			/* Get memory reference of CRC+LEN+DATA, so we can calculate reference of only data payload */
-            maxDataSizeP = 0u;
-            dataPP = NULL;
-			resultByStuff = eCU_BSTF_GetWherePutData(&ctx->byteStufferCtnx, &dataPP, &maxDataSizeP);
-			result = eFSP_MSGE_convertReturnFromBstf(resultByStuff);
-
-			if( MSGE_RES_OK == result )
-			{
-                if( maxDataSizeP < EFSP_MIN_MSGEN_BUFFLEN )
-                {
-                    result = MSGE_RES_CORRUPTCTX;
-                }
-                else
-                {
-                    /* Return reference of only the raw payload */
-                    *dataP = &dataPP[EFSP_MSGEN_HEADERSIZE];
-                    *maxDataSize = maxDataSizeP - EFSP_MSGEN_HEADERSIZE;
-                }
-			}
-		}
-	}
-
-	return result;
-}
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MEM-stack-param", "MISRAC2004-17.6_d", "MISRAC2012-Rule-1.3_s", "MISRAC2012-Rule-18.6_d", \
-                            "CERT-DCL30-C_e"
-#endif
 
 e_eFSP_MSGE_Res eFSP_MSGE_RestartMessage(s_eFSP_MSGE_Ctx* const ctx)
 {
