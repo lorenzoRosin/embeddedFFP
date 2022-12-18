@@ -206,7 +206,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == eFSP_MSGD_StartNewMsg(NULL) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_NewMsg(NULL) )
     {
         (void)printf("msgDecoderTestBadPointer 5  -- OK \n");
     }
@@ -306,7 +306,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == eFSP_MSGD_IsCurrentFrameBad(NULL, &isMsgDec) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_IsFrameBad(NULL, &isMsgDec) )
     {
         (void)printf("msgDecoderTestBadPointer 15 -- OK \n");
     }
@@ -316,7 +316,7 @@ void msgDecoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGD_RES_BADPOINTER == eFSP_MSGD_IsCurrentFrameBad(&ctx, NULL) )
+    if( MSGD_RES_BADPOINTER == eFSP_MSGD_IsFrameBad(&ctx, NULL) )
     {
         (void)printf("msgDecoderTestBadPointer 16 -- OK \n");
     }
@@ -412,7 +412,7 @@ void msgDecoderTestBadInit(void)
     ctx.cbCrcCtx = &ctxAdapterCrc;
     ctx.cbCrcPtr = cbCrcPTest;
 
-    if( MSGD_RES_NOINITLIB == eFSP_MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_NOINITLIB == eFSP_MSGD_NewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestBadInit 1  -- OK \n");
     }
@@ -462,7 +462,7 @@ void msgDecoderTestBadInit(void)
     }
 
     /* Function */
-    if( MSGD_RES_NOINITLIB == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_NOINITLIB == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( CRC_RES_OK == ctxAdapterCrc.lastError )
         {
@@ -594,7 +594,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     ctx.cbCrcPtr = NULL;
-    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_NewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 2  -- OK \n");
     }
@@ -614,7 +614,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     ctx.cbCrcCtx = NULL;
-    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_NewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 4  -- OK \n");
     }
@@ -714,7 +714,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     ctx.cbCrcCtx = NULL;
-    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 14 -- OK \n");
     }
@@ -774,7 +774,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     ctx.byteUStufferCtnx.p_memA = NULL;
-    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_NewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 20 -- OK \n");
     }
@@ -874,7 +874,7 @@ void msgDecoderTestCorruptedCtx(void)
     }
 
     ctx.byteUStufferCtnx.p_memA = NULL;
-    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestCorruptedCtx 30 -- OK \n");
     }
@@ -944,7 +944,7 @@ void msgDecoderTestBadClBck(void)
         (void)printf("msgDecoderTestBadClBck 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestBadClBck 2  -- OK \n");
     }
@@ -981,7 +981,7 @@ void msgDecoderTestBadClBck(void)
         (void)printf("msgDecoderTestBadClBck 4  -- FAIL \n");
     }
 
-    if( MSGD_RES_CRCCLBKERROR == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_CRCCLBKERROR == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         (void)printf("msgDecoderTestBadClBck 5  -- OK \n");
     }
@@ -1010,7 +1010,7 @@ void msgDecoderTestMsgEnd(void)
         (void)printf("msgDecoderTestMsgEnd 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestMsgEnd 2  -- OK \n");
     }
@@ -1051,7 +1051,7 @@ void msgDecoderTestOutOfMem(void)
         (void)printf("msgDecoderTestOutOfMem 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestOutOfMem 2  -- OK \n");
     }
@@ -1092,7 +1092,7 @@ void msgDecoderTestBadFrame(void)
         (void)printf("msgDecoderTestBadFrame 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestBadFrame 2  -- OK \n");
     }
@@ -1133,7 +1133,7 @@ void msgDecoderTestFrameRestart(void)
         (void)printf("msgDecoderTestFrameRestart 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestFrameRestart 2  -- OK \n");
     }
@@ -1178,7 +1178,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestGeneral 2  -- OK \n");
     }
@@ -1251,7 +1251,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 6  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1351,7 +1351,7 @@ void msgDecoderTestGeneral(void)
         (void)printf("msgDecoderTestGeneral 12 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1448,7 +1448,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestGeneral2 2  -- OK \n");
     }
@@ -1521,7 +1521,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 6  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1621,7 +1621,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 12 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1733,7 +1733,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 19 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1845,7 +1845,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 26 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -1957,7 +1957,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 33 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2069,7 +2069,7 @@ void msgDecoderTestGeneral2(void)
         (void)printf("msgDecoderTestGeneral2 40 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2141,7 +2141,7 @@ void msgDecoderTestCorernerMulti(void)
         (void)printf("msgDecoderTestCorernerMulti 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestCorernerMulti 2  -- OK \n");
     }
@@ -2657,7 +2657,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestErrorAndContinue 2  -- OK \n");
     }
@@ -2814,7 +2814,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 11 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -2926,7 +2926,7 @@ void msgDecoderTestErrorAndContinue(void)
         (void)printf("msgDecoderTestErrorAndContinue 19 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
@@ -3041,7 +3041,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestErrorAndContinueEx 2  -- OK \n");
     }
@@ -3198,7 +3198,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 11 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -3310,7 +3310,7 @@ void msgDecoderTestErrorAndContinueEx(void)
         (void)printf("msgDecoderTestErrorAndContinueEx 19 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
@@ -3425,7 +3425,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestErrorShortFrame 2  -- OK \n");
     }
@@ -3581,7 +3581,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 11 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -3693,7 +3693,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 19 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
@@ -3876,7 +3876,7 @@ void msgDecoderTestErrorShortFrame(void)
         (void)printf("msgDecoderTestErrorShortFrame 31 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
@@ -3948,7 +3948,7 @@ void msgDecoderTestErrorBadStuff(void)
         (void)printf("msgDecoderTestErrorBadStuff 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestErrorBadStuff 2  -- OK \n");
     }
@@ -4105,7 +4105,7 @@ void msgDecoderTestErrorBadStuff(void)
         (void)printf("msgDecoderTestErrorBadStuff 11 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
@@ -4217,7 +4217,7 @@ void msgDecoderTestErrorBadStuff(void)
         (void)printf("msgDecoderTestErrorBadStuff 19 -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_IsCurrentFrameBad(&ctx, &isMsgDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
@@ -4328,7 +4328,7 @@ void msgDecoderTestCorner(void)
         (void)printf("msgDecoderTestCorner 1  -- FAIL \n");
     }
 
-    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctx) )
+    if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
         (void)printf("msgDecoderTestCorner 2  -- OK \n");
     }

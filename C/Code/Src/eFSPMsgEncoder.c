@@ -89,7 +89,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_IsInit(s_eFSP_MSGE_Ctx* const ctx, bool_t* isInit)
 	return result;
 }
 
-e_eFSP_MSGE_Res eFSP_MSGE_StartNewMessage(s_eFSP_MSGE_Ctx* const ctx, const uint32_t messageLen)
+e_eFSP_MSGE_Res eFSP_MSGE_NewMessage(s_eFSP_MSGE_Ctx* const ctx, const uint32_t messageLen)
 {
 	/* Local variable */
 	e_eFSP_MSGE_Res result;
@@ -189,7 +189,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_StartNewMessage(s_eFSP_MSGE_Ctx* const ctx, const uint
     /* Suppressed for code clarity */
 #endif
 
-e_eFSP_MSGE_Res eFSP_MSGE_GetPayloadLocation(s_eFSP_MSGE_Ctx* const ctx, uint8_t** dataP, uint32_t* const maxDataSize)
+e_eFSP_MSGE_Res eFSP_MSGE_GetWherePutData(s_eFSP_MSGE_Ctx* const ctx, uint8_t** dataP, uint32_t* const maxDataSize)
 {
 	/* Local variable */
 	e_eFSP_MSGE_Res result;
@@ -241,7 +241,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetPayloadLocation(s_eFSP_MSGE_Ctx* const ctx, uint8_t
                             "CERT-DCL30-C_e"
 #endif
 
-e_eFSP_MSGE_Res eFSP_MSGE_RestartCurrentMessage(s_eFSP_MSGE_Ctx* const ctx)
+e_eFSP_MSGE_Res eFSP_MSGE_RestartMessage(s_eFSP_MSGE_Ctx* const ctx)
 {
 	/* Local variable */
 	e_eFSP_MSGE_Res result;
@@ -270,7 +270,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_RestartCurrentMessage(s_eFSP_MSGE_Ctx* const ctx)
 	return result;
 }
 
-e_eFSP_MSGE_Res eFSP_MSGE_GetRemToRetrive(s_eFSP_MSGE_Ctx* const ctx, uint32_t* const retrivedLen)
+e_eFSP_MSGE_Res eFSP_MSGE_GetRemByteToGet(s_eFSP_MSGE_Ctx* const ctx, uint32_t* const retrivedLen)
 {
 	/* Local variable */
 	e_eFSP_MSGE_Res result;
@@ -304,7 +304,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetRemToRetrive(s_eFSP_MSGE_Ctx* const ctx, uint32_t* 
     /* Suppressed because this warning is not working */
 #endif
 
-e_eFSP_MSGE_Res eFSP_MSGE_RetriveEChunk(s_eFSP_MSGE_Ctx* const ctx, uint8_t encodeDest[], const uint32_t maxDestLen,
+e_eFSP_MSGE_Res eFSP_MSGE_GetEncChunk(s_eFSP_MSGE_Ctx* const ctx, uint8_t encodeDest[], const uint32_t maxDestLen,
                                    uint32_t* const filledLen)
 {
 	/* Local variable */

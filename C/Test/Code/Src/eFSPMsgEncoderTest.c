@@ -192,7 +192,7 @@ void msgEncoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGE_RES_BADPOINTER == eFSP_MSGE_StartNewMessage(NULL, sizeof(memArea)) )
+    if( MSGE_RES_BADPOINTER == eFSP_MSGE_NewMessage(NULL, sizeof(memArea)) )
     {
         (void)printf("msgEncoderTestBadPointer 5  -- OK \n");
     }
@@ -202,7 +202,7 @@ void msgEncoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGE_RES_BADPOINTER == eFSP_MSGE_GetPayloadLocation(NULL, &dataP, &var32) )
+    if( MSGE_RES_BADPOINTER == eFSP_MSGE_GetWherePutData(NULL, &dataP, &var32) )
     {
         (void)printf("msgEncoderTestBadPointer 6  -- OK \n");
     }
@@ -212,7 +212,7 @@ void msgEncoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGE_RES_BADPOINTER == eFSP_MSGE_GetPayloadLocation(&ctx, NULL, &var32) )
+    if( MSGE_RES_BADPOINTER == eFSP_MSGE_GetWherePutData(&ctx, NULL, &var32) )
     {
         (void)printf("msgEncoderTestBadPointer 7  -- OK \n");
     }
@@ -222,7 +222,7 @@ void msgEncoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGE_RES_BADPOINTER == eFSP_MSGE_GetPayloadLocation(&ctx, &dataP, NULL) )
+    if( MSGE_RES_BADPOINTER == eFSP_MSGE_GetWherePutData(&ctx, &dataP, NULL) )
     {
         (void)printf("msgEncoderTestBadPointer 8  -- OK \n");
     }
@@ -232,7 +232,7 @@ void msgEncoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGE_RES_BADPOINTER == eFSP_MSGE_RestartCurrentMessage(NULL) )
+    if( MSGE_RES_BADPOINTER == eFSP_MSGE_RestartMessage(NULL) )
     {
         (void)printf("msgEncoderTestBadPointer 9  -- OK \n");
     }
@@ -242,7 +242,7 @@ void msgEncoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGE_RES_BADPOINTER == eFSP_MSGE_GetRemToRetrive(NULL, &var32) )
+    if( MSGE_RES_BADPOINTER == eFSP_MSGE_GetRemByteToGet(NULL, &var32) )
     {
         (void)printf("msgEncoderTestBadPointer 10 -- OK \n");
     }
@@ -252,7 +252,7 @@ void msgEncoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGE_RES_BADPOINTER == eFSP_MSGE_GetRemToRetrive(&ctx, NULL) )
+    if( MSGE_RES_BADPOINTER == eFSP_MSGE_GetRemByteToGet(&ctx, NULL) )
     {
         (void)printf("msgEncoderTestBadPointer 11 -- OK \n");
     }
@@ -262,7 +262,7 @@ void msgEncoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGE_RES_BADPOINTER == eFSP_MSGE_RetriveEChunk(NULL, memArea, sizeof(memArea), &var32) )
+    if( MSGE_RES_BADPOINTER == eFSP_MSGE_GetEncChunk(NULL, memArea, sizeof(memArea), &var32) )
     {
         (void)printf("msgEncoderTestBadPointer 12 -- OK \n");
     }
@@ -272,7 +272,7 @@ void msgEncoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGE_RES_BADPOINTER == eFSP_MSGE_RetriveEChunk(&ctx, NULL, sizeof(memArea), &var32) )
+    if( MSGE_RES_BADPOINTER == eFSP_MSGE_GetEncChunk(&ctx, NULL, sizeof(memArea), &var32) )
     {
         (void)printf("msgEncoderTestBadPointer 13 -- OK \n");
     }
@@ -282,7 +282,7 @@ void msgEncoderTestBadPointer(void)
     }
 
     /* Function */
-    if( MSGE_RES_BADPOINTER == eFSP_MSGE_RetriveEChunk(&ctx, memArea, sizeof(memArea), NULL) )
+    if( MSGE_RES_BADPOINTER == eFSP_MSGE_GetEncChunk(&ctx, memArea, sizeof(memArea), NULL) )
     {
         (void)printf("msgEncoderTestBadPointer 14 -- OK \n");
     }
@@ -327,7 +327,7 @@ void msgEncoderTestBadInit(void)
     ctx.cbCrcPtr = cbCrcPTest;
 
     /* Function */
-    if( MSGE_RES_NOINITLIB == eFSP_MSGE_StartNewMessage(&ctx, 1u) )
+    if( MSGE_RES_NOINITLIB == eFSP_MSGE_NewMessage(&ctx, 1u) )
     {
         (void)printf("msgEncoderTestBadInit 1  -- OK \n");
     }
@@ -337,7 +337,7 @@ void msgEncoderTestBadInit(void)
     }
 
     /* Function */
-    if( MSGE_RES_NOINITLIB == eFSP_MSGE_GetPayloadLocation(&ctx, &dataP, &var32) )
+    if( MSGE_RES_NOINITLIB == eFSP_MSGE_GetWherePutData(&ctx, &dataP, &var32) )
     {
         (void)printf("msgEncoderTestBadInit 2  -- OK \n");
     }
@@ -347,7 +347,7 @@ void msgEncoderTestBadInit(void)
     }
 
     /* Function */
-    if( MSGE_RES_NOINITLIB == eFSP_MSGE_RestartCurrentMessage(&ctx) )
+    if( MSGE_RES_NOINITLIB == eFSP_MSGE_RestartMessage(&ctx) )
     {
         (void)printf("msgEncoderTestBadInit 3  -- OK \n");
     }
@@ -357,7 +357,7 @@ void msgEncoderTestBadInit(void)
     }
 
     /* Function */
-    if( MSGE_RES_NOINITLIB == eFSP_MSGE_GetRemToRetrive(&ctx, &var32) )
+    if( MSGE_RES_NOINITLIB == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
     {
         (void)printf("msgEncoderTestBadInit 4  -- OK \n");
     }
@@ -367,7 +367,7 @@ void msgEncoderTestBadInit(void)
     }
 
     /* Function */
-    if( MSGE_RES_NOINITLIB == eFSP_MSGE_RetriveEChunk(&ctx, memArea, sizeof(memArea), &var32) )
+    if( MSGE_RES_NOINITLIB == eFSP_MSGE_GetEncChunk(&ctx, memArea, sizeof(memArea), &var32) )
     {
         (void)printf("msgEncoderTestBadInit 5  -- OK \n");
     }
@@ -416,7 +416,7 @@ void msgEncoderTestBadIniMsg(void)
         (void)printf("msgEncoderTestBadIniMsg 1  -- FAIL \n");
     }
 
-    if( MSGE_RES_NOINITMESSAGE == eFSP_MSGE_RestartCurrentMessage(&ctx) )
+    if( MSGE_RES_NOINITMESSAGE == eFSP_MSGE_RestartMessage(&ctx) )
     {
         (void)printf("msgEncoderTestBadIniMsg 2  -- OK \n");
     }
@@ -425,7 +425,7 @@ void msgEncoderTestBadIniMsg(void)
         (void)printf("msgEncoderTestBadIniMsg 2  -- FAIL \n");
     }
 
-    if( MSGE_RES_NOINITMESSAGE == eFSP_MSGE_GetRemToRetrive(&ctx, &var32) )
+    if( MSGE_RES_NOINITMESSAGE == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
     {
         (void)printf("msgEncoderTestBadIniMsg 3  -- OK \n");
     }
@@ -434,7 +434,7 @@ void msgEncoderTestBadIniMsg(void)
         (void)printf("msgEncoderTestBadIniMsg 3  -- FAIL \n");
     }
 
-    if( MSGE_RES_NOINITMESSAGE == eFSP_MSGE_RetriveEChunk(&ctx, memArea, sizeof(memArea), &var32) )
+    if( MSGE_RES_NOINITMESSAGE == eFSP_MSGE_GetEncChunk(&ctx, memArea, sizeof(memArea), &var32) )
     {
         (void)printf("msgEncoderTestBadIniMsg 4  -- OK \n");
     }
@@ -491,7 +491,7 @@ void msgEncoderTestBadParamEntr(void)
         (void)printf("msgEncoderTestBadParamEntr 2  -- FAIL \n");
     }
 
-    if( MSGE_RES_BADPARAM == eFSP_MSGE_StartNewMessage(&ctx, 0u) )
+    if( MSGE_RES_BADPARAM == eFSP_MSGE_NewMessage(&ctx, 0u) )
     {
         (void)printf("msgEncoderTestBadParamEntr 3  -- OK \n");
     }
@@ -500,7 +500,7 @@ void msgEncoderTestBadParamEntr(void)
         (void)printf("msgEncoderTestBadParamEntr 3  -- FAIL \n");
     }
 
-    if( MSGE_RES_BADPARAM == eFSP_MSGE_StartNewMessage(&ctx, (MAX_UINT32VAL - EFSP_MIN_MSGEN_PAYLOAD + 1u) ) )
+    if( MSGE_RES_BADPARAM == eFSP_MSGE_NewMessage(&ctx, (MAX_UINT32VAL - EFSP_MIN_MSGEN_PAYLOAD + 1u) ) )
     {
         (void)printf("msgEncoderTestBadParamEntr 4  -- OK \n");
     }
@@ -509,7 +509,7 @@ void msgEncoderTestBadParamEntr(void)
         (void)printf("msgEncoderTestBadParamEntr 4  -- FAIL \n");
     }
 
-    if( MSGE_RES_BADPARAM == eFSP_MSGE_StartNewMessage(&ctx, (3u) ) )
+    if( MSGE_RES_BADPARAM == eFSP_MSGE_NewMessage(&ctx, (3u) ) )
     {
         (void)printf("msgEncoderTestBadParamEntr 5  -- OK \n");
     }
@@ -518,7 +518,7 @@ void msgEncoderTestBadParamEntr(void)
         (void)printf("msgEncoderTestBadParamEntr 5  -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == eFSP_MSGE_StartNewMessage(&ctx, (2u) ) )
+    if( MSGE_RES_OK == eFSP_MSGE_NewMessage(&ctx, (2u) ) )
     {
         (void)printf("msgEncoderTestBadParamEntr 6  -- OK \n");
     }
@@ -527,7 +527,7 @@ void msgEncoderTestBadParamEntr(void)
         (void)printf("msgEncoderTestBadParamEntr 6  -- FAIL \n");
     }
 
-    if( MSGE_RES_BADPARAM == eFSP_MSGE_RetriveEChunk(&ctx, memArea, 0u, &var32) )
+    if( MSGE_RES_BADPARAM == eFSP_MSGE_GetEncChunk(&ctx, memArea, 0u, &var32) )
     {
         (void)printf("msgEncoderTestBadParamEntr 7  -- OK \n");
     }
@@ -561,7 +561,7 @@ void msgEncoderTestCorruptContext(void)
     }
 
     ctx.cbCrcCtx = NULL;
-    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_StartNewMessage(&ctx, 2u) )
+    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_NewMessage(&ctx, 2u) )
     {
         (void)printf("msgEncoderTestCorruptContext 2  -- OK \n");
     }
@@ -581,7 +581,7 @@ void msgEncoderTestCorruptContext(void)
     }
 
     ctx.cbCrcPtr = NULL;
-    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_StartNewMessage(&ctx, 2u) )
+    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_NewMessage(&ctx, 2u) )
     {
         (void)printf("msgEncoderTestCorruptContext 4  -- OK \n");
     }
@@ -601,7 +601,7 @@ void msgEncoderTestCorruptContext(void)
     }
 
     ctx.cbCrcPtr = NULL;
-    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetPayloadLocation(&ctx, &dataP, &var32) )
+    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetWherePutData(&ctx, &dataP, &var32) )
     {
         (void)printf("msgEncoderTestCorruptContext 6  -- OK \n");
     }
@@ -621,7 +621,7 @@ void msgEncoderTestCorruptContext(void)
     }
 
     ctx.cbCrcPtr = NULL;
-    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_RestartCurrentMessage(&ctx) )
+    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_RestartMessage(&ctx) )
     {
         (void)printf("msgEncoderTestCorruptContext 8  -- OK \n");
     }
@@ -641,7 +641,7 @@ void msgEncoderTestCorruptContext(void)
     }
 
     ctx.cbCrcPtr = NULL;
-    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetRemToRetrive(&ctx, &var32) )
+    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
     {
         (void)printf("msgEncoderTestCorruptContext 10 -- OK \n");
     }
@@ -661,7 +661,7 @@ void msgEncoderTestCorruptContext(void)
     }
 
     ctx.cbCrcPtr = NULL;
-    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_RetriveEChunk(&ctx, memArea, 2u, &var32) )
+    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetEncChunk(&ctx, memArea, 2u, &var32) )
     {
         (void)printf("msgEncoderTestCorruptContext 12 -- OK \n");
     }
@@ -681,7 +681,7 @@ void msgEncoderTestCorruptContext(void)
     }
 
     ctx.byteStufferCtnx.p_memA = NULL;
-    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_StartNewMessage(&ctx, 2u) )
+    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_NewMessage(&ctx, 2u) )
     {
         (void)printf("msgEncoderTestCorruptContext 14 -- OK \n");
     }
@@ -701,7 +701,7 @@ void msgEncoderTestCorruptContext(void)
     }
 
     ctx.byteStufferCtnx.p_memA = NULL;
-    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetPayloadLocation(&ctx, &dataP, &var32) )
+    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetWherePutData(&ctx, &dataP, &var32) )
     {
         (void)printf("msgEncoderTestCorruptContext 16 -- OK \n");
     }
@@ -720,7 +720,7 @@ void msgEncoderTestCorruptContext(void)
         (void)printf("msgEncoderTestCorruptContext 17 -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == eFSP_MSGE_StartNewMessage(&ctx, 2u) )
+    if( MSGE_RES_OK == eFSP_MSGE_NewMessage(&ctx, 2u) )
     {
         (void)printf("msgEncoderTestCorruptContext 18 -- OK \n");
     }
@@ -730,7 +730,7 @@ void msgEncoderTestCorruptContext(void)
     }
 
     ctx.byteStufferCtnx.p_memA = NULL;
-    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_RestartCurrentMessage(&ctx) )
+    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_RestartMessage(&ctx) )
     {
         (void)printf("msgEncoderTestCorruptContext 19 -- OK \n");
     }
@@ -749,7 +749,7 @@ void msgEncoderTestCorruptContext(void)
         (void)printf("msgEncoderTestCorruptContext 20 -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == eFSP_MSGE_StartNewMessage(&ctx, 2u) )
+    if( MSGE_RES_OK == eFSP_MSGE_NewMessage(&ctx, 2u) )
     {
         (void)printf("msgEncoderTestCorruptContext 21 -- OK \n");
     }
@@ -759,7 +759,7 @@ void msgEncoderTestCorruptContext(void)
     }
 
     ctx.byteStufferCtnx.p_memA = NULL;
-    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetRemToRetrive(&ctx, &var32) )
+    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
     {
         (void)printf("msgEncoderTestCorruptContext 22 -- OK \n");
     }
@@ -778,7 +778,7 @@ void msgEncoderTestCorruptContext(void)
         (void)printf("msgEncoderTestCorruptContext 23 -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == eFSP_MSGE_StartNewMessage(&ctx, 2u) )
+    if( MSGE_RES_OK == eFSP_MSGE_NewMessage(&ctx, 2u) )
     {
         (void)printf("msgEncoderTestCorruptContext 24 -- OK \n");
     }
@@ -788,7 +788,7 @@ void msgEncoderTestCorruptContext(void)
     }
 
     ctx.byteStufferCtnx.p_memA = NULL;
-    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_RetriveEChunk(&ctx, memArea, 2u, &var32) )
+    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetEncChunk(&ctx, memArea, 2u, &var32) )
     {
         (void)printf("msgEncoderTestCorruptContext 25 -- OK \n");
     }
@@ -819,7 +819,7 @@ void msgEncoderTestBadClBck(void)
         (void)printf("msgEncoderTestBadClBck 1  -- FAIL \n");
     }
 
-    if( MSGE_RES_CRCCLBKERROR == eFSP_MSGE_StartNewMessage(&ctx, 2u) )
+    if( MSGE_RES_CRCCLBKERROR == eFSP_MSGE_NewMessage(&ctx, 2u) )
     {
         if( CRC_RES_BADPOINTER == ctxAdapterCrc.lastError )
         {
@@ -860,7 +860,7 @@ void msgEncoderTestMsgEnd(void)
         (void)printf("msgEncoderTestMsgEnd 1  -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == eFSP_MSGE_GetPayloadLocation(&ctx, &dataP, &var32) )
+    if( MSGE_RES_OK == eFSP_MSGE_GetWherePutData(&ctx, &dataP, &var32) )
     {
         if( 4u == var32 )
         {
@@ -881,7 +881,7 @@ void msgEncoderTestMsgEnd(void)
     dataP[2u] = 3u;
     dataP[3u] = 4u;
 
-    if( MSGE_RES_OK == eFSP_MSGE_StartNewMessage(&ctx, 4u) )
+    if( MSGE_RES_OK == eFSP_MSGE_NewMessage(&ctx, 4u) )
     {
         (void)printf("msgEncoderTestMsgEnd 3  -- OK \n");
     }
@@ -891,7 +891,7 @@ void msgEncoderTestMsgEnd(void)
     }
 
     /* Parse all the message */
-    if( MSGE_RES_MESSAGEENDED == eFSP_MSGE_RetriveEChunk(&ctx, msgA, sizeof(msgA), &var32) )
+    if( MSGE_RES_MESSAGEENDED == eFSP_MSGE_GetEncChunk(&ctx, msgA, sizeof(msgA), &var32) )
     {
         if( 14u == var32 )
         {
@@ -954,7 +954,7 @@ void msgEncoderTestGeneral(void)
     }
 
     ctx.byteStufferCtnx.memASize = 3u;
-    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_StartNewMessage(&ctx, sizeof(memArea)) )
+    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_NewMessage(&ctx, sizeof(memArea)) )
     {
         (void)printf("msgEncoderTestGeneral 2  -- OK \n");
     }
@@ -973,7 +973,7 @@ void msgEncoderTestGeneral(void)
         (void)printf("msgEncoderTestGeneral 3  -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == eFSP_MSGE_GetPayloadLocation(&ctx, &dataP, &var32) )
+    if( MSGE_RES_OK == eFSP_MSGE_GetWherePutData(&ctx, &dataP, &var32) )
     {
         if( 4u == var32 )
         {
@@ -993,7 +993,7 @@ void msgEncoderTestGeneral(void)
     dataP[1u] = 2u;
     dataP[2u] = 3u;
     dataP[3u] = ECU_ESC;
-    if( MSGE_RES_OK == eFSP_MSGE_StartNewMessage(&ctx, var32) )
+    if( MSGE_RES_OK == eFSP_MSGE_NewMessage(&ctx, var32) )
     {
         (void)printf("msgEncoderTestGeneral 5  -- OK \n");
     }
@@ -1002,7 +1002,7 @@ void msgEncoderTestGeneral(void)
         (void)printf("msgEncoderTestGeneral 5  -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == eFSP_MSGE_GetRemToRetrive(&ctx, &var32) )
+    if( MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
     {
         if( 15u == var32)
         {
@@ -1018,7 +1018,7 @@ void msgEncoderTestGeneral(void)
         (void)printf("msgEncoderTestGeneral 6  -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == eFSP_MSGE_RetriveEChunk(&ctx, msgA, 5u, &var32) )
+    if( MSGE_RES_OK == eFSP_MSGE_GetEncChunk(&ctx, msgA, 5u, &var32) )
     {
         if( 5u == var32 )
         {
@@ -1042,7 +1042,7 @@ void msgEncoderTestGeneral(void)
         (void)printf("msgEncoderTestGeneral 7  -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == eFSP_MSGE_RestartCurrentMessage(&ctx) )
+    if( MSGE_RES_OK == eFSP_MSGE_RestartMessage(&ctx) )
     {
         (void)printf("msgEncoderTestGeneral 8  -- OK \n");
     }
@@ -1051,7 +1051,7 @@ void msgEncoderTestGeneral(void)
         (void)printf("msgEncoderTestGeneral 8  -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == eFSP_MSGE_GetRemToRetrive(&ctx, &var32) )
+    if( MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
     {
         if( 15u == var32)
         {
@@ -1067,7 +1067,7 @@ void msgEncoderTestGeneral(void)
         (void)printf("msgEncoderTestGeneral 9  -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == eFSP_MSGE_RetriveEChunk(&ctx, msgA, 5u, &var32) )
+    if( MSGE_RES_OK == eFSP_MSGE_GetEncChunk(&ctx, msgA, 5u, &var32) )
     {
         if( 5u == var32 )
         {
@@ -1091,7 +1091,7 @@ void msgEncoderTestGeneral(void)
         (void)printf("msgEncoderTestGeneral 10 -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == eFSP_MSGE_GetRemToRetrive(&ctx, &var32) )
+    if( MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
     {
         if( 10u == var32)
         {
@@ -1107,7 +1107,7 @@ void msgEncoderTestGeneral(void)
         (void)printf("msgEncoderTestGeneral 11 -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == eFSP_MSGE_RetriveEChunk(&ctx, msgA, 4u, &var32) )
+    if( MSGE_RES_OK == eFSP_MSGE_GetEncChunk(&ctx, msgA, 4u, &var32) )
     {
         if( 4u == var32 )
         {
@@ -1130,7 +1130,7 @@ void msgEncoderTestGeneral(void)
         (void)printf("msgEncoderTestGeneral 12 -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == eFSP_MSGE_GetRemToRetrive(&ctx, &var32) )
+    if( MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
     {
         if( 6u == var32)
         {
@@ -1146,7 +1146,7 @@ void msgEncoderTestGeneral(void)
         (void)printf("msgEncoderTestGeneral 13 -- FAIL \n");
     }
 
-    if( MSGE_RES_MESSAGEENDED == eFSP_MSGE_RetriveEChunk(&ctx, msgA, 10u, &var32) )
+    if( MSGE_RES_MESSAGEENDED == eFSP_MSGE_GetEncChunk(&ctx, msgA, 10u, &var32) )
     {
         if( 6u == var32 )
         {
@@ -1170,7 +1170,7 @@ void msgEncoderTestGeneral(void)
         (void)printf("msgEncoderTestGeneral 14 -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == eFSP_MSGE_GetRemToRetrive(&ctx, &var32) )
+    if( MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
     {
         if( 0u == var32)
         {
@@ -1197,7 +1197,7 @@ void msgEncoderTestGeneral(void)
     }
 
     ctx.byteStufferCtnx.memASize = 3u;
-    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetPayloadLocation(&ctx, &dataP, &var32) )
+    if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetWherePutData(&ctx, &dataP, &var32) )
     {
         (void)printf("msgEncoderTestGeneral 17 -- OK \n");
     }
@@ -1232,7 +1232,7 @@ void msgEncoderTestGeneral2(void)
         (void)printf("msgEncoderTestGeneral2 1  -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == eFSP_MSGE_GetPayloadLocation(&ctx, &dataP, &var32) )
+    if( MSGE_RES_OK == eFSP_MSGE_GetWherePutData(&ctx, &dataP, &var32) )
     {
         if( 4u == var32 )
         {
@@ -1252,7 +1252,7 @@ void msgEncoderTestGeneral2(void)
     dataP[1u] = 2u;
     dataP[2u] = 3u;
     dataP[3u] = 0x53u;
-    if( MSGE_RES_OK == eFSP_MSGE_StartNewMessage(&ctx, var32) )
+    if( MSGE_RES_OK == eFSP_MSGE_NewMessage(&ctx, var32) )
     {
         (void)printf("msgEncoderTestGeneral2 3  -- OK \n");
     }
@@ -1261,7 +1261,7 @@ void msgEncoderTestGeneral2(void)
         (void)printf("msgEncoderTestGeneral2 3  -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == eFSP_MSGE_GetRemToRetrive(&ctx, &var32) )
+    if( MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
     {
         if( 15u == var32)
         {
@@ -1277,7 +1277,7 @@ void msgEncoderTestGeneral2(void)
         (void)printf("msgEncoderTestGeneral2 4  -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == eFSP_MSGE_RetriveEChunk(&ctx, msgA, 6u, &var32) )
+    if( MSGE_RES_OK == eFSP_MSGE_GetEncChunk(&ctx, msgA, 6u, &var32) )
     {
         if( 6u == var32 )
         {
@@ -1301,7 +1301,7 @@ void msgEncoderTestGeneral2(void)
         (void)printf("msgEncoderTestGeneral2 5  -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == eFSP_MSGE_GetRemToRetrive(&ctx, &var32) )
+    if( MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
     {
         if( 9u == var32)
         {
@@ -1317,7 +1317,7 @@ void msgEncoderTestGeneral2(void)
         (void)printf("msgEncoderTestGeneral2 6  -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == eFSP_MSGE_RetriveEChunk(&ctx, msgA, 4u, &var32) )
+    if( MSGE_RES_OK == eFSP_MSGE_GetEncChunk(&ctx, msgA, 4u, &var32) )
     {
         if( 4u == var32 )
         {
@@ -1340,7 +1340,7 @@ void msgEncoderTestGeneral2(void)
         (void)printf("msgEncoderTestGeneral2 7  -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == eFSP_MSGE_GetRemToRetrive(&ctx, &var32) )
+    if( MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
     {
         if( 5u == var32)
         {
@@ -1356,7 +1356,7 @@ void msgEncoderTestGeneral2(void)
         (void)printf("msgEncoderTestGeneral2 8  -- FAIL \n");
     }
 
-    if( MSGE_RES_MESSAGEENDED == eFSP_MSGE_RetriveEChunk(&ctx, msgA, 10u, &var32) )
+    if( MSGE_RES_MESSAGEENDED == eFSP_MSGE_GetEncChunk(&ctx, msgA, 10u, &var32) )
     {
         if( 5u == var32 )
         {
@@ -1380,7 +1380,7 @@ void msgEncoderTestGeneral2(void)
         (void)printf("msgEncoderTestGeneral2 9  -- FAIL \n");
     }
 
-    if( MSGE_RES_OK == eFSP_MSGE_GetRemToRetrive(&ctx, &var32) )
+    if( MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
     {
         if( 0u == var32)
         {

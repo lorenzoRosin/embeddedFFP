@@ -102,7 +102,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_IsInit(s_eFSP_MSGE_Ctx* const ctx, bool_t* isInit);
  *				MSGE_RES_CRCCLBKERROR   - The crc callback function returned an error
  *              MSGE_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGE_Res eFSP_MSGE_StartNewMessage(s_eFSP_MSGE_Ctx* const ctx, const uint32_t messageLen);
+e_eFSP_MSGE_Res eFSP_MSGE_NewMessage(s_eFSP_MSGE_Ctx* const ctx, const uint32_t messageLen);
 
 /**
  * @brief       Retrive the pointer of the buffer that the user can use to insert data payload that need to be encoded
@@ -117,7 +117,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_StartNewMessage(s_eFSP_MSGE_Ctx* const ctx, const uint
  *		        MSGE_RES_CORRUPTCTX     - In case of an corrupted context
  *              MSGE_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGE_Res eFSP_MSGE_GetPayloadLocation(s_eFSP_MSGE_Ctx* const ctx, uint8_t** dataP, uint32_t* const maxDataSize);
+e_eFSP_MSGE_Res eFSP_MSGE_GetWherePutData(s_eFSP_MSGE_Ctx* const ctx, uint8_t** dataP, uint32_t* const maxDataSize);
 
 /**
  * @brief       Restart to encode the already passed payload/the current frame
@@ -130,10 +130,10 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetPayloadLocation(s_eFSP_MSGE_Ctx* const ctx, uint8_t
  *		        MSGE_RES_CORRUPTCTX     - In case of an corrupted context
  *              MSGE_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGE_Res eFSP_MSGE_RestartCurrentMessage(s_eFSP_MSGE_Ctx* const ctx);
+e_eFSP_MSGE_Res eFSP_MSGE_RestartMessage(s_eFSP_MSGE_Ctx* const ctx);
 
 /**
- * @brief       Retrive the numbers of stuffed bytes + header that can be retrived using MSGE_RetriveEChunk
+ * @brief       Retrive the numbers of stuffed bytes + header that can be retrived using eFSP_MSGE_GetEncChunk
  *              (e.g. if the value of the returned value is zero it's means that the message encoding is ended ).
  *
  * @param[in]   ctx         - Message Encoder context
@@ -145,7 +145,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_RestartCurrentMessage(s_eFSP_MSGE_Ctx* const ctx);
  *		        MSGE_RES_CORRUPTCTX     - In case of an corrupted context
  *              MSGE_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGE_Res eFSP_MSGE_GetRemToRetrive(s_eFSP_MSGE_Ctx* const ctx, uint32_t* const retrivedLen);
+e_eFSP_MSGE_Res eFSP_MSGE_GetRemByteToGet(s_eFSP_MSGE_Ctx* const ctx, uint32_t* const retrivedLen);
 
 /**
  * @brief       Retrive encoded data chunk. The raw data copied in the buffer using the function
@@ -171,7 +171,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetRemToRetrive(s_eFSP_MSGE_Ctx* const ctx, uint32_t* 
  *                                        completed, but we can be sure that filledLen will have the same value of
  *                                        maxDestLen
  */
-e_eFSP_MSGE_Res eFSP_MSGE_RetriveEChunk(s_eFSP_MSGE_Ctx* const ctx, uint8_t encodeDest[], const uint32_t maxDestLen,
+e_eFSP_MSGE_Res eFSP_MSGE_GetEncChunk(s_eFSP_MSGE_Ctx* const ctx, uint8_t encodeDest[], const uint32_t maxDestLen,
                                    uint32_t* const filledLen);
 
 #ifdef __cplusplus

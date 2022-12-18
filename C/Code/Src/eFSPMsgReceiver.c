@@ -139,7 +139,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_StartNewMsg(s_eFSP_MSGRX_Ctx* const ctx)
         else
         {
             /* Init message encoder */
-            resultMsgD = eFSP_MSGD_StartNewMsg(&ctx->msgDecoderCtnx);
+            resultMsgD = eFSP_MSGD_NewMsg(&ctx->msgDecoderCtnx);
             result = eFSP_MSGRX_convertReturnFromMSGD(resultMsgD);
 
             if( MSGRX_RES_OK == result )
@@ -181,7 +181,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_StartNewMsgNClean(s_eFSP_MSGRX_Ctx* const ctx)
             ctx->rxBuffFill = 0u;
 
             /* Init message encoder */
-            resultMsgD = eFSP_MSGD_StartNewMsg(&ctx->msgDecoderCtnx);
+            resultMsgD = eFSP_MSGD_NewMsg(&ctx->msgDecoderCtnx);
             result = eFSP_MSGRX_convertReturnFromMSGD(resultMsgD);
 
             if( MSGRX_RES_OK == result )

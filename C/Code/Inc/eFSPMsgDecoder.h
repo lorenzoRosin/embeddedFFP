@@ -98,7 +98,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_IsInit(s_eFSP_MSGD_Ctx* const ctx, bool_t* isInit);
  *		        MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
  *              MSGD_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGD_Res eFSP_MSGD_StartNewMsg(s_eFSP_MSGD_Ctx* const ctx);
+e_eFSP_MSGD_Res eFSP_MSGD_NewMsg(s_eFSP_MSGD_Ctx* const ctx);
 
 /**
  * @brief       Retrive the pointer to the stored decoded data payload ( NO HEADER ), and the data size of the frame.
@@ -175,7 +175,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_IsAFullMsgDecoded(s_eFSP_MSGD_Ctx* const ctx, bool_t* 
  *				MSGD_RES_CRCCLBKERROR   - The crc callback returned an error when the decoder were verifing CRC
  *              MSGD_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGD_Res eFSP_MSGD_IsCurrentFrameBad(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isFrameBad);
+e_eFSP_MSGD_Res eFSP_MSGD_IsFrameBad(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isFrameBad);
 
 /**
  * @brief       Return the most efficient numbers of data that needs to be passed to MSGD_InsEncChunk in the next

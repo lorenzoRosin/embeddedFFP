@@ -144,7 +144,7 @@ void msgDeEncoderTestCommon(void)
     }
 
     /* LOAD A MESSAGE IN THE ENCODER */
-    if( MSGE_RES_OK == eFSP_MSGE_GetPayloadLocation(&ctxEnc, &encPayLoc, &encMaxPaySize) )
+    if( MSGE_RES_OK == eFSP_MSGE_GetWherePutData(&ctxEnc, &encPayLoc, &encMaxPaySize) )
     {
         if( ( sizeof(memEncoderArea) - EFSP_MSGEN_HEADERSIZE ) == encMaxPaySize )
         {
@@ -170,7 +170,7 @@ void msgDeEncoderTestCommon(void)
     encPayLoc[6u] = ECU_SOF;
 
     /* Start encoding a new message */
-    if( MSGE_RES_OK == eFSP_MSGE_StartNewMessage(&ctxEnc, 0x07u) )
+    if( MSGE_RES_OK == eFSP_MSGE_NewMessage(&ctxEnc, 0x07u) )
     {
         (void)printf("msgDeEncoderTestCommon 4  -- OK \n");
     }
@@ -180,7 +180,7 @@ void msgDeEncoderTestCommon(void)
     }
 
     /* Start deconding a new message */
-    if( MSGD_RES_OK == eFSP_MSGD_StartNewMsg(&ctxDec) )
+    if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctxDec) )
     {
         (void)printf("msgDeEncoderTestCommon 5  -- OK \n");
     }
@@ -195,7 +195,7 @@ void msgDeEncoderTestCommon(void)
 
     while( MSGE_RES_OK == encoderRet )
     {
-        encoderRet = eFSP_MSGE_RetriveEChunk(&ctxEnc, &encDataSend[encCounter], 1u, &encToSendSize);
+        encoderRet = eFSP_MSGE_GetEncChunk(&ctxEnc, &encDataSend[encCounter], 1u, &encToSendSize);
 
         if( ( MSGE_RES_OK == encoderRet ) || ( MSGE_RES_MESSAGEENDED == encoderRet ) )
         {

@@ -96,7 +96,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_IsInit(s_eFSP_MSGD_Ctx* const ctx, bool_t* isInit)
 	return result;
 }
 
-e_eFSP_MSGD_Res eFSP_MSGD_StartNewMsg(s_eFSP_MSGD_Ctx* const ctx)
+e_eFSP_MSGD_Res eFSP_MSGD_NewMsg(s_eFSP_MSGD_Ctx* const ctx)
 {
 	/* Local variable */
 	e_eFSP_MSGD_Res result;
@@ -291,7 +291,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_IsAFullMsgDecoded(s_eFSP_MSGD_Ctx* const ctx, bool_t* 
 	return result;
 }
 
-e_eFSP_MSGD_Res eFSP_MSGD_IsCurrentFrameBad(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isFrameBad)
+e_eFSP_MSGD_Res eFSP_MSGD_IsFrameBad(s_eFSP_MSGD_Ctx* const ctx, bool_t* const isFrameBad)
 {
 	/* Local variable */
 	e_eFSP_MSGD_Res result;

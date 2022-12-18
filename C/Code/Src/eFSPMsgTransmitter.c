@@ -140,7 +140,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_StartNewMessage(s_eFSP_MSGTX_Ctx* const ctx, const u
                 ctx->sendBuffFill = 0u;
 
                 /* Init message encoder */
-                resultMsgE = eFSP_MSGE_StartNewMessage(&ctx->msgEncoderCtnx, messageLen);
+                resultMsgE = eFSP_MSGE_NewMessage(&ctx->msgEncoderCtnx, messageLen);
                 result = eFSP_MSGTX_convertReturnFromMSGE(resultMsgE);
 
                 /* Start timer */
@@ -179,7 +179,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_GetPayloadLocation(s_eFSP_MSGTX_Ctx* const ctx, uint
 		else
 		{
 			/* Get only the payload data reference */
-			resultMsgE = eFSP_MSGE_GetPayloadLocation(&ctx->msgEncoderCtnx, dataP, maxDataSize);
+			resultMsgE = eFSP_MSGE_GetWherePutData(&ctx->msgEncoderCtnx, dataP, maxDataSize);
 			result = eFSP_MSGTX_convertReturnFromMSGE(resultMsgE);
 		}
 	}
@@ -212,7 +212,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_RestartCurrentMessage(s_eFSP_MSGTX_Ctx* const ctx)
             ctx->sendBuffFill = 0u;
 
 			/* Restart only the byte stuffer */
-			resultMsgE = eFSP_MSGE_RestartCurrentMessage(&ctx->msgEncoderCtnx);
+			resultMsgE = eFSP_MSGE_RestartMessage(&ctx->msgEncoderCtnx);
 			result = eFSP_MSGTX_convertReturnFromMSGE(resultMsgE);
 
             /* Start timer */
@@ -376,7 +376,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const ctx)
                         ctx->sendBuffFill = 0u;
 
                         /* Is data present in message encoder buffer? */
-                        resultMsgE = eFSP_MSGE_RetriveEChunk(&ctx->msgEncoderCtnx, ctx->sendBuff, ctx->sendBuffSize,
+                        resultMsgE = eFSP_MSGE_GetEncChunk(&ctx->msgEncoderCtnx, ctx->sendBuff, ctx->sendBuffSize,
                                                         &ctx->sendBuffFill);
                         result = eFSP_MSGTX_convertReturnFromMSGE(resultMsgE);
 
