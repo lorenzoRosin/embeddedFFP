@@ -598,16 +598,16 @@ void msgReceiverTestBadPointer(void)
     /* Function */
     initData.p_i_memArea = NULL;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -622,16 +622,16 @@ void msgReceiverTestBadPointer(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = NULL;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = NULL;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -646,16 +646,16 @@ void msgReceiverTestBadPointer(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = NULL;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -670,16 +670,16 @@ void msgReceiverTestBadPointer(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = NULL;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -694,16 +694,16 @@ void msgReceiverTestBadPointer(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = NULL;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -718,16 +718,16 @@ void msgReceiverTestBadPointer(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = NULL;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -742,16 +742,16 @@ void msgReceiverTestBadPointer(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = NULL;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = NULL;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -766,16 +766,16 @@ void msgReceiverTestBadPointer(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = NULL;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = NULL;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -790,16 +790,16 @@ void msgReceiverTestBadPointer(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = NULL;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = NULL;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -914,16 +914,16 @@ void msgReceiverTestBadInit(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
 
@@ -1014,16 +1014,16 @@ void msgReceiverTestBadParamEntr(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = 0u;
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = 0u;
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_BADPARAM == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1038,16 +1038,16 @@ void msgReceiverTestBadParamEntr(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 0u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 0u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_BADPARAM == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1062,16 +1062,16 @@ void msgReceiverTestBadParamEntr(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 0u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_BADPARAM == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1086,16 +1086,16 @@ void msgReceiverTestBadParamEntr(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 100u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 100u;
     initData.i_timePerRecMs = 1000u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_BADPARAM == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1110,16 +1110,16 @@ void msgReceiverTestBadParamEntr(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = 1u;
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_BADPARAM == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1134,16 +1134,16 @@ void msgReceiverTestBadParamEntr(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1193,16 +1193,16 @@ void msgReceiverTestCorruptContext(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1228,16 +1228,16 @@ void msgReceiverTestCorruptContext(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1263,16 +1263,16 @@ void msgReceiverTestCorruptContext(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1298,16 +1298,16 @@ void msgReceiverTestCorruptContext(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1320,7 +1320,7 @@ void msgReceiverTestCorruptContext(void)
     }
 
     /* Function */
-    ctx.rxTim.p_timerCtx = NULL;
+    ctx.rxTim.p_timCtx = NULL;
     if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCorruptContext 8  -- OK \n");
@@ -1333,16 +1333,16 @@ void msgReceiverTestCorruptContext(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1355,7 +1355,7 @@ void msgReceiverTestCorruptContext(void)
     }
 
     /* Function */
-    ctx.rxTim.f_tim_start = NULL;
+    ctx.rxTim.f_timStart = NULL;
     if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCorruptContext 10 -- OK \n");
@@ -1368,16 +1368,16 @@ void msgReceiverTestCorruptContext(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1390,7 +1390,7 @@ void msgReceiverTestCorruptContext(void)
     }
 
     /* Function */
-    ctx.rxTim.f_tim_getRemaining = NULL;
+    ctx.rxTim.f_timGetRemaining = NULL;
     if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCorruptContext 12 -- OK \n");
@@ -1403,16 +1403,16 @@ void msgReceiverTestCorruptContext(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1438,16 +1438,16 @@ void msgReceiverTestCorruptContext(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1473,16 +1473,16 @@ void msgReceiverTestCorruptContext(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1508,16 +1508,16 @@ void msgReceiverTestCorruptContext(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1530,7 +1530,7 @@ void msgReceiverTestCorruptContext(void)
     }
 
     /* Function */
-    ctx.frameTimeoutMs = 0u;
+    ctx.timeoutMs = 0u;
     if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCorruptContext 20 -- OK \n");
@@ -1543,16 +1543,16 @@ void msgReceiverTestCorruptContext(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1578,16 +1578,16 @@ void msgReceiverTestCorruptContext(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1600,7 +1600,7 @@ void msgReceiverTestCorruptContext(void)
     }
 
     /* Function */
-    ctx.timePerRecMs = ctx.frameTimeoutMs + 1u;
+    ctx.timePerRecMs = ctx.timeoutMs + 1u;
     if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("msgReceiverTestCorruptContext 24 -- OK \n");
@@ -1613,16 +1613,16 @@ void msgReceiverTestCorruptContext(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1635,7 +1635,7 @@ void msgReceiverTestCorruptContext(void)
     }
 
     /* Function */
-    ctx.timePerRecMs = ctx.frameTimeoutMs + 1u;
+    ctx.timePerRecMs = ctx.timeoutMs + 1u;
     if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsgNClean(&ctx) )
     {
         (void)printf("msgReceiverTestCorruptContext 26 -- OK \n");
@@ -1648,16 +1648,16 @@ void msgReceiverTestCorruptContext(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1670,7 +1670,7 @@ void msgReceiverTestCorruptContext(void)
     }
 
     /* Function */
-    ctx.timePerRecMs = ctx.frameTimeoutMs + 1u;
+    ctx.timePerRecMs = ctx.timeoutMs + 1u;
     if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL) )
     {
         (void)printf("msgReceiverTestCorruptContext 28 -- OK \n");
@@ -1683,16 +1683,16 @@ void msgReceiverTestCorruptContext(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1705,7 +1705,7 @@ void msgReceiverTestCorruptContext(void)
     }
 
     /* Function */
-    ctx.timePerRecMs = ctx.frameTimeoutMs + 1u;
+    ctx.timePerRecMs = ctx.timeoutMs + 1u;
     if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("msgReceiverTestCorruptContext 30 -- OK \n");
@@ -1718,16 +1718,16 @@ void msgReceiverTestCorruptContext(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1753,16 +1753,16 @@ void msgReceiverTestCorruptContext(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1788,16 +1788,16 @@ void msgReceiverTestCorruptContext(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1823,16 +1823,16 @@ void msgReceiverTestCorruptContext(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1875,16 +1875,16 @@ void msgReceiverTestBadClBckCrc(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -1949,16 +1949,16 @@ void msgReceiverTestBadClBckReceive(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsgErr;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -2034,16 +2034,16 @@ void msgReceiverTestBadClBckTim(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStartErr;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemainingErr;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStartErr;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemainingErr;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -2102,16 +2102,16 @@ void msgReceiverTestBadClBckTim(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStartErr;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStartErr;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -2170,16 +2170,16 @@ void msgReceiverTestBadClBckTim(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemainingErrCntrl;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemainingErrCntrl;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = false;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -2245,16 +2245,16 @@ void msgReceiverTestBadFrame(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -2303,16 +2303,16 @@ void msgReceiverTestBadFrame(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -2371,16 +2371,16 @@ void msgReceiverTestBadFrame(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -2430,16 +2430,16 @@ void msgReceiverTestBadFrame(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -2531,16 +2531,16 @@ void msgReceiverTestBadFrame(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = false;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -2607,16 +2607,16 @@ void msgReceiverTestCornerCase(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 1u;
     initData.i_needWaitFrameStart = false;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -2693,16 +2693,16 @@ void msgReceiverTestCornerCase(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 5u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 5u;
     initData.i_timePerRecMs = 1u;
     initData.i_needWaitFrameStart = false;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -2779,16 +2779,16 @@ void msgReceiverTestCornerCase(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 6u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 6u;
     initData.i_timePerRecMs = 1u;
     initData.i_needWaitFrameStart = false;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -2865,16 +2865,16 @@ void msgReceiverTestCornerCase(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsgJump;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = false;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -2942,16 +2942,16 @@ void msgReceiverTestCornerCase(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = false;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -3039,16 +3039,16 @@ void msgReceiverTestCornerCase2(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsgJump;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 9u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 9u;
     initData.i_timePerRecMs = 9u;
     initData.i_needWaitFrameStart = false;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -3116,16 +3116,16 @@ void msgReceiverTestCornerCase2(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsgJump;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 10u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 10u;
     initData.i_timePerRecMs = 10u;
     initData.i_needWaitFrameStart = false;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -3193,16 +3193,16 @@ void msgReceiverTestCornerCase2(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsgJump;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 10u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 10u;
     initData.i_timePerRecMs = 10u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -3302,16 +3302,16 @@ void msgReceiverTestCornerCase2(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsgCrrupt;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 10u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 10u;
     initData.i_timePerRecMs = 10u;
     initData.i_needWaitFrameStart = false;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -3361,16 +3361,16 @@ void msgReceiverTestCornerCase2(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemainingCorr;
-    initData.i_frameTimeoutMs = 10u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemainingCorr;
+    initData.i_timeoutMs = 10u;
     initData.i_timePerRecMs = 10u;
     initData.i_needWaitFrameStart = false;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -3456,16 +3456,16 @@ void msgReceiverTestCornerCase3(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsgJump;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 1000u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -3740,16 +3740,16 @@ void msgReceiverTestCornerCase3(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsgJump;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 1000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 1000u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -3897,16 +3897,16 @@ void msgReceiverTestCornerCase4(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsgJump;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 8u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 8u;
     initData.i_timePerRecMs = 8u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -3992,16 +3992,16 @@ void msgReceiverTestCornerCase4(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = 1u;
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = 1u;
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 25u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 25u;
     initData.i_timePerRecMs = 1u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -4178,16 +4178,16 @@ void msgReceiverTestCornerCase5(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsgJumpLong;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 8u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 8u;
     initData.i_timePerRecMs = 8u;
     initData.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -4281,16 +4281,16 @@ void msgReceiverTestCornerCase5(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsgJumpLong;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 8u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 8u;
     initData.i_timePerRecMs = 8u;
     initData.i_needWaitFrameStart = false;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
@@ -4358,16 +4358,16 @@ void msgReceiverTestCornerCase6(void)
     /* Function */
     initData.p_i_memArea = memArea;
     initData.i_memAreaSize = sizeof(memArea);
-    initData.p_i_receiveBuffArea = recBuff;
-    initData.i_receiveBuffAreaSize = sizeof(recBuff);
+    initData.p_i_rxBuffArea = recBuff;
+    initData.i_rxBuffAreaSize = sizeof(recBuff);
     initData.f_i_Crc = cbCrcPTest;
     initData.p_i_cbCrcCtx = &ctxAdapterCrc;
     initData.f_i_Rx = &receiveMsg;
     initData.p_i_cbRxCtx = &ctxAdapterRx;
-    initData.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initData.i_rxTim.f_tim_start = &timStart;
-    initData.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initData.i_frameTimeoutMs = 2000u;
+    initData.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initData.i_rxTim.f_timStart = &timStart;
+    initData.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initData.i_timeoutMs = 2000u;
     initData.i_timePerRecMs = 2000u;
     initData.i_needWaitFrameStart = false;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )

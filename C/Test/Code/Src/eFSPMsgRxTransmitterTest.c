@@ -300,16 +300,16 @@ void msgRxTransmitterTestCommon(void)
     /* Init */
     initDataTx.p_i_memArea = memAreaTx;
     initDataTx.i_memAreaSize = sizeof(memAreaTx);
-    initDataTx.p_i_sendBuffArea = sendBuff;
-    initDataTx.i_sendBuffAreaSize = sizeof(sendBuff);
+    initDataTx.p_i_txBuffArea = sendBuff;
+    initDataTx.i_txBuffAreaSize = sizeof(sendBuff);
     initDataTx.f_i_Crc = &c32SAdapt;
     initDataTx.p_i_cbCrcCtx = &ctxAdapterCrcTx;
     initDataTx.f_i_Tx = &sendMsg;
     initDataTx.p_i_cbTxCtx = &ctxAdapterSend;
-    initDataTx.i_txTim.p_timerCtx = &ctxAdapterTimTx;
-    initDataTx.i_txTim.f_tim_start = &timStart;
-    initDataTx.i_txTim.f_tim_getRemaining = &timGetRemaining;
-    initDataTx.i_frameTimeoutMs = 1000u;
+    initDataTx.i_txTim.p_timCtx = &ctxAdapterTimTx;
+    initDataTx.i_txTim.f_timStart = &timStart;
+    initDataTx.i_txTim.f_timGetRemaining = &timGetRemaining;
+    initDataTx.i_timeoutMs = 1000u;
     initDataTx.i_timePerSendMs = 100u;
 
     if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctxTx, &initDataTx) )
@@ -323,16 +323,16 @@ void msgRxTransmitterTestCommon(void)
 
     initDataRX.p_i_memArea = memAreaRX;
     initDataRX.i_memAreaSize = sizeof(memAreaRX);
-    initDataRX.p_i_receiveBuffArea = recBuff;
-    initDataRX.i_receiveBuffAreaSize = sizeof(recBuff);
+    initDataRX.p_i_rxBuffArea = recBuff;
+    initDataRX.i_rxBuffAreaSize = sizeof(recBuff);
     initDataRX.f_i_Crc = &c32SAdapt;
     initDataRX.p_i_cbCrcCtx = &ctxAdapterCrcRX;
     initDataRX.f_i_Rx = &receiveMsg;
     initDataRX.p_i_cbRxCtx = &ctxAdapterRx;
-    initDataRX.i_rxTim.p_timerCtx = &ctxAdapterTim;
-    initDataRX.i_rxTim.f_tim_start = &timStart;
-    initDataRX.i_rxTim.f_tim_getRemaining = &timGetRemaining;
-    initDataRX.i_frameTimeoutMs = 1000u;
+    initDataRX.i_rxTim.p_timCtx = &ctxAdapterTim;
+    initDataRX.i_rxTim.f_timStart = &timStart;
+    initDataRX.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initDataRX.i_timeoutMs = 1000u;
     initDataRX.i_timePerRecMs = 100u;
     initDataRX.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctxRX, &initDataRX) )

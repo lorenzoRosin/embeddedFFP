@@ -42,9 +42,9 @@ typedef bool_t (*cb_rx_tim_getRemaining) ( void* p_ctx, uint32_t* const p_remain
 
 typedef struct
 {
-    void*                   p_timerCtx;
-    cb_rx_tim_start         f_tim_start;
-    cb_rx_tim_getRemaining  f_tim_getRemaining;
+    void*                   p_timCtx;
+    cb_rx_tim_start         f_timStart;
+    cb_rx_tim_getRemaining  f_timGetRemaining;
 }s_eFSP_RXTIMER;
 
 typedef enum
@@ -74,7 +74,7 @@ typedef struct
     cb_rx_msge      f_Rx;
     void*           p_RxCtx;
     s_eFSP_RXTIMER  rxTim;
-    uint32_t        frameTimeoutMs;
+    uint32_t        timeoutMs;
     uint32_t        timePerRecMs;
     bool_t          needWaitFrameStart;
 }s_eFSP_MSGRX_Ctx;
@@ -83,14 +83,14 @@ typedef struct
 {
     uint8_t*        p_i_memArea;
     uint32_t        i_memAreaSize;
-    uint8_t*        p_i_receiveBuffArea;
-    uint32_t        i_receiveBuffAreaSize;
+    uint8_t*        p_i_rxBuffArea;
+    uint32_t        i_rxBuffAreaSize;
     cb_crc32_msgd   f_i_Crc;
     void*           p_i_cbCrcCtx;
     cb_rx_msge      f_i_Rx;
     void*           p_i_cbRxCtx;
     s_eFSP_RXTIMER  i_rxTim;
-    uint32_t        i_frameTimeoutMs;
+    uint32_t        i_timeoutMs;
     uint32_t        i_timePerRecMs;
     bool_t          i_needWaitFrameStart;
 }s_eFSP_MSGRX_InitData;
@@ -175,8 +175,8 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const p_ctx, uint8_
  * @brief       Receive encoded chunk that the alg will decode byte per byte.
  *              The whole message can be received calling multiple times this function. Eache time this function will
  *              try to read all the data that can be readed in "i_timePerRecMs". The whole frame instead can be received
- *              in "i_frameTimeoutMs" milliseconds. This function can return different status, but if we keep call
- *              this function even after i_frameTimeoutMs it will start returning only MSGRX_RES_MESSAGETIMEOUT.
+ *              in "i_timeoutMs" milliseconds. This function can return different status, but if we keep call
+ *              this function even after i_timeoutMs it will start returning only MSGRX_RES_MESSAGETIMEOUT.
  *              If the flag i_needWaitFrameStart is true the timeout is started in the moment we receive the
  *              start of frame (if another SOF is received the timeout is reloaded). If the flag i_needWaitFrameStart
  *              is false the timeout is started in the moment we call the function eFSP_MSGRX_NewMsg or
@@ -201,7 +201,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const p_ctx, uint8_
  *                                        that some data could be left out the parsing and can remain saved inside a
  *                                        RX buffer. The onlyway to completly clean RX buffer is calling
  *                                        MSGRX_StartNewMsgNClean.
- *          MSGRX_RES_MESSAGETIMEOUT    - The message is not received before "i_frameTimeoutMs". Restart to continue.
+ *          MSGRX_RES_MESSAGETIMEOUT    - The message is not received before "i_timeoutMs". Restart to continue.
  *          MSGRX_RES_BADFRAME          - Found an error while parsing, the frame passed is invalid.
  *                                        Restart context in order to parse a new frame. Every other call
  *                                        to this function will not have effect until we call eFSP_MSGRX_NewMsg or
@@ -216,7 +216,7 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const p_ctx, uint8_
  *          MSGRX_RES_TIMCLBKERROR      - The timer function returned an error
  *          MSGRX_RES_OK           	    - Operation ended correctly. The chunk is parsed correctly but the frame is not
  *                                        finished yet. This function return OK when the i_timePerRecMs timeout is
- *                                        reached, but i_frameTimeoutMs is not elapsed.
+ *                                        reached, but i_timeoutMs is not elapsed.
  */
 e_eFSP_MSGRX_Res eFSP_MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const p_ctx);
 #ifdef __cplusplus
