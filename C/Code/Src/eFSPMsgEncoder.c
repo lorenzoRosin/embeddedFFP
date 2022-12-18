@@ -26,11 +26,6 @@ static e_eFSP_MSGE_Res eFSP_MSGE_convertReturnFromBstf(e_eCU_BSTF_Res returnedEv
 /***********************************************************************************************************************
  *   GLOBAL FUNCTIONS
  **********************************************************************************************************************/
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_disable = "MISRAC2012-Rule-10.3"
-    /* Suppressed because this warning is not working */
-#endif
-
 e_eFSP_MSGE_Res eFSP_MSGE_InitCtx(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_memArea, const uint32_t memAreaSize,
 								  cb_crc32_msge f_Crc, void* const p_clbCtx)
 {
@@ -65,10 +60,6 @@ e_eFSP_MSGE_Res eFSP_MSGE_InitCtx(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_memAr
 	return l_result;
 }
 
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MISRAC2012-Rule-10.3"
-#endif
-
 e_eFSP_MSGE_Res eFSP_MSGE_IsInit(s_eFSP_MSGE_Ctx* const p_ctx, bool_t* p_isInit)
 {
 	/* Local variable */
@@ -88,12 +79,6 @@ e_eFSP_MSGE_Res eFSP_MSGE_IsInit(s_eFSP_MSGE_Ctx* const p_ctx, bool_t* p_isInit)
 
 	return l_result;
 }
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_disable = "MEM-stack-param", "MISRAC2004-17.6_d", "MISRAC2012-Rule-1.3_s", "MISRAC2012-Rule-18.6_d", \
-                            "CERT-DCL30-C_e"
-    /* Suppressed for code clarity */
-#endif
 
 e_eFSP_MSGE_Res eFSP_MSGE_GetWherePutData(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t** pp_data, uint32_t* const p_maxDataL)
 {
@@ -141,11 +126,6 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetWherePutData(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t*
 
 	return l_result;
 }
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MEM-stack-param", "MISRAC2004-17.6_d", "MISRAC2012-Rule-1.3_s", "MISRAC2012-Rule-18.6_d", \
-                            "CERT-DCL30-C_e"
-#endif
 
 e_eFSP_MSGE_Res eFSP_MSGE_NewMessage(s_eFSP_MSGE_Ctx* const p_ctx, const uint32_t messageLen)
 {
@@ -300,11 +280,6 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetRemByteToGet(s_eFSP_MSGE_Ctx* const p_ctx, uint32_t
 	return l_result;
 }
 
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_disable = "MISRAC2012-Rule-10.3"
-    /* Suppressed because this warning is not working */
-#endif
-
 e_eFSP_MSGE_Res eFSP_MSGE_GetEncChunk(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_encodeDest, const uint32_t maxDestLen,
                                       uint32_t* const p_filledLen)
 {
@@ -334,10 +309,6 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetEncChunk(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_e
 
 	return l_result;
 }
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MISRAC2012-Rule-10.3"
-#endif
 
 
 

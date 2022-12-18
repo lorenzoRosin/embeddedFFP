@@ -26,11 +26,6 @@ static e_eFSP_MSGTX_Res eFSP_MSGTX_convertReturnFromMSGE(e_eFSP_MSGE_Res returne
 /***********************************************************************************************************************
  *   GLOBAL FUNCTIONS
  **********************************************************************************************************************/
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_disable = "MISRAC2012-Rule-10.3"
-    /* Suppressed because this warning is not working */
-#endif
-
 e_eFSP_MSGTX_Res eFSP_MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const p_ctx, const s_eFSP_MSGTX_InitData* p_initData)
 {
 	/* Local variable */
@@ -83,10 +78,6 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const p_ctx, const s_eFSP_
 
 	return l_res;
 }
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MISRAC2012-Rule-10.3"
-#endif
 
 e_eFSP_MSGTX_Res eFSP_MSGTX_IsInit(s_eFSP_MSGTX_Ctx* const p_ctx, bool_t* p_isInit)
 {
@@ -228,11 +219,6 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_RestartMessage(s_eFSP_MSGTX_Ctx* const p_ctx)
 
 	return l_res;
 }
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_disable = "MISRAC2012-Rule-10.3"
-    /* Suppressed because this warning is not working */
-#endif
 
 e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const p_ctx)
 {
@@ -523,10 +509,6 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const p_ctx)
 
 	return l_res;
 }
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MISRAC2012-Rule-10.3"
-#endif
 
 
 

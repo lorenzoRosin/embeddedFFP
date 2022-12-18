@@ -26,12 +26,6 @@ static e_eFSP_MSGRX_Res eFSP_MSGRX_convertReturnFromMSGD(e_eFSP_MSGD_Res returne
 /***********************************************************************************************************************
  *   GLOBAL FUNCTIONS
  **********************************************************************************************************************/
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_disable = "MISRAC2012-Rule-10.3"
-    /* Suppressed because this warning is not working */
-#endif
-
 e_eFSP_MSGRX_Res eFSP_MSGRX_InitCtx(s_eFSP_MSGRX_Ctx* const p_ctx, const s_eFSP_MSGRX_InitData* p_initData)
 {
 	/* Local variable */
@@ -93,10 +87,6 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_InitCtx(s_eFSP_MSGRX_Ctx* const p_ctx, const s_eFSP_
 
 	return l_res;
 }
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MISRAC2012-Rule-10.3"
-#endif
 
 e_eFSP_MSGRX_Res eFSP_MSGRX_IsInit(s_eFSP_MSGRX_Ctx* const p_ctx, bool_t* p_isInit)
 {
@@ -226,11 +216,6 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const p_ctx, uint8_
 
 	return l_res;
 }
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_disable = "MISRAC2012-Rule-10.3"
-    /* Suppressed because this warning is not working */
-#endif
 
 e_eFSP_MSGRX_Res eFSP_MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const p_ctx)
 {
@@ -766,10 +751,6 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const p_ctx)
 }
 
 
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MISRAC2012-Rule-10.3"
-#endif
 
 /***********************************************************************************************************************
  *  PRIVATE FUNCTION
