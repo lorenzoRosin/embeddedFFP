@@ -34,13 +34,13 @@ static e_eFSP_MSGTX_Res eFSP_MSGTX_convertReturnFromMSGE(e_eFSP_MSGE_Res returne
 e_eFSP_MSGTX_Res eFSP_MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const p_ctx, const s_eFSP_MSGTX_InitData* p_initData)
 {
 	/* Local variable */
-	e_eFSP_MSGTX_Res result;
-	e_eFSP_MSGE_Res resultMsgE;
+	e_eFSP_MSGTX_Res l_result;
+	e_eFSP_MSGE_Res l_resultMsgE;
 
 	/* Check pointer validity */
 	if( ( NULL == p_ctx ) || ( NULL == p_initData ) )
 	{
-		result = MSGTX_RES_BADPOINTER;
+		l_result = MSGTX_RES_BADPOINTER;
 	}
 	else
 	{
@@ -50,7 +50,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const p_ctx, const s_eFSP_
             ( NULL == p_initData->i_txTimer.timerCtx ) || ( NULL == p_initData->i_txTimer.tim_start ) ||
             ( NULL == p_initData->i_txTimer.tim_getRemaining ) )
         {
-            result = MSGTX_RES_BADPOINTER;
+            l_result = MSGTX_RES_BADPOINTER;
         }
         else
         {
@@ -58,7 +58,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const p_ctx, const s_eFSP_
             if( ( p_initData->i_sendBuffAreaSize < 1u ) || ( p_initData->i_frameTimeoutMs < 1u ) ||
                 ( p_initData->i_timePerSendMs < 1u ) || ( p_initData->i_timePerSendMs > p_initData->i_frameTimeoutMs ) )
             {
-                result = MSGTX_RES_BADPARAM;
+                l_result = MSGTX_RES_BADPARAM;
             }
             else
             {
@@ -74,14 +74,14 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const p_ctx, const s_eFSP_
                 p_ctx->timePerSendMs = p_initData->i_timePerSendMs;
 
                 /* initialize internal message encoder */
-                resultMsgE =  eFSP_MSGE_InitCtx(&p_ctx->msgEncoderCtnx, p_initData->i_memArea, p_initData->i_memAreaSize,
+                l_resultMsgE =  eFSP_MSGE_InitCtx(&p_ctx->msgEncoderCtnx, p_initData->i_memArea, p_initData->i_memAreaSize,
                                            p_initData->i_cbCrcP, p_initData->i_cbCrcCtx);
-                result = eFSP_MSGTX_convertReturnFromMSGE(resultMsgE);
+                l_result = eFSP_MSGTX_convertReturnFromMSGE(l_resultMsgE);
             }
         }
 	}
 
-	return result;
+	return l_result;
 }
 
 #ifdef __IAR_SYSTEMS_ICC__
@@ -91,76 +91,76 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const p_ctx, const s_eFSP_
 e_eFSP_MSGTX_Res eFSP_MSGTX_IsInit(s_eFSP_MSGTX_Ctx* const p_ctx, bool_t* p_isInit)
 {
 	/* Local variable */
-	e_eFSP_MSGTX_Res result;
-	e_eFSP_MSGE_Res resultMsgE;
+	e_eFSP_MSGTX_Res l_result;
+	e_eFSP_MSGE_Res l_resultMsgE;
 
 	/* Check pointer validity */
 	if( ( NULL == p_ctx ) || ( NULL == p_isInit ) )
 	{
-		result = MSGTX_RES_BADPOINTER;
+		l_result = MSGTX_RES_BADPOINTER;
 	}
 	else
 	{
-        resultMsgE = eFSP_MSGE_IsInit(&p_ctx->msgEncoderCtnx, p_isInit);
-        result = eFSP_MSGTX_convertReturnFromMSGE(resultMsgE);
+        l_resultMsgE = eFSP_MSGE_IsInit(&p_ctx->msgEncoderCtnx, p_isInit);
+        l_result = eFSP_MSGTX_convertReturnFromMSGE(l_resultMsgE);
 	}
 
-	return result;
+	return l_result;
 }
 
 e_eFSP_MSGTX_Res eFSP_MSGTX_GetWherePutData(s_eFSP_MSGTX_Ctx* const p_ctx, uint8_t** pp_data, uint32_t* const p_maxDataL)
 {
 	/* Local variable */
-	e_eFSP_MSGTX_Res result;
-	e_eFSP_MSGE_Res resultMsgE;
+	e_eFSP_MSGTX_Res l_result;
+	e_eFSP_MSGE_Res l_resultMsgE;
 
 	/* Check pointer validity */
 	if( ( NULL == p_ctx ) || ( NULL == pp_data ) || ( NULL == p_maxDataL ) )
 	{
-		result = MSGTX_RES_BADPOINTER;
+		l_result = MSGTX_RES_BADPOINTER;
 	}
 	else
 	{
 		/* Check internal status validity */
 		if( false == eFSP_MSGTX_isStatusStillCoherent(p_ctx) )
 		{
-			result = MSGTX_RES_CORRUPTCTX;
+			l_result = MSGTX_RES_CORRUPTCTX;
 		}
 		else
 		{
 			/* Get only the payload data reference */
-			resultMsgE = eFSP_MSGE_GetWherePutData(&p_ctx->msgEncoderCtnx, pp_data, p_maxDataL);
-			result = eFSP_MSGTX_convertReturnFromMSGE(resultMsgE);
+			l_resultMsgE = eFSP_MSGE_GetWherePutData(&p_ctx->msgEncoderCtnx, pp_data, p_maxDataL);
+			l_result = eFSP_MSGTX_convertReturnFromMSGE(l_resultMsgE);
 		}
 	}
 
-	return result;
+	return l_result;
 }
 
 e_eFSP_MSGTX_Res eFSP_MSGTX_NewMessage(s_eFSP_MSGTX_Ctx* const p_ctx, const uint32_t messageLen)
 {
 	/* Local variable */
-	e_eFSP_MSGTX_Res result;
-	e_eFSP_MSGE_Res resultMsgE;
+	e_eFSP_MSGTX_Res l_result;
+	e_eFSP_MSGE_Res l_resultMsgE;
 
 	/* Check pointer validity */
 	if( NULL == p_ctx )
 	{
-		result = MSGTX_RES_BADPOINTER;
+		l_result = MSGTX_RES_BADPOINTER;
 	}
 	else
 	{
         /* Check internal status validity */
         if( false == eFSP_MSGTX_isStatusStillCoherent(p_ctx) )
         {
-            result = MSGTX_RES_CORRUPTCTX;
+            l_result = MSGTX_RES_CORRUPTCTX;
         }
 		else
 		{
             /* Check param validity, need at least 1 byte of paylaod */
             if( messageLen <= 0u )
             {
-                result = MSGTX_RES_BADPARAM;
+                l_result = MSGTX_RES_BADPARAM;
             }
             else
             {
@@ -169,41 +169,41 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_NewMessage(s_eFSP_MSGTX_Ctx* const p_ctx, const uint
                 p_ctx->sendBuffFill = 0u;
 
                 /* Init message encoder */
-                resultMsgE = eFSP_MSGE_NewMessage(&p_ctx->msgEncoderCtnx, messageLen);
-                result = eFSP_MSGTX_convertReturnFromMSGE(resultMsgE);
+                l_resultMsgE = eFSP_MSGE_NewMessage(&p_ctx->msgEncoderCtnx, messageLen);
+                l_result = eFSP_MSGTX_convertReturnFromMSGE(l_resultMsgE);
 
                 /* Start timer */
-                if( MSGTX_RES_OK == result )
+                if( MSGTX_RES_OK == l_result )
                 {
                     if( true != p_ctx->txTimer.tim_start( p_ctx->txTimer.timerCtx, p_ctx->frameTimeoutMs ) )
                     {
-                        result = MSGTX_RES_TIMCLBKERROR;
+                        l_result = MSGTX_RES_TIMCLBKERROR;
                     }
                 }
             }
 		}
 	}
 
-	return result;
+	return l_result;
 }
 
 e_eFSP_MSGTX_Res eFSP_MSGTX_RestartMessage(s_eFSP_MSGTX_Ctx* const p_ctx)
 {
 	/* Local variable */
-	e_eFSP_MSGTX_Res result;
-	e_eFSP_MSGE_Res resultMsgE;
+	e_eFSP_MSGTX_Res l_result;
+	e_eFSP_MSGE_Res l_resultMsgE;
 
 	/* Check pointer validity */
 	if( NULL == p_ctx )
 	{
-		result = MSGTX_RES_BADPOINTER;
+		l_result = MSGTX_RES_BADPOINTER;
 	}
 	else
 	{
 		/* Check internal status validity */
 		if( false == eFSP_MSGTX_isStatusStillCoherent(p_ctx) )
 		{
-			result = MSGTX_RES_CORRUPTCTX;
+			l_result = MSGTX_RES_CORRUPTCTX;
 		}
 		else
 		{
@@ -212,21 +212,21 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_RestartMessage(s_eFSP_MSGTX_Ctx* const p_ctx)
             p_ctx->sendBuffFill = 0u;
 
 			/* Restart only the byte stuffer */
-			resultMsgE = eFSP_MSGE_RestartMessage(&p_ctx->msgEncoderCtnx);
-			result = eFSP_MSGTX_convertReturnFromMSGE(resultMsgE);
+			l_resultMsgE = eFSP_MSGE_RestartMessage(&p_ctx->msgEncoderCtnx);
+			l_result = eFSP_MSGTX_convertReturnFromMSGE(l_resultMsgE);
 
             /* Start timer */
-            if( MSGTX_RES_OK == result )
+            if( MSGTX_RES_OK == l_result )
             {
                 if( true != p_ctx->txTimer.tim_start( p_ctx->txTimer.timerCtx, p_ctx->frameTimeoutMs ) )
                 {
-                    result = MSGTX_RES_TIMCLBKERROR;
+                    l_result = MSGTX_RES_TIMCLBKERROR;
                 }
             }
 		}
 	}
 
-	return result;
+	return l_result;
 }
 
 #ifdef __IAR_SYSTEMS_ICC__
@@ -236,76 +236,76 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_RestartMessage(s_eFSP_MSGTX_Ctx* const p_ctx)
 
 e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const p_ctx)
 {
-	/* Local variable of the operation result */
-	e_eFSP_MSGTX_Res result;
-	e_eFSP_MSGE_Res resultMsgE;
-    bool_t isInit;
+	/* Local variable of the operation l_result */
+	e_eFSP_MSGTX_Res l_result;
+	e_eFSP_MSGE_Res l_resultMsgE;
+    bool_t l_isInit;
 
     /* Local variable to keep track of the current state machine state */
-    e_eFSP_MSGTX_Priv_state stateM;
+    e_eFSP_MSGTX_Priv_state l_stateM;
 
     /* Local variable to keep track of the start, current etc remaining time */
-    uint32_t sRemainTxTime;
-    uint32_t cRemainTxTime;
-    uint32_t sessionRemaining;
-    uint32_t elapsedFromStart;
+    uint32_t l_sRemainTxTime;
+    uint32_t l_cRemainTxTime;
+    uint32_t l_sessionRemaining;
+    uint32_t l_elapsedFromStart;
 
     /* Local variable usend for the current data calculation */
-    const uint8_t *cDToTxP;
-    uint32_t cDToTxLen;
-    uint32_t cDTxed;
+    const uint8_t *lp_cDToTx;
+    uint32_t l_cDToTxLen;
+    uint32_t l_cDTxed;
 
 	/* Check pointer validity */
 	if( NULL == p_ctx )
 	{
-		result = MSGTX_RES_BADPOINTER;
+		l_result = MSGTX_RES_BADPOINTER;
 	}
 	else
 	{
 		/* Check internal status validity */
 		if( false == eFSP_MSGTX_isStatusStillCoherent(p_ctx) )
 		{
-			result = MSGTX_RES_CORRUPTCTX;
+			l_result = MSGTX_RES_CORRUPTCTX;
 		}
 		else
 		{
             /* Init state machine value */
-            sessionRemaining = 0u;
-            sRemainTxTime = 0u;
-            result = MSGTX_RES_OK;
-            stateM = MSGTX_PRV_CHECKINIT;
+            l_sessionRemaining = 0u;
+            l_sRemainTxTime = 0u;
+            l_result = MSGTX_RES_OK;
+            l_stateM = MSGTX_PRV_CHECKINIT;
 
             /* wait end elaboration or end for timeout */
-            while( stateM != MSGTX_PRV_ELABDONE )
+            while( l_stateM != MSGTX_PRV_ELABDONE )
             {
-                switch( stateM )
+                switch( l_stateM )
                 {
                     case MSGTX_PRV_CHECKINIT:
                     {
                         /* Check if lib is initialized */
-                        isInit = false;
-                        resultMsgE = eFSP_MSGE_IsInit(&p_ctx->msgEncoderCtnx, &isInit);
-                        result = eFSP_MSGTX_convertReturnFromMSGE(resultMsgE);
+                        l_isInit = false;
+                        l_resultMsgE = eFSP_MSGE_IsInit(&p_ctx->msgEncoderCtnx, &l_isInit);
+                        l_result = eFSP_MSGTX_convertReturnFromMSGE(l_resultMsgE);
 
                         /* Check if frame timeout is eplased */
-                        if( MSGTX_RES_OK == result )
+                        if( MSGTX_RES_OK == l_result )
                         {
-                            if( true == isInit )
+                            if( true == l_isInit )
                             {
                                 /* All ok */
-                                stateM = MSGTX_PRV_CHECKINITTIMEOUT;
+                                l_stateM = MSGTX_PRV_CHECKINITTIMEOUT;
                             }
                             else
                             {
                                 /* Need to init the lib before */
-                                result = MSGTX_RES_NOINITLIB;
-                                stateM = MSGTX_PRV_ELABDONE;
+                                l_result = MSGTX_RES_NOINITLIB;
+                                l_stateM = MSGTX_PRV_ELABDONE;
                             }
                         }
                         else
                         {
                             /* Some error */
-                            stateM = MSGTX_PRV_ELABDONE;
+                            l_stateM = MSGTX_PRV_ELABDONE;
                         }
                         break;
                     }
@@ -313,37 +313,37 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const p_ctx)
                     case MSGTX_PRV_CHECKINITTIMEOUT:
                     {
                         /* Check if frame timeout is eplased */
-                        if( true == p_ctx->txTimer.tim_getRemaining(p_ctx->txTimer.timerCtx, &sRemainTxTime) )
+                        if( true == p_ctx->txTimer.tim_getRemaining(p_ctx->txTimer.timerCtx, &l_sRemainTxTime) )
                         {
-                            if( sRemainTxTime <= 0u )
+                            if( l_sRemainTxTime <= 0u )
                             {
                                 /* Time elapsed */
-                                result = MSGTX_RES_MESSAGETIMEOUT;
-                                stateM = MSGTX_PRV_ELABDONE;
+                                l_result = MSGTX_RES_MESSAGETIMEOUT;
+                                l_stateM = MSGTX_PRV_ELABDONE;
                             }
                             else
                             {
                                 /* Frame timeout is not elapsed, calculate frame session timeout */
-                                if( sRemainTxTime >= p_ctx->timePerSendMs )
+                                if( l_sRemainTxTime >= p_ctx->timePerSendMs )
                                 {
                                     /* Time elapsed */
-                                    sessionRemaining = p_ctx->timePerSendMs;
+                                    l_sessionRemaining = p_ctx->timePerSendMs;
                                 }
                                 else
                                 {
                                     /* Session timeout not elapsed, can send data */
-                                    sessionRemaining = sRemainTxTime;
+                                    l_sessionRemaining = l_sRemainTxTime;
                                 }
 
                                 /* check if we have some data to send in TX buffer */
-                                stateM = MSGTX_PRV_CHECKIFBUFFERTX;
+                                l_stateM = MSGTX_PRV_CHECKIFBUFFERTX;
                             }
                         }
                         else
                         {
                             /* Some error on timer */
-                            result = MSGTX_RES_TIMCLBKERROR;
-                            stateM = MSGTX_PRV_ELABDONE;
+                            l_result = MSGTX_RES_TIMCLBKERROR;
+                            l_stateM = MSGTX_PRV_ELABDONE;
                         }
                         break;
                     }
@@ -351,12 +351,12 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const p_ctx)
                     case MSGTX_PRV_CHECKIFBUFFERTX:
                     {
                         /* Is data present in send buffer? */
-                        cDToTxLen = p_ctx->sendBuffFill - p_ctx->sendBuffCntr;
+                        l_cDToTxLen = p_ctx->sendBuffFill - p_ctx->sendBuffCntr;
 
-                        if( cDToTxLen > 0u )
+                        if( l_cDToTxLen > 0u )
                         {
                             /* Can send data in msg buffer */
-                            stateM = MSGTX_PRV_SENDBUFF;
+                            l_stateM = MSGTX_PRV_SENDBUFF;
                         }
                         else
                         {
@@ -364,7 +364,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const p_ctx)
                              * not completed of course */
                             p_ctx->sendBuffFill = 0u;
                             p_ctx->sendBuffCntr = 0u;
-                            stateM = MSGTX_PRV_RETRIVECHUNK;
+                            l_stateM = MSGTX_PRV_RETRIVECHUNK;
                         }
                         break;
                     }
@@ -376,36 +376,36 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const p_ctx)
                         p_ctx->sendBuffFill = 0u;
 
                         /* Is data present in message encoder buffer? */
-                        resultMsgE = eFSP_MSGE_GetEncChunk(&p_ctx->msgEncoderCtnx, p_ctx->sendBuff, p_ctx->sendBuffSize,
+                        l_resultMsgE = eFSP_MSGE_GetEncChunk(&p_ctx->msgEncoderCtnx, p_ctx->sendBuff, p_ctx->sendBuffSize,
                                                         &p_ctx->sendBuffFill);
-                        result = eFSP_MSGTX_convertReturnFromMSGE(resultMsgE);
+                        l_result = eFSP_MSGTX_convertReturnFromMSGE(l_resultMsgE);
 
-                        if( MSGTX_RES_OK == result )
+                        if( MSGTX_RES_OK == l_result )
                         {
                             /* Retrived some data to send, by design if MSGE_RetriveEChunk return MSGE_RES_OK this
                              * means that the value of loaded data inside send buffer is equals to it's size */
 
                             /* Can go to send loaded data now */
-                            stateM = MSGTX_PRV_SENDBUFF;
+                            l_stateM = MSGTX_PRV_SENDBUFF;
                         }
-                        else if( MSGTX_RES_MESSAGESENDED == result )
+                        else if( MSGTX_RES_MESSAGESENDED == l_result )
                         {
                             /* Ok we retrived all the possible data */
                             if( 0u == p_ctx->sendBuffFill )
                             {
                                 /* No more data to send or retrive */
-                                stateM = MSGTX_PRV_ELABDONE;
+                                l_stateM = MSGTX_PRV_ELABDONE;
                             }
                             else
                             {
                                 /* Ok retrived all data but need to send the remaining data present in sendBuff */
-                                stateM = MSGTX_PRV_SENDBUFF;
+                                l_stateM = MSGTX_PRV_SENDBUFF;
                             }
                         }
                         else
                         {
                             /* Some error */
-                            stateM = MSGTX_PRV_ELABDONE;
+                            l_stateM = MSGTX_PRV_ELABDONE;
                         }
 
                         break;
@@ -414,32 +414,32 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const p_ctx)
                     case MSGTX_PRV_SENDBUFF:
                     {
                         /* Get data to send */
-                        cDToTxP = &p_ctx->sendBuff[p_ctx->sendBuffCntr];
-                        cDToTxLen = p_ctx->sendBuffFill - p_ctx->sendBuffCntr;
+                        lp_cDToTx = &p_ctx->sendBuff[p_ctx->sendBuffCntr];
+                        l_cDToTxLen = p_ctx->sendBuffFill - p_ctx->sendBuffCntr;
 
                         /* Can send data from send buffer */
-                        if( true == (*p_ctx->cbTxP)(p_ctx->cbTxCtx, cDToTxP, cDToTxLen, &cDTxed, sessionRemaining) )
+                        if( true == (*p_ctx->cbTxP)(p_ctx->cbTxCtx, lp_cDToTx, l_cDToTxLen, &l_cDTxed, l_sessionRemaining) )
                         {
                             /* Check for some strangeness */
-                            if( cDTxed > cDToTxLen )
+                            if( l_cDTxed > l_cDToTxLen )
                             {
-                                result = MSGTX_RES_CORRUPTCTX;
-                                stateM = MSGTX_PRV_ELABDONE;
+                                l_result = MSGTX_RES_CORRUPTCTX;
+                                l_stateM = MSGTX_PRV_ELABDONE;
                             }
                             else
                             {
                                 /* Update sended counter */
-                                p_ctx->sendBuffCntr += cDTxed;
+                                p_ctx->sendBuffCntr += l_cDTxed;
 
                                 /* Check if time is elapsed */
-                                stateM = MSGTX_PRV_CHECKTIMEOUTAFTERTX;
+                                l_stateM = MSGTX_PRV_CHECKTIMEOUTAFTERTX;
                             }
                         }
                         else
                         {
                             /* Error sending data */
-                            result = MSGTX_RES_TXCLBKERROR;
-                            stateM = MSGTX_PRV_ELABDONE;
+                            l_result = MSGTX_RES_TXCLBKERROR;
+                            l_stateM = MSGTX_PRV_ELABDONE;
                         }
                         break;
                     }
@@ -447,55 +447,55 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const p_ctx)
                     case MSGTX_PRV_CHECKTIMEOUTAFTERTX:
                     {
                         /* Check if frame timeout is eplased */
-                        if( true == p_ctx->txTimer.tim_getRemaining(p_ctx->txTimer.timerCtx, &cRemainTxTime) )
+                        if( true == p_ctx->txTimer.tim_getRemaining(p_ctx->txTimer.timerCtx, &l_cRemainTxTime) )
                         {
                             /* Check time validity */
-                            if( cRemainTxTime > sRemainTxTime )
+                            if( l_cRemainTxTime > l_sRemainTxTime )
                             {
                                 /* It's not possible to have more time to send the frame now than during
                                  * the begining */
-                                result = MSGTX_RES_CORRUPTCTX;
-                                stateM = MSGTX_PRV_ELABDONE;
+                                l_result = MSGTX_RES_CORRUPTCTX;
+                                l_stateM = MSGTX_PRV_ELABDONE;
                             }
                             else
                             {
-                                if( cRemainTxTime <= 0u )
+                                if( l_cRemainTxTime <= 0u )
                                 {
                                     /* Time elapsed */
-                                    result = MSGTX_RES_MESSAGETIMEOUT;
-                                    stateM = MSGTX_PRV_ELABDONE;
+                                    l_result = MSGTX_RES_MESSAGETIMEOUT;
+                                    l_stateM = MSGTX_PRV_ELABDONE;
                                 }
                                 else
                                 {
                                     /* During start do we had the whole time slice? */
-                                    if( sRemainTxTime >= p_ctx->timePerSendMs )
+                                    if( l_sRemainTxTime >= p_ctx->timePerSendMs )
                                     {
                                         /* Started with a whole time slice */
-                                        elapsedFromStart = sRemainTxTime - cRemainTxTime;
+                                        l_elapsedFromStart = l_sRemainTxTime - l_cRemainTxTime;
 
                                         /* Frame timeout is not elapsed, check current session if expired */
-                                        if( elapsedFromStart >= p_ctx->timePerSendMs )
+                                        if( l_elapsedFromStart >= p_ctx->timePerSendMs )
                                         {
                                             /* Time elapsed */
-                                            result = MSGTX_RES_OK;
-                                            stateM = MSGTX_PRV_ELABDONE;
+                                            l_result = MSGTX_RES_OK;
+                                            l_stateM = MSGTX_PRV_ELABDONE;
                                         }
                                         else
                                         {
                                             /* Session timeout not elapsed, can send data */
-                                            sessionRemaining = p_ctx->timePerSendMs - elapsedFromStart;
+                                            l_sessionRemaining = p_ctx->timePerSendMs - l_elapsedFromStart;
 
                                             /* Check if something to send is present */
-                                            stateM = MSGTX_PRV_CHECKIFBUFFERTX;
+                                            l_stateM = MSGTX_PRV_CHECKIFBUFFERTX;
                                         }
                                     }
                                     else
                                     {
                                         /* Started only with remaining time */
-                                        sessionRemaining = cRemainTxTime;
+                                        l_sessionRemaining = l_cRemainTxTime;
 
                                         /* Check if something to send is present */
-                                        stateM = MSGTX_PRV_CHECKIFBUFFERTX;
+                                        l_stateM = MSGTX_PRV_CHECKIFBUFFERTX;
                                     }
                                 }
                             }
@@ -503,8 +503,8 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const p_ctx)
                         else
                         {
                             /* Some error on timer */
-                            result = MSGTX_RES_TIMCLBKERROR;
-                            stateM = MSGTX_PRV_ELABDONE;
+                            l_result = MSGTX_RES_TIMCLBKERROR;
+                            l_stateM = MSGTX_PRV_ELABDONE;
                         }
                         break;
                     }
@@ -512,8 +512,8 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const p_ctx)
                     default:
                     {
                         /* Impossible end here */
-                        stateM = MSGTX_PRV_ELABDONE;
-                        result = MSGTX_RES_CORRUPTCTX;
+                        l_stateM = MSGTX_PRV_ELABDONE;
+                        l_result = MSGTX_RES_CORRUPTCTX;
                         break;
                     }
                 }
@@ -521,7 +521,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const p_ctx)
         }
 	}
 
-	return result;
+	return l_result;
 }
 
 #ifdef __IAR_SYSTEMS_ICC__
@@ -535,116 +535,116 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const p_ctx)
  **********************************************************************************************************************/
 static bool_t eFSP_MSGTX_isStatusStillCoherent(const s_eFSP_MSGTX_Ctx* p_ctx)
 {
-    bool_t result;
+    bool_t l_result;
 
 	/* Check pointer validity */
 	if( ( NULL == p_ctx->sendBuff ) || ( NULL == p_ctx->cbTxP ) || ( NULL == p_ctx->cbTxCtx ) ||
         ( NULL == p_ctx->txTimer.timerCtx ) || ( NULL == p_ctx->txTimer.tim_start ) ||
         ( NULL == p_ctx->txTimer.tim_getRemaining ) )
 	{
-		result = false;
+		l_result = false;
 	}
 	else
 	{
         /* Check send buffer validity */
         if( p_ctx->sendBuffSize < 1u )
         {
-            result =  false;
+            l_result =  false;
         }
         else
         {
             /* Check send buffer validity */
             if( ( p_ctx->sendBuffFill > p_ctx->sendBuffSize )  || ( p_ctx->sendBuffCntr > p_ctx->sendBuffFill ) )
             {
-                result =  false;
+                l_result =  false;
             }
             else
             {
                 /* Check timings validity */
                 if( ( p_ctx->frameTimeoutMs < 1u ) || ( p_ctx->timePerSendMs < 1u ) )
                 {
-                    result = false;
+                    l_result = false;
                 }
                 else
                 {
                     /* Check timings validity */
                     if( p_ctx->timePerSendMs > p_ctx->frameTimeoutMs )
                     {
-                        result = false;
+                        l_result = false;
                     }
                     else
                     {
-                        result = true;
+                        l_result = true;
                     }
                 }
             }
         }
 	}
 
-    return result;
+    return l_result;
 }
 
 static e_eFSP_MSGTX_Res eFSP_MSGTX_convertReturnFromMSGE(e_eFSP_MSGE_Res returnedEvent)
 {
-	e_eFSP_MSGTX_Res result;
+	e_eFSP_MSGTX_Res l_result;
 
 	switch( returnedEvent )
 	{
 		case MSGE_RES_OK:
 		{
-			result = MSGTX_RES_OK;
+			l_result = MSGTX_RES_OK;
             break;
 		}
 
 		case MSGE_RES_BADPARAM:
 		{
-			result = MSGTX_RES_BADPARAM;
+			l_result = MSGTX_RES_BADPARAM;
             break;
 		}
 
 		case MSGE_RES_BADPOINTER:
 		{
-			result = MSGTX_RES_BADPOINTER;
+			l_result = MSGTX_RES_BADPOINTER;
             break;
 		}
 
 		case MSGE_RES_CORRUPTCTX:
 		{
-			result = MSGTX_RES_CORRUPTCTX;
+			l_result = MSGTX_RES_CORRUPTCTX;
             break;
 		}
 
 		case MSGE_RES_MESSAGEENDED:
 		{
-			result = MSGTX_RES_MESSAGESENDED;
+			l_result = MSGTX_RES_MESSAGESENDED;
             break;
 		}
 
 		case MSGE_RES_NOINITLIB:
 		{
-			result = MSGTX_RES_NOINITLIB;
+			l_result = MSGTX_RES_NOINITLIB;
             break;
 		}
 
 		case MSGE_RES_NOINITMESSAGE :
 		{
-			result = MSGTX_RES_NOINITMESSAGE;
+			l_result = MSGTX_RES_NOINITMESSAGE;
             break;
 		}
 
 		case MSGE_RES_CRCCLBKERROR :
 		{
-			result = MSGTX_RES_CRCCLBKERROR;
+			l_result = MSGTX_RES_CRCCLBKERROR;
             break;
 		}
 
 		default:
 		{
             /* Impossible end here */
-			result = MSGTX_RES_CORRUPTCTX;
+			l_result = MSGTX_RES_CORRUPTCTX;
             break;
 		}
 	}
 
-	return result;
+	return l_result;
 }
