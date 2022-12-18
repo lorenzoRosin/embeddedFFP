@@ -123,6 +123,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_GetDecodedData(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t**
 	e_eFSP_MSGD_Res l_result;
 	s_eCU_BUNSTF_Res l_resByStuff;
 	uint8_t* lp_dataP;
+    uint8_t** lpp_dataP;
 	uint32_t l_dataSizeP;
 
 	/* Check pointer validity */
@@ -142,13 +143,14 @@ e_eFSP_MSGD_Res eFSP_MSGD_GetDecodedData(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t**
 			/* Get memory reference of CRC+LEN+DATA, so we can calculate reference of only data payload */
             l_dataSizeP = 0u;
             lp_dataP = NULL;
-			l_resByStuff = eCU_BUNSTF_GetUnstufData(&p_ctx->bunstf_Ctx, &lp_dataP, &l_dataSizeP);
+            lpp_dataP = &lp_dataP;
+			l_resByStuff = eCU_BUNSTF_GetUnstufData(&p_ctx->bunstf_Ctx, lpp_dataP, &l_dataSizeP);
 			l_result = eFSP_MSGD_convertReturnFromBstf(l_resByStuff);
 
 			if( MSGD_RES_OK == l_result )
 			{
                 /* Starting point is always the same */
-                *pp_data = &lp_dataP[EFSP_MSGDE_HEADERSIZE];
+                *pp_data = &(*lpp_dataP)[EFSP_MSGDE_HEADERSIZE];
 
 				/* Removed HADER from data ( CRC + DATA LEN ) */
                 if( l_dataSizeP < EFSP_MIN_MSGDE_BUFFLEN )

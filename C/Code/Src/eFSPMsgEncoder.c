@@ -86,6 +86,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetWherePutData(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t*
 	e_eFSP_MSGE_Res l_result;
 	e_eCU_BSTF_Res l_resultByStuff;
 	uint8_t* lp_data;
+    uint8_t** lpp_dataP;
 	uint32_t l_maxDataSizeP;
 
 	/* Check pointer validity */
@@ -105,7 +106,8 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetWherePutData(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t*
 			/* Get memory reference of CRC+LEN+DATA, so we can calculate reference of only data payload */
             l_maxDataSizeP = 0u;
             lp_data = NULL;
-			l_resultByStuff = eCU_BSTF_GetWherePutData(&p_ctx->bstf_Ctx, &lp_data, &l_maxDataSizeP);
+            lpp_dataP = &lp_data;
+			l_resultByStuff = eCU_BSTF_GetWherePutData(&p_ctx->bstf_Ctx, lpp_dataP, &l_maxDataSizeP);
 			l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
 
 			if( MSGE_RES_OK == l_result )
@@ -117,7 +119,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetWherePutData(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t*
                 else
                 {
                     /* Return reference of only the raw payload */
-                    *pp_data = &lp_data[EFSP_MSGEN_HEADERSIZE];
+                    *pp_data = &(*lpp_dataP)[EFSP_MSGEN_HEADERSIZE];
                     *p_maxDataL = l_maxDataSizeP - EFSP_MSGEN_HEADERSIZE;
                 }
 			}
