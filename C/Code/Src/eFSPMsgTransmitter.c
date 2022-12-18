@@ -47,8 +47,8 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const p_ctx, const s_eFSP_
         /* Check pointer validity */
         if( ( NULL == p_initData->p_i_memArea ) || ( NULL == p_initData->p_i_sendBuffArea ) || ( NULL == p_initData->f_i_Crc ) ||
             ( NULL == p_initData->p_i_cbCrcCtx ) || ( NULL == p_initData->f_i_Tx ) || ( NULL == p_initData->p_i_cbTxCtx ) ||
-            ( NULL == p_initData->i_txTimer.p_timerCtx ) || ( NULL == p_initData->i_txTimer.f_tim_start ) ||
-            ( NULL == p_initData->i_txTimer.f_tim_getRemaining ) )
+            ( NULL == p_initData->i_txTim.p_timerCtx ) || ( NULL == p_initData->i_txTim.f_tim_start ) ||
+            ( NULL == p_initData->i_txTim.f_tim_getRemaining ) )
         {
             l_result = MSGTX_RES_BADPOINTER;
         }
@@ -63,13 +63,13 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const p_ctx, const s_eFSP_
             else
             {
                 /* Initialize internal status variable */
-                p_ctx->sendBuff = p_initData->p_i_sendBuffArea;
-                p_ctx->sendBuffSize = p_initData->i_sendBuffAreaSize;
-                p_ctx->sendBuffCntr = 0u;
-                p_ctx->sendBuffFill = 0u;
+                p_ctx->p_rxBuff = p_initData->p_i_sendBuffArea;
+                p_ctx->txBuffSize = p_initData->i_sendBuffAreaSize;
+                p_ctx->txBuffCntr = 0u;
+                p_ctx->txBuffFill = 0u;
                 p_ctx->f_Tx = p_initData->f_i_Tx;
                 p_ctx->p_TxCtx = p_initData->p_i_cbTxCtx;
-                p_ctx->txTim =  p_initData->i_txTimer;
+                p_ctx->txTim =  p_initData->i_txTim;
                 p_ctx->frameTimeoutMs = p_initData->i_frameTimeoutMs;
                 p_ctx->timePerSendMs = p_initData->i_timePerSendMs;
 
@@ -165,8 +165,8 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_NewMessage(s_eFSP_MSGTX_Ctx* const p_ctx, const uint
             else
             {
                 /* Reset internal variable */
-                p_ctx->sendBuffCntr = 0u;
-                p_ctx->sendBuffFill = 0u;
+                p_ctx->txBuffCntr = 0u;
+                p_ctx->txBuffFill = 0u;
 
                 /* Init message encoder */
                 l_resultMsgE = eFSP_MSGE_NewMessage(&p_ctx->msge_Ctx, messageLen);
@@ -208,8 +208,8 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_RestartMessage(s_eFSP_MSGTX_Ctx* const p_ctx)
 		else
 		{
             /* Reset internal variable */
-            p_ctx->sendBuffCntr = 0u;
-            p_ctx->sendBuffFill = 0u;
+            p_ctx->txBuffCntr = 0u;
+            p_ctx->txBuffFill = 0u;
 
 			/* Restart only the byte stuffer */
 			l_resultMsgE = eFSP_MSGE_RestartMessage(&p_ctx->msge_Ctx);
@@ -351,7 +351,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const p_ctx)
                     case MSGTX_PRV_CHECKIFBUFFERTX:
                     {
                         /* Is data present in send buffer? */
-                        l_cDToTxLen = p_ctx->sendBuffFill - p_ctx->sendBuffCntr;
+                        l_cDToTxLen = p_ctx->txBuffFill - p_ctx->txBuffCntr;
 
                         if( l_cDToTxLen > 0u )
                         {
@@ -362,8 +362,8 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const p_ctx)
                         {
                             /* No data in msg buffer, retrive some other chunk of data, only if the message send is
                              * not completed of course */
-                            p_ctx->sendBuffFill = 0u;
-                            p_ctx->sendBuffCntr = 0u;
+                            p_ctx->txBuffFill = 0u;
+                            p_ctx->txBuffCntr = 0u;
                             l_stateM = MSGTX_PRV_RETRIVECHUNK;
                         }
                         break;
@@ -372,12 +372,12 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const p_ctx)
                     case MSGTX_PRV_RETRIVECHUNK:
                     {
                         /* Ok, the send buffer is empty, need to load remainings data */
-                        p_ctx->sendBuffCntr = 0u;
-                        p_ctx->sendBuffFill = 0u;
+                        p_ctx->txBuffCntr = 0u;
+                        p_ctx->txBuffFill = 0u;
 
                         /* Is data present in message encoder buffer? */
-                        l_resultMsgE = eFSP_MSGE_GetEncChunk(&p_ctx->msge_Ctx, p_ctx->sendBuff, p_ctx->sendBuffSize,
-                                                        &p_ctx->sendBuffFill);
+                        l_resultMsgE = eFSP_MSGE_GetEncChunk(&p_ctx->msge_Ctx, p_ctx->p_rxBuff, p_ctx->txBuffSize,
+                                                        &p_ctx->txBuffFill);
                         l_result = eFSP_MSGTX_convertReturnFromMSGE(l_resultMsgE);
 
                         if( MSGTX_RES_OK == l_result )
@@ -391,7 +391,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const p_ctx)
                         else if( MSGTX_RES_MESSAGESENDED == l_result )
                         {
                             /* Ok we retrived all the possible data */
-                            if( 0u == p_ctx->sendBuffFill )
+                            if( 0u == p_ctx->txBuffFill )
                             {
                                 /* No more data to send or retrive */
                                 l_stateM = MSGTX_PRV_ELABDONE;
@@ -414,8 +414,8 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const p_ctx)
                     case MSGTX_PRV_SENDBUFF:
                     {
                         /* Get data to send */
-                        lp_cDToTx = &p_ctx->sendBuff[p_ctx->sendBuffCntr];
-                        l_cDToTxLen = p_ctx->sendBuffFill - p_ctx->sendBuffCntr;
+                        lp_cDToTx = &p_ctx->p_rxBuff[p_ctx->txBuffCntr];
+                        l_cDToTxLen = p_ctx->txBuffFill - p_ctx->txBuffCntr;
 
                         /* Can send data from send buffer */
                         if( true == (*p_ctx->f_Tx)(p_ctx->p_TxCtx, lp_cDToTx, l_cDToTxLen, &l_cDTxed, l_sessionRemaining) )
@@ -429,7 +429,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const p_ctx)
                             else
                             {
                                 /* Update sended counter */
-                                p_ctx->sendBuffCntr += l_cDTxed;
+                                p_ctx->txBuffCntr += l_cDTxed;
 
                                 /* Check if time is elapsed */
                                 l_stateM = MSGTX_PRV_CHECKTIMEOUTAFTERTX;
@@ -538,7 +538,7 @@ static bool_t eFSP_MSGTX_isStatusStillCoherent(const s_eFSP_MSGTX_Ctx* p_ctx)
     bool_t l_result;
 
 	/* Check pointer validity */
-	if( ( NULL == p_ctx->sendBuff ) || ( NULL == p_ctx->f_Tx ) || ( NULL == p_ctx->p_TxCtx ) ||
+	if( ( NULL == p_ctx->p_rxBuff ) || ( NULL == p_ctx->f_Tx ) || ( NULL == p_ctx->p_TxCtx ) ||
         ( NULL == p_ctx->txTim.p_timerCtx ) || ( NULL == p_ctx->txTim.f_tim_start ) ||
         ( NULL == p_ctx->txTim.f_tim_getRemaining ) )
 	{
@@ -547,14 +547,14 @@ static bool_t eFSP_MSGTX_isStatusStillCoherent(const s_eFSP_MSGTX_Ctx* p_ctx)
 	else
 	{
         /* Check send buffer validity */
-        if( p_ctx->sendBuffSize < 1u )
+        if( p_ctx->txBuffSize < 1u )
         {
             l_result =  false;
         }
         else
         {
             /* Check send buffer validity */
-            if( ( p_ctx->sendBuffFill > p_ctx->sendBuffSize )  || ( p_ctx->sendBuffCntr > p_ctx->sendBuffFill ) )
+            if( ( p_ctx->txBuffFill > p_ctx->txBuffSize )  || ( p_ctx->txBuffCntr > p_ctx->txBuffFill ) )
             {
                 l_result =  false;
             }

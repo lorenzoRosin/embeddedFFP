@@ -306,9 +306,9 @@ void msgRxTransmitterTestCommon(void)
     initDataTx.p_i_cbCrcCtx = &ctxAdapterCrcTx;
     initDataTx.f_i_Tx = &sendMsg;
     initDataTx.p_i_cbTxCtx = &ctxAdapterSend;
-    initDataTx.i_txTimer.p_timerCtx = &ctxAdapterTimTx;
-    initDataTx.i_txTimer.f_tim_start = &timStart;
-    initDataTx.i_txTimer.f_tim_getRemaining = &timGetRemaining;
+    initDataTx.i_txTim.p_timerCtx = &ctxAdapterTimTx;
+    initDataTx.i_txTim.f_tim_start = &timStart;
+    initDataTx.i_txTim.f_tim_getRemaining = &timGetRemaining;
     initDataTx.i_frameTimeoutMs = 1000u;
     initDataTx.i_timePerSendMs = 100u;
 

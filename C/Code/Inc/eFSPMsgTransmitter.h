@@ -65,10 +65,10 @@ typedef enum
 typedef struct
 {
     s_eFSP_MSGE_Ctx msge_Ctx;
-	uint8_t*        sendBuff;
-	uint32_t        sendBuffSize;
-	uint32_t        sendBuffCntr;
-    uint32_t        sendBuffFill;
+	uint8_t*        p_rxBuff;
+	uint32_t        txBuffSize;
+	uint32_t        txBuffCntr;
+    uint32_t        txBuffFill;
     cb_tx_msge      f_Tx;
     void*           p_TxCtx;
     s_eFSP_TXTIMER  txTim;
@@ -86,7 +86,7 @@ typedef struct
     void*           p_i_cbCrcCtx;
     cb_tx_msge      f_i_Tx;
     void*           p_i_cbTxCtx;
-    s_eFSP_TXTIMER  i_txTimer;
+    s_eFSP_TXTIMER  i_txTim;
     uint32_t        i_frameTimeoutMs;
     uint32_t        i_timePerSendMs;
 }s_eFSP_MSGTX_InitData;
