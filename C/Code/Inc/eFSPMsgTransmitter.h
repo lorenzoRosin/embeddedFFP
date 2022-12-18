@@ -31,14 +31,14 @@ extern "C" {
  **********************************************************************************************************************/
 
 /* Call back to a function that will trasmit the passed data.
- * the cntx parameter is a custom pointer that can be used by the creator of this TX callback, and will not be used
+ * the p_ctx parameter is a custom pointer that can be used by the creator of this TX callback, and will not be used
  * by the MSG TRANSMITTER module */
-typedef bool_t (*cb_tx_msge) ( void* cntx, const uint8_t dataToSend[], const uint32_t dataToSendLen,
-                               uint32_t* const dataSended, const uint32_t timeToSend );
+typedef bool_t (*cb_tx_msge) ( void* p_ctx, const uint8_t a_dataToSend[], const uint32_t dataToSendLen,
+                               uint32_t* const p_dataSended, const uint32_t timeToSend );
 
 /* Call backs to functions that act as a timer */
-typedef bool_t (*cb_tx_tim_start) ( void* cntx, const uint32_t timeoutVal );
-typedef bool_t (*cb_tx_tim_getRemaining) ( void* cntx, uint32_t* const remainings );
+typedef bool_t (*cb_tx_tim_start) ( void* p_ctx, const uint32_t timeoutVal );
+typedef bool_t (*cb_tx_tim_getRemaining) ( void* p_ctx, uint32_t* const p_remainings );
 
 typedef struct
 {

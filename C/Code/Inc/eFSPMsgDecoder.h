@@ -30,10 +30,10 @@ extern "C" {
  *      TYPEDEFS
  **********************************************************************************************************************/
 /* Call back to a function that will calculate the CRC for this modules
- * the cntx parameter is a custom pointer that can be used by the creator of this CRC callback, and will not be used
+ * the p_ctx parameter is a custom pointer that can be used by the creator of this CRC callback, and will not be used
  * by the MSG DECODER module */
-typedef bool_t (*cb_crc32_msgd) ( void* cntx, const uint32_t seed, const uint8_t dataS[], const uint32_t dataSLen,
-                                  uint32_t* const crc32SVal );
+typedef bool_t (*cb_crc32_msgd) ( void* p_ctx, const uint32_t seed, const uint8_t a_data[], const uint32_t dataLen,
+                                  uint32_t* const p_crc32Val );
 
 typedef enum
 {
