@@ -60,8 +60,8 @@ e_eFSP_MSGD_Res eFSP_MSGD_InitCtx(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t a_memAre
         else
         {
             /* Initialize internal status clbck */
-            p_ctx->cbCrcPtr = f_Crc;
-            p_ctx->cbCrcCtx = p_clbCtx;
+            p_ctx->f_cbCrc = f_Crc;
+            p_ctx->p_cbCrcCtx = p_clbCtx;
 
 			/* initialize internal bytestuffer */
 			l_resByStuff =  eCU_BUNSTF_InitCtx(&p_ctx->byteUStufferCtnx, a_memArea, memAreaSize);
@@ -567,7 +567,7 @@ e_eFSP_MSGD_Res eFSP_MSGD_InsEncChunk(s_eFSP_MSGD_Ctx* const p_ctx, uint8_t a_en
                     case MSGD_PRV_MSG_END_CHECK:
                     {
                         /* Verify message integrity */
-                        l_resMsgCorrect = eFSP_MSGD_isMsgCorr(&p_ctx->byteUStufferCtnx, &l_isMCorrect, p_ctx->cbCrcPtr, p_ctx->cbCrcCtx);
+                        l_resMsgCorrect = eFSP_MSGD_isMsgCorr(&p_ctx->byteUStufferCtnx, &l_isMCorrect, p_ctx->f_cbCrc, p_ctx->p_cbCrcCtx);
 
                         if( MSGD_RES_OK == l_resMsgCorrect )
                         {
@@ -651,7 +651,7 @@ static bool_t eFSP_MSGD_isStatusStillCoherent(const s_eFSP_MSGD_Ctx* p_ctx)
     bool_t l_result;
 
 	/* Check context validity */
-	if( ( NULL == p_ctx->cbCrcPtr ) || ( NULL == p_ctx->cbCrcCtx ) )
+	if( ( NULL == p_ctx->f_cbCrc ) || ( NULL == p_ctx->p_cbCrcCtx ) )
 	{
 		l_result = false;
 	}
@@ -756,7 +756,7 @@ static e_eFSP_MSGD_Res eFSP_MSGD_IsFullMsgDec(s_eFSP_MSGD_Ctx* const p_ctx, bool
         else
         {
             /* Full frame received at unstuffer level, check if it is valid message at this level */
-            l_result = eFSP_MSGD_isMsgCorr(&p_ctx->byteUStufferCtnx, p_isMsgDec, p_ctx->cbCrcPtr, p_ctx->cbCrcCtx);
+            l_result = eFSP_MSGD_isMsgCorr(&p_ctx->byteUStufferCtnx, p_isMsgDec, p_ctx->f_cbCrc, p_ctx->p_cbCrcCtx);
         }
     }
 
@@ -816,7 +816,7 @@ static e_eFSP_MSGD_Res eFSP_MSGD_IsFrmBad(s_eFSP_MSGD_Ctx* const p_ctx, bool_t* 
                 else
                 {
                     /* Check complete frame coherence */
-                    l_result = eFSP_MSGD_isMsgCorr(&p_ctx->byteUStufferCtnx, &l_isCorrect, p_ctx->cbCrcPtr, p_ctx->cbCrcCtx);
+                    l_result = eFSP_MSGD_isMsgCorr(&p_ctx->byteUStufferCtnx, &l_isCorrect, p_ctx->f_cbCrc, p_ctx->p_cbCrcCtx);
 
                     if( MSGD_RES_OK == l_result )
                     {

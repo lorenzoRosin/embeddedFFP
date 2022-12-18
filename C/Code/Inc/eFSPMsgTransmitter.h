@@ -42,9 +42,9 @@ typedef bool_t (*cb_tx_tim_getRemaining) ( void* p_ctx, uint32_t* const p_remain
 
 typedef struct
 {
-    void*                   timerCtx;
-    cb_tx_tim_start         tim_start;
-    cb_tx_tim_getRemaining  tim_getRemaining;
+    void*                   p_timerCtx;
+    cb_tx_tim_start         f_tim_start;
+    cb_tx_tim_getRemaining  f_tim_getRemaining;
 }s_eFSP_TXTIMER;
 
 typedef enum
@@ -78,14 +78,14 @@ typedef struct
 
 typedef struct
 {
-    uint8_t*        i_memArea;
+    uint8_t*        p_i_memArea;
     uint32_t        i_memAreaSize;
-    uint8_t*        i_sendBuffArea;
+    uint8_t*        p_i_sendBuffArea;
     uint32_t        i_sendBuffAreaSize;
-    cb_crc32_msge   i_cbCrcP;
-    void*           i_cbCrcCtx;
-    cb_tx_msge      i_cbTxP;
-    void*           i_cbTxCtx;
+    cb_crc32_msge   f_i_Crc;
+    void*           p_i_cbCrcCtx;
+    cb_tx_msge      f_i_Tx;
+    void*           p_i_cbTxCtx;
     s_eFSP_TXTIMER  i_txTimer;
     uint32_t        i_frameTimeoutMs;
     uint32_t        i_timePerSendMs;

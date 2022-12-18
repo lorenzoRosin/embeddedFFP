@@ -42,9 +42,9 @@ typedef bool_t (*cb_rx_tim_getRemaining) ( void* p_ctx, uint32_t* const p_remain
 
 typedef struct
 {
-    void*                   timerCtx;
-    cb_rx_tim_start         tim_start;
-    cb_rx_tim_getRemaining  tim_getRemaining;
+    void*                   p_timerCtx;
+    cb_rx_tim_start         f_tim_start;
+    cb_rx_tim_getRemaining  f_tim_getRemaining;
 }s_eFSP_RXTIMER;
 
 typedef enum
@@ -67,12 +67,12 @@ typedef enum
 typedef struct
 {
     s_eFSP_MSGD_Ctx msgDecoderCtnx;
-	uint8_t*        rxBuff;
+	uint8_t*        p_rxBuff;
 	uint32_t        rxBuffSize;
 	uint32_t        rxBuffCntr;
     uint32_t        rxBuffFill;
-    cb_rx_msge      cbRxP;
-    void*           cbRxCtx;
+    cb_rx_msge      f_Rx;
+    void*           p_RxCtx;
     s_eFSP_RXTIMER  rxTim;
     uint32_t        frameTimeoutMs;
     uint32_t        timePerRecMs;
@@ -81,14 +81,14 @@ typedef struct
 
 typedef struct
 {
-    uint8_t*        i_memArea;
+    uint8_t*        p_i_memArea;
     uint32_t        i_memAreaSize;
-    uint8_t*        i_receiveBuffArea;
+    uint8_t*        p_i_receiveBuffArea;
     uint32_t        i_receiveBuffAreaSize;
-    cb_crc32_msgd   i_cbCrcP;
-    void*           i_cbCrcCrx;
-    cb_rx_msge      i_cbRxP;
-    void*           i_cbRxCtx;
+    cb_crc32_msgd   f_i_Crc;
+    void*           p_i_cbCrcCtx;
+    cb_rx_msge      f_i_Rx;
+    void*           p_i_cbRxCtx;
     s_eFSP_RXTIMER  i_rxTim;
     uint32_t        i_frameTimeoutMs;
     uint32_t        i_timePerRecMs;

@@ -53,8 +53,8 @@ e_eFSP_MSGE_Res eFSP_MSGE_InitCtx(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t a_memAre
         else
         {
             /* Initialize internal status clbck */
-            p_ctx->cbCrcPtr = f_Crc;
-            p_ctx->cbCrcCtx = p_clbCtx;
+            p_ctx->f_cbCrc = f_Crc;
+            p_ctx->p_cbCrcCtx = p_clbCtx;
 
 			/* initialize internal bytestuffer */
 			l_resultByStuff =  eCU_BSTF_InitCtx(&p_ctx->byteStufferCtnx, a_memArea, memAreaSize);
@@ -211,7 +211,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_NewMessage(s_eFSP_MSGE_Ctx* const p_ctx, const uint32_
 
 							/* Calculate the CRC of data payload and messageLen */
 							l_nBToCrc = messageLen + 4u;
-							l_crcRes = (*(p_ctx->cbCrcPtr))( p_ctx->cbCrcCtx, ECU_CRC_BASE_SEED, &lp_data[4u], l_nBToCrc, &l_cR32 );
+							l_crcRes = (*(p_ctx->f_cbCrc))( p_ctx->p_cbCrcCtx, ECU_CRC_BASE_SEED, &lp_data[4u], l_nBToCrc, &l_cR32 );
 
 							if( true == l_crcRes )
 							{
@@ -348,7 +348,7 @@ static bool_t eFSP_MSGE_isStatusStillCoherent(const s_eFSP_MSGE_Ctx* p_ctx)
     bool_t l_result;
 
 	/* Check context validity */
-	if( ( NULL == p_ctx->cbCrcPtr ) || ( NULL == p_ctx->cbCrcCtx ) )
+	if( ( NULL == p_ctx->f_cbCrc ) || ( NULL == p_ctx->p_cbCrcCtx ) )
 	{
 		l_result = false;
 	}

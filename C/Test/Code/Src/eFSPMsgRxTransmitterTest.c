@@ -298,17 +298,17 @@ void msgRxTransmitterTestCommon(void)
     (void)memset(&initDataRX, 0, sizeof(s_eFSP_MSGRX_InitData));
 
     /* Init */
-    initDataTx.i_memArea = memAreaTx;
+    initDataTx.p_i_memArea = memAreaTx;
     initDataTx.i_memAreaSize = sizeof(memAreaTx);
-    initDataTx.i_sendBuffArea = sendBuff;
+    initDataTx.p_i_sendBuffArea = sendBuff;
     initDataTx.i_sendBuffAreaSize = sizeof(sendBuff);
-    initDataTx.i_cbCrcP = &c32SAdapt;
-    initDataTx.i_cbCrcCtx = &ctxAdapterCrcTx;
-    initDataTx.i_cbTxP = &sendMsg;
-    initDataTx.i_cbTxCtx = &ctxAdapterSend;
-    initDataTx.i_txTimer.timerCtx = &ctxAdapterTimTx;
-    initDataTx.i_txTimer.tim_start = &timStart;
-    initDataTx.i_txTimer.tim_getRemaining = &timGetRemaining;
+    initDataTx.f_i_Crc = &c32SAdapt;
+    initDataTx.p_i_cbCrcCtx = &ctxAdapterCrcTx;
+    initDataTx.f_i_Tx = &sendMsg;
+    initDataTx.p_i_cbTxCtx = &ctxAdapterSend;
+    initDataTx.i_txTimer.p_timerCtx = &ctxAdapterTimTx;
+    initDataTx.i_txTimer.f_tim_start = &timStart;
+    initDataTx.i_txTimer.f_tim_getRemaining = &timGetRemaining;
     initDataTx.i_frameTimeoutMs = 1000u;
     initDataTx.i_timePerSendMs = 100u;
 
@@ -321,17 +321,17 @@ void msgRxTransmitterTestCommon(void)
         (void)printf("msgRxTransmitterTestCommon 1  -- FAIL \n");
     }
 
-    initDataRX.i_memArea = memAreaRX;
+    initDataRX.p_i_memArea = memAreaRX;
     initDataRX.i_memAreaSize = sizeof(memAreaRX);
-    initDataRX.i_receiveBuffArea = recBuff;
+    initDataRX.p_i_receiveBuffArea = recBuff;
     initDataRX.i_receiveBuffAreaSize = sizeof(recBuff);
-    initDataRX.i_cbCrcP = &c32SAdapt;
-    initDataRX.i_cbCrcCrx = &ctxAdapterCrcRX;
-    initDataRX.i_cbRxP = &receiveMsg;
-    initDataRX.i_cbRxCtx = &ctxAdapterRx;
-    initDataRX.i_rxTim.timerCtx = &ctxAdapterTim;
-    initDataRX.i_rxTim.tim_start = &timStart;
-    initDataRX.i_rxTim.tim_getRemaining = &timGetRemaining;
+    initDataRX.f_i_Crc = &c32SAdapt;
+    initDataRX.p_i_cbCrcCtx = &ctxAdapterCrcRX;
+    initDataRX.f_i_Rx = &receiveMsg;
+    initDataRX.p_i_cbRxCtx = &ctxAdapterRx;
+    initDataRX.i_rxTim.p_timerCtx = &ctxAdapterTim;
+    initDataRX.i_rxTim.f_tim_start = &timStart;
+    initDataRX.i_rxTim.f_tim_getRemaining = &timGetRemaining;
     initDataRX.i_frameTimeoutMs = 1000u;
     initDataRX.i_timePerRecMs = 100u;
     initDataRX.i_needWaitFrameStart = true;

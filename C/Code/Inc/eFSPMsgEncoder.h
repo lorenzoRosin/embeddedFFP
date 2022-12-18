@@ -50,8 +50,8 @@ typedef enum
 typedef struct
 {
     s_eCU_BSTF_Ctx  byteStufferCtnx;
-    cb_crc32_msge   cbCrcPtr;
-    void*           cbCrcCtx;
+    cb_crc32_msge   f_cbCrc;
+    void*           p_cbCrcCtx;
 }s_eFSP_MSGE_Ctx;
 
 

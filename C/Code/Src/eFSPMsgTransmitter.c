@@ -45,10 +45,10 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const p_ctx, const s_eFSP_
 	else
 	{
         /* Check pointer validity */
-        if( ( NULL == p_initData->i_memArea ) || ( NULL == p_initData->i_sendBuffArea ) || ( NULL == p_initData->i_cbCrcP ) ||
-            ( NULL == p_initData->i_cbCrcCtx ) || ( NULL == p_initData->i_cbTxP ) || ( NULL == p_initData->i_cbTxCtx ) ||
-            ( NULL == p_initData->i_txTimer.timerCtx ) || ( NULL == p_initData->i_txTimer.tim_start ) ||
-            ( NULL == p_initData->i_txTimer.tim_getRemaining ) )
+        if( ( NULL == p_initData->p_i_memArea ) || ( NULL == p_initData->p_i_sendBuffArea ) || ( NULL == p_initData->f_i_Crc ) ||
+            ( NULL == p_initData->p_i_cbCrcCtx ) || ( NULL == p_initData->f_i_Tx ) || ( NULL == p_initData->p_i_cbTxCtx ) ||
+            ( NULL == p_initData->i_txTimer.p_timerCtx ) || ( NULL == p_initData->i_txTimer.f_tim_start ) ||
+            ( NULL == p_initData->i_txTimer.f_tim_getRemaining ) )
         {
             l_result = MSGTX_RES_BADPOINTER;
         }
@@ -63,19 +63,19 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_InitCtx(s_eFSP_MSGTX_Ctx* const p_ctx, const s_eFSP_
             else
             {
                 /* Initialize internal status variable */
-                p_ctx->sendBuff = p_initData->i_sendBuffArea;
+                p_ctx->sendBuff = p_initData->p_i_sendBuffArea;
                 p_ctx->sendBuffSize = p_initData->i_sendBuffAreaSize;
                 p_ctx->sendBuffCntr = 0u;
                 p_ctx->sendBuffFill = 0u;
-                p_ctx->cbTxP = p_initData->i_cbTxP;
-                p_ctx->cbTxCtx = p_initData->i_cbTxCtx;
+                p_ctx->cbTxP = p_initData->f_i_Tx;
+                p_ctx->cbTxCtx = p_initData->p_i_cbTxCtx;
                 p_ctx->txTimer =  p_initData->i_txTimer;
                 p_ctx->frameTimeoutMs = p_initData->i_frameTimeoutMs;
                 p_ctx->timePerSendMs = p_initData->i_timePerSendMs;
 
                 /* initialize internal message encoder */
-                l_resultMsgE =  eFSP_MSGE_InitCtx(&p_ctx->msgEncoderCtnx, p_initData->i_memArea, p_initData->i_memAreaSize,
-                                           p_initData->i_cbCrcP, p_initData->i_cbCrcCtx);
+                l_resultMsgE =  eFSP_MSGE_InitCtx(&p_ctx->msgEncoderCtnx, p_initData->p_i_memArea, p_initData->i_memAreaSize,
+                                           p_initData->f_i_Crc, p_initData->p_i_cbCrcCtx);
                 l_result = eFSP_MSGTX_convertReturnFromMSGE(l_resultMsgE);
             }
         }
@@ -175,7 +175,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_NewMessage(s_eFSP_MSGTX_Ctx* const p_ctx, const uint
                 /* Start timer */
                 if( MSGTX_RES_OK == l_result )
                 {
-                    if( true != p_ctx->txTimer.tim_start( p_ctx->txTimer.timerCtx, p_ctx->frameTimeoutMs ) )
+                    if( true != p_ctx->txTimer.f_tim_start( p_ctx->txTimer.p_timerCtx, p_ctx->frameTimeoutMs ) )
                     {
                         l_result = MSGTX_RES_TIMCLBKERROR;
                     }
@@ -218,7 +218,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_RestartMessage(s_eFSP_MSGTX_Ctx* const p_ctx)
             /* Start timer */
             if( MSGTX_RES_OK == l_result )
             {
-                if( true != p_ctx->txTimer.tim_start( p_ctx->txTimer.timerCtx, p_ctx->frameTimeoutMs ) )
+                if( true != p_ctx->txTimer.f_tim_start( p_ctx->txTimer.p_timerCtx, p_ctx->frameTimeoutMs ) )
                 {
                     l_result = MSGTX_RES_TIMCLBKERROR;
                 }
@@ -313,7 +313,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const p_ctx)
                     case MSGTX_PRV_CHECKINITTIMEOUT:
                     {
                         /* Check if frame timeout is eplased */
-                        if( true == p_ctx->txTimer.tim_getRemaining(p_ctx->txTimer.timerCtx, &l_sRemainTxTime) )
+                        if( true == p_ctx->txTimer.f_tim_getRemaining(p_ctx->txTimer.p_timerCtx, &l_sRemainTxTime) )
                         {
                             if( l_sRemainTxTime <= 0u )
                             {
@@ -447,7 +447,7 @@ e_eFSP_MSGTX_Res eFSP_MSGTX_SendChunk(s_eFSP_MSGTX_Ctx* const p_ctx)
                     case MSGTX_PRV_CHECKTIMEOUTAFTERTX:
                     {
                         /* Check if frame timeout is eplased */
-                        if( true == p_ctx->txTimer.tim_getRemaining(p_ctx->txTimer.timerCtx, &l_cRemainTxTime) )
+                        if( true == p_ctx->txTimer.f_tim_getRemaining(p_ctx->txTimer.p_timerCtx, &l_cRemainTxTime) )
                         {
                             /* Check time validity */
                             if( l_cRemainTxTime > l_sRemainTxTime )
@@ -539,8 +539,8 @@ static bool_t eFSP_MSGTX_isStatusStillCoherent(const s_eFSP_MSGTX_Ctx* p_ctx)
 
 	/* Check pointer validity */
 	if( ( NULL == p_ctx->sendBuff ) || ( NULL == p_ctx->cbTxP ) || ( NULL == p_ctx->cbTxCtx ) ||
-        ( NULL == p_ctx->txTimer.timerCtx ) || ( NULL == p_ctx->txTimer.tim_start ) ||
-        ( NULL == p_ctx->txTimer.tim_getRemaining ) )
+        ( NULL == p_ctx->txTimer.p_timerCtx ) || ( NULL == p_ctx->txTimer.f_tim_start ) ||
+        ( NULL == p_ctx->txTimer.f_tim_getRemaining ) )
 	{
 		l_result = false;
 	}

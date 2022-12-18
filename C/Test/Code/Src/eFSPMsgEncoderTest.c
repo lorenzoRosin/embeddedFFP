@@ -323,8 +323,8 @@ void msgEncoderTestBadInit(void)
 
     /* Set value */
     ctx.byteStufferCtnx.isInit = false;
-    ctx.cbCrcCtx = &ctxAdapterCrc;
-    ctx.cbCrcPtr = cbCrcPTest;
+    ctx.p_cbCrcCtx = &ctxAdapterCrc;
+    ctx.f_cbCrc = cbCrcPTest;
 
     /* Function */
     if( MSGE_RES_NOINITLIB == eFSP_MSGE_NewMessage(&ctx, 1u) )
@@ -560,7 +560,7 @@ void msgEncoderTestCorruptContext(void)
         (void)printf("msgEncoderTestCorruptContext 1  -- FAIL \n");
     }
 
-    ctx.cbCrcCtx = NULL;
+    ctx.p_cbCrcCtx = NULL;
     if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_NewMessage(&ctx, 2u) )
     {
         (void)printf("msgEncoderTestCorruptContext 2  -- OK \n");
@@ -580,7 +580,7 @@ void msgEncoderTestCorruptContext(void)
         (void)printf("msgEncoderTestCorruptContext 3  -- FAIL \n");
     }
 
-    ctx.cbCrcPtr = NULL;
+    ctx.f_cbCrc = NULL;
     if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_NewMessage(&ctx, 2u) )
     {
         (void)printf("msgEncoderTestCorruptContext 4  -- OK \n");
@@ -600,7 +600,7 @@ void msgEncoderTestCorruptContext(void)
         (void)printf("msgEncoderTestCorruptContext 5  -- FAIL \n");
     }
 
-    ctx.cbCrcPtr = NULL;
+    ctx.f_cbCrc = NULL;
     if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetWherePutData(&ctx, &dataP, &var32) )
     {
         (void)printf("msgEncoderTestCorruptContext 6  -- OK \n");
@@ -620,7 +620,7 @@ void msgEncoderTestCorruptContext(void)
         (void)printf("msgEncoderTestCorruptContext 7  -- FAIL \n");
     }
 
-    ctx.cbCrcPtr = NULL;
+    ctx.f_cbCrc = NULL;
     if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_RestartMessage(&ctx) )
     {
         (void)printf("msgEncoderTestCorruptContext 8  -- OK \n");
@@ -640,7 +640,7 @@ void msgEncoderTestCorruptContext(void)
         (void)printf("msgEncoderTestCorruptContext 9  -- FAIL \n");
     }
 
-    ctx.cbCrcPtr = NULL;
+    ctx.f_cbCrc = NULL;
     if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
     {
         (void)printf("msgEncoderTestCorruptContext 10 -- OK \n");
@@ -660,7 +660,7 @@ void msgEncoderTestCorruptContext(void)
         (void)printf("msgEncoderTestCorruptContext 11 -- FAIL \n");
     }
 
-    ctx.cbCrcPtr = NULL;
+    ctx.f_cbCrc = NULL;
     if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetEncChunk(&ctx, memArea, 2u, &var32) )
     {
         (void)printf("msgEncoderTestCorruptContext 12 -- OK \n");
