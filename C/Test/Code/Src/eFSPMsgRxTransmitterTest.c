@@ -76,7 +76,7 @@ static void msgRxTransmitterTestCommon(void);
 /***********************************************************************************************************************
  *   GLOBAL FUNCTIONS
  **********************************************************************************************************************/
-void msgRxTransmitterTest(void)
+void eFSP_TEST_msgRxTransmitter(void)
 {
 	(void)printf("\n\nMESSAGE RECEIVER TRANSMITTER TEST START \n\n");
 

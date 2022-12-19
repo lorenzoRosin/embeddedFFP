@@ -93,7 +93,7 @@ static void msgReceiverTestCornerCase6(void);
 /***********************************************************************************************************************
  *   GLOBAL FUNCTIONS
  **********************************************************************************************************************/
-void msgReceiverTest(void)
+void eFSP_TEST_msgReceiver(void)
 {
 	(void)printf("\n\nMESSAGE RECEIVER TEST START \n\n");
 

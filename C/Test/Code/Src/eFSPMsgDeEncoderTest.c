@@ -54,7 +54,7 @@ static void msgDeEncoderTestCommon(void);
 /***********************************************************************************************************************
  *   GLOBAL FUNCTIONS
  **********************************************************************************************************************/
-void msgDeEncoderTest(void)
+void eFSP_TEST_msgDeEncoder(void)
 {
 	(void)printf("\n\nMESSAGE DECODER ENCODER TEST START \n\n");
 

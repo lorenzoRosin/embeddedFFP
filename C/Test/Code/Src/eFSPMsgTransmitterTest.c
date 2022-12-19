@@ -90,7 +90,7 @@ static void msgTransmitterTestCornerCase3(void);
 /***********************************************************************************************************************
  *   GLOBAL FUNCTIONS
  **********************************************************************************************************************/
-void msgTransmitterTest(void)
+void eFSP_TEST_msgTransmitter(void)
 {
 	(void)printf("\n\nMESSAGE TRANSMITTER TEST START \n\n");
 
