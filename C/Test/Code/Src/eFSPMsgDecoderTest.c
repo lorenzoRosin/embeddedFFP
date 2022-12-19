@@ -47,23 +47,23 @@ static bool_t c32SAdaptEr(void* cntx, const uint32_t s, const uint8_t* d, const 
 /***********************************************************************************************************************
  *   PRIVATE FUNCTION DECLARATION
  **********************************************************************************************************************/
-static void msgDecoderTestBadPointer(void);
-static void msgDecoderTestBadInit(void);
-static void msgDecoderTestBadParamEntr(void);
-static void msgDecoderTestCorruptedCtx(void);
-static void msgDecoderTestBadClBck(void);
-static void msgDecoderTestMsgEnd(void);
-static void msgDecoderTestFrameRestart(void);
-static void msgDecoderTestBadFrame(void);
-static void msgDecoderTestOutOfMem();
-static void msgDecoderTestGeneral(void);
-static void msgDecoderTestGeneral2(void);
-static void msgDecoderTestCorernerMulti(void);
-static void msgDecoderTestErrorAndContinue(void);
-static void msgDecoderTestErrorAndContinueEx(void);
-static void msgDecoderTestErrorShortFrame(void);
-static void msgDecoderTestErrorBadStuff(void);
-static void msgDecoderTestCorner(void);
+static void eFSP_TEST_msgDecoderBadPointer(void);
+static void eFSP_TEST_msgDecoderBadInit(void);
+static void eFSP_TEST_msgDecoderBadParamEntr(void);
+static void eFSP_TEST_msgDecoderCorruptedCtx(void);
+static void eFSP_TEST_msgDecoderBadClBck(void);
+static void eFSP_TEST_msgDecoderMsgEnd(void);
+static void eFSP_TEST_msgDecoderFrameRestart(void);
+static void eFSP_TEST_msgDecoderBadFrame(void);
+static void eFSP_TEST_msgDecoderOutOfMem();
+static void eFSP_TEST_msgDecoderGeneral(void);
+static void eFSP_TEST_msgDecoderGeneral2(void);
+static void eFSP_TEST_msgDecoderCorernerMulti(void);
+static void eFSP_TEST_msgDecoderErrorAndContinue(void);
+static void eFSP_TEST_msgDecoderErrorAndContinueEx(void);
+static void eFSP_TEST_msgDecoderErrorShortFrame(void);
+static void eFSP_TEST_msgDecoderErrorBadStuff(void);
+static void eFSP_TEST_msgDecoderCorner(void);
 
 
 
@@ -74,23 +74,23 @@ void eFSP_TEST_msgDecoder(void)
 {
 	(void)printf("\n\nMESSAGE DECODER TEST START \n\n");
 
-    msgDecoderTestBadPointer();
-    msgDecoderTestBadInit();
-    msgDecoderTestBadParamEntr();
-    msgDecoderTestCorruptedCtx();
-    msgDecoderTestBadClBck();
-    msgDecoderTestOutOfMem();
-    msgDecoderTestMsgEnd();
-    msgDecoderTestBadFrame();
-    msgDecoderTestFrameRestart();
-    msgDecoderTestGeneral();
-    msgDecoderTestGeneral2();
-    msgDecoderTestCorernerMulti();
-    msgDecoderTestErrorAndContinue();
-    msgDecoderTestErrorAndContinueEx();
-    msgDecoderTestErrorShortFrame();
-    msgDecoderTestErrorBadStuff();
-    msgDecoderTestCorner();
+    eFSP_TEST_msgDecoderBadPointer();
+    eFSP_TEST_msgDecoderBadInit();
+    eFSP_TEST_msgDecoderBadParamEntr();
+    eFSP_TEST_msgDecoderCorruptedCtx();
+    eFSP_TEST_msgDecoderBadClBck();
+    eFSP_TEST_msgDecoderOutOfMem();
+    eFSP_TEST_msgDecoderMsgEnd();
+    eFSP_TEST_msgDecoderBadFrame();
+    eFSP_TEST_msgDecoderFrameRestart();
+    eFSP_TEST_msgDecoderGeneral();
+    eFSP_TEST_msgDecoderGeneral2();
+    eFSP_TEST_msgDecoderCorernerMulti();
+    eFSP_TEST_msgDecoderErrorAndContinue();
+    eFSP_TEST_msgDecoderErrorAndContinueEx();
+    eFSP_TEST_msgDecoderErrorShortFrame();
+    eFSP_TEST_msgDecoderErrorBadStuff();
+    eFSP_TEST_msgDecoderCorner();
 
     (void)printf("\n\nMESSAGE DECODER TEST END \n\n");
 }
@@ -153,7 +153,7 @@ bool_t c32SAdaptEr(void* cntx, const uint32_t s, const uint8_t* d, const uint32_
 /***********************************************************************************************************************
  *   PRIVATE FUNCTION
  **********************************************************************************************************************/
-void msgDecoderTestBadPointer(void)
+void eFSP_TEST_msgDecoderBadPointer(void)
 {
     /* Local variable */
     s_eFSP_MSGD_Ctx ctx;
@@ -168,233 +168,233 @@ void msgDecoderTestBadPointer(void)
     /* Function */
     if( MSGD_RES_BADPOINTER == eFSP_MSGD_InitCtx(NULL, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestBadPointer 1  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 1  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadPointer 1  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 1  -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_BADPOINTER == eFSP_MSGD_InitCtx(&ctx, NULL, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestBadPointer 2  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 2  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadPointer 2  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 2  -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_BADPOINTER == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), NULL, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestBadPointer 3  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 3  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadPointer 3  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 3  -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_BADPOINTER == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, NULL) )
     {
-        (void)printf("msgDecoderTestBadPointer 4  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 4  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadPointer 4  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 4  -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_BADPOINTER == eFSP_MSGD_NewMsg(NULL) )
     {
-        (void)printf("msgDecoderTestBadPointer 5  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 5  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadPointer 5  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 5  -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_BADPOINTER == eFSP_MSGD_GetDecodedData(NULL, &dataP, &var32) )
     {
-        (void)printf("msgDecoderTestBadPointer 6  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 6  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadPointer 6  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 6  -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_BADPOINTER == eFSP_MSGD_GetDecodedData(&ctx, NULL, &var32) )
     {
-        (void)printf("msgDecoderTestBadPointer 7  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 7  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadPointer 7  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 7  -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_BADPOINTER == eFSP_MSGD_GetDecodedData(&ctx, &dataP, NULL) )
     {
-        (void)printf("msgDecoderTestBadPointer 8  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 8  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadPointer 8  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 8  -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_BADPOINTER == eFSP_MSGD_GetDecodedLen(NULL, &var32) )
     {
-        (void)printf("msgDecoderTestBadPointer 9  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 9  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadPointer 9  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 9  -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_BADPOINTER == eFSP_MSGD_GetDecodedLen(&ctx, NULL) )
     {
-        (void)printf("msgDecoderTestBadPointer 10 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 10 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadPointer 10 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 10 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_BADPOINTER == eFSP_MSGD_IsWaitingSof(NULL, &isMsgDec) )
     {
-        (void)printf("msgDecoderTestBadPointer 11 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 11 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadPointer 11 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 11 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_BADPOINTER == eFSP_MSGD_IsWaitingSof(&ctx, NULL) )
     {
-        (void)printf("msgDecoderTestBadPointer 12 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 12 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadPointer 12 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 12 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_BADPOINTER == eFSP_MSGD_IsAFullMsgDecoded(NULL, &isMsgDec) )
     {
-        (void)printf("msgDecoderTestBadPointer 13 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 13 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadPointer 13 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 13 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_BADPOINTER == eFSP_MSGD_IsAFullMsgDecoded(&ctx, NULL) )
     {
-        (void)printf("msgDecoderTestBadPointer 14 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 14 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadPointer 14 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 14 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_BADPOINTER == eFSP_MSGD_IsFrameBad(NULL, &isMsgDec) )
     {
-        (void)printf("msgDecoderTestBadPointer 15 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 15 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadPointer 15 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 15 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_BADPOINTER == eFSP_MSGD_IsFrameBad(&ctx, NULL) )
     {
-        (void)printf("msgDecoderTestBadPointer 16 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 16 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadPointer 16 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 16 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_BADPOINTER == eFSP_MSGD_GetMostEffDatLen(NULL, &var32) )
     {
-        (void)printf("msgDecoderTestBadPointer 17 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 17 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadPointer 17 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 17 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_BADPOINTER == eFSP_MSGD_GetMostEffDatLen(&ctx, NULL) )
     {
-        (void)printf("msgDecoderTestBadPointer 18 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 18 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadPointer 18 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 18 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_BADPOINTER == eFSP_MSGD_InsEncChunk(NULL, memArea, sizeof(memArea), &var32) )
     {
-        (void)printf("msgDecoderTestBadPointer 19 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 19 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadPointer 19 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 19 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_BADPOINTER == eFSP_MSGD_InsEncChunk(&ctx, NULL, sizeof(memArea), &var32) )
     {
-        (void)printf("msgDecoderTestBadPointer 20 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 20 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadPointer 20 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 20 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_BADPOINTER == eFSP_MSGD_InsEncChunk(&ctx, memArea, sizeof(memArea), NULL) )
     {
-        (void)printf("msgDecoderTestBadPointer 21 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 21 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadPointer 21 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 21 -- FAIL \n");
     }
 
     if( MSGD_RES_BADPOINTER == eFSP_MSGD_IsInit( NULL, &isInit ) )
     {
-        (void)printf("msgDecoderTestBadPointer 22 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 22 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadPointer 22 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 22 -- FAIL \n");
     }
 
     if( MSGD_RES_BADPOINTER == eFSP_MSGD_IsInit( &ctx, NULL ) )
     {
-        (void)printf("msgDecoderTestBadPointer 23 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 23 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadPointer 23 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadPointer 23 -- FAIL \n");
     }
 }
 
-void msgDecoderTestBadInit(void)
+void eFSP_TEST_msgDecoderBadInit(void)
 {
     /* Local variable */
     s_eFSP_MSGD_Ctx ctx;
@@ -414,51 +414,51 @@ void msgDecoderTestBadInit(void)
 
     if( MSGD_RES_NOINITLIB == eFSP_MSGD_NewMsg(&ctx) )
     {
-        (void)printf("msgDecoderTestBadInit 1  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadInit 1  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadInit 1  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadInit 1  -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_NOINITLIB == eFSP_MSGD_GetDecodedData(&ctx, &dataP, &var32) )
     {
-        (void)printf("msgDecoderTestBadInit 2  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadInit 2  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadInit 2  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadInit 2  -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_NOINITLIB == eFSP_MSGD_GetDecodedLen(&ctx, &var32) )
     {
-        (void)printf("msgDecoderTestBadInit 3  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadInit 3  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadInit 3  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadInit 3  -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_NOINITLIB == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
-        (void)printf("msgDecoderTestBadInit 4  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadInit 4  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadInit 4  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadInit 4  -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_NOINITLIB == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
-        (void)printf("msgDecoderTestBadInit 5  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadInit 5  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadInit 5  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadInit 5  -- FAIL \n");
     }
 
     /* Function */
@@ -466,56 +466,56 @@ void msgDecoderTestBadInit(void)
     {
         if( CRC_RES_OK == ctxAdapterCrc.lastError )
         {
-            (void)printf("msgDecoderTestBadInit 6  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderBadInit 6  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestBadInit 6  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderBadInit 6  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestBadInit 6  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadInit 6  -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_NOINITLIB == eFSP_MSGD_GetMostEffDatLen(&ctx, &var32) )
     {
-        (void)printf("msgDecoderTestBadInit 7  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadInit 7  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadInit 7  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadInit 7  -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_NOINITLIB == eFSP_MSGD_InsEncChunk(&ctx, memArea, sizeof(memArea), &var32) )
     {
-        (void)printf("msgDecoderTestBadInit 8  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadInit 8  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadInit 8  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadInit 8  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsInit( &ctx, &isInit ) )
     {
         if( false == isInit )
         {
-            (void)printf("msgDecoderTestBadInit 9  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderBadInit 9  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestBadInit 9  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderBadInit 9  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestBadInit 9  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadInit 9  -- FAIL \n");
     }
 }
 
-void msgDecoderTestBadParamEntr(void)
+void eFSP_TEST_msgDecoderBadParamEntr(void)
 {
     /* Local variable */
     s_eFSP_MSGD_Ctx ctx;
@@ -528,51 +528,51 @@ void msgDecoderTestBadParamEntr(void)
     /* Function */
     if( MSGD_RES_BADPARAM == eFSP_MSGD_InitCtx(&ctx, memArea, 8u, cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestBadParamEntr 1  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadParamEntr 1  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadParamEntr 1  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadParamEntr 1  -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestBadParamEntr 2  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadParamEntr 2  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadParamEntr 2  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadParamEntr 2  -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_BADPARAM == eFSP_MSGD_InsEncChunk(&ctx, memArea, 0u, &var32) )
     {
-        (void)printf("msgDecoderTestBadParamEntr 3  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadParamEntr 3  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadParamEntr 3  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadParamEntr 3  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsInit( &ctx, &isInit ) )
     {
         if( true == isInit )
         {
-            (void)printf("msgDecoderTestBadParamEntr 4  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderBadParamEntr 4  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestBadParamEntr 4  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderBadParamEntr 4  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestBadParamEntr 4  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadParamEntr 4  -- FAIL \n");
     }
 }
 
-void msgDecoderTestCorruptedCtx(void)
+void eFSP_TEST_msgDecoderCorruptedCtx(void)
 {
     /* Local variable */
     s_eFSP_MSGD_Ctx ctx;
@@ -586,345 +586,345 @@ void msgDecoderTestCorruptedCtx(void)
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 1  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 1  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 1  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 1  -- FAIL \n");
     }
 
     ctx.f_Crc = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_NewMsg(&ctx) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 2  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 2  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 2  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 2  -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 3  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 3  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 3  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 3  -- FAIL \n");
     }
 
     ctx.p_crcCtx = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_NewMsg(&ctx) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 4  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 4  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 4  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 4  -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 5  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 5  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 5  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 5  -- FAIL \n");
     }
 
     ctx.p_crcCtx = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_GetDecodedData(&ctx, &dataP, &var32) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 6  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 6  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 6  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 6  -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 7  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 7  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 7  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 7  -- FAIL \n");
     }
 
     ctx.p_crcCtx = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_GetDecodedLen(&ctx,&var32) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 8  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 8  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 8  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 8  -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 9  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 9  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 9  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 9  -- FAIL \n");
     }
 
     ctx.p_crcCtx = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 10 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 10 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 10 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 10 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 11 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 11 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 11 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 11 -- FAIL \n");
     }
 
     ctx.p_crcCtx = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 12 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 12 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 12 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 12 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 13 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 13 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 13 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 13 -- FAIL \n");
     }
 
     ctx.p_crcCtx = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 14 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 14 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 14 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 14 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 15 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 15 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 15 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 15 -- FAIL \n");
     }
 
     ctx.p_crcCtx = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_GetMostEffDatLen(&ctx, &var32) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 16 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 16 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 16 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 16 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 17 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 17 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 17 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 17 -- FAIL \n");
     }
 
     ctx.p_crcCtx = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_InsEncChunk(&ctx, memArea, 10u, &var32) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 18 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 18 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 18 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 18 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 19 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 19 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 19 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 19 -- FAIL \n");
     }
 
     ctx.bunstf_Ctx.p_memA = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_NewMsg(&ctx) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 20 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 20 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 20 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 20 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 21 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 21 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 21 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 21 -- FAIL \n");
     }
 
     ctx.bunstf_Ctx.p_memA = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_GetDecodedData(&ctx, &dataP, &var32) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 22 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 22 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 22 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 22 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 23 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 23 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 23 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 23 -- FAIL \n");
     }
 
     ctx.bunstf_Ctx.p_memA = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_GetDecodedLen(&ctx, &var32) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 24 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 24 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 24 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 24 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 25 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 25 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 25 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 25 -- FAIL \n");
     }
 
     ctx.bunstf_Ctx.p_memA = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 26 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 26 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 26 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 26 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 27 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 27 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 27 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 27 -- FAIL \n");
     }
 
     ctx.bunstf_Ctx.p_memA = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 28 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 28 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 28 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 28 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 29 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 29 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 29 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 29 -- FAIL \n");
     }
 
     ctx.bunstf_Ctx.p_memA = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 30 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 30 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 30 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 30 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 31 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 31 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 31 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 31 -- FAIL \n");
     }
 
     ctx.bunstf_Ctx.p_memA = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_GetMostEffDatLen(&ctx, &var32) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 32 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 32 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 32 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 32 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, 9u, cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 33 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 33 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 33 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 33 -- FAIL \n");
     }
 
     ctx.bunstf_Ctx.p_memA = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_InsEncChunk(&ctx, memArea, 10u, &var32) )
     {
-        (void)printf("msgDecoderTestCorruptedCtx 34 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 34 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorruptedCtx 34 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 34 -- FAIL \n");
     }
 }
 
-void msgDecoderTestBadClBck(void)
+void eFSP_TEST_msgDecoderBadClBck(void)
 {
     /* Local variable */
     s_eFSP_MSGD_Ctx ctx;
@@ -937,20 +937,20 @@ void msgDecoderTestBadClBck(void)
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestBadClBck 1  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadClBck 1  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadClBck 1  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadClBck 1  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
-        (void)printf("msgDecoderTestBadClBck 2  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadClBck 2  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadClBck 2  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadClBck 2  -- FAIL \n");
     }
 
     /* Decode */
@@ -960,38 +960,38 @@ void msgDecoderTestBadClBck(void)
     {
         if( CRC_RES_BADPOINTER == ctxAdapterCrc.lastError )
         {
-            (void)printf("msgDecoderTestBadClBck 3  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderBadClBck 3  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestBadClBck 3  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderBadClBck 3  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestBadClBck 3  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadClBck 3  -- FAIL \n");
     }
 
     if( MSGD_RES_CRCCLBKERROR == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
-        (void)printf("msgDecoderTestBadClBck 4  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadClBck 4  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadClBck 4  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadClBck 4  -- FAIL \n");
     }
 
     if( MSGD_RES_CRCCLBKERROR == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
-        (void)printf("msgDecoderTestBadClBck 5  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadClBck 5  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadClBck 5  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadClBck 5  -- FAIL \n");
     }
 }
 
-void msgDecoderTestMsgEnd(void)
+void eFSP_TEST_msgDecoderMsgEnd(void)
 {
     /* Local variable */
     s_eFSP_MSGD_Ctx ctx;
@@ -1003,20 +1003,20 @@ void msgDecoderTestMsgEnd(void)
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestMsgEnd 1  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderMsgEnd 1  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestMsgEnd 1  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderMsgEnd 1  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
-        (void)printf("msgDecoderTestMsgEnd 2  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderMsgEnd 2  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestMsgEnd 2  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderMsgEnd 2  -- FAIL \n");
     }
 
     /* Decode */
@@ -1024,15 +1024,15 @@ void msgDecoderTestMsgEnd(void)
 
     if( MSGD_RES_MESSAGEENDED == eFSP_MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &var32) )
     {
-        (void)printf("msgDecoderTestMsgEnd 3  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderMsgEnd 3  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestMsgEnd 3  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderMsgEnd 3  -- FAIL \n");
     }
 }
 
-void msgDecoderTestOutOfMem(void)
+void eFSP_TEST_msgDecoderOutOfMem(void)
 {
     /* Local variable */
     s_eFSP_MSGD_Ctx ctx;
@@ -1044,20 +1044,20 @@ void msgDecoderTestOutOfMem(void)
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestOutOfMem 1  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderOutOfMem 1  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestOutOfMem 1  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderOutOfMem 1  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
-        (void)printf("msgDecoderTestOutOfMem 2  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderOutOfMem 2  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestOutOfMem 2  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderOutOfMem 2  -- FAIL \n");
     }
 
     /* Decode */
@@ -1065,15 +1065,15 @@ void msgDecoderTestOutOfMem(void)
 
     if( MSGD_RES_OUTOFMEM == eFSP_MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &var32) )
     {
-        (void)printf("msgDecoderTestOutOfMem 3  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderOutOfMem 3  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestOutOfMem 3  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderOutOfMem 3  -- FAIL \n");
     }
 }
 
-void msgDecoderTestBadFrame(void)
+void eFSP_TEST_msgDecoderBadFrame(void)
 {
     /* Local variable */
     s_eFSP_MSGD_Ctx ctx;
@@ -1085,20 +1085,20 @@ void msgDecoderTestBadFrame(void)
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestBadFrame 1  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadFrame 1  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadFrame 1  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadFrame 1  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
-        (void)printf("msgDecoderTestBadFrame 2  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadFrame 2  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadFrame 2  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadFrame 2  -- FAIL \n");
     }
 
     /* Decode */
@@ -1106,15 +1106,15 @@ void msgDecoderTestBadFrame(void)
 
     if( MSGD_RES_BADFRAME == eFSP_MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &var32) )
     {
-        (void)printf("msgDecoderTestBadFrame 3  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderBadFrame 3  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestBadFrame 3  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderBadFrame 3  -- FAIL \n");
     }
 }
 
-void msgDecoderTestFrameRestart(void)
+void eFSP_TEST_msgDecoderFrameRestart(void)
 {
     /* Local variable */
     s_eFSP_MSGD_Ctx ctx;
@@ -1126,20 +1126,20 @@ void msgDecoderTestFrameRestart(void)
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestFrameRestart 1  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderFrameRestart 1  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestFrameRestart 1  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderFrameRestart 1  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
-        (void)printf("msgDecoderTestFrameRestart 2  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderFrameRestart 2  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestFrameRestart 2  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderFrameRestart 2  -- FAIL \n");
     }
 
     /* Decode */
@@ -1147,15 +1147,15 @@ void msgDecoderTestFrameRestart(void)
 
     if( MSGD_RES_FRAMERESTART == eFSP_MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &var32) )
     {
-        (void)printf("msgDecoderTestFrameRestart 3  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderFrameRestart 3  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestFrameRestart 3  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderFrameRestart 3  -- FAIL \n");
     }
 }
 
-void msgDecoderTestGeneral(void)
+void eFSP_TEST_msgDecoderGeneral(void)
 {
     /* Local variable */
     s_eFSP_MSGD_Ctx ctx;
@@ -1171,116 +1171,116 @@ void msgDecoderTestGeneral(void)
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestGeneral 1  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral 1  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral 1  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral 1  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
-        (void)printf("msgDecoderTestGeneral 2  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral 2  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral 2  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral 2  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestGeneral 3  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 3  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral 3  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 3  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral 3  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral 3  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestGeneral 4  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 4  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral 4  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 4  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral 4  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral 4  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
-            (void)printf("msgDecoderTestGeneral 5  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 5  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral 5  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 5  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral 5  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral 5  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestGeneral 6  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 6  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral 6  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 6  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral 6  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral 6  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestGeneral 7  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 7  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral 7  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 7  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral 7  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral 7  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 9u == mostEfficient )
         {
-            (void)printf("msgDecoderTestGeneral 8  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 8  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral 8  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 8  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral 8  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral 8  -- FAIL \n");
     }
 
     /* Remove */
@@ -1291,141 +1291,141 @@ void msgDecoderTestGeneral(void)
     {
         if( 14u == consumed )
         {
-            (void)printf("msgDecoderTestGeneral 9  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 9  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral 9  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 9  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral 9  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral 9  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 0u == mostEfficient )
         {
-            (void)printf("msgDecoderTestGeneral 10 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 10 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral 10 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 10 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral 10 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral 10 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestGeneral 11 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 11 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral 11 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 11 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral 11 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral 11 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
-            (void)printf("msgDecoderTestGeneral 12 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 12 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral 12 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 12 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral 12 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral 12 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestGeneral 13 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 13 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral 13 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 13 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral 13 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral 13 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
-            (void)printf("msgDecoderTestGeneral 14 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 14 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral 14 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 14 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral 14 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral 14 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
-            (void)printf("msgDecoderTestGeneral 15 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 15 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral 15 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 15 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral 15 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral 15 -- FAIL \n");
     }
 
     if( ( ECU_SOF == payLoadLoc[0u] ) && ( ECU_EOF == payLoadLoc[1u] ) )
     {
-        (void)printf("msgDecoderTestGeneral 16 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral 16 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral 16 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral 16 -- FAIL \n");
     }
 
     if( MSGD_RES_MESSAGEENDED == eFSP_MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &consumed) )
     {
         if( 0u == consumed )
         {
-            (void)printf("msgDecoderTestGeneral 17 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 17 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral 17 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral 17 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral 17 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral 17 -- FAIL \n");
     }
 }
 
-void msgDecoderTestGeneral2(void)
+void eFSP_TEST_msgDecoderGeneral2(void)
 {
     /* Local variable */
     s_eFSP_MSGD_Ctx ctx;
@@ -1441,116 +1441,116 @@ void msgDecoderTestGeneral2(void)
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestGeneral2 1  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 1  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 1  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 1  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
-        (void)printf("msgDecoderTestGeneral2 2  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 2  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 2  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 2  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestGeneral2 3  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 3  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 3  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 3  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 3  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 3  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestGeneral2 4  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 4  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 4  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 4  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 4  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 4  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
-            (void)printf("msgDecoderTestGeneral2 5  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 5  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 5  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 5  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 5  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 5  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestGeneral2 6  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 6  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 6  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 6  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 6  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 6  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestGeneral2 7  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 7  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 7  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 7  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 7  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 7  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 9u == mostEfficient )
         {
-            (void)printf("msgDecoderTestGeneral2 8  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 8  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 8  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 8  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 8  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 8  -- FAIL \n");
     }
 
     /* Remove */
@@ -1561,564 +1561,564 @@ void msgDecoderTestGeneral2(void)
     {
         if( 1u == consumed )
         {
-            (void)printf("msgDecoderTestGeneral2 9  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 9  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 9  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 9  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 9  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 9  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 8u == mostEfficient )
         {
-            (void)printf("msgDecoderTestGeneral2 10 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 10 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 10 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 10 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 10 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 10 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestGeneral2 11 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 11 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 11 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 11 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 11 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 11 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestGeneral2 12 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 12 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 12 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 12 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 12 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 12 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestGeneral2 13 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 13 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 13 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 13 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 13 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 13 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestGeneral2 14 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 14 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 14 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 14 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 14 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 14 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestGeneral2 15 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 15 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 15 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 15 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 15 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 15 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&ctx, &testData[1], 4u, &consumed) )
     {
         if( 4u == consumed )
         {
-            (void)printf("msgDecoderTestGeneral2 16 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 16 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 16 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 16 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 16 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 16 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 4u == mostEfficient )
         {
-            (void)printf("msgDecoderTestGeneral2 17 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 17 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 17 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 17 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 17 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 17 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestGeneral2 18 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 18 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 18 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 18 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 18 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 18 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestGeneral2 19 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 19 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 19 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 19 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 19 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 19 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestGeneral2 20 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 20 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 20 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 20 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 20 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 20 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestGeneral2 21 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 21 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 21 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 21 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 21 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 21 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestGeneral2 22 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 22 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 22 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 22 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 22 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 22 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&ctx, &testData[5], 4u, &consumed) )
     {
         if( 4u == consumed )
         {
-            (void)printf("msgDecoderTestGeneral2 23 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 23 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 23 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 23 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 23 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 23 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 3u == mostEfficient )
         {
-            (void)printf("msgDecoderTestGeneral2 24 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 24 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 24 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 24 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 24 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 24 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestGeneral2 25 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 25 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 25 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 25 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 25 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 25 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestGeneral2 26 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 26 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 26 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 26 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 26 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 26 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestGeneral2 27 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 27 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 27 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 27 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 27 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 27 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestGeneral2 28 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 28 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 28 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 28 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 28 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 28 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestGeneral2 29 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 29 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 29 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 29 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 29 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 29 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&ctx, &testData[9], 3u, &consumed) )
     {
         if( 3u == consumed )
         {
-            (void)printf("msgDecoderTestGeneral2 30 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 30 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 30 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 30 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 30 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 30 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 2u == mostEfficient )
         {
-            (void)printf("msgDecoderTestGeneral2 31 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 31 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 31 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 31 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 31 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 31 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestGeneral2 32 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 32 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 32 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 32 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 32 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 32 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestGeneral2 33 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 33 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 33 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 33 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 33 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 33 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestGeneral2 34 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 34 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 34 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 34 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 34 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 34 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x01u == payLoadLen )
         {
-            (void)printf("msgDecoderTestGeneral2 35 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 35 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 35 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 35 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 35 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 35 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x01u == payLoadLen )
         {
-            (void)printf("msgDecoderTestGeneral2 36 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 36 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 36 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 36 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 36 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 36 -- FAIL \n");
     }
 
     if( MSGD_RES_MESSAGEENDED == eFSP_MSGD_InsEncChunk(&ctx, &testData[12], 2u, &consumed) )
     {
         if( 2u == consumed )
         {
-            (void)printf("msgDecoderTestGeneral2 37 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 37 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 37 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 37 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 37 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 37 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 0u == mostEfficient )
         {
-            (void)printf("msgDecoderTestGeneral2 38 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 38 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 38 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 38 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 38 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 38 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestGeneral2 39 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 39 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 39 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 39 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 39 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 39 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
-            (void)printf("msgDecoderTestGeneral2 40 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 40 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 40 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 40 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 40 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 40 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestGeneral2 41 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 41 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 41 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 41 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 41 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 41 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
-            (void)printf("msgDecoderTestGeneral2 42 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 42 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 42 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 42 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 42 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 42 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
-            (void)printf("msgDecoderTestGeneral2 43 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 43 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestGeneral2 43 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderGeneral2 43 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestGeneral2 43 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderGeneral2 43 -- FAIL \n");
     }
 }
 
-void msgDecoderTestCorernerMulti(void)
+void eFSP_TEST_msgDecoderCorernerMulti(void)
 {
     /* Local variable */
     s_eFSP_MSGD_Ctx ctx;
@@ -2134,84 +2134,84 @@ void msgDecoderTestCorernerMulti(void)
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestCorernerMulti 1  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 1  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 1  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 1  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
-        (void)printf("msgDecoderTestCorernerMulti 2  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 2  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 2  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 2  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestCorernerMulti 3  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 3  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 3  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 3  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 3  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 3  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestCorernerMulti 4  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 4  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 4  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 4  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 4  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 4  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestCorernerMulti 5  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 5  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 5  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 5  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 5  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 5  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 9u == mostEfficient )
         {
-            (void)printf("msgDecoderTestCorernerMulti 6  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 6  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 6  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 6  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 6  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 6  -- FAIL \n");
     }
 
     /* Remove */
@@ -2222,80 +2222,80 @@ void msgDecoderTestCorernerMulti(void)
     {
         if( 4u == consumed )
         {
-            (void)printf("msgDecoderTestCorernerMulti 7  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 7  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 7  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 7  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 7  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 7  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 5u == mostEfficient )
         {
-            (void)printf("msgDecoderTestCorernerMulti 8  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 8  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 8  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 8  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 8  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 8  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestCorernerMulti 9  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 9  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 9  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 9  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 9  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 9  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestCorernerMulti 10 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 10 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 10 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 10 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 10 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 10 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestCorernerMulti 11 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 11 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 11 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 11 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 11 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 11 -- FAIL \n");
     }
 
     consumed = 0u;
@@ -2303,80 +2303,80 @@ void msgDecoderTestCorernerMulti(void)
     {
         if( 4u == consumed)
         {
-            (void)printf("msgDecoderTestCorernerMulti 12 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 12 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 12 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 12 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 12 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 12 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 1u == mostEfficient )
         {
-            (void)printf("msgDecoderTestCorernerMulti 13 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 13 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 13 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 13 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 13 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 13 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestCorernerMulti 14 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 14 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 14 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 14 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 14 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 14 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestCorernerMulti 15 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 15 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 15 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 15 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 15 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 15 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestCorernerMulti 16 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 16 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 16 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 16 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 16 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 16 -- FAIL \n");
     }
 
     consumed = 0u;
@@ -2384,80 +2384,80 @@ void msgDecoderTestCorernerMulti(void)
     {
         if( 2u == consumed )
         {
-            (void)printf("msgDecoderTestCorernerMulti 17 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 17 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 17 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 17 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 17 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 17 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 8u == mostEfficient )
         {
-            (void)printf("msgDecoderTestCorernerMulti 18 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 18 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 18 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 18 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 18 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 18 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestCorernerMulti 19 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 19 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 19 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 19 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 19 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 19 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestCorernerMulti 20 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 20 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 20 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 20 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 20 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 20 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestCorernerMulti 21 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 21 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 21 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 21 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 21 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 21 -- FAIL \n");
     }
 
     consumed = 0u;
@@ -2465,80 +2465,80 @@ void msgDecoderTestCorernerMulti(void)
     {
         if( 4u == consumed )
         {
-            (void)printf("msgDecoderTestCorernerMulti 22 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 22 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 22 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 22 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 22 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 22 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 5u == mostEfficient )
         {
-            (void)printf("msgDecoderTestCorernerMulti 23 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 23 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 23 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 23 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 23 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 23 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestCorernerMulti 24 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 24 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 24 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 24 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 24 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 24 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x03u == payLoadLen )
         {
-            (void)printf("msgDecoderTestCorernerMulti 25 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 25 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 25 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 25 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 25 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 25 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x03u == payLoadLen )
         {
-            (void)printf("msgDecoderTestCorernerMulti 26 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 26 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 26 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 26 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 26 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 26 -- FAIL \n");
     }
 
     consumed = 0u;
@@ -2546,95 +2546,95 @@ void msgDecoderTestCorernerMulti(void)
     {
         if( 5u == consumed )
         {
-            (void)printf("msgDecoderTestCorernerMulti 27 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 27 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 27 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 27 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 27 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 27 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 0u == mostEfficient )
         {
-            (void)printf("msgDecoderTestCorernerMulti 28 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 28 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 28 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 28 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 28 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 28 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
-            (void)printf("msgDecoderTestCorernerMulti 29 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 29 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 29 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 29 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 29 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 29 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x07u == payLoadLen )
         {
-            (void)printf("msgDecoderTestCorernerMulti 30 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 30 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 30 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 30 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 30 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 30 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x07u == payLoadLen )
         {
-            (void)printf("msgDecoderTestCorernerMulti 31 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 31 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorernerMulti 31 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorernerMulti 31 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 31 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 31 -- FAIL \n");
     }
 
     if( ( ECU_SOF == payLoadLoc[0u] ) && ( ECU_EOF == payLoadLoc[1u] ) && ( 0x01u == payLoadLoc[2u] ) &&
         ( 0x02u == payLoadLoc[3u] ) && ( 0x03u == payLoadLoc[4u] ) && ( 0x04u == payLoadLoc[5u] ) &&
         ( 0x05u == payLoadLoc[6u] ) )
     {
-        (void)printf("msgDecoderTestCorernerMulti 32 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 32 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorernerMulti 32 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorernerMulti 32 -- FAIL \n");
     }
 }
 
-void msgDecoderTestErrorAndContinue(void)
+void eFSP_TEST_msgDecoderErrorAndContinue(void)
 {
     /* Local variable */
     s_eFSP_MSGD_Ctx ctx;
@@ -2650,84 +2650,84 @@ void msgDecoderTestErrorAndContinue(void)
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestErrorAndContinue 1  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 1  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinue 1  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 1  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
-        (void)printf("msgDecoderTestErrorAndContinue 2  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 2  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinue 2  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 2  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorAndContinue 3  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 3  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinue 3  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 3  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinue 3  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 3  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorAndContinue 4  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 4  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinue 4  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 4  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinue 4  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 4  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorAndContinue 5  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 5  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinue 5  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 5  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinue 5  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 5  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 9u == mostEfficient )
         {
-            (void)printf("msgDecoderTestErrorAndContinue 6  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 6  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinue 6  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 6  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinue 6  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 6  -- FAIL \n");
     }
 
     /* Remove */
@@ -2738,266 +2738,266 @@ void msgDecoderTestErrorAndContinue(void)
     {
         if( 2u == consumed )
         {
-            (void)printf("msgDecoderTestErrorAndContinue 7  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 7  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinue 7  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 7  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinue 7  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 7  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&ctx, &testData[2u], 12u, &consumed) )
     {
         if( 12u == consumed )
         {
-            (void)printf("msgDecoderTestErrorAndContinue 8  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 8  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinue 8  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 8  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinue 8  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 8  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 1u == mostEfficient )
         {
-            (void)printf("msgDecoderTestErrorAndContinue 9  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 9  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinue 9  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 9  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinue 9  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 9  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorAndContinue 10 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 10 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinue 10 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 10 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinue 10 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 10 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorAndContinue 11 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 11 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinue 11 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 11 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinue 11 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 11 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorAndContinue 12 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 12 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinue 12 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 12 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinue 12 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 12 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorAndContinue 13 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 13 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinue 13 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 13 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinue 13 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 13 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorAndContinue 14 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 14 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinue 14 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 14 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinue 14 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 14 -- FAIL \n");
     }
 
     if( MSGD_RES_BADFRAME == eFSP_MSGD_InsEncChunk(&ctx, &testData[14u], 1u, &consumed) )
     {
         if( 1u == consumed )
         {
-            (void)printf("msgDecoderTestErrorAndContinue 15 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 15 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinue 15 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 15 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinue 15 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 15 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 0u == mostEfficient )
         {
-            (void)printf("msgDecoderTestErrorAndContinue 17 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 17 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinue 17 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 17 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinue 17 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 17 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorAndContinue 18 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 18 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinue 18 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 18 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinue 18 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 18 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorAndContinue 19 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 19 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinue 19 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 19 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinue 19 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 19 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorAndContinue 20 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 20 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinue 20 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 20 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinue 20 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 20 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x03u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorAndContinue 21 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 21 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinue 21 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 21 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinue 21 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 21 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x03u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorAndContinue 22 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 22 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinue 22 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 22 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinue 22 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 22 -- FAIL \n");
     }
 
     if( MSGD_RES_BADFRAME == eFSP_MSGD_InsEncChunk(&ctx, &testData[14u], 1u, &consumed) )
     {
         if( 0u == consumed )
         {
-            (void)printf("msgDecoderTestErrorAndContinue 23 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 23 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinue 23 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 23 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinue 23 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 23 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestErrorAndContinue 24 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 24 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinue 24 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 24 -- FAIL \n");
     }
 
     /* Remove */
@@ -3005,20 +3005,20 @@ void msgDecoderTestErrorAndContinue(void)
     {
         if( (sizeof(testData) - 1u) == consumed )
         {
-            (void)printf("msgDecoderTestErrorAndContinue 25 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 25 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinue 25 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 25 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinue 25 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinue 25 -- FAIL \n");
     }
 }
 
-void msgDecoderTestErrorAndContinueEx(void)
+void eFSP_TEST_msgDecoderErrorAndContinueEx(void)
 {
     /* Local variable */
     s_eFSP_MSGD_Ctx ctx;
@@ -3034,84 +3034,84 @@ void msgDecoderTestErrorAndContinueEx(void)
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 1  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 1  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 1  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 1  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 2  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 2  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 2  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 2  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 3  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 3  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 3  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 3  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 3  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 3  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 4  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 4  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 4  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 4  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 4  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 4  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 5  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 5  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 5  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 5  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 5  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 5  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 9u == mostEfficient )
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 6  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 6  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 6  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 6  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 6  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 6  -- FAIL \n");
     }
 
     /* Remove */
@@ -3122,266 +3122,266 @@ void msgDecoderTestErrorAndContinueEx(void)
     {
         if( 2u == consumed )
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 7  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 7  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 7  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 7  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 7  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 7  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&ctx, &testData[2u], 12u, &consumed) )
     {
         if( 12u == consumed )
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 8  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 8  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 8  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 8  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 8  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 8  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 1u == mostEfficient )
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 9  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 9  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 9  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 9  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 9  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 9  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 10 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 10 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 10 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 10 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 10 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 10 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 11 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 11 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 11 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 11 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 11 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 11 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 12 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 12 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 12 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 12 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 12 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 12 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 13 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 13 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 13 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 13 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 13 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 13 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 14 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 14 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 14 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 14 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 14 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 14 -- FAIL \n");
     }
 
     if( MSGD_RES_BADFRAME == eFSP_MSGD_InsEncChunk(&ctx, &testData[14u], 1u, &consumed) )
     {
         if( 1u == consumed )
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 15 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 15 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 15 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 15 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 15 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 15 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 0u == mostEfficient )
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 17 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 17 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 17 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 17 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 17 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 17 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 18 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 18 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 18 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 18 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 18 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 18 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 19 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 19 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 19 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 19 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 19 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 19 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 20 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 20 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 20 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 20 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 20 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 20 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 21 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 21 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 21 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 21 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 21 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 21 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x02u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 22 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 22 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 22 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 22 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 22 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 22 -- FAIL \n");
     }
 
     if( MSGD_RES_BADFRAME == eFSP_MSGD_InsEncChunk(&ctx, &testData[14u], 1u, &consumed) )
     {
         if( 0u == consumed )
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 23 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 23 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 23 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 23 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 23 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 23 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 24 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 24 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 24 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 24 -- FAIL \n");
     }
 
     /* Remove */
@@ -3389,20 +3389,20 @@ void msgDecoderTestErrorAndContinueEx(void)
     {
         if( (sizeof(testData) - 1u) == consumed )
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 25 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 25 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorAndContinueEx 25 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 25 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorAndContinueEx 25 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorAndContinueEx 25 -- FAIL \n");
     }
 }
 
-void msgDecoderTestErrorShortFrame(void)
+void eFSP_TEST_msgDecoderErrorShortFrame(void)
 {
     /* Local variable */
     s_eFSP_MSGD_Ctx ctx;
@@ -3418,84 +3418,84 @@ void msgDecoderTestErrorShortFrame(void)
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestErrorShortFrame 1  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 1  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 1  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 1  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
-        (void)printf("msgDecoderTestErrorShortFrame 2  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 2  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 2  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 2  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 3  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 3  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 3  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 3  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 3  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 3  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 4  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 4  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 4  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 4  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 4  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 4  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 5  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 5  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 5  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 5  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 5  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 5  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 9u == mostEfficient )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 6  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 6  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 6  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 6  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 6  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 6  -- FAIL \n");
     }
 
     /* Remove */
@@ -3505,266 +3505,266 @@ void msgDecoderTestErrorShortFrame(void)
     {
         if( 2u == consumed )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 7  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 7  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 7  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 7  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 7  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 7  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&ctx, &testData[2u], 9u, &consumed) )
     {
         if( 9u == consumed )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 8  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 8  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 8  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 8  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 8  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 8  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 4u == mostEfficient )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 9  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 9  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 9  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 9  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 9  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 9  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 10 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 10 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 10 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 10 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 10 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 10 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 11 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 11 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 11 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 11 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 11 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 11 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 12 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 12 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 12 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 12 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 12 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 12 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x01u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 13 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 13 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 13 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 13 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 13 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 13 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x01u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 14 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 14 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 14 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 14 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 14 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 14 -- FAIL \n");
     }
 
     if( MSGD_RES_BADFRAME == eFSP_MSGD_InsEncChunk(&ctx, &testData[11u], 1u, &consumed) )
     {
         if( 1u == consumed )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 15 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 15 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 15 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 15 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 15 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 15 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 0u == mostEfficient )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 17 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 17 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 17 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 17 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 17 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 17 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 18 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 18 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 18 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 18 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 18 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 18 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 19 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 19 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 19 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 19 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 19 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 19 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 20 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 20 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 20 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 20 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 20 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 20 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x01u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 21 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 21 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 21 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 21 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 21 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 21 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x01u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 22 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 22 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 22 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 22 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 22 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 22 -- FAIL \n");
     }
 
     if( MSGD_RES_BADFRAME == eFSP_MSGD_InsEncChunk(&ctx, &testData[11u], 1u, &consumed) )
     {
         if( 0u == consumed )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 23 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 23 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 23 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 23 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 23 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 23 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestErrorShortFrame 24 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 24 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 24 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 24 -- FAIL \n");
     }
 
     /* Remove */
@@ -3772,26 +3772,26 @@ void msgDecoderTestErrorShortFrame(void)
     {
         if( (sizeof(testData) - 1u) == consumed )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 25 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 25 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 25 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 25 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 25 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 25 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestErrorShortFrame 26 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 26 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 26 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 26 -- FAIL \n");
     }
 
     uint8_t testData2[] = { ECU_SOF, 0xAAu, 0xAAu, ECU_EOF};
@@ -3800,132 +3800,132 @@ void msgDecoderTestErrorShortFrame(void)
     {
         if( 4u == consumed )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 27 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 27 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 27 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 27 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 27 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 27 -- FAIL \n");
     }
 
     if( MSGD_RES_BADFRAME == eFSP_MSGD_InsEncChunk(&ctx, testData2, sizeof(testData2), &consumed) )
     {
         if( 0u == consumed )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 28 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 28 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 28 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 28 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 28 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 28 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 0u == mostEfficient )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 29 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 29 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 29 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 29 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 29 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 29 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 30 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 30 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 30 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 30 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 30 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 30 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 31 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 31 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 31 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 31 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 31 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 31 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 32 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 32 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 32 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 32 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 32 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 32 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 33 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 33 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 33 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 33 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 33 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 33 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorShortFrame 34 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 34 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorShortFrame 34 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 34 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorShortFrame 34 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorShortFrame 34 -- FAIL \n");
     }
 }
 
-void msgDecoderTestErrorBadStuff(void)
+void eFSP_TEST_msgDecoderErrorBadStuff(void)
 {
     /* Local variable */
     s_eFSP_MSGD_Ctx ctx;
@@ -3941,84 +3941,84 @@ void msgDecoderTestErrorBadStuff(void)
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestErrorBadStuff 1  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 1  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestErrorBadStuff 1  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 1  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
-        (void)printf("msgDecoderTestErrorBadStuff 2  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 2  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestErrorBadStuff 2  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 2  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorBadStuff 3  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 3  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorBadStuff 3  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 3  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorBadStuff 3  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 3  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x00u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorBadStuff 4  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 4  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorBadStuff 4  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 4  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorBadStuff 4  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 4  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorBadStuff 5  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 5  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorBadStuff 5  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 5  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorBadStuff 5  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 5  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 9u == mostEfficient )
         {
-            (void)printf("msgDecoderTestErrorBadStuff 6  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 6  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorBadStuff 6  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 6  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorBadStuff 6  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 6  -- FAIL \n");
     }
 
     /* Remove */
@@ -4029,266 +4029,266 @@ void msgDecoderTestErrorBadStuff(void)
     {
         if( 2u == consumed )
         {
-            (void)printf("msgDecoderTestErrorBadStuff 7  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 7  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorBadStuff 7  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 7  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorBadStuff 7  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 7  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&ctx, &testData[2u], 9u, &consumed) )
     {
         if( 9u == consumed )
         {
-            (void)printf("msgDecoderTestErrorBadStuff 8  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 8  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorBadStuff 8  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 8  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorBadStuff 8  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 8  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 4u == mostEfficient )
         {
-            (void)printf("msgDecoderTestErrorBadStuff 9  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 9  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorBadStuff 9  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 9  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorBadStuff 9  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 9  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorBadStuff 10 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 10 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorBadStuff 10 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 10 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorBadStuff 10 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 10 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorBadStuff 11 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 11 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorBadStuff 11 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 11 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorBadStuff 11 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 11 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorBadStuff 12 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 12 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorBadStuff 12 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 12 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorBadStuff 12 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 12 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x01u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorBadStuff 13 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 13 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorBadStuff 13 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 13 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorBadStuff 13 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 13 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x01u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorBadStuff 14 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 14 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorBadStuff 14 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 14 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorBadStuff 14 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 14 -- FAIL \n");
     }
 
     if( MSGD_RES_BADFRAME == eFSP_MSGD_InsEncChunk(&ctx, &testData[11u], 2u, &consumed) )
     {
         if( 2u == consumed )
         {
-            (void)printf("msgDecoderTestErrorBadStuff 15 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 15 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorBadStuff 15 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 15 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorBadStuff 15 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 15 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctx, &mostEfficient) )
     {
         if( 0u == mostEfficient )
         {
-            (void)printf("msgDecoderTestErrorBadStuff 17 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 17 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorBadStuff 17 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 17 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorBadStuff 17 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 17 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorBadStuff 18 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 18 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorBadStuff 18 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 18 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorBadStuff 18 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 18 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         if( false == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorBadStuff 19 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 19 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorBadStuff 19 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 19 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorBadStuff 19 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 19 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         if( true == isMsgDec )
         {
-            (void)printf("msgDecoderTestErrorBadStuff 20 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 20 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorBadStuff 20 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 20 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorBadStuff 20 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 20 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedLen(&ctx, &payLoadLen) )
     {
         if( 0x01u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorBadStuff 21 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 21 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorBadStuff 21 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 21 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorBadStuff 21 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 21 -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&ctx, &payLoadLoc, &payLoadLen) )
     {
         if( 0x01u == payLoadLen )
         {
-            (void)printf("msgDecoderTestErrorBadStuff 22 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 22 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorBadStuff 22 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 22 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorBadStuff 22 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 22 -- FAIL \n");
     }
 
     if( MSGD_RES_BADFRAME == eFSP_MSGD_InsEncChunk(&ctx, &testData[11u], 2u, &consumed) )
     {
         if( 0u == consumed )
         {
-            (void)printf("msgDecoderTestErrorBadStuff 23 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 23 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorBadStuff 23 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 23 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorBadStuff 23 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 23 -- FAIL \n");
     }
 
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestErrorBadStuff 24 -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 24 -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestErrorBadStuff 24 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 24 -- FAIL \n");
     }
 
     /* Remove */
@@ -4296,20 +4296,20 @@ void msgDecoderTestErrorBadStuff(void)
     {
         if( 12u == consumed )
         {
-            (void)printf("msgDecoderTestErrorBadStuff 25 -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 25 -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestErrorBadStuff 25 -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 25 -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestErrorBadStuff 25 -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderErrorBadStuff 25 -- FAIL \n");
     }
 }
 
-void msgDecoderTestCorner(void)
+void eFSP_TEST_msgDecoderCorner(void)
 {
     /* Local variable */
     s_eFSP_MSGD_Ctx ctx;
@@ -4321,20 +4321,20 @@ void msgDecoderTestCorner(void)
     /* Function */
     if( MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
-        (void)printf("msgDecoderTestCorner 1  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorner 1  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorner 1  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorner 1  -- FAIL \n");
     }
 
     if( MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctx) )
     {
-        (void)printf("msgDecoderTestCorner 2  -- OK \n");
+        (void)printf("eFSP_TEST_msgDecoderCorner 2  -- OK \n");
     }
     else
     {
-        (void)printf("msgDecoderTestCorner 2  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorner 2  -- FAIL \n");
     }
 
     /* Decode */
@@ -4344,32 +4344,32 @@ void msgDecoderTestCorner(void)
     {
         if( sizeof(testData) == var32 )
         {
-            (void)printf("msgDecoderTestCorner 3  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorner 3  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorner 3  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorner 3  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorner 3  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorner 3  -- FAIL \n");
     }
 
     if( MSGD_RES_MESSAGEENDED == eFSP_MSGD_InsEncChunk(&ctx, testData, sizeof(testData) + 10u, &var32) )
     {
         if( 0u == var32 )
         {
-            (void)printf("msgDecoderTestCorner 4  -- OK \n");
+            (void)printf("eFSP_TEST_msgDecoderCorner 4  -- OK \n");
         }
         else
         {
-            (void)printf("msgDecoderTestCorner 4  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgDecoderCorner 4  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgDecoderTestCorner 4  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgDecoderCorner 4  -- FAIL \n");
     }
 }
 

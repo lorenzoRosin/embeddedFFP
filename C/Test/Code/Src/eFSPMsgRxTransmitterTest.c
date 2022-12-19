@@ -69,7 +69,7 @@ typedef struct
     bool sendIsError;
 }s_eCU_timerAdapterCtx;
 
-static void msgRxTransmitterTestCommon(void);
+static void eFSP_TEST_msgRxTransmitterCommon(void);
 
 
 
@@ -80,7 +80,7 @@ void eFSP_TEST_msgRxTransmitter(void)
 {
 	(void)printf("\n\nMESSAGE RECEIVER TRANSMITTER TEST START \n\n");
 
-    msgRxTransmitterTestCommon();
+    eFSP_TEST_msgRxTransmitterCommon();
 
     (void)printf("\n\nMESSAGE RECEIVER TRANSMITTER TEST END \n\n");
 }
@@ -263,7 +263,7 @@ bool_t timGetRemaining ( void* cntx, uint32_t* const remainings )
 /***********************************************************************************************************************
  *   PRIVATE FUNCTION
  **********************************************************************************************************************/
-void msgRxTransmitterTestCommon(void)
+void eFSP_TEST_msgRxTransmitterCommon(void)
 {
     /* Init static */
     m_BufferComCounterInsert = 0u;
@@ -314,11 +314,11 @@ void msgRxTransmitterTestCommon(void)
 
     if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctxTx, &initDataTx) )
     {
-        (void)printf("msgRxTransmitterTestCommon 1  -- OK \n");
+        (void)printf("eFSP_TEST_msgRxTransmitterCommon 1  -- OK \n");
     }
     else
     {
-        (void)printf("msgRxTransmitterTestCommon 1  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgRxTransmitterCommon 1  -- FAIL \n");
     }
 
     initDataRX.p_i_memArea = memAreaRX;
@@ -337,11 +337,11 @@ void msgRxTransmitterTestCommon(void)
     initDataRX.i_needWaitFrameStart = true;
     if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctxRX, &initDataRX) )
     {
-        (void)printf("msgRxTransmitterTestCommon 2  -- OK \n");
+        (void)printf("eFSP_TEST_msgRxTransmitterCommon 2  -- OK \n");
     }
     else
     {
-        (void)printf("msgRxTransmitterTestCommon 2  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgRxTransmitterCommon 2  -- FAIL \n");
     }
 
     /* Fill data */
@@ -349,16 +349,16 @@ void msgRxTransmitterTestCommon(void)
     {
         if( 12u == dataL )
         {
-            (void)printf("msgRxTransmitterTestCommon 3  -- OK \n");
+            (void)printf("eFSP_TEST_msgRxTransmitterCommon 3  -- OK \n");
         }
         else
         {
-            (void)printf("msgRxTransmitterTestCommon 3  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgRxTransmitterCommon 3  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgRxTransmitterTestCommon 3  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgRxTransmitterCommon 3  -- FAIL \n");
     }
 
     dataP[0u] = ECU_SOF;
@@ -372,41 +372,41 @@ void msgRxTransmitterTestCommon(void)
     /* Start TX message */
     if( MSGTX_RES_OK == eFSP_MSGTX_NewMessage(&ctxTx, 7u) )
     {
-        (void)printf("msgTransmitterTestCornerCase 4  -- OK \n");
+        (void)printf("eFSP_TEST_msgTransmitterCornerCase 4  -- OK \n");
     }
     else
     {
-        (void)printf("msgTransmitterTestCornerCase 4  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgTransmitterCornerCase 4  -- FAIL \n");
     }
 
     /* Start RX message */
     if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctxRX) )
     {
-        (void)printf("msgTransmitterTestCornerCase 5  -- OK \n");
+        (void)printf("eFSP_TEST_msgTransmitterCornerCase 5  -- OK \n");
     }
     else
     {
-        (void)printf("msgTransmitterTestCornerCase 5  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgTransmitterCornerCase 5  -- FAIL \n");
     }
 
     /* Send data  */
     if( MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&ctxTx) )
     {
-        (void)printf("msgTransmitterTestCornerCase 6  -- OK \n");
+        (void)printf("eFSP_TEST_msgTransmitterCornerCase 6  -- OK \n");
     }
     else
     {
-        (void)printf("msgTransmitterTestCornerCase 6  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgTransmitterCornerCase 6  -- FAIL \n");
     }
 
     /* Receive data */
     if( MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctxRX) )
     {
-        (void)printf("msgTransmitterTestCornerCase 7  -- OK \n");
+        (void)printf("eFSP_TEST_msgTransmitterCornerCase 7  -- OK \n");
     }
     else
     {
-        (void)printf("msgTransmitterTestCornerCase 7  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgTransmitterCornerCase 7  -- FAIL \n");
     }
 
     /* Get RX data */
@@ -418,21 +418,21 @@ void msgRxTransmitterTestCommon(void)
                 (  ECU_EOF == dataP[3u] ) || (  0xFFu == dataP[4u] ) || (  0xCCu == dataP[5u] ) ||
                 (  ECU_SOF == dataP[6u] ) )
             {
-                (void)printf("msgTransmitterTestCornerCase 8  -- OK \n");
+                (void)printf("eFSP_TEST_msgTransmitterCornerCase 8  -- OK \n");
             }
             else
             {
-                (void)printf("msgTransmitterTestCornerCase 8  -- FAIL \n");
+                (void)printf("eFSP_TEST_msgTransmitterCornerCase 8  -- FAIL \n");
             }
         }
         else
         {
-            (void)printf("msgTransmitterTestCornerCase 8  -- FAIL \n");
+            (void)printf("eFSP_TEST_msgTransmitterCornerCase 8  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("msgTransmitterTestCornerCase 8  -- FAIL \n");
+        (void)printf("eFSP_TEST_msgTransmitterCornerCase 8  -- FAIL \n");
     }
 }
 
