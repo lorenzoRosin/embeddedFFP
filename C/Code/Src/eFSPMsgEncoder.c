@@ -19,7 +19,7 @@
  *  PRIVATE STATIC FUNCTION DECLARATION
  **********************************************************************************************************************/
 static bool_t eFSP_MSGE_isStatusStillCoherent(const s_eFSP_MSGE_Ctx* p_ctx);
-static e_eFSP_MSGE_Res eFSP_MSGE_convertReturnFromBstf(e_eCU_BSTF_Res returnedEvent);
+static e_eFSP_MSGE_Res eFSP_MSGE_convertReturnFromBstf(e_eCU_BSTF_RES returnedEvent);
 
 
 
@@ -31,7 +31,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_InitCtx(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_memAr
 {
 	/* Local variable */
 	e_eFSP_MSGE_Res l_result;
-	e_eCU_BSTF_Res l_resultByStuff;
+	e_eCU_BSTF_RES l_resultByStuff;
 
 	/* Check pointer validity */
 	if( ( NULL == p_ctx ) || ( NULL == p_memArea ) || ( NULL == f_Crc ) || ( NULL == p_clbCtx ) )
@@ -64,7 +64,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_IsInit(s_eFSP_MSGE_Ctx* const p_ctx, bool_t* p_isInit)
 {
 	/* Local variable */
 	e_eFSP_MSGE_Res l_result;
-    e_eCU_BSTF_Res l_resultByStuff;
+    e_eCU_BSTF_RES l_resultByStuff;
 
 	/* Check pointer validity */
 	if( ( NULL == p_ctx ) || ( NULL == p_isInit ) )
@@ -84,7 +84,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetWherePutData(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t*
 {
 	/* Local variable */
 	e_eFSP_MSGE_Res l_result;
-	e_eCU_BSTF_Res l_resultByStuff;
+	e_eCU_BSTF_RES l_resultByStuff;
 	uint8_t* lp_data;
     uint8_t** lpp_dataP;
 	uint32_t l_maxDataSizeP;
@@ -133,7 +133,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_NewMessage(s_eFSP_MSGE_Ctx* const p_ctx, const uint32_
 {
 	/* Local variable */
 	e_eFSP_MSGE_Res l_result;
-	e_eCU_BSTF_Res l_resultByStuff;
+	e_eCU_BSTF_RES l_resultByStuff;
 	uint8_t* lp_data;
 	uint32_t l_maxDataSize;
     uint32_t l_cR32;
@@ -193,7 +193,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_NewMessage(s_eFSP_MSGE_Ctx* const p_ctx, const uint32_
 
 							/* Calculate the CRC of data payload and messageLen */
 							l_nBToCrc = messageLen + 4u;
-							l_crcRes = (*(p_ctx->f_Crc))( p_ctx->p_crcCtx, ECU_CRC_BASE_SEED, &lp_data[4u], l_nBToCrc,
+							l_crcRes = (*(p_ctx->f_Crc))( p_ctx->p_crcCtx, eCU_CRC_BASE_SEED, &lp_data[4u], l_nBToCrc,
                                                           &l_cR32 );
 
 							if( true == l_crcRes )
@@ -228,7 +228,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_RestartMessage(s_eFSP_MSGE_Ctx* const p_ctx)
 {
 	/* Local variable */
 	e_eFSP_MSGE_Res l_result;
-	e_eCU_BSTF_Res l_resultByStuff;
+	e_eCU_BSTF_RES l_resultByStuff;
 
 	/* Check pointer validity */
 	if( NULL == p_ctx )
@@ -257,7 +257,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetRemByteToGet(s_eFSP_MSGE_Ctx* const p_ctx, uint32_t
 {
 	/* Local variable */
 	e_eFSP_MSGE_Res l_result;
-	e_eCU_BSTF_Res l_resultByStuff;
+	e_eCU_BSTF_RES l_resultByStuff;
 
 	/* Check pointer validity */
 	if( ( NULL == p_ctx ) || ( NULL == p_retrivedLen ) )
@@ -287,7 +287,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetEncChunk(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_e
 {
 	/* Local variable */
 	e_eFSP_MSGE_Res l_result;
-	e_eCU_BSTF_Res l_resultByStuff;
+	e_eCU_BSTF_RES l_resultByStuff;
 
 	/* Check pointer validity */
 	if( ( NULL == p_ctx )  || ( NULL == p_encodeDest ) || ( NULL == p_filledLen ) )
@@ -334,49 +334,49 @@ static bool_t eFSP_MSGE_isStatusStillCoherent(const s_eFSP_MSGE_Ctx* p_ctx)
     return l_result;
 }
 
-static e_eFSP_MSGE_Res eFSP_MSGE_convertReturnFromBstf(e_eCU_BSTF_Res returnedEvent)
+static e_eFSP_MSGE_Res eFSP_MSGE_convertReturnFromBstf(e_eCU_BSTF_RES returnedEvent)
 {
 	e_eFSP_MSGE_Res l_result;
 
 	switch( returnedEvent )
 	{
-		case BSTF_RES_OK:
+		case e_eCU_BSTF_RES_OK:
 		{
 			l_result = MSGE_RES_OK;
             break;
 		}
 
-		case BSTF_RES_BADPARAM:
+		case e_eCU_BSTF_RES_BADPARAM:
 		{
 			l_result = MSGE_RES_BADPARAM;
             break;
 		}
 
-		case BSTF_RES_BADPOINTER:
+		case e_eCU_BSTF_RES_BADPOINTER:
 		{
 			l_result = MSGE_RES_BADPOINTER;
             break;
 		}
 
-		case BSTF_RES_CORRUPTCTX:
+		case e_eCU_BSTF_RES_CORRUPTCTX:
 		{
 			l_result = MSGE_RES_CORRUPTCTX;
             break;
 		}
 
-		case BSTF_RES_FRAMEENDED:
+		case e_eCU_BSTF_RES_FRAMEENDED:
 		{
 			l_result = MSGE_RES_MESSAGEENDED;
             break;
 		}
 
-		case BSTF_RES_NOINITLIB:
+		case e_eCU_BSTF_RES_NOINITLIB:
 		{
 			l_result = MSGE_RES_NOINITLIB;
             break;
 		}
 
-		case BSTF_RES_NOINITFRAME :
+		case e_eCU_BSTF_RES_NOINITFRAME :
 		{
 			l_result = MSGE_RES_NOINITMESSAGE;
             break;

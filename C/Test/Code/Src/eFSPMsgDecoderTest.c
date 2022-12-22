@@ -36,7 +36,7 @@
  **********************************************************************************************************************/
 typedef struct
 {
-    e_eCU_CRC_Res lastError;
+    e_eCU_CRC_RES lastError;
 }s_eCU_crcAdapterCtx;
 
 static bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
@@ -112,7 +112,7 @@ bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t 
         ctxCur = (s_eCU_crcAdapterCtx*)cntx;
 
         ctxCur->lastError = eCU_CRC_32Seed(s, (const uint8_t*)d, dLen, c32Val);
-        if( CRC_RES_OK == ctxCur->lastError )
+        if( e_eCU_CRC_RES_OK == ctxCur->lastError )
         {
             result = true;
         }
@@ -142,7 +142,7 @@ bool_t c32SAdaptEr(void* cntx, const uint32_t s, const uint8_t* d, const uint32_
     {
         ctxCur = (s_eCU_crcAdapterCtx*)cntx;
 
-        ctxCur->lastError = CRC_RES_BADPOINTER;
+        ctxCur->lastError = e_eCU_CRC_RES_BADPOINTER;
         result = false;
         *c32Val = 0u;
     }
@@ -404,11 +404,11 @@ void eFSP_TEST_msgDecoderBadInit(void)
     bool_t isMsgDec;
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
-    ctxAdapterCrc.lastError = CRC_RES_OK;
+    ctxAdapterCrc.lastError = e_eCU_CRC_RES_OK;
     bool_t isInit;
 
     /* Function */
-    ctx.bunstf_Ctx.isInit = false;
+    ctx.bunstf_Ctx.bIsInit = false;
     ctx.p_crcCtx = &ctxAdapterCrc;
     ctx.f_Crc = cbCrcPTest;
 
@@ -464,7 +464,7 @@ void eFSP_TEST_msgDecoderBadInit(void)
     /* Function */
     if( MSGD_RES_NOINITLIB == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
-        if( CRC_RES_OK == ctxAdapterCrc.lastError )
+        if( e_eCU_CRC_RES_OK == ctxAdapterCrc.lastError )
         {
             (void)printf("eFSP_TEST_msgDecoderBadInit 6  -- OK \n");
         }
@@ -773,7 +773,7 @@ void eFSP_TEST_msgDecoderCorruptedCtx(void)
         (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 19 -- FAIL \n");
     }
 
-    ctx.bunstf_Ctx.p_memA = NULL;
+    ctx.bunstf_Ctx.puBuff = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 20 -- OK \n");
@@ -793,7 +793,7 @@ void eFSP_TEST_msgDecoderCorruptedCtx(void)
         (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 21 -- FAIL \n");
     }
 
-    ctx.bunstf_Ctx.p_memA = NULL;
+    ctx.bunstf_Ctx.puBuff = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_GetDecodedData(&ctx, &dataP, &var32) )
     {
         (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 22 -- OK \n");
@@ -813,7 +813,7 @@ void eFSP_TEST_msgDecoderCorruptedCtx(void)
         (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 23 -- FAIL \n");
     }
 
-    ctx.bunstf_Ctx.p_memA = NULL;
+    ctx.bunstf_Ctx.puBuff = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_GetDecodedLen(&ctx, &var32) )
     {
         (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 24 -- OK \n");
@@ -833,7 +833,7 @@ void eFSP_TEST_msgDecoderCorruptedCtx(void)
         (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 25 -- FAIL \n");
     }
 
-    ctx.bunstf_Ctx.p_memA = NULL;
+    ctx.bunstf_Ctx.puBuff = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_IsWaitingSof(&ctx, &isMsgDec) )
     {
         (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 26 -- OK \n");
@@ -853,7 +853,7 @@ void eFSP_TEST_msgDecoderCorruptedCtx(void)
         (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 27 -- FAIL \n");
     }
 
-    ctx.bunstf_Ctx.p_memA = NULL;
+    ctx.bunstf_Ctx.puBuff = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_IsAFullMsgDecoded(&ctx, &isMsgDec) )
     {
         (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 28 -- OK \n");
@@ -873,7 +873,7 @@ void eFSP_TEST_msgDecoderCorruptedCtx(void)
         (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 29 -- FAIL \n");
     }
 
-    ctx.bunstf_Ctx.p_memA = NULL;
+    ctx.bunstf_Ctx.puBuff = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
         (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 30 -- OK \n");
@@ -893,7 +893,7 @@ void eFSP_TEST_msgDecoderCorruptedCtx(void)
         (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 31 -- FAIL \n");
     }
 
-    ctx.bunstf_Ctx.p_memA = NULL;
+    ctx.bunstf_Ctx.puBuff = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_GetMostEffDatLen(&ctx, &var32) )
     {
         (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 32 -- OK \n");
@@ -913,7 +913,7 @@ void eFSP_TEST_msgDecoderCorruptedCtx(void)
         (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 33 -- FAIL \n");
     }
 
-    ctx.bunstf_Ctx.p_memA = NULL;
+    ctx.bunstf_Ctx.puBuff = NULL;
     if( MSGD_RES_CORRUPTCTX == eFSP_MSGD_InsEncChunk(&ctx, memArea, 10u, &var32) )
     {
         (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 34 -- OK \n");
@@ -958,7 +958,7 @@ void eFSP_TEST_msgDecoderBadClBck(void)
 
     if( MSGD_RES_CRCCLBKERROR == eFSP_MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &var32) )
     {
-        if( CRC_RES_BADPOINTER == ctxAdapterCrc.lastError )
+        if( e_eCU_CRC_RES_BADPOINTER == ctxAdapterCrc.lastError )
         {
             (void)printf("eFSP_TEST_msgDecoderBadClBck 3  -- OK \n");
         }

@@ -36,7 +36,7 @@
  **********************************************************************************************************************/
 typedef struct
 {
-    e_eCU_CRC_Res lastError;
+    e_eCU_CRC_RES lastError;
 }s_eCU_crcAdapterCtx;
 
 typedef struct
@@ -134,7 +134,7 @@ bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t 
         ctxCur = (s_eCU_crcAdapterCtx*)cntx;
 
         ctxCur->lastError = eCU_CRC_32Seed(s, (const uint8_t*)d, dLen, c32Val);
-        if( CRC_RES_OK == ctxCur->lastError )
+        if( e_eCU_CRC_RES_OK == ctxCur->lastError )
         {
             result = true;
         }
@@ -164,7 +164,7 @@ bool_t c32SAdaptEr(void* cntx, const uint32_t s, const uint8_t* d, const uint32_
     {
         ctxCur = (s_eCU_crcAdapterCtx*)cntx;
 
-        ctxCur->lastError = CRC_RES_BADPOINTER;
+        ctxCur->lastError = e_eCU_CRC_RES_BADPOINTER;
         result = false;
         *c32Val = 0u;
     }
@@ -936,7 +936,7 @@ void eFSP_TEST_msgReceiverBadInit(void)
         (void)printf("eFSP_TEST_msgReceiverBadInit 1  -- FAIL \n");
     }
 
-    ctx.msgd_Ctx.bunstf_Ctx.isInit = false;
+    ctx.msgd_Ctx.bunstf_Ctx.bIsInit = false;
     if( MSGRX_RES_OK == eFSP_MSGRX_IsInit(&ctx, &isInit) )
     {
         if( false == isInit )

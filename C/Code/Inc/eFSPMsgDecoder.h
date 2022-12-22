@@ -51,7 +51,7 @@ typedef enum
 
 typedef struct
 {
-    s_eCU_BUNSTF_Ctx bunstf_Ctx;
+    t_eCU_BUNSTF_Ctx bunstf_Ctx;
     cb_crc32_msgd    f_Crc;
     void*            p_crcCtx;
 }s_eFSP_MSGD_Ctx;

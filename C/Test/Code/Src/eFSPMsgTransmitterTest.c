@@ -39,7 +39,7 @@
  **********************************************************************************************************************/
 typedef struct
 {
-    e_eCU_CRC_Res lastError;
+    e_eCU_CRC_RES lastError;
 }s_eCU_crcAdapterCtx;
 
 typedef struct
@@ -128,7 +128,7 @@ bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t 
         ctxCur = (s_eCU_crcAdapterCtx*)cntx;
 
         ctxCur->lastError = eCU_CRC_32Seed(s, (const uint8_t*)d, dLen, c32Val);
-        if( CRC_RES_OK == ctxCur->lastError )
+        if( e_eCU_CRC_RES_OK == ctxCur->lastError )
         {
             result = true;
         }
@@ -158,7 +158,7 @@ bool_t c32SAdaptEr(void* cntx, const uint32_t s, const uint8_t* d, const uint32_
     {
         ctxCur = (s_eCU_crcAdapterCtx*)cntx;
 
-        ctxCur->lastError = CRC_RES_BADPOINTER;
+        ctxCur->lastError = e_eCU_CRC_RES_BADPOINTER;
         result = false;
         *c32Val = 0u;
     }
@@ -845,7 +845,7 @@ void eFSP_TEST_msgTransmitterBadInit(void)
 
     /* Function */
     (void)memset(&ctx, 0, sizeof(s_eFSP_MSGTX_Ctx));
-    ctx.msge_Ctx.bstf_Ctx.isInit = false;
+    ctx.msge_Ctx.bstf_Ctx.bIsInit = false;
     ctx.msge_Ctx.p_crcCtx = &ctxAdapterCrc;
     ctx.msge_Ctx.f_Crc = cbCrcPTest;
     ctx.p_rxBuff = sendBuff;
@@ -1624,7 +1624,7 @@ void eFSP_TEST_msgTransmitterBadClBckCrc(void)
     /* Function */
     if( MSGTX_RES_CRCCLBKERROR == eFSP_MSGTX_NewMessage(&ctx, 2u) )
     {
-        if( CRC_RES_BADPOINTER == ctxAdapterCrc.lastError )
+        if( e_eCU_CRC_RES_BADPOINTER == ctxAdapterCrc.lastError )
         {
             (void)printf("eFSP_TEST_msgTransmitterBadClBckCrc 2  -- OK \n");
         }

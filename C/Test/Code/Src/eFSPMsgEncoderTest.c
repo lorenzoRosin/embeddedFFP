@@ -35,7 +35,7 @@
  **********************************************************************************************************************/
 typedef struct
 {
-    e_eCU_CRC_Res lastError;
+    e_eCU_CRC_RES lastError;
 }s_eCU_crcAdapterCtx;
 
 static bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
@@ -97,7 +97,7 @@ bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t 
         ctxCur = (s_eCU_crcAdapterCtx*)cntx;
 
         ctxCur->lastError = eCU_CRC_32Seed(s, (const uint8_t*)d, dLen, c32Val);
-        if( CRC_RES_OK == ctxCur->lastError )
+        if( e_eCU_CRC_RES_OK == ctxCur->lastError )
         {
             result = true;
         }
@@ -127,7 +127,7 @@ bool_t c32SAdaptEr(void* cntx, const uint32_t s, const uint8_t* d, const uint32_
     {
         ctxCur = (s_eCU_crcAdapterCtx*)cntx;
 
-        ctxCur->lastError = CRC_RES_BADPOINTER;
+        ctxCur->lastError = e_eCU_CRC_RES_BADPOINTER;
         result = false;
         *c32Val = 0u;
     }
@@ -322,7 +322,7 @@ void eFSP_TEST_msgEncoderBadInit(void)
     s_eCU_crcAdapterCtx ctxAdapterCrc;
 
     /* Set value */
-    ctx.bstf_Ctx.isInit = false;
+    ctx.bstf_Ctx.bIsInit = false;
     ctx.p_crcCtx = &ctxAdapterCrc;
     ctx.f_Crc = cbCrcPTest;
 
@@ -680,7 +680,7 @@ void eFSP_TEST_msgEncoderCorruptContext(void)
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 13 -- FAIL \n");
     }
 
-    ctx.bstf_Ctx.p_memA = NULL;
+    ctx.bstf_Ctx.puBuff = NULL;
     if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_NewMessage(&ctx, 2u) )
     {
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 14 -- OK \n");
@@ -700,7 +700,7 @@ void eFSP_TEST_msgEncoderCorruptContext(void)
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 15 -- FAIL \n");
     }
 
-    ctx.bstf_Ctx.p_memA = NULL;
+    ctx.bstf_Ctx.puBuff = NULL;
     if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetWherePutData(&ctx, &dataP, &var32) )
     {
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 16 -- OK \n");
@@ -729,7 +729,7 @@ void eFSP_TEST_msgEncoderCorruptContext(void)
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 18 -- FAIL \n");
     }
 
-    ctx.bstf_Ctx.p_memA = NULL;
+    ctx.bstf_Ctx.puBuff = NULL;
     if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_RestartMessage(&ctx) )
     {
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 19 -- OK \n");
@@ -758,7 +758,7 @@ void eFSP_TEST_msgEncoderCorruptContext(void)
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 21 -- FAIL \n");
     }
 
-    ctx.bstf_Ctx.p_memA = NULL;
+    ctx.bstf_Ctx.puBuff = NULL;
     if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
     {
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 22 -- OK \n");
@@ -787,7 +787,7 @@ void eFSP_TEST_msgEncoderCorruptContext(void)
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 24 -- FAIL \n");
     }
 
-    ctx.bstf_Ctx.p_memA = NULL;
+    ctx.bstf_Ctx.puBuff = NULL;
     if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetEncChunk(&ctx, memArea, 2u, &var32) )
     {
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 25 -- OK \n");
@@ -821,7 +821,7 @@ void eFSP_TEST_msgEncoderBadClBck(void)
 
     if( MSGE_RES_CRCCLBKERROR == eFSP_MSGE_NewMessage(&ctx, 2u) )
     {
-        if( CRC_RES_BADPOINTER == ctxAdapterCrc.lastError )
+        if( e_eCU_CRC_RES_BADPOINTER == ctxAdapterCrc.lastError )
         {
             (void)printf("eFSP_TEST_msgEncoderBadClBck 2  -- OK \n");
         }
@@ -953,7 +953,7 @@ void eFSP_TEST_msgEncoderGeneral(void)
         (void)printf("eFSP_TEST_msgEncoderGeneral 1  -- FAIL \n");
     }
 
-    ctx.bstf_Ctx.memASize = 3u;
+    ctx.bstf_Ctx.uBuffL = 3u;
     if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_NewMessage(&ctx, sizeof(memArea)) )
     {
         (void)printf("eFSP_TEST_msgEncoderGeneral 2  -- OK \n");
@@ -1196,7 +1196,7 @@ void eFSP_TEST_msgEncoderGeneral(void)
         (void)printf("eFSP_TEST_msgEncoderGeneral 16 -- FAIL \n");
     }
 
-    ctx.bstf_Ctx.memASize = 3u;
+    ctx.bstf_Ctx.uBuffL = 3u;
     if( MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetWherePutData(&ctx, &dataP, &var32) )
     {
         (void)printf("eFSP_TEST_msgEncoderGeneral 17 -- OK \n");

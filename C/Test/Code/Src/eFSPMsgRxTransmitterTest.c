@@ -53,7 +53,7 @@ static bool_t timGetRemaining ( void* cntx, uint32_t* const remainings );
  **********************************************************************************************************************/
 typedef struct
 {
-    e_eCU_CRC_Res lastError;
+    e_eCU_CRC_RES lastError;
 }s_eCU_crcAdapterCtx;
 
 typedef struct
@@ -108,7 +108,7 @@ bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t 
         ctxCur = (s_eCU_crcAdapterCtx*)cntx;
 
         ctxCur->lastError = eCU_CRC_32Seed(s, (const uint8_t*)d, dLen, c32Val);
-        if( CRC_RES_OK == ctxCur->lastError )
+        if( e_eCU_CRC_RES_OK == ctxCur->lastError )
         {
             result = true;
         }
