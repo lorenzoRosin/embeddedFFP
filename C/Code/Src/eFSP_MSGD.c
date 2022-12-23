@@ -1,5 +1,5 @@
 /**
- * @file       eFSPMsgDecoder.c
+ * @file       eFSP_MSGD.c
  *
  * @brief      Message decoder utils
  *
@@ -10,8 +10,8 @@
 /***********************************************************************************************************************
  *      INCLUDES
  **********************************************************************************************************************/
-#include "eFSPMsgDecoder.h"
-#include "eFSPMsgDecoder_Priv.h"
+#include "eFSP_MSGD.h"
+#include "eFSP_MSGDPRV.h"
 #include "eCU_CRC.h"
 
 

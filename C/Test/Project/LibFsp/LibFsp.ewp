@@ -1081,46 +1081,46 @@
     <group>
         <name>Inc</name>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPMsgDecoder.h</name>
+            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSP_MSGD.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPMsgDecoder_Priv.h</name>
+            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSP_MSGDPRV.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPMsgEncoder.h</name>
+            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSP_MSGE.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPMsgReceiver.h</name>
+            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSP_MSGRX.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPMsgReceiver_Priv.h</name>
+            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSP_MSGRXPRV.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPMsgTransmitter.h</name>
+            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSP_MSGTX.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPMsgTransmitter_Priv.h</name>
+            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSP_MSGTXPRV.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPStandardType.h</name>
+            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSP_STANDARDTYPE.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSPType.h</name>
+            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSP_TYPE.h</name>
         </file>
     </group>
     <group>
         <name>Src</name>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Src\eFSPMsgDecoder.c</name>
+            <name>$PROJ_DIR$\..\..\..\Code\Src\eFSP_MSGD.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Src\eFSPMsgEncoder.c</name>
+            <name>$PROJ_DIR$\..\..\..\Code\Src\eFSP_MSGE.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Src\eFSPMsgReceiver.c</name>
+            <name>$PROJ_DIR$\..\..\..\Code\Src\eFSP_MSGRX.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Src\eFSPMsgTransmitter.c</name>
+            <name>$PROJ_DIR$\..\..\..\Code\Src\eFSP_MSGTX.c</name>
         </file>
     </group>
 </project>

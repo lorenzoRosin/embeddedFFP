@@ -1,5 +1,5 @@
 /**
- * @file       eFSPMsgReceiver.h
+ * @file       eFSP_MSGRX.h
  *
  * @brief      Message receiver utils
  *
@@ -21,8 +21,8 @@ extern "C" {
 /***********************************************************************************************************************
  *      INCLUDES
  **********************************************************************************************************************/
-#include "eFSPType.h"
-#include "eFSPMsgDecoder.h"
+#include "eFSP_TYPE.h"
+#include "eFSP_MSGD.h"
 
 
 

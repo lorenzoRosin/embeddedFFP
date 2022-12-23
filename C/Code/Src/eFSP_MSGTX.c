@@ -1,5 +1,5 @@
 /**
- * @file       eFSPMsgTransmitter.h
+ * @file       eFSP_MSGTX.h
  *
  * @brief      Message transmitter utils
  *
@@ -10,8 +10,8 @@
 /***********************************************************************************************************************
  *      INCLUDES
  **********************************************************************************************************************/
-#include "eFSPMsgTransmitter.h"
-#include "eFSPMsgTransmitter_Priv.h"
+#include "eFSP_MSGTX.h"
+#include "eFSP_MSGTXPRV.h"
 
 
 

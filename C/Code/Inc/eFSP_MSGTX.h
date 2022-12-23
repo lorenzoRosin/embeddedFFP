@@ -1,5 +1,5 @@
 /**
- * @file       eFSPMsgTransmitter.h
+ * @file       eFSP_MSGTX.h
  *
  * @brief      Message transmitter utils
  *
@@ -21,8 +21,8 @@ extern "C" {
 /***********************************************************************************************************************
  *      INCLUDES
  **********************************************************************************************************************/
-#include "eFSPType.h"
-#include "eFSPMsgEncoder.h"
+#include "eFSP_TYPE.h"
+#include "eFSP_MSGE.h"
 
 
 

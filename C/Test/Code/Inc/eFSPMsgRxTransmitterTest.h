@@ -21,9 +21,9 @@ extern "C" {
 /***********************************************************************************************************************
  *      INCLUDES
  **********************************************************************************************************************/
-#include "eFSPType.h"
-#include "eFSPMsgTransmitter.h"
-#include "eFSPMsgReceiver.h"
+#include "eFSP_TYPE.h"
+#include "eFSP_MSGTX.h"
+#include "eFSP_MSGRX.h"
 
 
 

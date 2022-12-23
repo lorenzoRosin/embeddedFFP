@@ -1,5 +1,5 @@
 /**
- * @file       eFSPMsgReceiver.h
+ * @file       eFSP_MSGRX.h
  *
  * @brief      Message receiver utils
  *
@@ -10,8 +10,8 @@
 /***********************************************************************************************************************
  *      INCLUDES
  **********************************************************************************************************************/
-#include "eFSPMsgReceiver.h"
-#include "eFSPMsgReceiver_Priv.h"
+#include "eFSP_MSGRX.h"
+#include "eFSP_MSGRXPRV.h"
 
 
 
