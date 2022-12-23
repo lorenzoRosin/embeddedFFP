@@ -5,13 +5,13 @@ Program "TestEcu" coverage: 49.19%
 
 +------------------------------------------+
 
-Module "eCUByteStuffer" coverage: 92.36%
+Module "eCU_BSTF" coverage: 92.36%
 
 Function "eCU_BSTF_GetRemByteToGet" coverage: 79.41%
 
    Step point(s) not covered:
 
-   File C:\Project\embeddedCU\C\Code\Src\eCUByteStuffer.c
+   File C:\Project\embeddedCU\C\Code\Src\eCU_BSTF.c
 
    Line    272 : Col  21 -  92    addr(0x2dea-0x2df5)
    Line    277 : Col   8 -  36    addr(0x2dfe-0x2e03)
@@ -25,7 +25,7 @@ Function "eCU_BSTF_GetStufChunk" coverage: 90.74%
 
    Step point(s) not covered:
 
-   File C:\Project\embeddedCU\C\Code\Src\eCUByteStuffer.c
+   File C:\Project\embeddedCU\C\Code\Src\eCU_BSTF.c
 
    Line    381 -    383 : Col  25 -  39   addr(0x2e9e-0x2eaf)
    Line    385 : Col  29 -  55    addr(0x2eb0-0x2ec1)
@@ -760,7 +760,7 @@ Function "eCU_TEST_byteStuffer" coverage: 100.00%
 
 +------------------------------------------+
 
-Module "eCUByteUnStuffer" coverage: 98.05%
+Module "eCU_BUNSTF" coverage: 98.05%
 
 Function "eCU_BUNSTF_GetUnstufData" coverage: 100.00%
 
@@ -775,7 +775,7 @@ Function "eCU_BUNSTF_InsStufChunk" coverage: 95.45%
 
    Step point(s) not covered:
 
-   File C:\Project\embeddedCU\C\Code\Src\eCUByteUnStuffer.c
+   File C:\Project\embeddedCU\C\Code\Src\eCU_BUNSTF.c
 
    Line    366 : Col   7 -  35    addr(0x7908-0x7915)
    Line    489 : Col   9 -  41    addr(0x7a28-0x7a2b)
@@ -1602,7 +1602,7 @@ Function "eCU_TEST_byteUnStuffer" coverage: 100.00%
 
 +------------------------------------------+
 
-Module "eCUCircularQueue" coverage: 100.00%
+Module "eCU_CIRQ" coverage: 100.00%
 
 Function "eCU_CIRQ_GetFreeSapce" coverage: 100.00%
 
@@ -1942,7 +1942,7 @@ Function "eCU_TEST_circularqueueGeneric" coverage: 27.03%
 
 +------------------------------------------+
 
-Module "eCUCrc" coverage: 100.00%
+Module "eCU_CRC" coverage: 100.00%
 
 Function "eCU_CRC_32" coverage: 100.00%
 
@@ -1952,7 +1952,7 @@ Function "eCU_CRC_32Seed" coverage: 100.00%
 
 +------------------------------------------+
 
-Module "eCUCrcDigest" coverage: 100.00%
+Module "eCU_CRCD" coverage: 100.00%
 
 Function "eCU_CRCD_Digest" coverage: 100.00%
 
@@ -2287,7 +2287,7 @@ Function "eCU_TEST_crc32Value" coverage: 33.33%
 
 +------------------------------------------+
 
-Module "eCUDataPack" coverage: 100.00%
+Module "eCU_DPK" coverage: 100.00%
 
 Function "eCU_DPK_GetDataReference" coverage: 100.00%
 
@@ -2837,7 +2837,7 @@ Function "eCU_TEST_dataStuffUnStuffCommon" coverage: 37.14%
 
 +------------------------------------------+
 
-Module "eCUDataUnPack" coverage: 100.00%
+Module "eCU_DUNPK" coverage: 100.00%
 
 Function "eCU_DUNPK_GetRemToPop" coverage: 100.00%
 

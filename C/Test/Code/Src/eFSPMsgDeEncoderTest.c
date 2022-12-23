@@ -11,7 +11,7 @@
  *      INCLUDES
  **********************************************************************************************************************/
 #include "eFSPMsgDeEncoderTest.h"
-#include "eCUCrc.h"
+#include "eCU_CRC.h"
 
 #ifdef __IAR_SYSTEMS_ICC__
     #pragma cstat_disable = "MISRAC2004-20.9", "MISRAC2012-Rule-21.6"
