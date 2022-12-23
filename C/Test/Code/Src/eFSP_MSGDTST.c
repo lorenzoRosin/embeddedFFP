@@ -1,5 +1,5 @@
 /**
- * @file       eFSPMsgDecoderTest.h
+ * @file       eFSP_MSGDTST.h
  *
  * @brief      Message dencoder test
  *
@@ -10,7 +10,7 @@
 /***********************************************************************************************************************
  *      INCLUDES
  **********************************************************************************************************************/
-#include "eFSPMsgDecoderTest.h"
+#include "eFSP_MSGDTST.h"
 #include "eCU_CRC.h"
 
 #ifdef __IAR_SYSTEMS_ICC__

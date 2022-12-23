@@ -1,5 +1,5 @@
 /**
- * @file       eFSPMsgReceiverTest.h
+ * @file       eFSP_MSGRXTST.h
  *
  * @brief      Message receiver test
  *
@@ -10,7 +10,7 @@
 /***********************************************************************************************************************
  *      INCLUDES
  **********************************************************************************************************************/
-#include "eFSPMsgReceiverTest.h"
+#include "eFSP_MSGRXTST.h"
 #include "eCU_CRC.h"
 
 #ifdef __IAR_SYSTEMS_ICC__

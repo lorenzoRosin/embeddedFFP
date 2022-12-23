@@ -1,14 +1,14 @@
 /**
- * @file       eFSPMsgReceiverTest.h
+ * @file       eFSP_MSGDTST.h
  *
- * @brief      Message receiver test
+ * @brief      Message dencoder test
  *
  * @author     Lorenzo Rosin
  *
  **********************************************************************************************************************/
 
-#ifndef EFSPMSGRECEIVERTEST_H
-#define EFSPMSGRECEIVERTEST_H
+#ifndef EFSPMSGDECODERTEST_H
+#define EFSPMSGDECODERTEST_H
 
 
 
@@ -22,7 +22,7 @@ extern "C" {
  *      INCLUDES
  **********************************************************************************************************************/
 #include "eFSP_TYPE.h"
-#include "eFSP_MSGRX.h"
+#include "eFSP_MSGD.h"
 
 
 
@@ -30,13 +30,13 @@ extern "C" {
  * GLOBAL PROTOTYPES
  **********************************************************************************************************************/
 /**
- * @brief       Test the message receiver module
+ * @brief       Test the message dencoder module
  *
  * @param[in]   none
  *
  * @return      none
  */
-void eFSP_TEST_msgReceiver(void);
+void eFSP_TEST_msgDecoder(void);
 
 
 
@@ -46,4 +46,4 @@ void eFSP_TEST_msgReceiver(void);
 
 
 
-#endif /* EFSPMSGRECEIVERTEST_H */
+#endif /* EFSPMSGDECODERTEST_H */

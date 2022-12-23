@@ -1,9 +1,9 @@
-#include "eFSPMsgEncoderTest.h"
-#include "eFSPMsgDecoderTest.h"
-#include "eFSPMsgDeEncoderTest.h"
-#include "eFSPMsgTransmitterTest.h"
-#include "eFSPMsgReceiverTest.h"
-#include "eFSPMsgRxTransmitterTest.h"
+#include "eFSP_MSGETST.h"
+#include "eFSP_MSGDTST.h"
+#include "eFSP_MSGDMSGETST.h"
+#include "eFSP_MSGTXTST.h"
+#include "eFSP_MSGRXTST.h"
+#include "eFSP_MSGRXMSGTXTST.h"
 
 
 int main(void);

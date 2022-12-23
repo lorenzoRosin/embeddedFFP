@@ -1,5 +1,5 @@
 /**
- * @file       eFSPMsgEncoderTest.h
+ * @file       eFSP_MSGETST.h
  *
  * @brief      Message encoder test
  *

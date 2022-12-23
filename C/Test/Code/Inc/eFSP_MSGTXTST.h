@@ -1,14 +1,14 @@
 /**
- * @file       eFSPMsgRxTransmitterTest.h
+ * @file       eFSP_MSGTXTST.h
  *
- * @brief      Message Tx Rx test
+ * @brief      Message trasmitter test
  *
  * @author     Lorenzo Rosin
  *
  **********************************************************************************************************************/
 
-#ifndef EFSPMSGRXTRANSMITTERTEST_H
-#define EFSPMSGRXTRANSMITTERTEST_H
+#ifndef EFSPMSGTRANSMITTERTEST_H
+#define EFSPMSGTRANSMITTERTEST_H
 
 
 
@@ -23,7 +23,6 @@ extern "C" {
  **********************************************************************************************************************/
 #include "eFSP_TYPE.h"
 #include "eFSP_MSGTX.h"
-#include "eFSP_MSGRX.h"
 
 
 
@@ -31,13 +30,13 @@ extern "C" {
  * GLOBAL PROTOTYPES
  **********************************************************************************************************************/
 /**
- * @brief       Test the message Rx Rx module
+ * @brief       Test the message transmitter module
  *
  * @param[in]   none
  *
  * @return      none
  */
-void eFSP_TEST_msgRxTransmitter(void);
+void eFSP_TEST_msgTransmitter(void);
 
 
 
@@ -47,4 +46,4 @@ void eFSP_TEST_msgRxTransmitter(void);
 
 
 
-#endif /* EFSPMSGRXTRANSMITTERTEST_H */
+#endif /* EFSPMSGTRANSMITTERTEST_H */

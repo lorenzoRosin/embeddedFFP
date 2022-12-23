@@ -1426,43 +1426,43 @@
     <group>
         <name>Inc</name>
         <file>
-            <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgDecoderTest.h</name>
+            <name>$PROJ_DIR$\..\..\Code\Inc\eFSP_MSGDTST.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgDeEncoderTest.h</name>
+            <name>$PROJ_DIR$\..\..\Code\Inc\eFSP_MSGDMSGETST.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgEncoderTest.h</name>
+            <name>$PROJ_DIR$\..\..\Code\Inc\eFSP_MSGETST.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgReceiverTest.h</name>
+            <name>$PROJ_DIR$\..\..\Code\Inc\eFSP_MSGRXTST.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgRxTransmitterTest.h</name>
+            <name>$PROJ_DIR$\..\..\Code\Inc\eFSP_MSGRXMSGTXTST.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Code\Inc\eFSPMsgTransmitterTest.h</name>
+            <name>$PROJ_DIR$\..\..\Code\Inc\eFSP_MSGTXTST.h</name>
         </file>
     </group>
     <group>
         <name>Src</name>
         <file>
-            <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgDecoderTest.c</name>
+            <name>$PROJ_DIR$\..\..\Code\Src\eFSP_MSGDTST.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgDeEncoderTest.c</name>
+            <name>$PROJ_DIR$\..\..\Code\Src\eFSP_MSGDMSGETST.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgEncoderTest.c</name>
+            <name>$PROJ_DIR$\..\..\Code\Src\eFSP_MSGETST.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgReceiverTest.c</name>
+            <name>$PROJ_DIR$\..\..\Code\Src\eFSP_MSGRXTST.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgRxTransmitterTest.c</name>
+            <name>$PROJ_DIR$\..\..\Code\Src\eFSP_MSGRXMSGTXTST.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Code\Src\eFSPMsgTransmitterTest.c</name>
+            <name>$PROJ_DIR$\..\..\Code\Src\eFSP_MSGTXTST.c</name>
         </file>
     </group>
     <file>
