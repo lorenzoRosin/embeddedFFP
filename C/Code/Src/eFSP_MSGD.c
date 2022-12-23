@@ -23,7 +23,7 @@ static bool_t eFSP_MSGD_isStatusStillCoherent(const t_eFSP_MSGD_Ctx* p_ptCtx);
 static e_eFSP_MSGD_RES eFSP_MSGD_convertReturnFromBstf(e_eCU_BUNSTF_RES returnedEvent);
 static e_eFSP_MSGD_RES eFSP_MSGD_IsFullMsgDec(t_eFSP_MSGD_Ctx* const p_ptCtx, bool_t* const p_isMsgDec);
 static e_eFSP_MSGD_RES eFSP_MSGD_IsFrmBad(t_eFSP_MSGD_Ctx* const p_ptCtx, bool_t* const p_isFrameBad);
-static e_eFSP_MSGD_RES eFSP_MSGD_isMsgCorr(t_eCU_BUNSTF_Ctx* p_ptCtx, bool_t* p_isCor, f_eFSP_MSGD_CrcCb f_Crc,
+static e_eFSP_MSGD_RES eFSP_MSGD_isMsgCorr(t_eCU_BUNSTF_Ctx* p_ptCtx, bool_t* p_isCor, f_eFSP_MSGD_CrcCb p_fCrc,
                                            void* p_crcCtx);
 static e_eFSP_MSGD_RES eFSP_MSGD_isMsgCohe(t_eCU_BUNSTF_Ctx* p_ptCtx, bool_t* p_isCoherent);
 static uint32_t eFSP_MSGD_composeU32LE(uint8_t v1, uint8_t v2, uint8_t v3, uint8_t v4);
@@ -34,33 +34,33 @@ static uint32_t eFSP_MSGD_composeU32LE(uint8_t v1, uint8_t v2, uint8_t v3, uint8
  *   GLOBAL FUNCTIONS
  **********************************************************************************************************************/
 
-e_eFSP_MSGD_RES eFSP_MSGD_InitCtx(t_eFSP_MSGD_Ctx* const p_ptCtx, uint8_t* p_memArea, const uint32_t memAreaSize,
-								  f_eFSP_MSGD_CrcCb f_Crc, void* const p_clbCtx)
+e_eFSP_MSGD_RES eFSP_MSGD_InitCtx(t_eFSP_MSGD_Ctx* const p_ptCtx, uint8_t* p_puBuff, const uint32_t p_uBuffL,
+								  f_eFSP_MSGD_CrcCb p_fCrc, void* const p_ptFctx)
 {
 	/* Local variable */
 	e_eFSP_MSGD_RES l_result;
 	e_eCU_BUNSTF_RES l_resByStuff;
 
 	/* Check pointer validity */
-	if( ( NULL == p_ptCtx ) || ( NULL == p_memArea ) || ( NULL == f_Crc ) || ( NULL == p_clbCtx ) )
+	if( ( NULL == p_ptCtx ) || ( NULL == p_puBuff ) || ( NULL == p_fCrc ) || ( NULL == p_ptFctx ) )
 	{
 		l_result = e_eFSP_MSGD_RES_BADPOINTER;
 	}
 	else
 	{
         /* Check data validity, we need some len to store the data */
-        if( memAreaSize < EFSP_MIN_MSGDE_BUFFLEN )
+        if( p_uBuffL < EFSP_MIN_MSGDE_BUFFLEN )
         {
             l_result = e_eFSP_MSGD_RES_BADPARAM;
         }
         else
         {
             /* Initialize internal status clbck */
-            p_ptCtx->fCrc = f_Crc;
-            p_ptCtx->ptCrcCtx = p_clbCtx;
+            p_ptCtx->fCrc = p_fCrc;
+            p_ptCtx->ptCrcCtx = p_ptFctx;
 
 			/* initialize internal bytestuffer */
-			l_resByStuff =  eCU_BUNSTF_InitCtx(&p_ptCtx->tBUNSTFCtx, &p_memArea[0u], memAreaSize);
+			l_resByStuff =  eCU_BUNSTF_InitCtx(&p_ptCtx->tBUNSTFCtx, &p_puBuff[0u], p_uBuffL);
 			l_result = eFSP_MSGD_convertReturnFromBstf(l_resByStuff);
         }
 	}
@@ -815,7 +815,7 @@ static e_eFSP_MSGD_RES eFSP_MSGD_IsFrmBad(t_eFSP_MSGD_Ctx* const p_ptCtx, bool_t
 	return l_result;
 }
 
-static e_eFSP_MSGD_RES eFSP_MSGD_isMsgCorr(t_eCU_BUNSTF_Ctx* p_ptCtx, bool_t* p_isCor, f_eFSP_MSGD_CrcCb f_Crc,
+static e_eFSP_MSGD_RES eFSP_MSGD_isMsgCorr(t_eCU_BUNSTF_Ctx* p_ptCtx, bool_t* p_isCor, f_eFSP_MSGD_CrcCb p_fCrc,
                                            void* p_crcCtx)
 {
     e_eFSP_MSGD_RES l_result;
@@ -828,7 +828,7 @@ static e_eFSP_MSGD_RES eFSP_MSGD_isMsgCorr(t_eCU_BUNSTF_Ctx* p_ptCtx, bool_t* p_
 	uint8_t* lp_data;
 
     /* Check NULL */
-    if( ( NULL == p_ptCtx ) || ( NULL == p_isCor) || ( NULL == f_Crc) || ( NULL == p_crcCtx ) )
+    if( ( NULL == p_ptCtx ) || ( NULL == p_isCor) || ( NULL == p_fCrc) || ( NULL == p_crcCtx ) )
     {
         l_result = e_eFSP_MSGD_RES_BADPOINTER;
     }
@@ -865,7 +865,7 @@ static e_eFSP_MSGD_RES eFSP_MSGD_isMsgCorr(t_eCU_BUNSTF_Ctx* p_ptCtx, bool_t* p_
                     l_crcInMsg = eFSP_MSGD_composeU32LE(lp_data[0x00u], lp_data[0x01u], lp_data[0x02u], lp_data[0x03u]);
 
                     /* Calculate CRC */
-                    l_crcRes = (*(f_Crc))( p_crcCtx, eCU_CRC_BASE_SEED, &lp_data[4u], l_dPayToRx + 4u,  &l_crcExp );
+                    l_crcRes = (*(p_fCrc))( p_crcCtx, eCU_CRC_BASE_SEED, &lp_data[4u], l_dPayToRx + 4u,  &l_crcExp );
 
                     if( true == l_crcRes )
                     {
