@@ -78,16 +78,16 @@ typedef struct
 
 typedef struct
 {
-    uint8_t*        p_i_memArea;
-    uint32_t        i_memAreaSize;
+    uint8_t*        puIMemArea;
+    uint32_t        uIMemAreaL;
     uint8_t*        p_i_txBuffArea;
     uint32_t        i_txBuffAreaSize;
-    f_eFSP_MSGE_CrcCb   f_i_Crc;
-    void*           p_i_cbCrcCtx;
+    f_eFSP_MSGE_CrcCb   fICrc;
+    void*           ptICbCrcCtx;
     f_eFSP_MSGTX_TxCb      f_i_Tx;
     void*           p_i_cbTxCtx;
     t_eFSP_MSGTX_Timer  i_txTim;
-    uint32_t        i_timeoutMs;
+    uint32_t        uITimeoutMs;
     uint32_t        i_timePerSendMs;
 }t_eFSP_MSGTX_InitData;
 
@@ -171,8 +171,8 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_RestartMessage(t_eFSP_MSGTX_Ctx* const p_ptCtx);
  *              MSGTX_GetPayloadLocation will be encoded (header and byte stuffing) and sended by this function.
  *              The whole message can be sended calling multiple times this function. Eache time this function will
  *              try to send all the data that can be send in "i_timePerSendMs". The whole frame instead can be sended
- *              in "i_timeoutMs" milliseconds. This function can return different status, but if we keep call
- *              this function even after i_timeoutMs it will start returning only e_eFSP_MSGTX_RES_MESSAGETIMEOUT.
+ *              in "uITimeoutMs" milliseconds. This function can return different status, but if we keep call
+ *              this function even after uITimeoutMs it will start returning only e_eFSP_MSGTX_RES_MESSAGETIMEOUT.
  *
  * @param[in]   p_ptCtx         - Message Transmitter context
  *
@@ -184,12 +184,12 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_RestartMessage(t_eFSP_MSGTX_Ctx* const p_ptCtx);
  *              e_eFSP_MSGTX_RES_MESSAGESENDED  - No more data that we can send, restart or start a new msg to proceed.
  *                                         This means that we have finished sending the current message, without
  *                                         any particular error or timeout.
- *              e_eFSP_MSGTX_RES_MESSAGETIMEOUT - The message is not sended before "i_timeoutMs". Restart to continue.
+ *              e_eFSP_MSGTX_RES_MESSAGETIMEOUT - The message is not sended before "uITimeoutMs". Restart to continue.
  *              e_eFSP_MSGTX_RES_TXCLBKERROR    - Some error reported by the user send function. Restart to continue.
  *              e_eFSP_MSGTX_RES_TIMCLBKERROR   - The timer function returned an error
  *              e_eFSP_MSGTX_RES_OK             - Operation ended correctly, message is not fully sended. This happnes
  *                                         when the whole message wasn't sended in "i_timePerSendMs" millisecond, but
- *                                         the "i_timeoutMs" timeout is still not reached. Call this function again
+ *                                         the "uITimeoutMs" timeout is still not reached. Call this function again
  *                                         to send another chunk of data.
  */
 e_eFSP_MSGTX_RES eFSP_MSGTX_SendChunk(t_eFSP_MSGTX_Ctx* const p_ptCtx);

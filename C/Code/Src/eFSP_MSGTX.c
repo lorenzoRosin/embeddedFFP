@@ -40,8 +40,8 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_InitCtx(t_eFSP_MSGTX_Ctx* const p_ptCtx, const t_eFS
 	else
 	{
         /* Check pointer validity */
-        if( ( NULL == p_initData->p_i_memArea ) || ( NULL == p_initData->p_i_txBuffArea ) ||
-            ( NULL == p_initData->f_i_Crc ) || ( NULL == p_initData->p_i_cbCrcCtx ) || ( NULL == p_initData->f_i_Tx ) ||
+        if( ( NULL == p_initData->puIMemArea ) || ( NULL == p_initData->p_i_txBuffArea ) ||
+            ( NULL == p_initData->fICrc ) || ( NULL == p_initData->ptICbCrcCtx ) || ( NULL == p_initData->f_i_Tx ) ||
             ( NULL == p_initData->p_i_cbTxCtx ) || ( NULL == p_initData->i_txTim.ptTimCtx ) ||
             ( NULL == p_initData->i_txTim.fTimStart ) || ( NULL == p_initData->i_txTim.fTimGetRemain ) )
         {
@@ -50,8 +50,8 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_InitCtx(t_eFSP_MSGTX_Ctx* const p_ptCtx, const t_eFS
         else
         {
             /* Check data validity, we need some len to store the data */
-            if( ( p_initData->i_txBuffAreaSize < 1u ) || ( p_initData->i_timeoutMs < 1u ) ||
-                ( p_initData->i_timePerSendMs < 1u ) || ( p_initData->i_timePerSendMs > p_initData->i_timeoutMs ) )
+            if( ( p_initData->i_txBuffAreaSize < 1u ) || ( p_initData->uITimeoutMs < 1u ) ||
+                ( p_initData->i_timePerSendMs < 1u ) || ( p_initData->i_timePerSendMs > p_initData->uITimeoutMs ) )
             {
                 l_res = e_eFSP_MSGTX_RES_BADPARAM;
             }
@@ -65,12 +65,12 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_InitCtx(t_eFSP_MSGTX_Ctx* const p_ptCtx, const t_eFS
                 p_ptCtx->f_Tx = p_initData->f_i_Tx;
                 p_ptCtx->p_TxCtx = p_initData->p_i_cbTxCtx;
                 p_ptCtx->txTim =  p_initData->i_txTim;
-                p_ptCtx->timeoutMs = p_initData->i_timeoutMs;
+                p_ptCtx->timeoutMs = p_initData->uITimeoutMs;
                 p_ptCtx->timePerSendMs = p_initData->i_timePerSendMs;
 
                 /* initialize internal message encoder */
-                l_resultMsgE =  eFSP_MSGE_InitCtx(&p_ptCtx->msge_Ctx, p_initData->p_i_memArea, p_initData->i_memAreaSize,
-                                                   p_initData->f_i_Crc, p_initData->p_i_cbCrcCtx);
+                l_resultMsgE =  eFSP_MSGE_InitCtx(&p_ptCtx->msge_Ctx, p_initData->puIMemArea, p_initData->uIMemAreaL,
+                                                   p_initData->fICrc, p_initData->ptICbCrcCtx);
                 l_res = eFSP_MSGTX_convertReturnFromMSGE(l_resultMsgE);
             }
         }

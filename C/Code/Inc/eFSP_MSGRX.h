@@ -81,18 +81,18 @@ typedef struct
 
 typedef struct
 {
-    uint8_t*        p_i_memArea;
-    uint32_t        i_memAreaSize;
-    uint8_t*        p_i_rxBuffArea;
-    uint32_t        i_rxBuffAreaSize;
-    f_eFSP_MSGD_CrcCb   f_i_Crc;
-    void*           p_i_cbCrcCtx;
-    f_eFSP_MSGRX_RxCb      f_i_Rx;
-    void*           p_i_cbRxCtx;
-    t_eFSP_MSGRX_Timer  i_rxTim;
-    uint32_t        i_timeoutMs;
-    uint32_t        i_timePerRecMs;
-    bool_t          i_needWaitFrameStart;
+    uint8_t*            puIMemArea;
+    uint32_t            uIMemAreaL;
+    uint8_t*            puIRxBuffArea;
+    uint32_t            uIRxBuffAreaL;
+    f_eFSP_MSGD_CrcCb   fICrc;
+    void*               ptICbCrcCtx;
+    f_eFSP_MSGRX_RxCb   fIRx;
+    void*               ptICbRxCtx;
+    t_eFSP_MSGRX_Timer  tIRxTim;
+    uint32_t            uITimeoutMs;
+    uint32_t            uITimePerRecMs;
+    bool_t              bINeedWaitFrameStart;
 }t_eFSP_MSGRX_InitData;
 
 
@@ -125,7 +125,7 @@ e_eFSP_MSGRX_RES eFSP_MSGRX_IsInit(t_eFSP_MSGRX_Ctx* const p_ptCtx, bool_t* p_pb
 
 /**
  * @brief       Start receiving a new message, loosing the previous stored decoded msg frame, but not the data in rx
- *              buffer, retrived toghether with the current discharged frame. If i_needWaitFrameStart is true the
+ *              buffer, retrived toghether with the current discharged frame. If bINeedWaitFrameStart is true the
  *              timeout will start counting after the first byte of the frame is received, otherwise it will start
  *              couting just after this function is called.
  *
@@ -141,7 +141,7 @@ e_eFSP_MSGRX_RES eFSP_MSGRX_NewMsg(t_eFSP_MSGRX_Ctx* const p_ptCtx);
 
 /**
  * @brief       Start receiving a new message, loosing the previous stored decoded msg frame, and cleaning rx buffer.
- *              If i_needWaitFrameStart is true the timeout will start counting after the first byte of the frame
+ *              If bINeedWaitFrameStart is true the timeout will start counting after the first byte of the frame
  *              is received, otherwise it will start couting just after this function is called.
  *
  * @param[in]   p_ptCtx         - Msg receiver context
@@ -174,11 +174,11 @@ e_eFSP_MSGRX_RES eFSP_MSGRX_GetDecodedData(t_eFSP_MSGRX_Ctx* const p_ptCtx, uint
 /**
  * @brief       Receive encoded chunk that the alg will decode byte per byte.
  *              The whole message can be received calling multiple times this function. Eache time this function will
- *              try to read all the data that can be readed in "i_timePerRecMs". The whole frame instead can be received
- *              in "i_timeoutMs" milliseconds. This function can return different status, but if we keep call
- *              this function even after i_timeoutMs it will start returning only e_eFSP_MSGRX_RES_MESSAGETIMEOUT.
- *              If the flag i_needWaitFrameStart is true the timeout is started in the moment we receive the
- *              start of frame (if another SOF is received the timeout is reloaded). If the flag i_needWaitFrameStart
+ *              try to read all the data that can be readed in "uITimePerRecMs". The whole frame instead can be received
+ *              in "uITimeoutMs" milliseconds. This function can return different status, but if we keep call
+ *              this function even after uITimeoutMs it will start returning only e_eFSP_MSGRX_RES_MESSAGETIMEOUT.
+ *              If the flag bINeedWaitFrameStart is true the timeout is started in the moment we receive the
+ *              start of frame (if another SOF is received the timeout is reloaded). If the flag bINeedWaitFrameStart
  *              is false the timeout is started in the moment we call the function eFSP_MSGRX_NewMsg or
  *              MSGRX_StartNewMsgNClean is called.
  *
@@ -201,7 +201,7 @@ e_eFSP_MSGRX_RES eFSP_MSGRX_GetDecodedData(t_eFSP_MSGRX_Ctx* const p_ptCtx, uint
  *                                        that some data could be left out the parsing and can remain saved inside a
  *                                        RX buffer. The onlyway to completly clean RX buffer is calling
  *                                        MSGRX_StartNewMsgNClean.
- *          e_eFSP_MSGRX_RES_MESSAGETIMEOUT    - The message is not received before "i_timeoutMs". Restart to continue.
+ *          e_eFSP_MSGRX_RES_MESSAGETIMEOUT    - The message is not received before "uITimeoutMs". Restart to continue.
  *          e_eFSP_MSGRX_RES_BADFRAME          - Found an error while parsing, the frame passed is invalid.
  *                                        Restart context in order to parse a new frame. Every other call
  *                                        to this function will not have effect until we call eFSP_MSGRX_NewMsg or
@@ -215,8 +215,8 @@ e_eFSP_MSGRX_RES eFSP_MSGRX_GetDecodedData(t_eFSP_MSGRX_Ctx* const p_ptCtx, uint
  *		    e_eFSP_MSGRX_RES_CRCCLBKERROR      - The crc callback returned an error when the decoder where verifing CRC
  *          e_eFSP_MSGRX_RES_TIMCLBKERROR      - The timer function returned an error
  *          e_eFSP_MSGRX_RES_OK           	    - Operation ended correctly. The chunk is parsed correctly but the frame is not
- *                                        finished yet. This function return OK when the i_timePerRecMs timeout is
- *                                        reached, but i_timeoutMs is not elapsed.
+ *                                        finished yet. This function return OK when the uITimePerRecMs timeout is
+ *                                        reached, but uITimeoutMs is not elapsed.
  */
 e_eFSP_MSGRX_RES eFSP_MSGRX_ReceiveChunk(t_eFSP_MSGRX_Ctx* const p_ptCtx);
 #ifdef __cplusplus

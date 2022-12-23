@@ -40,45 +40,45 @@ e_eFSP_MSGRX_RES eFSP_MSGRX_InitCtx(t_eFSP_MSGRX_Ctx* const p_ptCtx, const t_eFS
 	else
 	{
         /* Check pointer validity */
-        if( ( NULL == p_initData->p_i_memArea ) || ( NULL == p_initData->p_i_rxBuffArea ) ||
-            ( NULL == p_initData->f_i_Crc ) || ( NULL == p_initData->p_i_cbCrcCtx ) || ( NULL == p_initData->f_i_Rx ) ||
-            ( NULL == p_initData->p_i_cbRxCtx ) || ( NULL == p_initData->i_rxTim.ptTimCtx ) ||
-            ( NULL == p_initData->i_rxTim.fTimStart ) || ( NULL == p_initData->i_rxTim.fTimGetRemain ) )
+        if( ( NULL == p_initData->puIMemArea ) || ( NULL == p_initData->puIRxBuffArea ) ||
+            ( NULL == p_initData->fICrc ) || ( NULL == p_initData->ptICbCrcCtx ) || ( NULL == p_initData->fIRx ) ||
+            ( NULL == p_initData->ptICbRxCtx ) || ( NULL == p_initData->tIRxTim.ptTimCtx ) ||
+            ( NULL == p_initData->tIRxTim.fTimStart ) || ( NULL == p_initData->tIRxTim.fTimGetRemain ) )
         {
             l_res = e_eFSP_MSGRX_RES_BADPOINTER;
         }
         else
         {
             /* Check data validity of data area */
-            if( p_initData->i_rxBuffAreaSize < 1u)
+            if( p_initData->uIRxBuffAreaL < 1u)
             {
                 l_res = e_eFSP_MSGRX_RES_BADPARAM;
             }
             else
             {
                 /* Check data validity of time */
-                if( ( p_initData->i_timeoutMs < 1u ) || ( p_initData->i_timePerRecMs < 1u ) ||
-                    ( p_initData->i_timePerRecMs > p_initData->i_timeoutMs ) )
+                if( ( p_initData->uITimeoutMs < 1u ) || ( p_initData->uITimePerRecMs < 1u ) ||
+                    ( p_initData->uITimePerRecMs > p_initData->uITimeoutMs ) )
                 {
                     l_res = e_eFSP_MSGRX_RES_BADPARAM;
                 }
                 else
                 {
                     /* Initialize internal status variable */
-                    p_ptCtx->p_rxBuff = p_initData->p_i_rxBuffArea;
-                    p_ptCtx->rxBuffSize = p_initData->i_rxBuffAreaSize;
+                    p_ptCtx->p_rxBuff = p_initData->puIRxBuffArea;
+                    p_ptCtx->rxBuffSize = p_initData->uIRxBuffAreaL;
                     p_ptCtx->rxBuffCntr = 0u;
                     p_ptCtx->rxBuffFill = 0u;
-                    p_ptCtx->f_Rx = p_initData->f_i_Rx;
-                    p_ptCtx->p_RxCtx = p_initData->p_i_cbRxCtx;
-                    p_ptCtx->rxTim = p_initData->i_rxTim;
-                    p_ptCtx->timeoutMs = p_initData->i_timeoutMs;
-                    p_ptCtx->timePerRecMs = p_initData->i_timePerRecMs;
-                    p_ptCtx->needWaitFrameStart = p_initData->i_needWaitFrameStart;
+                    p_ptCtx->f_Rx = p_initData->fIRx;
+                    p_ptCtx->p_RxCtx = p_initData->ptICbRxCtx;
+                    p_ptCtx->rxTim = p_initData->tIRxTim;
+                    p_ptCtx->timeoutMs = p_initData->uITimeoutMs;
+                    p_ptCtx->timePerRecMs = p_initData->uITimePerRecMs;
+                    p_ptCtx->needWaitFrameStart = p_initData->bINeedWaitFrameStart;
 
                     /* initialize internal bytestuffer */
-                    l_resMsgD =  eFSP_MSGD_InitCtx(&p_ptCtx->msgd_Ctx, p_initData->p_i_memArea, p_initData->i_memAreaSize,
-                                               p_initData->f_i_Crc, p_initData->p_i_cbCrcCtx);
+                    l_resMsgD =  eFSP_MSGD_InitCtx(&p_ptCtx->msgd_Ctx, p_initData->puIMemArea, p_initData->uIMemAreaL,
+                                               p_initData->fICrc, p_initData->ptICbCrcCtx);
                     l_res = eFSP_MSGRX_convertReturnFromMSGD(l_resMsgD);
                 }
             }

@@ -298,18 +298,18 @@ void eFSP_TEST_msgRxTransmitterCommon(void)
     (void)memset(&initDataRX, 0, sizeof(t_eFSP_MSGRX_InitData));
 
     /* Init */
-    initDataTx.p_i_memArea = memAreaTx;
-    initDataTx.i_memAreaSize = sizeof(memAreaTx);
+    initDataTx.puIMemArea = memAreaTx;
+    initDataTx.uIMemAreaL = sizeof(memAreaTx);
     initDataTx.p_i_txBuffArea = sendBuff;
     initDataTx.i_txBuffAreaSize = sizeof(sendBuff);
-    initDataTx.f_i_Crc = &c32SAdapt;
-    initDataTx.p_i_cbCrcCtx = &ctxAdapterCrcTx;
+    initDataTx.fICrc = &c32SAdapt;
+    initDataTx.ptICbCrcCtx = &ctxAdapterCrcTx;
     initDataTx.f_i_Tx = &sendMsg;
     initDataTx.p_i_cbTxCtx = &ctxAdapterSend;
     initDataTx.i_txTim.ptTimCtx = &ctxAdapterTimTx;
     initDataTx.i_txTim.fTimStart = &timStart;
     initDataTx.i_txTim.fTimGetRemain = &timGetRemaining;
-    initDataTx.i_timeoutMs = 1000u;
+    initDataTx.uITimeoutMs = 1000u;
     initDataTx.i_timePerSendMs = 100u;
 
     if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctxTx, &initDataTx) )
@@ -321,20 +321,20 @@ void eFSP_TEST_msgRxTransmitterCommon(void)
         (void)printf("eFSP_TEST_msgRxTransmitterCommon 1  -- FAIL \n");
     }
 
-    initDataRX.p_i_memArea = memAreaRX;
-    initDataRX.i_memAreaSize = sizeof(memAreaRX);
-    initDataRX.p_i_rxBuffArea = recBuff;
-    initDataRX.i_rxBuffAreaSize = sizeof(recBuff);
-    initDataRX.f_i_Crc = &c32SAdapt;
-    initDataRX.p_i_cbCrcCtx = &ctxAdapterCrcRX;
-    initDataRX.f_i_Rx = &receiveMsg;
-    initDataRX.p_i_cbRxCtx = &ctxAdapterRx;
-    initDataRX.i_rxTim.ptTimCtx = &ctxAdapterTim;
-    initDataRX.i_rxTim.fTimStart = &timStart;
-    initDataRX.i_rxTim.fTimGetRemain = &timGetRemaining;
-    initDataRX.i_timeoutMs = 1000u;
-    initDataRX.i_timePerRecMs = 100u;
-    initDataRX.i_needWaitFrameStart = true;
+    initDataRX.puIMemArea = memAreaRX;
+    initDataRX.uIMemAreaL = sizeof(memAreaRX);
+    initDataRX.puIRxBuffArea = recBuff;
+    initDataRX.uIRxBuffAreaL = sizeof(recBuff);
+    initDataRX.fICrc = &c32SAdapt;
+    initDataRX.ptICbCrcCtx = &ctxAdapterCrcRX;
+    initDataRX.fIRx = &receiveMsg;
+    initDataRX.ptICbRxCtx = &ctxAdapterRx;
+    initDataRX.tIRxTim.ptTimCtx = &ctxAdapterTim;
+    initDataRX.tIRxTim.fTimStart = &timStart;
+    initDataRX.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initDataRX.uITimeoutMs = 1000u;
+    initDataRX.uITimePerRecMs = 100u;
+    initDataRX.bINeedWaitFrameStart = true;
     if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctxRX, &initDataRX) )
     {
         (void)printf("eFSP_TEST_msgRxTransmitterCommon 2  -- OK \n");
