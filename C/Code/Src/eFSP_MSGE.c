@@ -48,11 +48,11 @@ e_eFSP_MSGE_RES eFSP_MSGE_InitCtx(t_eFSP_MSGE_Ctx* const p_ptCtx, uint8_t* p_mem
         else
         {
             /* Initialize internal status clbck */
-            p_ptCtx->f_Crc = f_Crc;
-            p_ptCtx->p_crcCtx = p_clbCtx;
+            p_ptCtx->fCrc = f_Crc;
+            p_ptCtx->ptCrcCtx = p_clbCtx;
 
 			/* initialize internal bytestuffer */
-			l_resultByStuff =  eCU_BSTF_InitCtx(&p_ptCtx->bstf_Ctx, p_memArea, memAreaSize);
+			l_resultByStuff =  eCU_BSTF_InitCtx(&p_ptCtx->tBSTFCtx, p_memArea, memAreaSize);
 			l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
         }
 	}
@@ -73,7 +73,7 @@ e_eFSP_MSGE_RES eFSP_MSGE_IsInit(t_eFSP_MSGE_Ctx* const p_ptCtx, bool_t* p_pbIsI
 	}
 	else
 	{
-        l_resultByStuff = eCU_BSTF_IsInit(&p_ptCtx->bstf_Ctx, p_pbIsInit);
+        l_resultByStuff = eCU_BSTF_IsInit(&p_ptCtx->tBSTFCtx, p_pbIsInit);
         l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
 	}
 
@@ -107,7 +107,7 @@ e_eFSP_MSGE_RES eFSP_MSGE_GetWherePutData(t_eFSP_MSGE_Ctx* const p_ptCtx, uint8_
             l_maxDataSizeP = 0u;
             lp_data = NULL;
             lpp_dataP = &lp_data;
-			l_resultByStuff = eCU_BSTF_GetWherePutData(&p_ptCtx->bstf_Ctx, lpp_dataP, &l_maxDataSizeP);
+			l_resultByStuff = eCU_BSTF_GetWherePutData(&p_ptCtx->tBSTFCtx, lpp_dataP, &l_maxDataSizeP);
 			l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
 
 			if( e_eFSP_MSGE_RES_OK == l_result )
@@ -166,7 +166,7 @@ e_eFSP_MSGE_RES eFSP_MSGE_NewMessage(t_eFSP_MSGE_Ctx* const p_ptCtx, const uint3
                 /* Get memory reference of CRC+LEN+DATA, so we can calculate data len and recalculate CRC */
                 l_maxDataSize = 0u;
                 lp_data = NULL;
-				l_resultByStuff = eCU_BSTF_GetWherePutData(&p_ptCtx->bstf_Ctx, &lp_data, &l_maxDataSize);
+				l_resultByStuff = eCU_BSTF_GetWherePutData(&p_ptCtx->tBSTFCtx, &lp_data, &l_maxDataSize);
 				l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
 
 				if( e_eFSP_MSGE_RES_OK == l_result )
@@ -193,7 +193,7 @@ e_eFSP_MSGE_RES eFSP_MSGE_NewMessage(t_eFSP_MSGE_Ctx* const p_ptCtx, const uint3
 
 							/* Calculate the CRC of data payload and messageLen */
 							l_nBToCrc = messageLen + 4u;
-							l_crcRes = (*(p_ptCtx->f_Crc))( p_ptCtx->p_crcCtx, eCU_CRC_BASE_SEED, &lp_data[4u], l_nBToCrc,
+							l_crcRes = (*(p_ptCtx->fCrc))( p_ptCtx->ptCrcCtx, eCU_CRC_BASE_SEED, &lp_data[4u], l_nBToCrc,
                                                           &l_cR32 );
 
 							if( true == l_crcRes )
@@ -207,7 +207,7 @@ e_eFSP_MSGE_RES eFSP_MSGE_NewMessage(t_eFSP_MSGE_Ctx* const p_ptCtx, const uint3
 								/* the message frame is ready, need to start the bytestuffer with size of crc + size
 								* of len + real number of data */
 								l_nByteToSf = ( EFSP_MSGEN_HEADERSIZE + messageLen );
-								l_resultByStuff = eCU_BSTF_NewFrame(&p_ptCtx->bstf_Ctx, l_nByteToSf);
+								l_resultByStuff = eCU_BSTF_NewFrame(&p_ptCtx->tBSTFCtx, l_nByteToSf);
 								l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
 							}
 							else
@@ -245,7 +245,7 @@ e_eFSP_MSGE_RES eFSP_MSGE_RestartMessage(t_eFSP_MSGE_Ctx* const p_ptCtx)
 		else
 		{
 			/* Restart only the byte stuffer */
-			l_resultByStuff = eCU_BSTF_RestartFrame(&p_ptCtx->bstf_Ctx);
+			l_resultByStuff = eCU_BSTF_RestartFrame(&p_ptCtx->tBSTFCtx);
 			l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
 		}
 	}
@@ -274,7 +274,7 @@ e_eFSP_MSGE_RES eFSP_MSGE_GetRemByteToGet(t_eFSP_MSGE_Ctx* const p_ptCtx, uint32
 		else
 		{
 			/* Get memory reference */
-			l_resultByStuff = eCU_BSTF_GetRemByteToGet(&p_ptCtx->bstf_Ctx, p_retrivedLen);
+			l_resultByStuff = eCU_BSTF_GetRemByteToGet(&p_ptCtx->tBSTFCtx, p_retrivedLen);
 			l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
 		}
 	}
@@ -304,7 +304,7 @@ e_eFSP_MSGE_RES eFSP_MSGE_GetEncChunk(t_eFSP_MSGE_Ctx* const p_ptCtx, uint8_t* p
 		else
 		{
 			/* Get memory reference */
-			l_resultByStuff = eCU_BSTF_GetStufChunk(&p_ptCtx->bstf_Ctx, p_encodeDest, maxDestLen, p_filledLen);
+			l_resultByStuff = eCU_BSTF_GetStufChunk(&p_ptCtx->tBSTFCtx, p_encodeDest, maxDestLen, p_filledLen);
 			l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
 		}
 	}
@@ -322,7 +322,7 @@ static bool_t eFSP_MSGE_isStatusStillCoherent(const t_eFSP_MSGE_Ctx* p_ptCtx)
     bool_t l_result;
 
 	/* Check context validity */
-	if( ( NULL == p_ptCtx->f_Crc ) || ( NULL == p_ptCtx->p_crcCtx ) )
+	if( ( NULL == p_ptCtx->fCrc ) || ( NULL == p_ptCtx->ptCrcCtx ) )
 	{
 		l_result = false;
 	}

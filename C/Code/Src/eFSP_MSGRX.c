@@ -42,8 +42,8 @@ e_eFSP_MSGRX_RES eFSP_MSGRX_InitCtx(t_eFSP_MSGRX_Ctx* const p_ptCtx, const t_eFS
         /* Check pointer validity */
         if( ( NULL == p_initData->p_i_memArea ) || ( NULL == p_initData->p_i_rxBuffArea ) ||
             ( NULL == p_initData->f_i_Crc ) || ( NULL == p_initData->p_i_cbCrcCtx ) || ( NULL == p_initData->f_i_Rx ) ||
-            ( NULL == p_initData->p_i_cbRxCtx ) || ( NULL == p_initData->i_rxTim.p_timCtx ) ||
-            ( NULL == p_initData->i_rxTim.f_timStart ) || ( NULL == p_initData->i_rxTim.f_timGetRemaining ) )
+            ( NULL == p_initData->p_i_cbRxCtx ) || ( NULL == p_initData->i_rxTim.ptTimCtx ) ||
+            ( NULL == p_initData->i_rxTim.fTimStart ) || ( NULL == p_initData->i_rxTim.fTimGetRemain ) )
         {
             l_res = e_eFSP_MSGRX_RES_BADPOINTER;
         }
@@ -135,7 +135,7 @@ e_eFSP_MSGRX_RES eFSP_MSGRX_NewMsg(t_eFSP_MSGRX_Ctx* const p_ptCtx)
             if( e_eFSP_MSGRX_RES_OK == l_res )
             {
                 /* Start timer even if we need to wait SOF, this case is handled in the MSGRX_GetDecodedData */
-                if( true != p_ptCtx->rxTim.f_timStart( p_ptCtx->rxTim.p_timCtx, p_ptCtx->timeoutMs ) )
+                if( true != p_ptCtx->rxTim.fTimStart( p_ptCtx->rxTim.ptTimCtx, p_ptCtx->timeoutMs ) )
                 {
                     l_res = e_eFSP_MSGRX_RES_TIMCLBKERROR;
                 }
@@ -177,7 +177,7 @@ e_eFSP_MSGRX_RES eFSP_MSGRX_NewMsgNClean(t_eFSP_MSGRX_Ctx* const p_ptCtx)
             if( e_eFSP_MSGRX_RES_OK == l_res )
             {
                 /* Start timer even if we need to wait SOF, this case is handled in the MSGRX_GetDecodedData */
-                if( true != p_ptCtx->rxTim.f_timStart( p_ptCtx->rxTim.p_timCtx, p_ptCtx->timeoutMs ) )
+                if( true != p_ptCtx->rxTim.fTimStart( p_ptCtx->rxTim.ptTimCtx, p_ptCtx->timeoutMs ) )
                 {
                     l_res = e_eFSP_MSGRX_RES_TIMCLBKERROR;
                 }
@@ -310,7 +310,7 @@ e_eFSP_MSGRX_RES eFSP_MSGRX_ReceiveChunk(t_eFSP_MSGRX_Ctx* const p_ptCtx)
                     case e_eFSP_MSGRXPRV_SM_CHECKINITTIMEOUT:
                     {
                         /* Check if frame timeout is eplased */
-                        if( true == p_ptCtx->rxTim.f_timGetRemaining(p_ptCtx->rxTim.p_timCtx, &l_sRemRxTime) )
+                        if( true == p_ptCtx->rxTim.fTimGetRemain(p_ptCtx->rxTim.ptTimCtx, &l_sRemRxTime) )
                         {
                             /* Check also if we are still waiting start of frame to be received */
                             l_resMsgD =  eFSP_MSGD_IsWaitingSof(&p_ptCtx->msgd_Ctx, &l_isWaitingSof);
@@ -324,7 +324,7 @@ e_eFSP_MSGRX_RES eFSP_MSGRX_ReceiveChunk(t_eFSP_MSGRX_Ctx* const p_ptCtx)
                                     if( true == l_isWaitingSof )
                                     {
                                         /* We are waiting start of frame, reset timer */
-                                        if( true == p_ptCtx->rxTim.f_timStart( p_ptCtx->rxTim.p_timCtx, p_ptCtx->timeoutMs ) )
+                                        if( true == p_ptCtx->rxTim.fTimStart( p_ptCtx->rxTim.ptTimCtx, p_ptCtx->timeoutMs ) )
                                         {
                                             /* Ok restarted the timer */
                                             l_sRemRxTime = p_ptCtx->timeoutMs;
@@ -592,7 +592,7 @@ e_eFSP_MSGRX_RES eFSP_MSGRX_ReceiveChunk(t_eFSP_MSGRX_Ctx* const p_ptCtx)
                     case e_eFSP_MSGRXPRV_SM_CHECKTIMEOUTAFTERRX:
                     {
                         /* Check if frame timeout is eplased */
-                        if( true == p_ptCtx->rxTim.f_timGetRemaining(p_ptCtx->rxTim.p_timCtx, &l_cRemainRxTime) )
+                        if( true == p_ptCtx->rxTim.fTimGetRemain(p_ptCtx->rxTim.ptTimCtx, &l_cRemainRxTime) )
                         {
                             /* Check time validity */
                             if( l_cRemainRxTime > l_sRemRxTime )
@@ -618,7 +618,7 @@ e_eFSP_MSGRX_RES eFSP_MSGRX_ReceiveChunk(t_eFSP_MSGRX_Ctx* const p_ptCtx)
                                         l_stateM = e_eFSP_MSGRXPRV_SM_ELABDONE;
 
                                         /* Frame restarted, restart the timer */
-                                        if( true == p_ptCtx->rxTim.f_timStart( p_ptCtx->rxTim.p_timCtx, p_ptCtx->timeoutMs ) )
+                                        if( true == p_ptCtx->rxTim.fTimStart( p_ptCtx->rxTim.ptTimCtx, p_ptCtx->timeoutMs ) )
                                         {
                                             /* Ok restarted the timer */
                                             l_sRemRxTime = p_ptCtx->timeoutMs;
@@ -636,7 +636,7 @@ e_eFSP_MSGRX_RES eFSP_MSGRX_ReceiveChunk(t_eFSP_MSGRX_Ctx* const p_ptCtx)
                                     {
                                         /* In this case total time dosen't need to be decreased, only the session */
                                         /* Frame restarted, restart the timer */
-                                        if( true == p_ptCtx->rxTim.f_timStart( p_ptCtx->rxTim.p_timCtx, p_ptCtx->timeoutMs ) )
+                                        if( true == p_ptCtx->rxTim.fTimStart( p_ptCtx->rxTim.ptTimCtx, p_ptCtx->timeoutMs ) )
                                         {
                                             /* Ok restarted the timer */
                                             l_sRemRxTime = p_ptCtx->timeoutMs;
@@ -761,8 +761,8 @@ static bool_t eFSP_MSGRX_isStatusStillCoherent(const t_eFSP_MSGRX_Ctx* p_ptCtx)
 
 	/* Check pointer validity */
 	if( ( NULL == p_ptCtx->p_rxBuff ) || ( NULL == p_ptCtx->f_Rx ) || ( NULL == p_ptCtx->p_RxCtx ) ||
-        ( NULL == p_ptCtx->rxTim.p_timCtx ) || ( NULL == p_ptCtx->rxTim.f_timStart ) ||
-        ( NULL == p_ptCtx->rxTim.f_timGetRemaining ) )
+        ( NULL == p_ptCtx->rxTim.ptTimCtx ) || ( NULL == p_ptCtx->rxTim.fTimStart ) ||
+        ( NULL == p_ptCtx->rxTim.fTimGetRemain ) )
 	{
 		l_res = false;
 	}

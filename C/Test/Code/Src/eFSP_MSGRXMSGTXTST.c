@@ -306,9 +306,9 @@ void eFSP_TEST_msgRxTransmitterCommon(void)
     initDataTx.p_i_cbCrcCtx = &ctxAdapterCrcTx;
     initDataTx.f_i_Tx = &sendMsg;
     initDataTx.p_i_cbTxCtx = &ctxAdapterSend;
-    initDataTx.i_txTim.p_timCtx = &ctxAdapterTimTx;
-    initDataTx.i_txTim.f_timStart = &timStart;
-    initDataTx.i_txTim.f_timGetRemaining = &timGetRemaining;
+    initDataTx.i_txTim.ptTimCtx = &ctxAdapterTimTx;
+    initDataTx.i_txTim.fTimStart = &timStart;
+    initDataTx.i_txTim.fTimGetRemain = &timGetRemaining;
     initDataTx.i_timeoutMs = 1000u;
     initDataTx.i_timePerSendMs = 100u;
 
@@ -329,9 +329,9 @@ void eFSP_TEST_msgRxTransmitterCommon(void)
     initDataRX.p_i_cbCrcCtx = &ctxAdapterCrcRX;
     initDataRX.f_i_Rx = &receiveMsg;
     initDataRX.p_i_cbRxCtx = &ctxAdapterRx;
-    initDataRX.i_rxTim.p_timCtx = &ctxAdapterTim;
-    initDataRX.i_rxTim.f_timStart = &timStart;
-    initDataRX.i_rxTim.f_timGetRemaining = &timGetRemaining;
+    initDataRX.i_rxTim.ptTimCtx = &ctxAdapterTim;
+    initDataRX.i_rxTim.fTimStart = &timStart;
+    initDataRX.i_rxTim.fTimGetRemain = &timGetRemaining;
     initDataRX.i_timeoutMs = 1000u;
     initDataRX.i_timePerRecMs = 100u;
     initDataRX.i_needWaitFrameStart = true;

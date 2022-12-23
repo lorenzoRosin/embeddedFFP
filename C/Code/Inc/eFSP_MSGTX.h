@@ -42,9 +42,9 @@ typedef bool_t (*f_eFSP_MSGTX_TimGetRemaing) ( void* p_ptCtx, uint32_t* const p_
 
 typedef struct
 {
-    void*                   p_timCtx;
-    f_eFSP_MSGTX_TimStart         f_timStart;
-    f_eFSP_MSGTX_TimGetRemaing  f_timGetRemaining;
+    void*                       ptTimCtx;
+    f_eFSP_MSGTX_TimStart       fTimStart;
+    f_eFSP_MSGTX_TimGetRemaing  fTimGetRemain;
 }t_eFSP_MSGTX_Timer;
 
 typedef enum

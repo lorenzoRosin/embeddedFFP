@@ -322,9 +322,9 @@ void eFSP_TEST_msgEncoderBadInit(void)
     s_eCU_crcAdapterCtx ctxAdapterCrc;
 
     /* Set value */
-    ctx.bstf_Ctx.bIsInit = false;
-    ctx.p_crcCtx = &ctxAdapterCrc;
-    ctx.f_Crc = cbCrcPTest;
+    ctx.tBSTFCtx.bIsInit = false;
+    ctx.ptCrcCtx = &ctxAdapterCrc;
+    ctx.fCrc = cbCrcPTest;
 
     /* Function */
     if( e_eFSP_MSGE_RES_NOINITLIB == eFSP_MSGE_NewMessage(&ctx, 1u) )
@@ -560,7 +560,7 @@ void eFSP_TEST_msgEncoderCorruptContext(void)
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 1  -- FAIL \n");
     }
 
-    ctx.p_crcCtx = NULL;
+    ctx.ptCrcCtx = NULL;
     if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_NewMessage(&ctx, 2u) )
     {
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 2  -- OK \n");
@@ -580,7 +580,7 @@ void eFSP_TEST_msgEncoderCorruptContext(void)
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 3  -- FAIL \n");
     }
 
-    ctx.f_Crc = NULL;
+    ctx.fCrc = NULL;
     if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_NewMessage(&ctx, 2u) )
     {
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 4  -- OK \n");
@@ -600,7 +600,7 @@ void eFSP_TEST_msgEncoderCorruptContext(void)
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 5  -- FAIL \n");
     }
 
-    ctx.f_Crc = NULL;
+    ctx.fCrc = NULL;
     if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetWherePutData(&ctx, &dataP, &var32) )
     {
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 6  -- OK \n");
@@ -620,7 +620,7 @@ void eFSP_TEST_msgEncoderCorruptContext(void)
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 7  -- FAIL \n");
     }
 
-    ctx.f_Crc = NULL;
+    ctx.fCrc = NULL;
     if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_RestartMessage(&ctx) )
     {
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 8  -- OK \n");
@@ -640,7 +640,7 @@ void eFSP_TEST_msgEncoderCorruptContext(void)
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 9  -- FAIL \n");
     }
 
-    ctx.f_Crc = NULL;
+    ctx.fCrc = NULL;
     if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
     {
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 10 -- OK \n");
@@ -660,7 +660,7 @@ void eFSP_TEST_msgEncoderCorruptContext(void)
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 11 -- FAIL \n");
     }
 
-    ctx.f_Crc = NULL;
+    ctx.fCrc = NULL;
     if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetEncChunk(&ctx, memArea, 2u, &var32) )
     {
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 12 -- OK \n");
@@ -680,7 +680,7 @@ void eFSP_TEST_msgEncoderCorruptContext(void)
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 13 -- FAIL \n");
     }
 
-    ctx.bstf_Ctx.puBuff = NULL;
+    ctx.tBSTFCtx.puBuff = NULL;
     if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_NewMessage(&ctx, 2u) )
     {
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 14 -- OK \n");
@@ -700,7 +700,7 @@ void eFSP_TEST_msgEncoderCorruptContext(void)
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 15 -- FAIL \n");
     }
 
-    ctx.bstf_Ctx.puBuff = NULL;
+    ctx.tBSTFCtx.puBuff = NULL;
     if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetWherePutData(&ctx, &dataP, &var32) )
     {
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 16 -- OK \n");
@@ -729,7 +729,7 @@ void eFSP_TEST_msgEncoderCorruptContext(void)
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 18 -- FAIL \n");
     }
 
-    ctx.bstf_Ctx.puBuff = NULL;
+    ctx.tBSTFCtx.puBuff = NULL;
     if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_RestartMessage(&ctx) )
     {
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 19 -- OK \n");
@@ -758,7 +758,7 @@ void eFSP_TEST_msgEncoderCorruptContext(void)
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 21 -- FAIL \n");
     }
 
-    ctx.bstf_Ctx.puBuff = NULL;
+    ctx.tBSTFCtx.puBuff = NULL;
     if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
     {
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 22 -- OK \n");
@@ -787,7 +787,7 @@ void eFSP_TEST_msgEncoderCorruptContext(void)
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 24 -- FAIL \n");
     }
 
-    ctx.bstf_Ctx.puBuff = NULL;
+    ctx.tBSTFCtx.puBuff = NULL;
     if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetEncChunk(&ctx, memArea, 2u, &var32) )
     {
         (void)printf("eFSP_TEST_msgEncoderCorruptContext 25 -- OK \n");
@@ -953,7 +953,7 @@ void eFSP_TEST_msgEncoderGeneral(void)
         (void)printf("eFSP_TEST_msgEncoderGeneral 1  -- FAIL \n");
     }
 
-    ctx.bstf_Ctx.uBuffL = 3u;
+    ctx.tBSTFCtx.uBuffL = 3u;
     if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_NewMessage(&ctx, sizeof(memArea)) )
     {
         (void)printf("eFSP_TEST_msgEncoderGeneral 2  -- OK \n");
@@ -1196,7 +1196,7 @@ void eFSP_TEST_msgEncoderGeneral(void)
         (void)printf("eFSP_TEST_msgEncoderGeneral 16 -- FAIL \n");
     }
 
-    ctx.bstf_Ctx.uBuffL = 3u;
+    ctx.tBSTFCtx.uBuffL = 3u;
     if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetWherePutData(&ctx, &dataP, &var32) )
     {
         (void)printf("eFSP_TEST_msgEncoderGeneral 17 -- OK \n");
