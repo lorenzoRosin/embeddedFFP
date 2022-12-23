@@ -18,7 +18,7 @@
 /***********************************************************************************************************************
  *  PRIVATE STATIC FUNCTION DECLARATION
  **********************************************************************************************************************/
-static bool_t eFSP_MSGE_isStatusStillCoherent(const t_eFSP_MSGE_Ctx* p_ctx);
+static bool_t eFSP_MSGE_isStatusStillCoherent(const t_eFSP_MSGE_Ctx* p_ptCtx);
 static e_eFSP_MSGE_RES eFSP_MSGE_convertReturnFromBstf(e_eCU_BSTF_RES returnedEvent);
 
 
@@ -26,15 +26,15 @@ static e_eFSP_MSGE_RES eFSP_MSGE_convertReturnFromBstf(e_eCU_BSTF_RES returnedEv
 /***********************************************************************************************************************
  *   GLOBAL FUNCTIONS
  **********************************************************************************************************************/
-e_eFSP_MSGE_RES eFSP_MSGE_InitCtx(t_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_memArea, const uint32_t memAreaSize,
-								  cb_crc32_msge f_Crc, void* const p_clbCtx)
+e_eFSP_MSGE_RES eFSP_MSGE_InitCtx(t_eFSP_MSGE_Ctx* const p_ptCtx, uint8_t* p_memArea, const uint32_t memAreaSize,
+								  f_eFSP_MSGE_CrcCb f_Crc, void* const p_clbCtx)
 {
 	/* Local variable */
 	e_eFSP_MSGE_RES l_result;
 	e_eCU_BSTF_RES l_resultByStuff;
 
 	/* Check pointer validity */
-	if( ( NULL == p_ctx ) || ( NULL == p_memArea ) || ( NULL == f_Crc ) || ( NULL == p_clbCtx ) )
+	if( ( NULL == p_ptCtx ) || ( NULL == p_memArea ) || ( NULL == f_Crc ) || ( NULL == p_clbCtx ) )
 	{
 		l_result = e_eFSP_MSGE_RES_BADPOINTER;
 	}
@@ -48,11 +48,11 @@ e_eFSP_MSGE_RES eFSP_MSGE_InitCtx(t_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_memAr
         else
         {
             /* Initialize internal status clbck */
-            p_ctx->f_Crc = f_Crc;
-            p_ctx->p_crcCtx = p_clbCtx;
+            p_ptCtx->f_Crc = f_Crc;
+            p_ptCtx->p_crcCtx = p_clbCtx;
 
 			/* initialize internal bytestuffer */
-			l_resultByStuff =  eCU_BSTF_InitCtx(&p_ctx->bstf_Ctx, p_memArea, memAreaSize);
+			l_resultByStuff =  eCU_BSTF_InitCtx(&p_ptCtx->bstf_Ctx, p_memArea, memAreaSize);
 			l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
         }
 	}
@@ -60,27 +60,27 @@ e_eFSP_MSGE_RES eFSP_MSGE_InitCtx(t_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_memAr
 	return l_result;
 }
 
-e_eFSP_MSGE_RES eFSP_MSGE_IsInit(t_eFSP_MSGE_Ctx* const p_ctx, bool_t* p_isInit)
+e_eFSP_MSGE_RES eFSP_MSGE_IsInit(t_eFSP_MSGE_Ctx* const p_ptCtx, bool_t* p_pbIsInit)
 {
 	/* Local variable */
 	e_eFSP_MSGE_RES l_result;
     e_eCU_BSTF_RES l_resultByStuff;
 
 	/* Check pointer validity */
-	if( ( NULL == p_ctx ) || ( NULL == p_isInit ) )
+	if( ( NULL == p_ptCtx ) || ( NULL == p_pbIsInit ) )
 	{
 		l_result = e_eFSP_MSGE_RES_BADPOINTER;
 	}
 	else
 	{
-        l_resultByStuff = eCU_BSTF_IsInit(&p_ctx->bstf_Ctx, p_isInit);
+        l_resultByStuff = eCU_BSTF_IsInit(&p_ptCtx->bstf_Ctx, p_pbIsInit);
         l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
 	}
 
 	return l_result;
 }
 
-e_eFSP_MSGE_RES eFSP_MSGE_GetWherePutData(t_eFSP_MSGE_Ctx* const p_ctx, uint8_t** pp_data, uint32_t* const p_maxDataL)
+e_eFSP_MSGE_RES eFSP_MSGE_GetWherePutData(t_eFSP_MSGE_Ctx* const p_ptCtx, uint8_t** pp_data, uint32_t* const p_maxDataL)
 {
 	/* Local variable */
 	e_eFSP_MSGE_RES l_result;
@@ -90,14 +90,14 @@ e_eFSP_MSGE_RES eFSP_MSGE_GetWherePutData(t_eFSP_MSGE_Ctx* const p_ctx, uint8_t*
 	uint32_t l_maxDataSizeP;
 
 	/* Check pointer validity */
-	if( ( NULL == p_ctx ) || ( NULL == pp_data ) || ( NULL == p_maxDataL ) )
+	if( ( NULL == p_ptCtx ) || ( NULL == pp_data ) || ( NULL == p_maxDataL ) )
 	{
 		l_result = e_eFSP_MSGE_RES_BADPOINTER;
 	}
 	else
 	{
 		/* Check internal status validity */
-		if( false == eFSP_MSGE_isStatusStillCoherent(p_ctx) )
+		if( false == eFSP_MSGE_isStatusStillCoherent(p_ptCtx) )
 		{
 			l_result = e_eFSP_MSGE_RES_CORRUPTCTX;
 		}
@@ -107,7 +107,7 @@ e_eFSP_MSGE_RES eFSP_MSGE_GetWherePutData(t_eFSP_MSGE_Ctx* const p_ctx, uint8_t*
             l_maxDataSizeP = 0u;
             lp_data = NULL;
             lpp_dataP = &lp_data;
-			l_resultByStuff = eCU_BSTF_GetWherePutData(&p_ctx->bstf_Ctx, lpp_dataP, &l_maxDataSizeP);
+			l_resultByStuff = eCU_BSTF_GetWherePutData(&p_ptCtx->bstf_Ctx, lpp_dataP, &l_maxDataSizeP);
 			l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
 
 			if( e_eFSP_MSGE_RES_OK == l_result )
@@ -129,7 +129,7 @@ e_eFSP_MSGE_RES eFSP_MSGE_GetWherePutData(t_eFSP_MSGE_Ctx* const p_ctx, uint8_t*
 	return l_result;
 }
 
-e_eFSP_MSGE_RES eFSP_MSGE_NewMessage(t_eFSP_MSGE_Ctx* const p_ctx, const uint32_t messageLen)
+e_eFSP_MSGE_RES eFSP_MSGE_NewMessage(t_eFSP_MSGE_Ctx* const p_ptCtx, const uint32_t messageLen)
 {
 	/* Local variable */
 	e_eFSP_MSGE_RES l_result;
@@ -142,14 +142,14 @@ e_eFSP_MSGE_RES eFSP_MSGE_NewMessage(t_eFSP_MSGE_Ctx* const p_ctx, const uint32_
 	uint32_t l_nBToCrc;
 
 	/* Check pointer validity */
-	if( NULL == p_ctx )
+	if( NULL == p_ptCtx )
 	{
 		l_result = e_eFSP_MSGE_RES_BADPOINTER;
 	}
 	else
 	{
         /* Check internal status validity */
-        if( false == eFSP_MSGE_isStatusStillCoherent(p_ctx) )
+        if( false == eFSP_MSGE_isStatusStillCoherent(p_ptCtx) )
         {
             l_result = e_eFSP_MSGE_RES_CORRUPTCTX;
         }
@@ -166,7 +166,7 @@ e_eFSP_MSGE_RES eFSP_MSGE_NewMessage(t_eFSP_MSGE_Ctx* const p_ctx, const uint32_
                 /* Get memory reference of CRC+LEN+DATA, so we can calculate data len and recalculate CRC */
                 l_maxDataSize = 0u;
                 lp_data = NULL;
-				l_resultByStuff = eCU_BSTF_GetWherePutData(&p_ctx->bstf_Ctx, &lp_data, &l_maxDataSize);
+				l_resultByStuff = eCU_BSTF_GetWherePutData(&p_ptCtx->bstf_Ctx, &lp_data, &l_maxDataSize);
 				l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
 
 				if( e_eFSP_MSGE_RES_OK == l_result )
@@ -193,7 +193,7 @@ e_eFSP_MSGE_RES eFSP_MSGE_NewMessage(t_eFSP_MSGE_Ctx* const p_ctx, const uint32_
 
 							/* Calculate the CRC of data payload and messageLen */
 							l_nBToCrc = messageLen + 4u;
-							l_crcRes = (*(p_ctx->f_Crc))( p_ctx->p_crcCtx, eCU_CRC_BASE_SEED, &lp_data[4u], l_nBToCrc,
+							l_crcRes = (*(p_ptCtx->f_Crc))( p_ptCtx->p_crcCtx, eCU_CRC_BASE_SEED, &lp_data[4u], l_nBToCrc,
                                                           &l_cR32 );
 
 							if( true == l_crcRes )
@@ -207,7 +207,7 @@ e_eFSP_MSGE_RES eFSP_MSGE_NewMessage(t_eFSP_MSGE_Ctx* const p_ctx, const uint32_
 								/* the message frame is ready, need to start the bytestuffer with size of crc + size
 								* of len + real number of data */
 								l_nByteToSf = ( EFSP_MSGEN_HEADERSIZE + messageLen );
-								l_resultByStuff = eCU_BSTF_NewFrame(&p_ctx->bstf_Ctx, l_nByteToSf);
+								l_resultByStuff = eCU_BSTF_NewFrame(&p_ptCtx->bstf_Ctx, l_nByteToSf);
 								l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
 							}
 							else
@@ -224,28 +224,28 @@ e_eFSP_MSGE_RES eFSP_MSGE_NewMessage(t_eFSP_MSGE_Ctx* const p_ctx, const uint32_
 	return l_result;
 }
 
-e_eFSP_MSGE_RES eFSP_MSGE_RestartMessage(t_eFSP_MSGE_Ctx* const p_ctx)
+e_eFSP_MSGE_RES eFSP_MSGE_RestartMessage(t_eFSP_MSGE_Ctx* const p_ptCtx)
 {
 	/* Local variable */
 	e_eFSP_MSGE_RES l_result;
 	e_eCU_BSTF_RES l_resultByStuff;
 
 	/* Check pointer validity */
-	if( NULL == p_ctx )
+	if( NULL == p_ptCtx )
 	{
 		l_result = e_eFSP_MSGE_RES_BADPOINTER;
 	}
 	else
 	{
 		/* Check internal status validity */
-		if( false == eFSP_MSGE_isStatusStillCoherent(p_ctx) )
+		if( false == eFSP_MSGE_isStatusStillCoherent(p_ptCtx) )
 		{
 			l_result = e_eFSP_MSGE_RES_CORRUPTCTX;
 		}
 		else
 		{
 			/* Restart only the byte stuffer */
-			l_resultByStuff = eCU_BSTF_RestartFrame(&p_ctx->bstf_Ctx);
+			l_resultByStuff = eCU_BSTF_RestartFrame(&p_ptCtx->bstf_Ctx);
 			l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
 		}
 	}
@@ -253,28 +253,28 @@ e_eFSP_MSGE_RES eFSP_MSGE_RestartMessage(t_eFSP_MSGE_Ctx* const p_ctx)
 	return l_result;
 }
 
-e_eFSP_MSGE_RES eFSP_MSGE_GetRemByteToGet(t_eFSP_MSGE_Ctx* const p_ctx, uint32_t* const p_retrivedLen)
+e_eFSP_MSGE_RES eFSP_MSGE_GetRemByteToGet(t_eFSP_MSGE_Ctx* const p_ptCtx, uint32_t* const p_retrivedLen)
 {
 	/* Local variable */
 	e_eFSP_MSGE_RES l_result;
 	e_eCU_BSTF_RES l_resultByStuff;
 
 	/* Check pointer validity */
-	if( ( NULL == p_ctx ) || ( NULL == p_retrivedLen ) )
+	if( ( NULL == p_ptCtx ) || ( NULL == p_retrivedLen ) )
 	{
 		l_result = e_eFSP_MSGE_RES_BADPOINTER;
 	}
 	else
 	{
 		/* Check internal status validity */
-		if( false == eFSP_MSGE_isStatusStillCoherent(p_ctx) )
+		if( false == eFSP_MSGE_isStatusStillCoherent(p_ptCtx) )
 		{
 			l_result = e_eFSP_MSGE_RES_CORRUPTCTX;
 		}
 		else
 		{
 			/* Get memory reference */
-			l_resultByStuff = eCU_BSTF_GetRemByteToGet(&p_ctx->bstf_Ctx, p_retrivedLen);
+			l_resultByStuff = eCU_BSTF_GetRemByteToGet(&p_ptCtx->bstf_Ctx, p_retrivedLen);
 			l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
 		}
 	}
@@ -282,7 +282,7 @@ e_eFSP_MSGE_RES eFSP_MSGE_GetRemByteToGet(t_eFSP_MSGE_Ctx* const p_ctx, uint32_t
 	return l_result;
 }
 
-e_eFSP_MSGE_RES eFSP_MSGE_GetEncChunk(t_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_encodeDest, const uint32_t maxDestLen,
+e_eFSP_MSGE_RES eFSP_MSGE_GetEncChunk(t_eFSP_MSGE_Ctx* const p_ptCtx, uint8_t* p_encodeDest, const uint32_t maxDestLen,
                                       uint32_t* const p_filledLen)
 {
 	/* Local variable */
@@ -290,21 +290,21 @@ e_eFSP_MSGE_RES eFSP_MSGE_GetEncChunk(t_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_e
 	e_eCU_BSTF_RES l_resultByStuff;
 
 	/* Check pointer validity */
-	if( ( NULL == p_ctx )  || ( NULL == p_encodeDest ) || ( NULL == p_filledLen ) )
+	if( ( NULL == p_ptCtx )  || ( NULL == p_encodeDest ) || ( NULL == p_filledLen ) )
 	{
 		l_result = e_eFSP_MSGE_RES_BADPOINTER;
 	}
 	else
 	{
 		/* Check internal status validity */
-		if( false == eFSP_MSGE_isStatusStillCoherent(p_ctx) )
+		if( false == eFSP_MSGE_isStatusStillCoherent(p_ptCtx) )
 		{
 			l_result = e_eFSP_MSGE_RES_CORRUPTCTX;
 		}
 		else
 		{
 			/* Get memory reference */
-			l_resultByStuff = eCU_BSTF_GetStufChunk(&p_ctx->bstf_Ctx, p_encodeDest, maxDestLen, p_filledLen);
+			l_resultByStuff = eCU_BSTF_GetStufChunk(&p_ptCtx->bstf_Ctx, p_encodeDest, maxDestLen, p_filledLen);
 			l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
 		}
 	}
@@ -317,12 +317,12 @@ e_eFSP_MSGE_RES eFSP_MSGE_GetEncChunk(t_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_e
 /***********************************************************************************************************************
  *  PRIVATE FUNCTION
  **********************************************************************************************************************/
-static bool_t eFSP_MSGE_isStatusStillCoherent(const t_eFSP_MSGE_Ctx* p_ctx)
+static bool_t eFSP_MSGE_isStatusStillCoherent(const t_eFSP_MSGE_Ctx* p_ptCtx)
 {
     bool_t l_result;
 
 	/* Check context validity */
-	if( ( NULL == p_ctx->f_Crc ) || ( NULL == p_ctx->p_crcCtx ) )
+	if( ( NULL == p_ptCtx->f_Crc ) || ( NULL == p_ptCtx->p_crcCtx ) )
 	{
 		l_result = false;
 	}

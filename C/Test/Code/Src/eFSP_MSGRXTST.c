@@ -565,7 +565,7 @@ void eFSP_TEST_msgReceiverBadPointer(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
     s_eCU_timerAdapterCtx ctxAdapterTim;
@@ -901,7 +901,7 @@ void eFSP_TEST_msgReceiverBadInit(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
     s_eCU_timerAdapterCtx ctxAdapterTim;
@@ -1003,7 +1003,7 @@ void eFSP_TEST_msgReceiverBadParamEntr(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
     s_eCU_timerAdapterCtx ctxAdapterTim;
@@ -1181,7 +1181,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
     s_eCU_timerAdapterCtx ctxAdapterTim;
@@ -1865,7 +1865,7 @@ void eFSP_TEST_msgReceiverBadClBckCrc(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    cb_crc32_msgd cbCrcPTest = &c32SAdaptEr;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdaptEr;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
     s_eCU_timerAdapterCtx ctxAdapterTim;
@@ -1939,7 +1939,7 @@ void eFSP_TEST_msgReceiverBadClBckReceive(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
     s_eCU_timerAdapterCtx ctxAdapterTim;
@@ -2024,7 +2024,7 @@ void eFSP_TEST_msgReceiverBadClBckTim(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
     s_eCU_timerAdapterCtx ctxAdapterTim;
@@ -2235,7 +2235,7 @@ void eFSP_TEST_msgReceiverBadFrame(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
     s_eCU_timerAdapterCtx ctxAdapterTim;
@@ -2597,7 +2597,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
     s_eCU_timerAdapterCtx ctxAdapterTim;
@@ -3026,7 +3026,7 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
     s_eCU_timerAdapterCtx ctxAdapterTim;
@@ -3444,7 +3444,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
     s_eCU_timerAdapterCtx ctxAdapterTim;
@@ -3887,7 +3887,7 @@ void eFSP_TEST_msgReceiverCornerCase4(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
     s_eCU_timerAdapterCtx ctxAdapterTim;
@@ -4166,7 +4166,7 @@ void eFSP_TEST_msgReceiverCornerCase5(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
     s_eCU_timerAdapterCtx ctxAdapterTim;
@@ -4348,7 +4348,7 @@ void eFSP_TEST_msgReceiverCornerCase6(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
     s_eCU_timerAdapterCtx ctxAdapterTim;

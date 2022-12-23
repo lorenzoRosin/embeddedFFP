@@ -105,7 +105,7 @@ void eFSP_TEST_msgDeEncoderCommon(void)
     /* Local variable for message ENCODER */
     t_eFSP_MSGE_Ctx ctxEnc;
     s_eCU_crcAdapterCtx  ctxCrcEnc;
-    cb_crc32_msge cbCrcPEnc = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPEnc = &c32SAdapt;
     uint8_t  memEncoderArea[100u] = {0u};
     uint32_t encMaxPaySize;
     uint8_t* encPayLoc;
@@ -117,7 +117,7 @@ void eFSP_TEST_msgDeEncoderCommon(void)
     /* Local variable for message ENCODER */
     t_eFSP_MSGD_Ctx ctxDec;
     s_eCU_crcAdapterCtx  ctxCrcDec;
-    cb_crc32_msgd cbCrcPDec = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPDec = &c32SAdapt;
     uint8_t  memDecoderArea[100u] = {0u};
     uint32_t decTotCounter;
     uint32_t decCurCounter;

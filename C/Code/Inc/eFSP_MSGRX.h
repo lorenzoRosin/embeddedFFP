@@ -31,21 +31,21 @@ extern "C" {
  **********************************************************************************************************************/
 
 /* Call back to a function that will receive data.
- * the p_ctx parameter is a custom pointer that can be used by the creator of this TX callback, and will not be used
+ * the p_ptCtx parameter is a custom pointer that can be used by the creator of this TX callback, and will not be used
  * by the MSG RECEIVER module */
-typedef bool_t (*cb_rx_msge) ( void* p_ctx, uint8_t* p_dataReceived, uint32_t* const p_receivedLen,
-                               const uint32_t maxDataRxSize, const uint32_t timeToReceive);
+typedef bool_t (*f_eFSP_MSGRX_RxCb) ( void* p_ptCtx, uint8_t* p_puDataRx, uint32_t* const p_puDataRxL,
+                               const uint32_t p_uCaxDataRxL, const uint32_t p_uTimeRx);
 
 /* Call backs to functions that act as a timer */
-typedef bool_t (*cb_rx_tim_start) ( void* p_ctx, const uint32_t timeoutVal );
-typedef bool_t (*cb_rx_tim_getRemaining) ( void* p_ctx, uint32_t* const p_remainings );
+typedef bool_t (*f_eFSP_MSGRX_TimStart) ( void* p_ptCtx, const uint32_t p_uTimeout );
+typedef bool_t (*f_eFSP_MSGRX_TimGetRemaing) ( void* p_ptCtx, uint32_t* const p_puRemain );
 
 typedef struct
 {
     void*                   p_timCtx;
-    cb_rx_tim_start         f_timStart;
-    cb_rx_tim_getRemaining  f_timGetRemaining;
-}t_eFSP_RXTIMER;
+    f_eFSP_MSGRX_TimStart         f_timStart;
+    f_eFSP_MSGRX_TimGetRemaing  f_timGetRemaining;
+}t_eFSP_MSGRX_Timer;
 
 typedef enum
 {
@@ -71,9 +71,9 @@ typedef struct
 	uint32_t        rxBuffSize;
 	uint32_t        rxBuffCntr;
     uint32_t        rxBuffFill;
-    cb_rx_msge      f_Rx;
+    f_eFSP_MSGRX_RxCb      f_Rx;
     void*           p_RxCtx;
-    t_eFSP_RXTIMER  rxTim;
+    t_eFSP_MSGRX_Timer  rxTim;
     uint32_t        timeoutMs;
     uint32_t        timePerRecMs;
     bool_t          needWaitFrameStart;
@@ -85,11 +85,11 @@ typedef struct
     uint32_t        i_memAreaSize;
     uint8_t*        p_i_rxBuffArea;
     uint32_t        i_rxBuffAreaSize;
-    cb_crc32_msgd   f_i_Crc;
+    f_eFSP_MSGD_CrcCb   f_i_Crc;
     void*           p_i_cbCrcCtx;
-    cb_rx_msge      f_i_Rx;
+    f_eFSP_MSGRX_RxCb      f_i_Rx;
     void*           p_i_cbRxCtx;
-    t_eFSP_RXTIMER  i_rxTim;
+    t_eFSP_MSGRX_Timer  i_rxTim;
     uint32_t        i_timeoutMs;
     uint32_t        i_timePerRecMs;
     bool_t          i_needWaitFrameStart;
@@ -103,25 +103,25 @@ typedef struct
 /**
  * @brief       Initialize the message receiver context
  *
- * @param[in]   p_ctx         - Msg receiver context
+ * @param[in]   p_ptCtx         - Msg receiver context
  * @param[in]   p_initData    - Init data
  *
  * @return      e_eFSP_MSGRX_RES_BADPOINTER     - In case of bad pointer passed to the function
  *		        e_eFSP_MSGRX_RES_BADPARAM       - In case of an invalid parameter passed to the function
  *              e_eFSP_MSGRX_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGRX_RES eFSP_MSGRX_InitCtx(t_eFSP_MSGRX_Ctx* const p_ctx, const t_eFSP_MSGRX_InitData* p_initData);
+e_eFSP_MSGRX_RES eFSP_MSGRX_InitCtx(t_eFSP_MSGRX_Ctx* const p_ptCtx, const t_eFSP_MSGRX_InitData* p_initData);
 
 /**
  * @brief       Check if the lib is initialized
  *
- * @param[in]   p_ctx         - Msg receiver context
- * @param[out]  p_isInit      - Pointer to a bool_t variable that will be filled with true if the lib is initialized
+ * @param[in]   p_ptCtx         - Msg receiver context
+ * @param[out]  p_pbIsInit      - Pointer to a bool_t variable that will be filled with true if the lib is initialized
  *
  * @return      e_eFSP_MSGRX_RES_BADPOINTER    - In case of bad pointer passed to the function
  *              e_eFSP_MSGRX_RES_OK            - Operation ended correctly
  */
-e_eFSP_MSGRX_RES eFSP_MSGRX_IsInit(t_eFSP_MSGRX_Ctx* const p_ctx, bool_t* p_isInit);
+e_eFSP_MSGRX_RES eFSP_MSGRX_IsInit(t_eFSP_MSGRX_Ctx* const p_ptCtx, bool_t* p_pbIsInit);
 
 /**
  * @brief       Start receiving a new message, loosing the previous stored decoded msg frame, but not the data in rx
@@ -129,7 +129,7 @@ e_eFSP_MSGRX_RES eFSP_MSGRX_IsInit(t_eFSP_MSGRX_Ctx* const p_ctx, bool_t* p_isIn
  *              timeout will start counting after the first byte of the frame is received, otherwise it will start
  *              couting just after this function is called.
  *
- * @param[in]   p_ctx         - Msg receiver context
+ * @param[in]   p_ptCtx         - Msg receiver context
  *
  * @return      e_eFSP_MSGRX_RES_BADPOINTER   	- In case of bad pointer passed to the function
  *		        e_eFSP_MSGRX_RES_NOINITLIB    	- Need to init context before taking some action
@@ -137,14 +137,14 @@ e_eFSP_MSGRX_RES eFSP_MSGRX_IsInit(t_eFSP_MSGRX_Ctx* const p_ctx, bool_t* p_isIn
  *              e_eFSP_MSGRX_RES_TIMCLBKERROR  - The timer function returned an error
  *              e_eFSP_MSGRX_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGRX_RES eFSP_MSGRX_NewMsg(t_eFSP_MSGRX_Ctx* const p_ctx);
+e_eFSP_MSGRX_RES eFSP_MSGRX_NewMsg(t_eFSP_MSGRX_Ctx* const p_ptCtx);
 
 /**
  * @brief       Start receiving a new message, loosing the previous stored decoded msg frame, and cleaning rx buffer.
  *              If i_needWaitFrameStart is true the timeout will start counting after the first byte of the frame
  *              is received, otherwise it will start couting just after this function is called.
  *
- * @param[in]   p_ctx         - Msg receiver context
+ * @param[in]   p_ptCtx         - Msg receiver context
  *
  * @return      e_eFSP_MSGRX_RES_BADPOINTER   	- In case of bad pointer passed to the function
  *		        e_eFSP_MSGRX_RES_NOINITLIB    	- Need to init context before taking some action
@@ -152,14 +152,14 @@ e_eFSP_MSGRX_RES eFSP_MSGRX_NewMsg(t_eFSP_MSGRX_Ctx* const p_ctx);
  *              e_eFSP_MSGRX_RES_TIMCLBKERROR  - The timer function returned an error
  *              e_eFSP_MSGRX_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGRX_RES eFSP_MSGRX_NewMsgNClean(t_eFSP_MSGRX_Ctx* const p_ctx);
+e_eFSP_MSGRX_RES eFSP_MSGRX_NewMsgNClean(t_eFSP_MSGRX_Ctx* const p_ptCtx);
 
 /**
  * @brief       Retrive the pointer to the stored decoded data payload ( NO HEADER ), and the data size of the frame.
  *              Keep in mind that the message parsing could be ongoing, and if an error in the frame occour the
  *              p_GetLen could be setted to 0 again. We will retrive only payload size and no CRC + LEN header
  *
- * @param[in]   p_ctx         - Msg receiver context
+ * @param[in]   p_ptCtx         - Msg receiver context
  * @param[out]  pp_data       - Pointer to a Pointer pointing to the decoded data payload ( NO CRC NO DATA SIZE )
  * @param[out]  p_GetLen      - Pointer to a uint32_t variable where the size of the decoded data will be placed ( raw
  *                              paylod data len )
@@ -169,7 +169,7 @@ e_eFSP_MSGRX_RES eFSP_MSGRX_NewMsgNClean(t_eFSP_MSGRX_Ctx* const p_ctx);
  *		        e_eFSP_MSGRX_RES_CORRUPTCTX   	- In case of an corrupted context
  *              e_eFSP_MSGRX_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGRX_RES eFSP_MSGRX_GetDecodedData(t_eFSP_MSGRX_Ctx* const p_ctx, uint8_t** pp_data, uint32_t* const p_GetLen);
+e_eFSP_MSGRX_RES eFSP_MSGRX_GetDecodedData(t_eFSP_MSGRX_Ctx* const p_ptCtx, uint8_t** pp_data, uint32_t* const p_GetLen);
 
 /**
  * @brief       Receive encoded chunk that the alg will decode byte per byte.
@@ -182,7 +182,7 @@ e_eFSP_MSGRX_RES eFSP_MSGRX_GetDecodedData(t_eFSP_MSGRX_Ctx* const p_ctx, uint8_
  *              is false the timeout is started in the moment we call the function eFSP_MSGRX_NewMsg or
  *              MSGRX_StartNewMsgNClean is called.
  *
- * @param[in]   p_ctx         	 - Msg receiver context
+ * @param[in]   p_ptCtx         	 - Msg receiver context
  *
  * @return  e_eFSP_MSGRX_RES_BADPOINTER   	    - In case of bad pointer passed to the function
  *		    e_eFSP_MSGRX_RES_NOINITLIB    	    - Need to init context before taking some action
@@ -218,7 +218,7 @@ e_eFSP_MSGRX_RES eFSP_MSGRX_GetDecodedData(t_eFSP_MSGRX_Ctx* const p_ctx, uint8_
  *                                        finished yet. This function return OK when the i_timePerRecMs timeout is
  *                                        reached, but i_timeoutMs is not elapsed.
  */
-e_eFSP_MSGRX_RES eFSP_MSGRX_ReceiveChunk(t_eFSP_MSGRX_Ctx* const p_ctx);
+e_eFSP_MSGRX_RES eFSP_MSGRX_ReceiveChunk(t_eFSP_MSGRX_Ctx* const p_ptCtx);
 #ifdef __cplusplus
 } /* extern "C" */
 #endif

@@ -30,10 +30,10 @@ extern "C" {
  *      TYPEDEFS
  **********************************************************************************************************************/
 /* Call back to a function that will calculate the CRC for this modules
- * the p_ctx parameter is a custom pointer that can be used by the creator of this CRC callback, and will not be used
+ * the p_ptCtx parameter is a custom pointer that can be used by the creator of this CRC callback, and will not be used
  * by the MSG DECODER module */
-typedef bool_t (*cb_crc32_msgd) ( void* p_ctx, const uint32_t seed, const uint8_t* p_data, const uint32_t dataLen,
-                                  uint32_t* const p_crc32Val );
+typedef bool_t (*f_eFSP_MSGD_CrcCb) ( void* p_ptCtx, const uint32_t p_uSeed, const uint8_t* p_puData, const uint32_t p_uDataL,
+                                  uint32_t* const p_puCrc32Val );
 
 typedef enum
 {
@@ -52,7 +52,7 @@ typedef enum
 typedef struct
 {
     t_eCU_BUNSTF_Ctx bunstf_Ctx;
-    cb_crc32_msgd    f_Crc;
+    f_eFSP_MSGD_CrcCb    p_fCrc;
     void*            p_crcCtx;
 }t_eFSP_MSGD_Ctx;
 
@@ -64,41 +64,41 @@ typedef struct
 /**
  * @brief       Initialize the data decoder context
  *
- * @param[in]   p_ctx           - Msg decoder context
- * @param[in]   p_memArea       - Pointer to a memory area that we will use to save decoded data
- * @param[in]   memAreaSize     - Dimension in byte of the memory area
- * @param[in]   f_Crc           - Pointer to a CRC 32 seed callback function
- * @param[in]   p_clbCtx        - Custom context passed to the callback function
+ * @param[in]   p_ptCtx           - Msg decoder context
+ * @param[in]   p_puBuff       - Pointer to a memory area that we will use to save decoded data
+ * @param[in]   p_uBuffL     - Dimension in byte of the memory area
+ * @param[in]   p_fCrc           - Pointer to a CRC 32 p_uSeed callback function
+ * @param[in]   p_ptFctx        - Custom context passed to the callback function
  *
  * @return      e_eFSP_MSGD_RES_BADPOINTER     - In case of bad pointer passed to the function
  *		        e_eFSP_MSGD_RES_BADPARAM       - In case of an invalid parameter passed to the function
  *              e_eFSP_MSGD_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGD_RES eFSP_MSGD_InitCtx(t_eFSP_MSGD_Ctx* const p_ctx, uint8_t* p_memArea, const uint32_t memAreaSize,
-                                  cb_crc32_msgd f_Crc, void* const p_clbCtx);
+e_eFSP_MSGD_RES eFSP_MSGD_InitCtx(t_eFSP_MSGD_Ctx* const p_ptCtx, uint8_t* p_puBuff, const uint32_t p_uBuffL,
+                                  f_eFSP_MSGD_CrcCb p_fCrc, void* const p_ptFctx);
 
 /**
  * @brief       Check if the lib is initialized
  *
- * @param[in]   p_ctx         - Msg decoder context
- * @param[out]  p_isInit      - Pointer to a bool_t variable that will be filled with true if the lib is initialized
+ * @param[in]   p_ptCtx         - Msg decoder context
+ * @param[out]  p_pbIsInit      - Pointer to a bool_t variable that will be filled with true if the lib is initialized
  *
  * @return      e_eFSP_MSGD_RES_BADPOINTER    - In case of bad pointer passed to the function
  *              e_eFSP_MSGD_RES_OK            - Operation ended correctly
  */
-e_eFSP_MSGD_RES eFSP_MSGD_IsInit(t_eFSP_MSGD_Ctx* const p_ctx, bool_t* p_isInit);
+e_eFSP_MSGD_RES eFSP_MSGD_IsInit(t_eFSP_MSGD_Ctx* const p_ptCtx, bool_t* p_pbIsInit);
 
 /**
  * @brief       Start receiving a new message, loosing the previous stored decoded msg frame. Clear even error state
  *
- * @param[in]   p_ctx         - Msg decoder context
+ * @param[in]   p_ptCtx         - Msg decoder context
  *
  * @return      e_eFSP_MSGD_RES_BADPOINTER   	- In case of bad pointer passed to the function
  *		        e_eFSP_MSGD_RES_NOINITLIB    	- Need to init context before taking some action
  *		        e_eFSP_MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
  *              e_eFSP_MSGD_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGD_RES eFSP_MSGD_NewMsg(t_eFSP_MSGD_Ctx* const p_ctx);
+e_eFSP_MSGD_RES eFSP_MSGD_NewMsg(t_eFSP_MSGD_Ctx* const p_ptCtx);
 
 /**
  * @brief       Retrive the pointer to the stored decoded data payload ( NO HEADER ), and the data size of the frame.
@@ -106,7 +106,7 @@ e_eFSP_MSGD_RES eFSP_MSGD_NewMsg(t_eFSP_MSGD_Ctx* const p_ctx);
  *              data. We will retrive only payload size and no CRC + LEN header.
  *              Use this function when the whole message is decoded.
  *
- * @param[in]   p_ctx         - Msg decoder context
+ * @param[in]   p_ptCtx         - Msg decoder context
  * @param[out]  pp_data       - Pointer to a Pointer pointing to the decoded data payload ( NO CRC NO DATA SIZE )
  * @param[out]  p_gettedLen   - Pointer to a uint32_t variable where the size of the decoded data will be placed (raw
  *                              paylod data len, no header no crc )
@@ -116,14 +116,14 @@ e_eFSP_MSGD_RES eFSP_MSGD_NewMsg(t_eFSP_MSGD_Ctx* const p_ctx);
  *		        e_eFSP_MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
  *              e_eFSP_MSGD_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGD_RES eFSP_MSGD_GetDecodedData(t_eFSP_MSGD_Ctx* const p_ctx, uint8_t** pp_data, uint32_t* const p_gettedLen);
+e_eFSP_MSGD_RES eFSP_MSGD_GetDecodedData(t_eFSP_MSGD_Ctx* const p_ptCtx, uint8_t** pp_data, uint32_t* const p_gettedLen);
 
 /**
  * @brief       Retrive the size of encoded data payload frame. Keep in mind that the message parsing could be ongoing,
  *              and some value could change after parsing more data. We will retrive only
  * 				payload size and no CRC + LEN header. Use this function when the whole message is decoded.
  *
- * @param[in]   p_ctx         - Msg decoder context
+ * @param[in]   p_ptCtx         - Msg decoder context
  * @param[out]  p_retrivedLen - Pointer to a uint32_t variable where the size of the decoded data will be placed (raw
  *                              paylod data len, no header size )
  *
@@ -132,12 +132,12 @@ e_eFSP_MSGD_RES eFSP_MSGD_GetDecodedData(t_eFSP_MSGD_Ctx* const p_ctx, uint8_t**
  *		        e_eFSP_MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
  *              e_eFSP_MSGD_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGD_RES eFSP_MSGD_GetDecodedLen(t_eFSP_MSGD_Ctx* const p_ctx, uint32_t* const p_retrivedLen);
+e_eFSP_MSGD_RES eFSP_MSGD_GetDecodedLen(t_eFSP_MSGD_Ctx* const p_ptCtx, uint32_t* const p_retrivedLen);
 
 /**
  * @brief       Retrive if the MsgDecoder is currently waiting for the Start of frame.
  *
- * @param[in]   p_ctx         - Msg decoder context
+ * @param[in]   p_ptCtx         - Msg decoder context
  * @param[out]  p_isMsgDec 	  - Pointer to a bool_t variable that will be filled with true if we are waiting SOF
  *
  * @return      e_eFSP_MSGD_RES_BADPOINTER   	- In case of bad pointer passed to the function
@@ -145,13 +145,13 @@ e_eFSP_MSGD_RES eFSP_MSGD_GetDecodedLen(t_eFSP_MSGD_Ctx* const p_ctx, uint32_t* 
  *		        e_eFSP_MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
  *              e_eFSP_MSGD_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGD_RES eFSP_MSGD_IsWaitingSof(t_eFSP_MSGD_Ctx* const p_ctx, bool_t* const p_isWaitingSof);
+e_eFSP_MSGD_RES eFSP_MSGD_IsWaitingSof(t_eFSP_MSGD_Ctx* const p_ptCtx, bool_t* const p_isWaitingSof);
 
 /**
  * @brief       Check if the current message is finished or if we need to decode some more data to have the full frame.
  *              If a bad frame is received this function will consider it as an unfinished frame.
  *
- * @param[in]   p_ctx         - Msg decoder context
+ * @param[in]   p_ptCtx         - Msg decoder context
  * @param[out]  p_isMsgDec 	  - Pointer to a bool_t variable where we will store if the message decoded ended.
  *
  * @return      e_eFSP_MSGD_RES_BADPOINTER   	- In case of bad pointer passed to the function
@@ -160,13 +160,13 @@ e_eFSP_MSGD_RES eFSP_MSGD_IsWaitingSof(t_eFSP_MSGD_Ctx* const p_ctx, bool_t* con
  *				e_eFSP_MSGD_RES_CRCCLBKERROR   - The crc callback returned an error when the decoder here verifing CRC
  *              e_eFSP_MSGD_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGD_RES eFSP_MSGD_IsAFullMsgDecoded(t_eFSP_MSGD_Ctx* const p_ctx, bool_t* const p_isMsgDec);
+e_eFSP_MSGD_RES eFSP_MSGD_IsAFullMsgDecoded(t_eFSP_MSGD_Ctx* const p_ptCtx, bool_t* const p_isMsgDec);
 
 /**
  * @brief       Check if the current received data compose a bad frame. If a bad frame is detected we can only
  *              call MSGD_StartNewMsg before parsing new data.
  *
- * @param[in]   p_ctx           - Msg decoder context
+ * @param[in]   p_ptCtx           - Msg decoder context
  * @param[out]  p_isFrameBad 	- Pointer to a bool_t variable where we will store if the frame is bad formed
  *
  * @return      e_eFSP_MSGD_RES_BADPOINTER   	- In case of bad pointer passed to the function
@@ -175,14 +175,14 @@ e_eFSP_MSGD_RES eFSP_MSGD_IsAFullMsgDecoded(t_eFSP_MSGD_Ctx* const p_ctx, bool_t
  *				e_eFSP_MSGD_RES_CRCCLBKERROR   - The crc callback returned an error when the decoder were verifing CRC
  *              e_eFSP_MSGD_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGD_RES eFSP_MSGD_IsFrameBad(t_eFSP_MSGD_Ctx* const p_ctx, bool_t* const p_isFrameBad);
+e_eFSP_MSGD_RES eFSP_MSGD_IsFrameBad(t_eFSP_MSGD_Ctx* const p_ptCtx, bool_t* const p_isFrameBad);
 
 /**
  * @brief       Return the most efficient numbers of data that needs to be passed to eFSP_MSGD_InsEncChunk in the next
  *              function call in order to speedup operation. When this function return 0 it's mean that the frame
  *              is fully received or that the frame is corrupted and we need to start receiving a new frame.
  *
- * @param[in]   p_ctx             - Msg decoder context
+ * @param[in]   p_ptCtx             - Msg decoder context
  * @param[out]  p_mostEffPayload  - Pointer to an uint32_t were we will store the most efficient numbers of data len
  *                                  that we could parse in eFSP_MSGD_InsEncChunk
  *
@@ -191,12 +191,12 @@ e_eFSP_MSGD_RES eFSP_MSGD_IsFrameBad(t_eFSP_MSGD_Ctx* const p_ctx, bool_t* const
  *		        e_eFSP_MSGD_RES_CORRUPTCTX   	- In case of an corrupted context
  *              e_eFSP_MSGD_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGD_RES eFSP_MSGD_GetMostEffDatLen(t_eFSP_MSGD_Ctx* const p_ctx, uint32_t* const p_mostEffPayload);
+e_eFSP_MSGD_RES eFSP_MSGD_GetMostEffDatLen(t_eFSP_MSGD_Ctx* const p_ptCtx, uint32_t* const p_mostEffPayload);
 
 /**
  * @brief       Insert the encoded data chunk that the alg will decode byte per byte
  *
- * @param[in]   p_ctx         	 - Msg decoder context
+ * @param[in]   p_ptCtx         	 - Msg decoder context
  * @param[in]   p_encArea     	 - Pointer to the encoded Data that we will decode
  * @param[in]   encLen      	 - Size of the p_encArea
  * @param[out]  p_usedEncByt     - Pointer to an uint32_t were we will store how many encoded data has been
@@ -236,7 +236,7 @@ e_eFSP_MSGD_RES eFSP_MSGD_GetMostEffDatLen(t_eFSP_MSGD_Ctx* const p_ctx, uint32_
  *                                        finished yet. In this situation p_usedEncByt is always reported with a
  *                                        value equals to encLen.
  */
-e_eFSP_MSGD_RES eFSP_MSGD_InsEncChunk(t_eFSP_MSGD_Ctx* const p_ctx, uint8_t* p_encArea, const uint32_t encLen,
+e_eFSP_MSGD_RES eFSP_MSGD_InsEncChunk(t_eFSP_MSGD_Ctx* const p_ptCtx, uint8_t* p_encArea, const uint32_t encLen,
                                       uint32_t* const p_usedEncByt);
 
 #ifdef __cplusplus

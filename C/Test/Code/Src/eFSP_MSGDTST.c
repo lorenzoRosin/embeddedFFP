@@ -158,7 +158,7 @@ void eFSP_TEST_msgDecoderBadPointer(void)
     /* Local variable */
     t_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[10u];
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
     uint8_t* dataP;
@@ -402,7 +402,7 @@ void eFSP_TEST_msgDecoderBadInit(void)
     uint32_t var32;
     uint8_t* dataP;
     bool_t isMsgDec;
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     ctxAdapterCrc.lastError = e_eCU_CRC_RES_OK;
     bool_t isInit;
@@ -410,7 +410,7 @@ void eFSP_TEST_msgDecoderBadInit(void)
     /* Function */
     ctx.bunstf_Ctx.bIsInit = false;
     ctx.p_crcCtx = &ctxAdapterCrc;
-    ctx.f_Crc = cbCrcPTest;
+    ctx.p_fCrc = cbCrcPTest;
 
     if( e_eFSP_MSGD_RES_NOINITLIB == eFSP_MSGD_NewMsg(&ctx) )
     {
@@ -520,7 +520,7 @@ void eFSP_TEST_msgDecoderBadParamEntr(void)
     /* Local variable */
     t_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[10u];
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
     bool_t isInit;
@@ -577,7 +577,7 @@ void eFSP_TEST_msgDecoderCorruptedCtx(void)
     /* Local variable */
     t_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[10u];
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
     uint8_t* dataP;
@@ -593,7 +593,7 @@ void eFSP_TEST_msgDecoderCorruptedCtx(void)
         (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 1  -- FAIL \n");
     }
 
-    ctx.f_Crc = NULL;
+    ctx.p_fCrc = NULL;
     if( e_eFSP_MSGD_RES_CORRUPTCTX == eFSP_MSGD_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgDecoderCorruptedCtx 2  -- OK \n");
@@ -929,7 +929,7 @@ void eFSP_TEST_msgDecoderBadClBck(void)
     /* Local variable */
     t_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[10u];
-    cb_crc32_msgd cbCrcPTest = &c32SAdaptEr;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdaptEr;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
     bool_t isMsgDec;
@@ -996,7 +996,7 @@ void eFSP_TEST_msgDecoderMsgEnd(void)
     /* Local variable */
     t_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[10u];
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
 
@@ -1037,7 +1037,7 @@ void eFSP_TEST_msgDecoderOutOfMem(void)
     /* Local variable */
     t_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[9u];
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
 
@@ -1078,7 +1078,7 @@ void eFSP_TEST_msgDecoderBadFrame(void)
     /* Local variable */
     t_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[10u];
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
 
@@ -1119,7 +1119,7 @@ void eFSP_TEST_msgDecoderFrameRestart(void)
     /* Local variable */
     t_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[10u];
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
 
@@ -1160,7 +1160,7 @@ void eFSP_TEST_msgDecoderGeneral(void)
     /* Local variable */
     t_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[40u];
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t consumed;
     uint32_t mostEfficient;
@@ -1430,7 +1430,7 @@ void eFSP_TEST_msgDecoderGeneral2(void)
     /* Local variable */
     t_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[40u];
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t consumed;
     uint32_t mostEfficient;
@@ -2123,7 +2123,7 @@ void eFSP_TEST_msgDecoderCorernerMulti(void)
     /* Local variable */
     t_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[40u];
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t consumed;
     uint32_t mostEfficient;
@@ -2639,7 +2639,7 @@ void eFSP_TEST_msgDecoderErrorAndContinue(void)
     /* Local variable */
     t_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[40u];
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t consumed;
     uint32_t mostEfficient;
@@ -3023,7 +3023,7 @@ void eFSP_TEST_msgDecoderErrorAndContinueEx(void)
     /* Local variable */
     t_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[40u];
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t consumed;
     uint32_t mostEfficient;
@@ -3407,7 +3407,7 @@ void eFSP_TEST_msgDecoderErrorShortFrame(void)
     /* Local variable */
     t_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[40u];
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t consumed;
     uint32_t mostEfficient;
@@ -3930,7 +3930,7 @@ void eFSP_TEST_msgDecoderErrorBadStuff(void)
     /* Local variable */
     t_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[40u];
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t consumed;
     uint32_t mostEfficient;
@@ -4314,7 +4314,7 @@ void eFSP_TEST_msgDecoderCorner(void)
     /* Local variable */
     t_eFSP_MSGD_Ctx ctx;
     uint8_t  memArea[10u];
-    cb_crc32_msgd cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
 

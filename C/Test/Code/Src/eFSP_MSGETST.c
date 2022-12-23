@@ -145,7 +145,7 @@ void eFSP_TEST_msgEncoderBadPointer(void)
     /* Local variable */
     t_eFSP_MSGE_Ctx ctx;
     uint8_t  memArea[5u];
-    cb_crc32_msge cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
     uint8_t* dataP;
@@ -318,7 +318,7 @@ void eFSP_TEST_msgEncoderBadInit(void)
     uint32_t var32;
     uint8_t* dataP;
     bool_t isInit;
-    cb_crc32_msge cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
 
     /* Set value */
@@ -398,7 +398,7 @@ void eFSP_TEST_msgEncoderBadIniMsg(void)
     /* Local variable */
     t_eFSP_MSGE_Ctx ctx;
     uint8_t  memArea[10u];
-    cb_crc32_msge cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
     bool_t isInit;
@@ -465,7 +465,7 @@ void eFSP_TEST_msgEncoderBadParamEntr(void)
     /* Local variable */
     t_eFSP_MSGE_Ctx ctx;
     uint8_t  memArea[10u];
-    cb_crc32_msge cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
 
@@ -542,7 +542,7 @@ void eFSP_TEST_msgEncoderCorruptContext(void)
     /* Local variable */
     t_eFSP_MSGE_Ctx ctx;
     uint8_t  memArea[10u];
-    cb_crc32_msge cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
     uint8_t* dataP;
@@ -803,7 +803,7 @@ void eFSP_TEST_msgEncoderBadClBck(void)
     /* Local variable */
     t_eFSP_MSGE_Ctx ctx;
     uint8_t  memArea[10u];
-    cb_crc32_msge cbCrcPTest = &c32SAdaptEr;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdaptEr;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
 
     /* Set value */
@@ -842,7 +842,7 @@ void eFSP_TEST_msgEncoderMsgEnd(void)
     t_eFSP_MSGE_Ctx ctx;
     uint8_t  memArea[12u] = {0u};
     uint8_t  msgA[24u] = {0u};
-    cb_crc32_msge cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
     uint8_t* dataP;
@@ -935,7 +935,7 @@ void eFSP_TEST_msgEncoderGeneral(void)
     t_eFSP_MSGE_Ctx ctx;
     uint8_t  memArea[12u] = {0u};
     uint8_t  msgA[24u] = {0u};
-    cb_crc32_msge cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
     uint8_t* dataP;
@@ -1214,7 +1214,7 @@ void eFSP_TEST_msgEncoderGeneral2(void)
     t_eFSP_MSGE_Ctx ctx;
     uint8_t  memArea[12u] = {0u};
     uint8_t  msgA[24u] = {0u};
-    cb_crc32_msge cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     uint32_t var32;
     uint8_t* dataP;

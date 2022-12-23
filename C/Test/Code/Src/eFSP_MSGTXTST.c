@@ -443,7 +443,7 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     /* Local variable */
     t_eFSP_MSGTX_Ctx ctx;
     t_eFSP_MSGTX_InitData initData;
-    cb_crc32_msge cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterSend;
     s_eCU_timerAdapterCtx ctxAdapterTim;
@@ -834,7 +834,7 @@ void eFSP_TEST_msgTransmitterBadInit(void)
 {
     /* Local variable */
     t_eFSP_MSGTX_Ctx ctx;
-    cb_crc32_msge cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterSend;
     s_eCU_timerAdapterCtx ctxAdapterTim;
@@ -923,7 +923,7 @@ void eFSP_TEST_msgTransmitterBadIniMsg(void)
     /* Local variable */
     t_eFSP_MSGTX_Ctx ctx;
     t_eFSP_MSGTX_InitData initData;
-    cb_crc32_msge cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterSend;
     s_eCU_timerAdapterCtx ctxAdapterTim;
@@ -1000,7 +1000,7 @@ void eFSP_TEST_msgTransmitterBadParamEntr(void)
     /* Local variable */
     t_eFSP_MSGTX_Ctx ctx;
     t_eFSP_MSGTX_InitData initData;
-    cb_crc32_msge cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterSend;
     s_eCU_timerAdapterCtx ctxAdapterTim;
@@ -1165,7 +1165,7 @@ void eFSP_TEST_msgTransmitterCorruptContext(void)
     /* Local variable */
     t_eFSP_MSGTX_Ctx ctx;
     t_eFSP_MSGTX_InitData initData;
-    cb_crc32_msge cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterSend;
     s_eCU_timerAdapterCtx ctxAdapterTim;
@@ -1587,7 +1587,7 @@ void eFSP_TEST_msgTransmitterBadClBckCrc(void)
     /* Local variable */
     t_eFSP_MSGTX_Ctx ctx;
     t_eFSP_MSGTX_InitData initData;
-    cb_crc32_msge cbCrcPTest = &c32SAdaptEr;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdaptEr;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterSend;
     s_eCU_timerAdapterCtx ctxAdapterTim;
@@ -1644,7 +1644,7 @@ void eFSP_TEST_msgTransmitterBadClBckSend(void)
     /* Local variable */
     t_eFSP_MSGTX_Ctx ctx;
     t_eFSP_MSGTX_InitData initData;
-    cb_crc32_msge cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterSend;
     s_eCU_timerAdapterCtx ctxAdapterTim;
@@ -1725,7 +1725,7 @@ void eFSP_TEST_msgTransmitterBadClBckTim(void)
     /* Local variable */
     t_eFSP_MSGTX_Ctx ctx;
     t_eFSP_MSGTX_InitData initData;
-    cb_crc32_msge cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterSend;
     s_eCU_timerAdapterCtx ctxAdapterTim;
@@ -1877,7 +1877,7 @@ void eFSP_TEST_msgTransmitterCornerCase(void)
     /* Local variable */
     t_eFSP_MSGTX_Ctx ctx;
     t_eFSP_MSGTX_InitData initData;
-    cb_crc32_msge cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterSend;
     s_eCU_timerAdapterCtx ctxAdapterTim;
@@ -2281,7 +2281,7 @@ void eFSP_TEST_msgTransmitterCornerCase2(void)
     /* Local variable */
     t_eFSP_MSGTX_Ctx ctx;
     t_eFSP_MSGTX_InitData initData;
-    cb_crc32_msge cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterSend;
     s_eCU_timerAdapterCtx ctxAdapterTim;
@@ -2481,7 +2481,7 @@ void eFSP_TEST_msgTransmitterCornerCase3()
     /* Local variable */
     t_eFSP_MSGTX_Ctx ctx;
     t_eFSP_MSGTX_InitData initData;
-    cb_crc32_msge cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterSend;
     s_eCU_timerAdapterCtx ctxAdapterTim;
