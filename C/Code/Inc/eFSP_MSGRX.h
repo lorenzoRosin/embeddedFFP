@@ -7,8 +7,8 @@
  *
  **********************************************************************************************************************/
 
-#ifndef EFSPMSGRECEIVER_H
-#define EFSPMSGRECEIVER_H
+#ifndef EFSP_MSGRX_H
+#define EFSP_MSGRX_H
 
 
 
@@ -45,39 +45,39 @@ typedef struct
     void*                   p_timCtx;
     cb_rx_tim_start         f_timStart;
     cb_rx_tim_getRemaining  f_timGetRemaining;
-}s_eFSP_RXTIMER;
+}t_eFSP_RXTIMER;
 
 typedef enum
 {
-    MSGRX_RES_OK = 0,
-    MSGRX_RES_BADPARAM,
-    MSGRX_RES_BADPOINTER,
-	MSGRX_RES_CORRUPTCTX,
-    MSGRX_RES_OUTOFMEM,
-    MSGRX_RES_BADFRAME,
-    MSGRX_RES_FRAMERESTART,
-    MSGRX_RES_MESSAGERECEIVED,
-    MSGRX_RES_MESSAGETIMEOUT,
-    MSGRX_RES_NOINITLIB,
-	MSGRX_RES_CRCCLBKERROR,
-    MSGRX_RES_RXCLBKERROR,
-    MSGRX_RES_TIMCLBKERROR
-}e_eFSP_MSGRX_Res;
+    e_eFSP_MSGRX_RES_OK = 0,
+    e_eFSP_MSGRX_RES_BADPARAM,
+    e_eFSP_MSGRX_RES_BADPOINTER,
+	e_eFSP_MSGRX_RES_CORRUPTCTX,
+    e_eFSP_MSGRX_RES_OUTOFMEM,
+    e_eFSP_MSGRX_RES_BADFRAME,
+    e_eFSP_MSGRX_RES_FRAMERESTART,
+    e_eFSP_MSGRX_RES_MESSAGERECEIVED,
+    e_eFSP_MSGRX_RES_MESSAGETIMEOUT,
+    e_eFSP_MSGRX_RES_NOINITLIB,
+	e_eFSP_MSGRX_RES_CRCCLBKERROR,
+    e_eFSP_MSGRX_RES_RXCLBKERROR,
+    e_eFSP_MSGRX_RES_TIMCLBKERROR
+}e_eFSP_MSGRX_RES;
 
 typedef struct
 {
-    s_eFSP_MSGD_Ctx msgd_Ctx;
+    t_eFSP_MSGD_Ctx msgd_Ctx;
 	uint8_t*        p_rxBuff;
 	uint32_t        rxBuffSize;
 	uint32_t        rxBuffCntr;
     uint32_t        rxBuffFill;
     cb_rx_msge      f_Rx;
     void*           p_RxCtx;
-    s_eFSP_RXTIMER  rxTim;
+    t_eFSP_RXTIMER  rxTim;
     uint32_t        timeoutMs;
     uint32_t        timePerRecMs;
     bool_t          needWaitFrameStart;
-}s_eFSP_MSGRX_Ctx;
+}t_eFSP_MSGRX_Ctx;
 
 typedef struct
 {
@@ -89,11 +89,11 @@ typedef struct
     void*           p_i_cbCrcCtx;
     cb_rx_msge      f_i_Rx;
     void*           p_i_cbRxCtx;
-    s_eFSP_RXTIMER  i_rxTim;
+    t_eFSP_RXTIMER  i_rxTim;
     uint32_t        i_timeoutMs;
     uint32_t        i_timePerRecMs;
     bool_t          i_needWaitFrameStart;
-}s_eFSP_MSGRX_InitData;
+}t_eFSP_MSGRX_InitData;
 
 
 
@@ -106,11 +106,11 @@ typedef struct
  * @param[in]   p_ctx         - Msg receiver context
  * @param[in]   p_initData    - Init data
  *
- * @return      MSGRX_RES_BADPOINTER     - In case of bad pointer passed to the function
- *		        MSGRX_RES_BADPARAM       - In case of an invalid parameter passed to the function
- *              MSGRX_RES_OK             - Operation ended correctly
+ * @return      e_eFSP_MSGRX_RES_BADPOINTER     - In case of bad pointer passed to the function
+ *		        e_eFSP_MSGRX_RES_BADPARAM       - In case of an invalid parameter passed to the function
+ *              e_eFSP_MSGRX_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGRX_Res eFSP_MSGRX_InitCtx(s_eFSP_MSGRX_Ctx* const p_ctx, const s_eFSP_MSGRX_InitData* p_initData);
+e_eFSP_MSGRX_RES eFSP_MSGRX_InitCtx(t_eFSP_MSGRX_Ctx* const p_ctx, const t_eFSP_MSGRX_InitData* p_initData);
 
 /**
  * @brief       Check if the lib is initialized
@@ -118,10 +118,10 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_InitCtx(s_eFSP_MSGRX_Ctx* const p_ctx, const s_eFSP_
  * @param[in]   p_ctx         - Msg receiver context
  * @param[out]  p_isInit      - Pointer to a bool_t variable that will be filled with true if the lib is initialized
  *
- * @return      MSGRX_RES_BADPOINTER    - In case of bad pointer passed to the function
- *              MSGRX_RES_OK            - Operation ended correctly
+ * @return      e_eFSP_MSGRX_RES_BADPOINTER    - In case of bad pointer passed to the function
+ *              e_eFSP_MSGRX_RES_OK            - Operation ended correctly
  */
-e_eFSP_MSGRX_Res eFSP_MSGRX_IsInit(s_eFSP_MSGRX_Ctx* const p_ctx, bool_t* p_isInit);
+e_eFSP_MSGRX_RES eFSP_MSGRX_IsInit(t_eFSP_MSGRX_Ctx* const p_ctx, bool_t* p_isInit);
 
 /**
  * @brief       Start receiving a new message, loosing the previous stored decoded msg frame, but not the data in rx
@@ -131,13 +131,13 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_IsInit(s_eFSP_MSGRX_Ctx* const p_ctx, bool_t* p_isIn
  *
  * @param[in]   p_ctx         - Msg receiver context
  *
- * @return      MSGRX_RES_BADPOINTER   	- In case of bad pointer passed to the function
- *		        MSGRX_RES_NOINITLIB    	- Need to init context before taking some action
- *		        MSGRX_RES_CORRUPTCTX   	- In case of an corrupted context
- *              MSGRX_RES_TIMCLBKERROR  - The timer function returned an error
- *              MSGRX_RES_OK           	- Operation ended correctly
+ * @return      e_eFSP_MSGRX_RES_BADPOINTER   	- In case of bad pointer passed to the function
+ *		        e_eFSP_MSGRX_RES_NOINITLIB    	- Need to init context before taking some action
+ *		        e_eFSP_MSGRX_RES_CORRUPTCTX   	- In case of an corrupted context
+ *              e_eFSP_MSGRX_RES_TIMCLBKERROR  - The timer function returned an error
+ *              e_eFSP_MSGRX_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGRX_Res eFSP_MSGRX_NewMsg(s_eFSP_MSGRX_Ctx* const p_ctx);
+e_eFSP_MSGRX_RES eFSP_MSGRX_NewMsg(t_eFSP_MSGRX_Ctx* const p_ctx);
 
 /**
  * @brief       Start receiving a new message, loosing the previous stored decoded msg frame, and cleaning rx buffer.
@@ -146,13 +146,13 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_NewMsg(s_eFSP_MSGRX_Ctx* const p_ctx);
  *
  * @param[in]   p_ctx         - Msg receiver context
  *
- * @return      MSGRX_RES_BADPOINTER   	- In case of bad pointer passed to the function
- *		        MSGRX_RES_NOINITLIB    	- Need to init context before taking some action
- *		        MSGRX_RES_CORRUPTCTX   	- In case of an corrupted context
- *              MSGRX_RES_TIMCLBKERROR  - The timer function returned an error
- *              MSGRX_RES_OK           	- Operation ended correctly
+ * @return      e_eFSP_MSGRX_RES_BADPOINTER   	- In case of bad pointer passed to the function
+ *		        e_eFSP_MSGRX_RES_NOINITLIB    	- Need to init context before taking some action
+ *		        e_eFSP_MSGRX_RES_CORRUPTCTX   	- In case of an corrupted context
+ *              e_eFSP_MSGRX_RES_TIMCLBKERROR  - The timer function returned an error
+ *              e_eFSP_MSGRX_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGRX_Res eFSP_MSGRX_NewMsgNClean(s_eFSP_MSGRX_Ctx* const p_ctx);
+e_eFSP_MSGRX_RES eFSP_MSGRX_NewMsgNClean(t_eFSP_MSGRX_Ctx* const p_ctx);
 
 /**
  * @brief       Retrive the pointer to the stored decoded data payload ( NO HEADER ), and the data size of the frame.
@@ -164,19 +164,19 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_NewMsgNClean(s_eFSP_MSGRX_Ctx* const p_ctx);
  * @param[out]  p_GetLen      - Pointer to a uint32_t variable where the size of the decoded data will be placed ( raw
  *                              paylod data len )
  *
- * @return      MSGRX_RES_BADPOINTER   	- In case of bad pointer passed to the function
- *		        MSGRX_RES_NOINITLIB    	- Need to init context before taking some action
- *		        MSGRX_RES_CORRUPTCTX   	- In case of an corrupted context
- *              MSGRX_RES_OK           	- Operation ended correctly
+ * @return      e_eFSP_MSGRX_RES_BADPOINTER   	- In case of bad pointer passed to the function
+ *		        e_eFSP_MSGRX_RES_NOINITLIB    	- Need to init context before taking some action
+ *		        e_eFSP_MSGRX_RES_CORRUPTCTX   	- In case of an corrupted context
+ *              e_eFSP_MSGRX_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGRX_Res eFSP_MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const p_ctx, uint8_t** pp_data, uint32_t* const p_GetLen);
+e_eFSP_MSGRX_RES eFSP_MSGRX_GetDecodedData(t_eFSP_MSGRX_Ctx* const p_ctx, uint8_t** pp_data, uint32_t* const p_GetLen);
 
 /**
  * @brief       Receive encoded chunk that the alg will decode byte per byte.
  *              The whole message can be received calling multiple times this function. Eache time this function will
  *              try to read all the data that can be readed in "i_timePerRecMs". The whole frame instead can be received
  *              in "i_timeoutMs" milliseconds. This function can return different status, but if we keep call
- *              this function even after i_timeoutMs it will start returning only MSGRX_RES_MESSAGETIMEOUT.
+ *              this function even after i_timeoutMs it will start returning only e_eFSP_MSGRX_RES_MESSAGETIMEOUT.
  *              If the flag i_needWaitFrameStart is true the timeout is started in the moment we receive the
  *              start of frame (if another SOF is received the timeout is reloaded). If the flag i_needWaitFrameStart
  *              is false the timeout is started in the moment we call the function eFSP_MSGRX_NewMsg or
@@ -184,45 +184,45 @@ e_eFSP_MSGRX_Res eFSP_MSGRX_GetDecodedData(s_eFSP_MSGRX_Ctx* const p_ctx, uint8_
  *
  * @param[in]   p_ctx         	 - Msg receiver context
  *
- * @return  MSGRX_RES_BADPOINTER   	    - In case of bad pointer passed to the function
- *		    MSGRX_RES_NOINITLIB    	    - Need to init context before taking some action
- *		    MSGRX_RES_BADPARAM     	    - In case of an invalid parameter passed to the function
- *		    MSGRX_RES_CORRUPTCTX   	    - In case of an corrupted context
- *          MSGRX_RES_OUTOFMEM     	    - Can not decode data, initial mem pointer was too small. The only way to
+ * @return  e_eFSP_MSGRX_RES_BADPOINTER   	    - In case of bad pointer passed to the function
+ *		    e_eFSP_MSGRX_RES_NOINITLIB    	    - Need to init context before taking some action
+ *		    e_eFSP_MSGRX_RES_BADPARAM     	    - In case of an invalid parameter passed to the function
+ *		    e_eFSP_MSGRX_RES_CORRUPTCTX   	    - In case of an corrupted context
+ *          e_eFSP_MSGRX_RES_OUTOFMEM     	    - Can not decode data, initial mem pointer was too small. The only way to
  *                                        resolve the issue is increasing the size of the memory area passed to init.
  *                                        Keep in mind that if there are multiple and frequent error in data tx or rx
  *                                        we could end in this situation when data size in frame is corrupted and
  *                                        interpreted higher that it should be and EOF + SOF of the next frame are lost.
  *                                        So this status could be due to a transmissione error, but it's not possible
  *                                        to know the reason of the error without storing all the data and checking CRC.
- *		    MSGRX_RES_MESSAGERECEIVED   - Frame ended, restart context in order to parse a new frame. Every other call
+ *		    e_eFSP_MSGRX_RES_MESSAGERECEIVED   - Frame ended, restart context in order to parse a new frame. Every other call
  *                                        to this function will not have effect until we call eFSP_MSGRX_NewMsg,
  *                                        MSGRX_StartNewMsgNClean or timeout elapse. In this situation bear in mind
  *                                        that some data could be left out the parsing and can remain saved inside a
  *                                        RX buffer. The onlyway to completly clean RX buffer is calling
  *                                        MSGRX_StartNewMsgNClean.
- *          MSGRX_RES_MESSAGETIMEOUT    - The message is not received before "i_timeoutMs". Restart to continue.
- *          MSGRX_RES_BADFRAME          - Found an error while parsing, the frame passed is invalid.
+ *          e_eFSP_MSGRX_RES_MESSAGETIMEOUT    - The message is not received before "i_timeoutMs". Restart to continue.
+ *          e_eFSP_MSGRX_RES_BADFRAME          - Found an error while parsing, the frame passed is invalid.
  *                                        Restart context in order to parse a new frame. Every other call
  *                                        to this function will not have effect until we call eFSP_MSGRX_NewMsg or
  *                                        timeout elapse. In this situation bear in mind that some data could be left
  *                                        out the parsing and can remain saved inside a RX buffer.
- *          MSGRX_RES_FRAMERESTART      - During frame receiving another start of frame is received. In this situation
+ *          e_eFSP_MSGRX_RES_FRAMERESTART      - During frame receiving another start of frame is received. In this situation
  *                                        clear old data and restart the frame, witouth the need to call any other
  *                                        function. In this situation bear in mind that some data could be left
  *                                        out the parsing and can remain saved inside a RX buffer.
- *		    MSGRX_RES_RXCLBKERROR       - Some error reported by the user receive function. Restart to continue.
- *		    MSGRX_RES_CRCCLBKERROR      - The crc callback returned an error when the decoder where verifing CRC
- *          MSGRX_RES_TIMCLBKERROR      - The timer function returned an error
- *          MSGRX_RES_OK           	    - Operation ended correctly. The chunk is parsed correctly but the frame is not
+ *		    e_eFSP_MSGRX_RES_RXCLBKERROR       - Some error reported by the user receive function. Restart to continue.
+ *		    e_eFSP_MSGRX_RES_CRCCLBKERROR      - The crc callback returned an error when the decoder where verifing CRC
+ *          e_eFSP_MSGRX_RES_TIMCLBKERROR      - The timer function returned an error
+ *          e_eFSP_MSGRX_RES_OK           	    - Operation ended correctly. The chunk is parsed correctly but the frame is not
  *                                        finished yet. This function return OK when the i_timePerRecMs timeout is
  *                                        reached, but i_timeoutMs is not elapsed.
  */
-e_eFSP_MSGRX_Res eFSP_MSGRX_ReceiveChunk(s_eFSP_MSGRX_Ctx* const p_ctx);
+e_eFSP_MSGRX_RES eFSP_MSGRX_ReceiveChunk(t_eFSP_MSGRX_Ctx* const p_ctx);
 #ifdef __cplusplus
 } /* extern "C" */
 #endif
 
 
 
-#endif /* EFSPMSGRECEIVER_H */
+#endif /* EFSP_MSGRX_H */

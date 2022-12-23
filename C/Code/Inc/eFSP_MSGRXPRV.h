@@ -7,8 +7,8 @@
  *
  **********************************************************************************************************************/
 
-#ifndef EFSPMSGRECEIVER_PRIV_H
-#define EFSPMSGRECEIVER_PRIV_H
+#ifndef EFSP_MSGRXPRV_H
+#define EFSP_MSGRXPRV_H
 
 
 
@@ -31,15 +31,15 @@ extern "C" {
  **********************************************************************************************************************/
 typedef enum
 {
-    MSGRX_PRV_CHECKINIT = 0,
-    MSGRX_PRV_CHECKINITTIMEOUT,
-    MSGRX_PRV_CHECKHOWMANYDATA,
-    MSGRX_PRV_CHECKIFBUFFERRX,
-    MSGRX_PRV_INSERTCHUNK,
-    MSGRX_PRV_CHECKTIMEOUTAFTERRX,
-    MSGRX_PRV_RECEIVE_BUFF,
-    MSGRX_PRV_ELABDONE
-}e_eFSP_MSGRX_Priv_state;
+    e_eFSP_MSGRXPRV_SM_CHECKINIT = 0,
+    e_eFSP_MSGRXPRV_SM_CHECKINITTIMEOUT,
+    e_eFSP_MSGRXPRV_SM_CHECKHOWMANYDATA,
+    e_eFSP_MSGRXPRV_SM_CHECKIFBUFFERRX,
+    e_eFSP_MSGRXPRV_SM_INSERTCHUNK,
+    e_eFSP_MSGRXPRV_SM_CHECKTIMEOUTAFTERRX,
+    e_eFSP_MSGRXPRV_SM_RECEIVEBUFF,
+    e_eFSP_MSGRXPRV_SM_ELABDONE
+}e_eFSP_MSGRXPRV_SM;
 
 
 
@@ -49,4 +49,4 @@ typedef enum
 
 
 
-#endif /* EFSPMSGRECEIVER_PRIV_H */
+#endif /* EFSP_MSGRXPRV_H */

@@ -563,8 +563,8 @@ void eFSP_TEST_msgReceiverBadPointer(void)
 	m_read_jumpLong = 0u;
 
     /* Local variable */
-    s_eFSP_MSGRX_Ctx ctx;
-    s_eFSP_MSGRX_InitData initData;
+    t_eFSP_MSGRX_Ctx ctx;
+    t_eFSP_MSGRX_InitData initData;
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
@@ -576,7 +576,7 @@ void eFSP_TEST_msgReceiverBadPointer(void)
     bool_t isInit;
 
     /* Function */
-    if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(NULL, &initData) )
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(NULL, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadPointer 1  -- OK \n");
     }
@@ -586,7 +586,7 @@ void eFSP_TEST_msgReceiverBadPointer(void)
     }
 
     /* Function */
-    if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, NULL) )
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, NULL) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadPointer 2  -- OK \n");
     }
@@ -610,7 +610,7 @@ void eFSP_TEST_msgReceiverBadPointer(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadPointer 3  -- OK \n");
     }
@@ -634,7 +634,7 @@ void eFSP_TEST_msgReceiverBadPointer(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadPointer 4  -- OK \n");
     }
@@ -658,7 +658,7 @@ void eFSP_TEST_msgReceiverBadPointer(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadPointer 5  -- OK \n");
     }
@@ -682,7 +682,7 @@ void eFSP_TEST_msgReceiverBadPointer(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadPointer 6  -- OK \n");
     }
@@ -706,7 +706,7 @@ void eFSP_TEST_msgReceiverBadPointer(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadPointer 7  -- OK \n");
     }
@@ -730,7 +730,7 @@ void eFSP_TEST_msgReceiverBadPointer(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadPointer 8  -- OK \n");
     }
@@ -754,7 +754,7 @@ void eFSP_TEST_msgReceiverBadPointer(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadPointer 9  -- OK \n");
     }
@@ -778,7 +778,7 @@ void eFSP_TEST_msgReceiverBadPointer(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadPointer 10 -- OK \n");
     }
@@ -802,7 +802,7 @@ void eFSP_TEST_msgReceiverBadPointer(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadPointer 11 -- OK \n");
     }
@@ -812,7 +812,7 @@ void eFSP_TEST_msgReceiverBadPointer(void)
     }
 
     /* Function */
-    if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_IsInit(NULL, &isInit) )
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_IsInit(NULL, &isInit) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadPointer 12 -- OK \n");
     }
@@ -822,7 +822,7 @@ void eFSP_TEST_msgReceiverBadPointer(void)
     }
 
     /* Function */
-    if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_IsInit(&ctx, NULL) )
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_IsInit(&ctx, NULL) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadPointer 13 -- OK \n");
     }
@@ -832,7 +832,7 @@ void eFSP_TEST_msgReceiverBadPointer(void)
     }
 
     /* Function */
-    if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_NewMsg(NULL) )
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_NewMsg(NULL) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadPointer 14 -- OK \n");
     }
@@ -842,7 +842,7 @@ void eFSP_TEST_msgReceiverBadPointer(void)
     }
 
     /* Function */
-    if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_NewMsgNClean(NULL) )
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_NewMsgNClean(NULL) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadPointer 15 -- OK \n");
     }
@@ -852,7 +852,7 @@ void eFSP_TEST_msgReceiverBadPointer(void)
     }
 
     /* Function */
-    if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_GetDecodedData(NULL, &dataP, &dataL) )
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_GetDecodedData(NULL, &dataP, &dataL) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadPointer 16 -- OK \n");
     }
@@ -862,7 +862,7 @@ void eFSP_TEST_msgReceiverBadPointer(void)
     }
 
     /* Function */
-    if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_GetDecodedData(&ctx, NULL, &dataL) )
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_GetDecodedData(&ctx, NULL, &dataL) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadPointer 17 -- OK \n");
     }
@@ -872,7 +872,7 @@ void eFSP_TEST_msgReceiverBadPointer(void)
     }
 
     /* Function */
-    if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, NULL) )
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, NULL) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadPointer 18 -- OK \n");
     }
@@ -882,7 +882,7 @@ void eFSP_TEST_msgReceiverBadPointer(void)
     }
 
     /* Function */
-    if( MSGRX_RES_BADPOINTER == eFSP_MSGRX_ReceiveChunk(NULL) )
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_ReceiveChunk(NULL) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadPointer 19 -- OK \n");
     }
@@ -899,8 +899,8 @@ void eFSP_TEST_msgReceiverBadInit(void)
 	m_read_jumpLong = 0u;
 
     /* Local variable */
-    s_eFSP_MSGRX_Ctx ctx;
-    s_eFSP_MSGRX_InitData initData;
+    t_eFSP_MSGRX_Ctx ctx;
+    t_eFSP_MSGRX_InitData initData;
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
@@ -927,7 +927,7 @@ void eFSP_TEST_msgReceiverBadInit(void)
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadInit 1  -- OK \n");
     }
@@ -937,7 +937,7 @@ void eFSP_TEST_msgReceiverBadInit(void)
     }
 
     ctx.msgd_Ctx.bunstf_Ctx.bIsInit = false;
-    if( MSGRX_RES_OK == eFSP_MSGRX_IsInit(&ctx, &isInit) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_IsInit(&ctx, &isInit) )
     {
         if( false == isInit )
         {
@@ -954,7 +954,7 @@ void eFSP_TEST_msgReceiverBadInit(void)
     }
 
     /* Function */
-    if( MSGRX_RES_NOINITLIB == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_NOINITLIB == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadInit 3  -- OK \n");
     }
@@ -964,7 +964,7 @@ void eFSP_TEST_msgReceiverBadInit(void)
     }
 
     /* Function */
-    if( MSGRX_RES_NOINITLIB == eFSP_MSGRX_NewMsgNClean(&ctx) )
+    if( e_eFSP_MSGRX_RES_NOINITLIB == eFSP_MSGRX_NewMsgNClean(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadInit 4  -- OK \n");
     }
@@ -974,7 +974,7 @@ void eFSP_TEST_msgReceiverBadInit(void)
     }
 
     /* Function */
-    if( MSGRX_RES_NOINITLIB == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL) )
+    if( e_eFSP_MSGRX_RES_NOINITLIB == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadInit 5  -- OK \n");
     }
@@ -984,7 +984,7 @@ void eFSP_TEST_msgReceiverBadInit(void)
     }
 
     /* Function */
-    if( MSGRX_RES_NOINITLIB == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_NOINITLIB == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadInit 6  -- OK \n");
     }
@@ -1001,8 +1001,8 @@ void eFSP_TEST_msgReceiverBadParamEntr(void)
 	m_read_jumpLong = 0u;
 
     /* Local variable */
-    s_eFSP_MSGRX_Ctx ctx;
-    s_eFSP_MSGRX_InitData initData;
+    t_eFSP_MSGRX_Ctx ctx;
+    t_eFSP_MSGRX_InitData initData;
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
@@ -1026,7 +1026,7 @@ void eFSP_TEST_msgReceiverBadParamEntr(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_BADPARAM == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_BADPARAM == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadParamEntr 1  -- OK \n");
     }
@@ -1050,7 +1050,7 @@ void eFSP_TEST_msgReceiverBadParamEntr(void)
     initData.i_timeoutMs = 0u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_BADPARAM == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_BADPARAM == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadParamEntr 2  -- OK \n");
     }
@@ -1074,7 +1074,7 @@ void eFSP_TEST_msgReceiverBadParamEntr(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 0u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_BADPARAM == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_BADPARAM == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadParamEntr 3  -- OK \n");
     }
@@ -1098,7 +1098,7 @@ void eFSP_TEST_msgReceiverBadParamEntr(void)
     initData.i_timeoutMs = 100u;
     initData.i_timePerRecMs = 1000u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_BADPARAM == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_BADPARAM == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadParamEntr 4  -- OK \n");
     }
@@ -1122,7 +1122,7 @@ void eFSP_TEST_msgReceiverBadParamEntr(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_BADPARAM == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_BADPARAM == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadParamEntr 5  -- OK \n");
     }
@@ -1146,7 +1146,7 @@ void eFSP_TEST_msgReceiverBadParamEntr(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadParamEntr 6  -- OK \n");
     }
@@ -1155,7 +1155,7 @@ void eFSP_TEST_msgReceiverBadParamEntr(void)
         (void)printf("eFSP_TEST_msgReceiverBadParamEntr 6  -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_IsInit(&ctx, &isInit) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_IsInit(&ctx, &isInit) )
     {
         if( true == isInit )
         {
@@ -1179,8 +1179,8 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
 	m_read_jumpLong = 0u;
 
     /* Local variable */
-    s_eFSP_MSGRX_Ctx ctx;
-    s_eFSP_MSGRX_InitData initData;
+    t_eFSP_MSGRX_Ctx ctx;
+    t_eFSP_MSGRX_InitData initData;
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
@@ -1205,7 +1205,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 1  -- OK \n");
     }
@@ -1216,7 +1216,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
 
     /* Function */
     ctx.p_rxBuff = NULL;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 2  -- OK \n");
     }
@@ -1240,7 +1240,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 3  -- OK \n");
     }
@@ -1251,7 +1251,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
 
     /* Function */
     ctx.f_Rx = NULL;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 4  -- OK \n");
     }
@@ -1275,7 +1275,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 5  -- OK \n");
     }
@@ -1286,7 +1286,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
 
     /* Function */
     ctx.p_RxCtx = NULL;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 6  -- OK \n");
     }
@@ -1310,7 +1310,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 7  -- OK \n");
     }
@@ -1321,7 +1321,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
 
     /* Function */
     ctx.rxTim.p_timCtx = NULL;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 8  -- OK \n");
     }
@@ -1345,7 +1345,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 9  -- OK \n");
     }
@@ -1356,7 +1356,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
 
     /* Function */
     ctx.rxTim.f_timStart = NULL;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 10 -- OK \n");
     }
@@ -1380,7 +1380,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 11 -- OK \n");
     }
@@ -1391,7 +1391,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
 
     /* Function */
     ctx.rxTim.f_timGetRemaining = NULL;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 12 -- OK \n");
     }
@@ -1415,7 +1415,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 13 -- OK \n");
     }
@@ -1426,7 +1426,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
 
     /* Function */
     ctx.rxBuffSize = 0u;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 14 -- OK \n");
     }
@@ -1450,7 +1450,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 15 -- OK \n");
     }
@@ -1461,7 +1461,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
 
     /* Function */
     ctx.rxBuffFill = ctx.rxBuffSize + 1u;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 16 -- OK \n");
     }
@@ -1485,7 +1485,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 17 -- OK \n");
     }
@@ -1496,7 +1496,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
 
     /* Function */
     ctx.rxBuffCntr = ctx.rxBuffFill + 1u;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 18 -- OK \n");
     }
@@ -1520,7 +1520,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 19 -- OK \n");
     }
@@ -1531,7 +1531,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
 
     /* Function */
     ctx.timeoutMs = 0u;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 20 -- OK \n");
     }
@@ -1555,7 +1555,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 21 -- OK \n");
     }
@@ -1566,7 +1566,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
 
     /* Function */
     ctx.timePerRecMs = 0u;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 22 -- OK \n");
     }
@@ -1590,7 +1590,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 23 -- OK \n");
     }
@@ -1601,7 +1601,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
 
     /* Function */
     ctx.timePerRecMs = ctx.timeoutMs + 1u;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 24 -- OK \n");
     }
@@ -1625,7 +1625,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 25 -- OK \n");
     }
@@ -1636,7 +1636,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
 
     /* Function */
     ctx.timePerRecMs = ctx.timeoutMs + 1u;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsgNClean(&ctx) )
+    if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsgNClean(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 26 -- OK \n");
     }
@@ -1660,7 +1660,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 27 -- OK \n");
     }
@@ -1671,7 +1671,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
 
     /* Function */
     ctx.timePerRecMs = ctx.timeoutMs + 1u;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL) )
+    if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 28 -- OK \n");
     }
@@ -1695,7 +1695,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 29 -- OK \n");
     }
@@ -1706,7 +1706,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
 
     /* Function */
     ctx.timePerRecMs = ctx.timeoutMs + 1u;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 30 -- OK \n");
     }
@@ -1730,7 +1730,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 31 -- OK \n");
     }
@@ -1741,7 +1741,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
 
     /* Function */
     ctx.msgd_Ctx.p_crcCtx = NULL;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 32 -- OK \n");
     }
@@ -1765,7 +1765,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 33 -- OK \n");
     }
@@ -1776,7 +1776,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
 
     /* Function */
     ctx.msgd_Ctx.p_crcCtx = NULL;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsgNClean(&ctx) )
+    if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsgNClean(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 34 -- OK \n");
     }
@@ -1800,7 +1800,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 35 -- OK \n");
     }
@@ -1811,7 +1811,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
 
     /* Function */
     ctx.msgd_Ctx.p_crcCtx = NULL;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL ) )
+    if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL ) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 36 -- OK \n");
     }
@@ -1835,7 +1835,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 37 -- OK \n");
     }
@@ -1846,7 +1846,7 @@ void eFSP_TEST_msgReceiverCorruptContext(void)
 
     /* Function */
     ctx.msgd_Ctx.p_crcCtx = NULL;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCorruptContext 38 -- OK \n");
     }
@@ -1863,8 +1863,8 @@ void eFSP_TEST_msgReceiverBadClBckCrc(void)
 	m_read_jumpLong = 0u;
 
     /* Local variable */
-    s_eFSP_MSGRX_Ctx ctx;
-    s_eFSP_MSGRX_InitData initData;
+    t_eFSP_MSGRX_Ctx ctx;
+    t_eFSP_MSGRX_InitData initData;
     cb_crc32_msgd cbCrcPTest = &c32SAdaptEr;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
@@ -1887,7 +1887,7 @@ void eFSP_TEST_msgReceiverBadClBckCrc(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadClBckCrc 1  -- OK \n");
     }
@@ -1897,7 +1897,7 @@ void eFSP_TEST_msgReceiverBadClBckCrc(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadClBckCrc 2  -- OK \n");
     }
@@ -1921,7 +1921,7 @@ void eFSP_TEST_msgReceiverBadClBckCrc(void)
     m_rxPayload[9u] = 0xCCu;
     m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = ECU_EOF;
-    if( MSGRX_RES_CRCCLBKERROR == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_CRCCLBKERROR == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadClBckCrc 3  -- OK \n");
     }
@@ -1937,8 +1937,8 @@ void eFSP_TEST_msgReceiverBadClBckReceive(void)
     m_read_jump = 0u;
 
     /* Local variable */
-    s_eFSP_MSGRX_Ctx ctx;
-    s_eFSP_MSGRX_InitData initData;
+    t_eFSP_MSGRX_Ctx ctx;
+    t_eFSP_MSGRX_InitData initData;
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
@@ -1961,7 +1961,7 @@ void eFSP_TEST_msgReceiverBadClBckReceive(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadClBckReceive 1  -- OK \n");
     }
@@ -1971,7 +1971,7 @@ void eFSP_TEST_msgReceiverBadClBckReceive(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadClBckReceive 2  -- OK \n");
     }
@@ -1981,7 +1981,7 @@ void eFSP_TEST_msgReceiverBadClBckReceive(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsgNClean(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsgNClean(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadClBckReceive 3  -- OK \n");
     }
@@ -2005,7 +2005,7 @@ void eFSP_TEST_msgReceiverBadClBckReceive(void)
     m_rxPayload[9u] = 0xCCu;
     m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = ECU_EOF;
-    if( MSGRX_RES_RXCLBKERROR == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_RXCLBKERROR == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadClBckReceive 4  -- OK \n");
     }
@@ -2022,8 +2022,8 @@ void eFSP_TEST_msgReceiverBadClBckTim(void)
 	m_read_jumpLong = 0u;
 
     /* Local variable */
-    s_eFSP_MSGRX_Ctx ctx;
-    s_eFSP_MSGRX_InitData initData;
+    t_eFSP_MSGRX_Ctx ctx;
+    t_eFSP_MSGRX_InitData initData;
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
@@ -2046,7 +2046,7 @@ void eFSP_TEST_msgReceiverBadClBckTim(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadClBckTim 1  -- OK \n");
     }
@@ -2056,7 +2056,7 @@ void eFSP_TEST_msgReceiverBadClBckTim(void)
     }
 
     /* Function */
-    if( MSGRX_RES_TIMCLBKERROR == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_TIMCLBKERROR == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadClBckTim 2  -- OK \n");
     }
@@ -2066,7 +2066,7 @@ void eFSP_TEST_msgReceiverBadClBckTim(void)
     }
 
     /* Function */
-    if( MSGRX_RES_TIMCLBKERROR == eFSP_MSGRX_NewMsgNClean(&ctx) )
+    if( e_eFSP_MSGRX_RES_TIMCLBKERROR == eFSP_MSGRX_NewMsgNClean(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadClBckTim 3  -- OK \n");
     }
@@ -2090,7 +2090,7 @@ void eFSP_TEST_msgReceiverBadClBckTim(void)
     m_rxPayload[9u] = 0xCCu;
     m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = ECU_EOF;
-    if( MSGRX_RES_TIMCLBKERROR == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_TIMCLBKERROR == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadClBckTim 4  -- OK \n");
     }
@@ -2114,7 +2114,7 @@ void eFSP_TEST_msgReceiverBadClBckTim(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadClBckTim 5  -- OK \n");
     }
@@ -2124,7 +2124,7 @@ void eFSP_TEST_msgReceiverBadClBckTim(void)
     }
 
     /* Function */
-    if( MSGRX_RES_TIMCLBKERROR == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_TIMCLBKERROR == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadClBckTim 6  -- OK \n");
     }
@@ -2134,7 +2134,7 @@ void eFSP_TEST_msgReceiverBadClBckTim(void)
     }
 
     /* Function */
-    if( MSGRX_RES_TIMCLBKERROR == eFSP_MSGRX_NewMsgNClean(&ctx) )
+    if( e_eFSP_MSGRX_RES_TIMCLBKERROR == eFSP_MSGRX_NewMsgNClean(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadClBckTim 7  -- OK \n");
     }
@@ -2158,7 +2158,7 @@ void eFSP_TEST_msgReceiverBadClBckTim(void)
     m_rxPayload[9u] = 0xCCu;
     m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = ECU_EOF;
-    if( MSGRX_RES_TIMCLBKERROR == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_TIMCLBKERROR == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadClBckTim 8  -- OK \n");
     }
@@ -2182,7 +2182,7 @@ void eFSP_TEST_msgReceiverBadClBckTim(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = false;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadClBckTim 9  -- OK \n");
     }
@@ -2192,7 +2192,7 @@ void eFSP_TEST_msgReceiverBadClBckTim(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadClBckTim 10 -- OK \n");
     }
@@ -2216,7 +2216,7 @@ void eFSP_TEST_msgReceiverBadClBckTim(void)
     m_rxPayload[9u] = 0xCCu;
     m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = ECU_EOF;
-    if( MSGRX_RES_TIMCLBKERROR == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_TIMCLBKERROR == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadClBckTim 11 -- OK \n");
     }
@@ -2233,8 +2233,8 @@ void eFSP_TEST_msgReceiverBadFrame(void)
 	m_read_jumpLong = 0u;
 
     /* Local variable */
-    s_eFSP_MSGRX_Ctx ctx;
-    s_eFSP_MSGRX_InitData initData;
+    t_eFSP_MSGRX_Ctx ctx;
+    t_eFSP_MSGRX_InitData initData;
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
@@ -2257,7 +2257,7 @@ void eFSP_TEST_msgReceiverBadFrame(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadFrame 1  -- OK \n");
     }
@@ -2267,7 +2267,7 @@ void eFSP_TEST_msgReceiverBadFrame(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadFrame 2  -- OK \n");
     }
@@ -2291,7 +2291,7 @@ void eFSP_TEST_msgReceiverBadFrame(void)
     m_rxPayload[9u] = 0xCCu;
     m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = ECU_EOF;
-    if( MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadFrame 3  -- OK \n");
     }
@@ -2315,7 +2315,7 @@ void eFSP_TEST_msgReceiverBadFrame(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadFrame 4  -- OK \n");
     }
@@ -2325,7 +2325,7 @@ void eFSP_TEST_msgReceiverBadFrame(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadFrame 5  -- OK \n");
     }
@@ -2350,7 +2350,7 @@ void eFSP_TEST_msgReceiverBadFrame(void)
     m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = 0xCCu;
     m_rxPayload[12u] = ECU_EOF;
-    if( MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadFrame 6  -- OK \n");
     }
@@ -2359,7 +2359,7 @@ void eFSP_TEST_msgReceiverBadFrame(void)
         (void)printf("eFSP_TEST_msgReceiverBadFrame 6  -- FAIL \n");
     }
 
-    if( MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadFrame 6  -- OK \n");
     }
@@ -2383,7 +2383,7 @@ void eFSP_TEST_msgReceiverBadFrame(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadFrame 7  -- OK \n");
     }
@@ -2393,7 +2393,7 @@ void eFSP_TEST_msgReceiverBadFrame(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadFrame 8  -- OK \n");
     }
@@ -2418,7 +2418,7 @@ void eFSP_TEST_msgReceiverBadFrame(void)
     m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = 0xCCu;
     m_rxPayload[12u] = ECU_EOF;
-    if( MSGRX_RES_OUTOFMEM == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_OUTOFMEM == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadFrame 9  -- OK \n");
     }
@@ -2442,7 +2442,7 @@ void eFSP_TEST_msgReceiverBadFrame(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadFrame 10 -- OK \n");
     }
@@ -2452,7 +2452,7 @@ void eFSP_TEST_msgReceiverBadFrame(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadFrame 11 -- OK \n");
     }
@@ -2477,7 +2477,7 @@ void eFSP_TEST_msgReceiverBadFrame(void)
     m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = ECU_EOF;
 
-    if( MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadFrame 12 -- OK \n");
     }
@@ -2486,7 +2486,7 @@ void eFSP_TEST_msgReceiverBadFrame(void)
         (void)printf("eFSP_TEST_msgReceiverBadFrame 12 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadFrame 13 -- OK \n");
     }
@@ -2496,7 +2496,7 @@ void eFSP_TEST_msgReceiverBadFrame(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadFrame 14 -- OK \n");
     }
@@ -2519,7 +2519,7 @@ void eFSP_TEST_msgReceiverBadFrame(void)
     m_rxPayload[8u] = 0x00u;
     m_rxPayload[9u] = ECU_EOF;
 
-    if( MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadFrame 15 -- OK \n");
     }
@@ -2543,7 +2543,7 @@ void eFSP_TEST_msgReceiverBadFrame(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = false;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadFrame 16 -- OK \n");
     }
@@ -2553,7 +2553,7 @@ void eFSP_TEST_msgReceiverBadFrame(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadFrame 17 -- OK \n");
     }
@@ -2578,7 +2578,7 @@ void eFSP_TEST_msgReceiverBadFrame(void)
     m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = 0xCCu;
     m_rxPayload[12u] = ECU_EOF;
-    if( MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverBadFrame 18 -- OK \n");
     }
@@ -2595,8 +2595,8 @@ void eFSP_TEST_msgReceiverCornerCase(void)
 	m_read_jumpLong = 0u;
 
     /* Local variable */
-    s_eFSP_MSGRX_Ctx ctx;
-    s_eFSP_MSGRX_InitData initData;
+    t_eFSP_MSGRX_Ctx ctx;
+    t_eFSP_MSGRX_InitData initData;
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
@@ -2619,7 +2619,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 1u;
     initData.i_needWaitFrameStart = false;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 1  -- OK \n");
     }
@@ -2629,7 +2629,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 2  -- OK \n");
     }
@@ -2654,7 +2654,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
     m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = 0xCCu;
     m_rxPayload[12u] = ECU_EOF;
-    if( MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 3  -- OK \n");
     }
@@ -2663,7 +2663,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase 3  -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 4  -- OK \n");
     }
@@ -2672,7 +2672,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase 4  -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 5  -- OK \n");
     }
@@ -2681,7 +2681,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase 5  -- FAIL \n");
     }
 
-    if( MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 6  -- OK \n");
     }
@@ -2705,7 +2705,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
     initData.i_timeoutMs = 5u;
     initData.i_timePerRecMs = 1u;
     initData.i_needWaitFrameStart = false;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 7  -- OK \n");
     }
@@ -2715,7 +2715,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 8  -- OK \n");
     }
@@ -2740,7 +2740,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
     m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = 0xCCu;
     m_rxPayload[12u] = ECU_EOF;
-    if( MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 9  -- OK \n");
     }
@@ -2749,7 +2749,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase 9  -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 10 -- OK \n");
     }
@@ -2758,7 +2758,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase 10 -- FAIL \n");
     }
 
-    if( MSGRX_RES_MESSAGETIMEOUT == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGETIMEOUT == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 11 -- OK \n");
     }
@@ -2767,7 +2767,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase 11 -- FAIL \n");
     }
 
-    if( MSGRX_RES_MESSAGETIMEOUT == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGETIMEOUT == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 12 -- OK \n");
     }
@@ -2791,7 +2791,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
     initData.i_timeoutMs = 6u;
     initData.i_timePerRecMs = 1u;
     initData.i_needWaitFrameStart = false;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 13 -- OK \n");
     }
@@ -2801,7 +2801,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 14 -- OK \n");
     }
@@ -2826,7 +2826,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
     m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = 0xCCu;
     m_rxPayload[12u] = ECU_EOF;
-    if( MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 15 -- OK \n");
     }
@@ -2835,7 +2835,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase 15 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 16 -- OK \n");
     }
@@ -2844,7 +2844,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase 16 -- FAIL \n");
     }
 
-    if( MSGRX_RES_MESSAGETIMEOUT == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGETIMEOUT == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 17 -- OK \n");
     }
@@ -2853,7 +2853,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase 17 -- FAIL \n");
     }
 
-    if( MSGRX_RES_MESSAGETIMEOUT == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGETIMEOUT == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 18 -- OK \n");
     }
@@ -2877,7 +2877,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = false;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 19 -- OK \n");
     }
@@ -2887,7 +2887,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 20 -- OK \n");
     }
@@ -2912,7 +2912,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
     m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = 0xCCu;
     m_rxPayload[12u] = ECU_EOF;
-    if( MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 21 -- OK \n");
     }
@@ -2921,7 +2921,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase 21 -- FAIL \n");
     }
 
-    if( MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 22 -- OK \n");
     }
@@ -2930,7 +2930,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase 22 -- FAIL \n");
     }
 
-    if( MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 23 -- OK \n");
     }
@@ -2954,7 +2954,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 100u;
     initData.i_needWaitFrameStart = false;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 24 -- OK \n");
     }
@@ -2964,7 +2964,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 25 -- OK \n");
     }
@@ -2989,7 +2989,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
     m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = ECU_ESC;
     m_rxPayload[12u] = ECU_EOF;
-    if( MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 26 -- OK \n");
     }
@@ -2998,7 +2998,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase 26 -- FAIL \n");
     }
 
-    if( MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 27 -- OK \n");
     }
@@ -3007,7 +3007,7 @@ void eFSP_TEST_msgReceiverCornerCase(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase 27 -- FAIL \n");
     }
 
-    if( MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase 28 -- OK \n");
     }
@@ -3024,8 +3024,8 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
 	m_read_jumpLong = 0u;
 
     /* Local variable */
-    s_eFSP_MSGRX_Ctx ctx;
-    s_eFSP_MSGRX_InitData initData;
+    t_eFSP_MSGRX_Ctx ctx;
+    t_eFSP_MSGRX_InitData initData;
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
@@ -3051,7 +3051,7 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
     initData.i_timeoutMs = 9u;
     initData.i_timePerRecMs = 9u;
     initData.i_needWaitFrameStart = false;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 1  -- OK \n");
     }
@@ -3061,7 +3061,7 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 2  -- OK \n");
     }
@@ -3086,7 +3086,7 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
     m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = 0xCCu;
     m_rxPayload[12u] = ECU_EOF;
-    if( MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 3  -- OK \n");
     }
@@ -3095,7 +3095,7 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 3  -- FAIL \n");
     }
 
-    if( MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 4  -- OK \n");
     }
@@ -3104,7 +3104,7 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 4  -- FAIL \n");
     }
 
-    if( MSGRX_RES_MESSAGETIMEOUT == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGETIMEOUT == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 5  -- OK \n");
     }
@@ -3128,7 +3128,7 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
     initData.i_timeoutMs = 10u;
     initData.i_timePerRecMs = 10u;
     initData.i_needWaitFrameStart = false;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 6  -- OK \n");
     }
@@ -3138,7 +3138,7 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 7  -- OK \n");
     }
@@ -3163,7 +3163,7 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
     m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = 0xCCu;
     m_rxPayload[12u] = ECU_EOF;
-    if( MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 8  -- OK \n");
     }
@@ -3172,7 +3172,7 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 8  -- FAIL \n");
     }
 
-    if( MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 9  -- OK \n");
     }
@@ -3181,7 +3181,7 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 9  -- FAIL \n");
     }
 
-    if( MSGRX_RES_MESSAGETIMEOUT == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGETIMEOUT == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 10 -- OK \n");
     }
@@ -3205,7 +3205,7 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
     initData.i_timeoutMs = 10u;
     initData.i_timePerRecMs = 10u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 11 -- OK \n");
     }
@@ -3215,7 +3215,7 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 12 -- OK \n");
     }
@@ -3240,7 +3240,7 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
     m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = 0xC1u;
     m_rxPayload[12u] = ECU_EOF;
-    if( MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 13 -- OK \n");
     }
@@ -3249,7 +3249,7 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 13 -- FAIL \n");
     }
 
-    if( MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 14 -- OK \n");
     }
@@ -3258,7 +3258,7 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 14 -- FAIL \n");
     }
 
-    if( MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 15 -- OK \n");
     }
@@ -3267,7 +3267,7 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 15 -- FAIL \n");
     }
 
-    if( MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 16 -- OK \n");
     }
@@ -3276,7 +3276,7 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 16 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL) )
     {
         if( 2u == dataL )
         {
@@ -3314,7 +3314,7 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
     initData.i_timeoutMs = 10u;
     initData.i_timePerRecMs = 10u;
     initData.i_needWaitFrameStart = false;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 18 -- OK \n");
     }
@@ -3324,7 +3324,7 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 19 -- OK \n");
     }
@@ -3349,7 +3349,7 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
     m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = 0xCCu;
     m_rxPayload[12u] = ECU_EOF;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 20 -- OK \n");
     }
@@ -3373,7 +3373,7 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
     initData.i_timeoutMs = 10u;
     initData.i_timePerRecMs = 10u;
     initData.i_needWaitFrameStart = false;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 21 -- OK \n");
     }
@@ -3383,7 +3383,7 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 22 -- OK \n");
     }
@@ -3392,7 +3392,7 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 22 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL) )
     {
         if( 0u == dataL )
         {
@@ -3425,7 +3425,7 @@ void eFSP_TEST_msgReceiverCornerCase2(void)
     m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = 0xCCu;
     m_rxPayload[12u] = ECU_EOF;
-    if( MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase2 24 -- OK \n");
     }
@@ -3442,8 +3442,8 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
 	m_read_jumpLong = 0u;
 
     /* Local variable */
-    s_eFSP_MSGRX_Ctx ctx;
-    s_eFSP_MSGRX_InitData initData;
+    t_eFSP_MSGRX_Ctx ctx;
+    t_eFSP_MSGRX_InitData initData;
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
@@ -3468,7 +3468,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 1000u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 1  -- OK \n");
     }
@@ -3478,7 +3478,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 2  -- OK \n");
     }
@@ -3511,7 +3511,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
     m_rxPayload[18u] = 0xCCu;
     m_rxPayload[19u] = 0xC1u;
     m_rxPayload[20u] = ECU_EOF;
-    if( MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 3  -- OK \n");
     }
@@ -3520,7 +3520,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 3  -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 4  -- OK \n");
     }
@@ -3529,7 +3529,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 4  -- FAIL \n");
     }
 
-    if( MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 5  -- OK \n");
     }
@@ -3538,7 +3538,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 5  -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 6  -- OK \n");
     }
@@ -3547,7 +3547,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 6  -- FAIL \n");
     }
 
-    if( MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 7  -- OK \n");
     }
@@ -3556,7 +3556,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 7  -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 8  -- OK \n");
     }
@@ -3565,7 +3565,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 8  -- FAIL \n");
     }
 
-    if( MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 9  -- OK \n");
     }
@@ -3574,7 +3574,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 9  -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 10 -- OK \n");
     }
@@ -3583,7 +3583,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 10 -- FAIL \n");
     }
 
-    if( MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 11 -- OK \n");
     }
@@ -3592,7 +3592,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 11 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 12 -- OK \n");
     }
@@ -3601,7 +3601,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 12 -- FAIL \n");
     }
 
-    if( MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 13 -- OK \n");
     }
@@ -3610,7 +3610,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 13 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 14 -- OK \n");
     }
@@ -3619,7 +3619,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 14 -- FAIL \n");
     }
 
-    if( MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 15 -- OK \n");
     }
@@ -3628,7 +3628,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 15 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 16 -- OK \n");
     }
@@ -3637,7 +3637,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 16 -- FAIL \n");
     }
 
-    if( MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 17 -- OK \n");
     }
@@ -3646,7 +3646,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 17 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 18 -- OK \n");
     }
@@ -3655,7 +3655,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 18 -- FAIL \n");
     }
 
-    if( MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 19 -- OK \n");
     }
@@ -3664,7 +3664,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 19 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL) )
     {
         if( 0u == dataL )
         {
@@ -3680,7 +3680,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 20 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 21 -- OK \n");
     }
@@ -3689,7 +3689,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 21 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL) )
     {
         if( 0u == dataL )
         {
@@ -3705,7 +3705,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 22 -- FAIL \n");
     }
 
-    if( MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 23 -- OK \n");
     }
@@ -3714,7 +3714,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 23 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL) )
     {
         if( 2u == dataL )
         {
@@ -3752,7 +3752,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
     initData.i_timeoutMs = 1000u;
     initData.i_timePerRecMs = 1000u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 25 -- OK \n");
     }
@@ -3762,7 +3762,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 26 -- OK \n");
     }
@@ -3795,7 +3795,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
     m_rxPayload[18u] = 0xCCu;
     m_rxPayload[19u] = 0xC1u;
     m_rxPayload[20u] = ECU_EOF;
-    if( MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 24 -- OK \n");
     }
@@ -3804,7 +3804,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 24 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL) )
     {
         if( 0u == dataL )
         {
@@ -3820,7 +3820,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 25 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsgNClean(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsgNClean(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 26 -- OK \n");
     }
@@ -3829,7 +3829,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 26 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL) )
     {
         if( 0u == dataL )
         {
@@ -3845,7 +3845,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 27 -- FAIL \n");
     }
 
-    if( MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 28 -- OK \n");
     }
@@ -3854,7 +3854,7 @@ void eFSP_TEST_msgReceiverCornerCase3(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase3 28 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL) )
     {
         if( 2u == dataL )
         {
@@ -3885,8 +3885,8 @@ void eFSP_TEST_msgReceiverCornerCase4(void)
 	m_read_jumpLong = 0u;
 
     /* Local variable */
-    s_eFSP_MSGRX_Ctx ctx;
-    s_eFSP_MSGRX_InitData initData;
+    t_eFSP_MSGRX_Ctx ctx;
+    t_eFSP_MSGRX_InitData initData;
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
@@ -3909,7 +3909,7 @@ void eFSP_TEST_msgReceiverCornerCase4(void)
     initData.i_timeoutMs = 8u;
     initData.i_timePerRecMs = 8u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 1  -- OK \n");
     }
@@ -3919,7 +3919,7 @@ void eFSP_TEST_msgReceiverCornerCase4(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 2  -- OK \n");
     }
@@ -3944,7 +3944,7 @@ void eFSP_TEST_msgReceiverCornerCase4(void)
     m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = 0xC1u;
     m_rxPayload[12u] = ECU_EOF;
-    if( MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 3  -- OK \n");
     }
@@ -3953,7 +3953,7 @@ void eFSP_TEST_msgReceiverCornerCase4(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 3  -- FAIL \n");
     }
 
-    if( MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 4  -- OK \n");
     }
@@ -3962,7 +3962,7 @@ void eFSP_TEST_msgReceiverCornerCase4(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 4  -- FAIL \n");
     }
 
-    if( MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 5  -- OK \n");
     }
@@ -3971,7 +3971,7 @@ void eFSP_TEST_msgReceiverCornerCase4(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 5  -- FAIL \n");
     }
 
-    if( MSGRX_RES_MESSAGETIMEOUT == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGETIMEOUT == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 6  -- OK \n");
     }
@@ -3980,7 +3980,7 @@ void eFSP_TEST_msgReceiverCornerCase4(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 6  -- FAIL \n");
     }
 
-    if( MSGRX_RES_MESSAGETIMEOUT == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGETIMEOUT == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 7  -- OK \n");
     }
@@ -4004,7 +4004,7 @@ void eFSP_TEST_msgReceiverCornerCase4(void)
     initData.i_timeoutMs = 25u;
     initData.i_timePerRecMs = 1u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 8  -- OK \n");
     }
@@ -4014,7 +4014,7 @@ void eFSP_TEST_msgReceiverCornerCase4(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 9  -- OK \n");
     }
@@ -4039,7 +4039,7 @@ void eFSP_TEST_msgReceiverCornerCase4(void)
     m_rxPayload[10u] = 0xCCu;
     m_rxPayload[11u] = 0xC1u;
     m_rxPayload[12u] = ECU_EOF;
-    if( MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 10 -- OK \n");
     }
@@ -4048,7 +4048,7 @@ void eFSP_TEST_msgReceiverCornerCase4(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 10 -- FAIL \n");
     }
 
-    if( MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 11 -- OK \n");
     }
@@ -4057,7 +4057,7 @@ void eFSP_TEST_msgReceiverCornerCase4(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 11 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 12 -- OK \n");
     }
@@ -4066,7 +4066,7 @@ void eFSP_TEST_msgReceiverCornerCase4(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 12 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 13 -- OK \n");
     }
@@ -4075,7 +4075,7 @@ void eFSP_TEST_msgReceiverCornerCase4(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 13 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 14 -- OK \n");
     }
@@ -4084,7 +4084,7 @@ void eFSP_TEST_msgReceiverCornerCase4(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 14 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 15 -- OK \n");
     }
@@ -4093,7 +4093,7 @@ void eFSP_TEST_msgReceiverCornerCase4(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 15 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 16 -- OK \n");
     }
@@ -4102,7 +4102,7 @@ void eFSP_TEST_msgReceiverCornerCase4(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 16 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 17 -- OK \n");
     }
@@ -4111,7 +4111,7 @@ void eFSP_TEST_msgReceiverCornerCase4(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 17 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 18 -- OK \n");
     }
@@ -4120,7 +4120,7 @@ void eFSP_TEST_msgReceiverCornerCase4(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 18 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 19 -- OK \n");
     }
@@ -4129,7 +4129,7 @@ void eFSP_TEST_msgReceiverCornerCase4(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 19 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 20 -- OK \n");
     }
@@ -4138,7 +4138,7 @@ void eFSP_TEST_msgReceiverCornerCase4(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 20 -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 21 -- OK \n");
     }
@@ -4147,7 +4147,7 @@ void eFSP_TEST_msgReceiverCornerCase4(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 21 -- FAIL \n");
     }
 
-    if( MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase4 22 -- OK \n");
     }
@@ -4164,8 +4164,8 @@ void eFSP_TEST_msgReceiverCornerCase5(void)
 	m_read_jumpLong = 0u;
 
     /* Local variable */
-    s_eFSP_MSGRX_Ctx ctx;
-    s_eFSP_MSGRX_InitData initData;
+    t_eFSP_MSGRX_Ctx ctx;
+    t_eFSP_MSGRX_InitData initData;
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
@@ -4190,7 +4190,7 @@ void eFSP_TEST_msgReceiverCornerCase5(void)
     initData.i_timeoutMs = 8u;
     initData.i_timePerRecMs = 8u;
     initData.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase5 1  -- OK \n");
     }
@@ -4200,7 +4200,7 @@ void eFSP_TEST_msgReceiverCornerCase5(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase5 2  -- OK \n");
     }
@@ -4224,7 +4224,7 @@ void eFSP_TEST_msgReceiverCornerCase5(void)
     m_rxPayload[9u]  = 0xCCu;
     m_rxPayload[10u] = 0xC1u;
     m_rxPayload[11u] = ECU_EOF;
-    if( MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase5 3  -- OK \n");
     }
@@ -4234,7 +4234,7 @@ void eFSP_TEST_msgReceiverCornerCase5(void)
     }
 
     m_read_jumpLong = 0u;
-    if( MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase5 4  -- OK \n");
     }
@@ -4243,7 +4243,7 @@ void eFSP_TEST_msgReceiverCornerCase5(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase5 4  -- FAIL \n");
     }
 
-    if( MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&ctx, &dataP, &dataL) )
     {
         if( 0u == dataL )
         {
@@ -4260,7 +4260,7 @@ void eFSP_TEST_msgReceiverCornerCase5(void)
     }
 
     ctx.f_Rx = &receiveMsg;
-    if( MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase5 6  -- OK \n");
     }
@@ -4269,7 +4269,7 @@ void eFSP_TEST_msgReceiverCornerCase5(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase5 6  -- FAIL \n");
     }
 
-    if( MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase5 6  -- OK \n");
     }
@@ -4293,7 +4293,7 @@ void eFSP_TEST_msgReceiverCornerCase5(void)
     initData.i_timeoutMs = 8u;
     initData.i_timePerRecMs = 8u;
     initData.i_needWaitFrameStart = false;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase5 7  -- OK \n");
     }
@@ -4303,7 +4303,7 @@ void eFSP_TEST_msgReceiverCornerCase5(void)
     }
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase5 8  -- OK \n");
     }
@@ -4328,7 +4328,7 @@ void eFSP_TEST_msgReceiverCornerCase5(void)
     m_rxPayload[10u] = 0xC1u;
     m_rxPayload[11u] = ECU_EOF;
     m_read_jumpLong = 0u;
-    if( MSGRX_RES_MESSAGETIMEOUT == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGETIMEOUT == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase5 9  -- OK \n");
     }
@@ -4346,8 +4346,8 @@ void eFSP_TEST_msgReceiverCornerCase6(void)
     uint32_t temp;
 
     /* Local variable */
-    s_eFSP_MSGRX_Ctx ctx;
-    s_eFSP_MSGRX_InitData initData;
+    t_eFSP_MSGRX_Ctx ctx;
+    t_eFSP_MSGRX_InitData initData;
     cb_crc32_msgd cbCrcPTest = &c32SAdapt;
     s_eCU_crcAdapterCtx ctxAdapterCrc;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
@@ -4370,7 +4370,7 @@ void eFSP_TEST_msgReceiverCornerCase6(void)
     initData.i_timeoutMs = 2000u;
     initData.i_timePerRecMs = 2000u;
     initData.i_needWaitFrameStart = false;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase6 1  -- OK \n");
     }
@@ -4381,7 +4381,7 @@ void eFSP_TEST_msgReceiverCornerCase6(void)
 
 
     /* Function */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase6 2  -- OK \n");
     }
@@ -4419,7 +4419,7 @@ void eFSP_TEST_msgReceiverCornerCase6(void)
     m_rxPayload[19u] = 0xC1u;
     m_rxPayload[20u] = ECU_EOF;
 
-    if( MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase6 3  -- OK \n");
     }
@@ -4437,7 +4437,7 @@ void eFSP_TEST_msgReceiverCornerCase6(void)
         (void)printf("eFSP_TEST_msgReceiverCornerCase6 4  -- FAIL \n");
     }
 
-    if( MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
+    if( e_eFSP_MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_TEST_msgReceiverCornerCase6 5  -- OK \n");
     }

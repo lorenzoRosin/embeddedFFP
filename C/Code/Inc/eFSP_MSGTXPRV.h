@@ -7,8 +7,8 @@
  *
  **********************************************************************************************************************/
 
-#ifndef EFSPMSGTRANSMITTER_PRIV_H
-#define EFSPMSGTRANSMITTER_PRIV_H
+#ifndef EFSP_MSGTXPRV_H
+#define EFSP_MSGTXPRV_H
 
 
 
@@ -31,14 +31,14 @@ extern "C" {
  **********************************************************************************************************************/
 typedef enum
 {
-    MSGTX_PRV_CHECKINIT = 0,
-    MSGTX_PRV_CHECKINITTIMEOUT,
-    MSGTX_PRV_CHECKIFBUFFERTX,
-    MSGTX_PRV_RETRIVECHUNK,
-    MSGTX_PRV_SENDBUFF,
-    MSGTX_PRV_CHECKTIMEOUTAFTERTX,
-    MSGTX_PRV_ELABDONE
-}e_eFSP_MSGTX_Priv_state;
+    e_eFSP_MSGTXPRV_SM_CHECKINIT = 0,
+    e_eFSP_MSGTXPRV_SM_CHECKINITTIMEOUT,
+    e_eFSP_MSGTXPRV_SM_CHECKIFBUFFERTX,
+    e_eFSP_MSGTXPRV_SM_RETRIVECHUNK,
+    e_eFSP_MSGTXPRV_SM_SENDBUFF,
+    e_eFSP_MSGTXPRV_SM_CHECKTIMEOUTAFTERTX,
+    e_eFSP_MSGTXPRV_SM_ELABDONE
+}e_eFSP_MSGTXPRV_SM;
 
 
 
@@ -48,4 +48,4 @@ typedef enum
 
 
 
-#endif /* EFSPMSGTRANSMITTER_PRIV_H */
+#endif /* EFSP_MSGTXPRV_H */

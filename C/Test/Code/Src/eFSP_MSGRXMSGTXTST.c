@@ -270,8 +270,8 @@ void eFSP_TEST_msgRxTransmitterCommon(void)
     m_BufferComCounterRetrive = 0u;
 
     /* Local variable RECEIVER */
-    s_eFSP_MSGRX_Ctx ctxRX;
-    s_eFSP_MSGRX_InitData initDataRX;
+    t_eFSP_MSGRX_Ctx ctxRX;
+    t_eFSP_MSGRX_InitData initDataRX;
     s_eCU_crcAdapterCtx ctxAdapterCrcRX;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
     s_eCU_timerAdapterCtx ctxAdapterTim;
@@ -279,8 +279,8 @@ void eFSP_TEST_msgRxTransmitterCommon(void)
     uint8_t  recBuff[1u];
 
     /* Local variable TRANSMITTER */
-    s_eFSP_MSGTX_Ctx ctxTx;
-    s_eFSP_MSGTX_InitData initDataTx;
+    t_eFSP_MSGTX_Ctx ctxTx;
+    t_eFSP_MSGTX_InitData initDataTx;
     s_eCU_crcAdapterCtx ctxAdapterCrcTx;
     s_eCU_msgSendAdapterCtx ctxAdapterSend;
     s_eCU_timerAdapterCtx ctxAdapterTimTx;
@@ -292,10 +292,10 @@ void eFSP_TEST_msgRxTransmitterCommon(void)
     uint32_t dataL;
 
     /* Clear */
-    (void)memset(&ctxTx, 0, sizeof(s_eFSP_MSGTX_Ctx));
-    (void)memset(&initDataTx, 0, sizeof(s_eFSP_MSGTX_InitData));
-    (void)memset(&ctxRX, 0, sizeof(s_eFSP_MSGRX_Ctx));
-    (void)memset(&initDataRX, 0, sizeof(s_eFSP_MSGRX_InitData));
+    (void)memset(&ctxTx, 0, sizeof(t_eFSP_MSGTX_Ctx));
+    (void)memset(&initDataTx, 0, sizeof(t_eFSP_MSGTX_InitData));
+    (void)memset(&ctxRX, 0, sizeof(t_eFSP_MSGRX_Ctx));
+    (void)memset(&initDataRX, 0, sizeof(t_eFSP_MSGRX_InitData));
 
     /* Init */
     initDataTx.p_i_memArea = memAreaTx;
@@ -312,7 +312,7 @@ void eFSP_TEST_msgRxTransmitterCommon(void)
     initDataTx.i_timeoutMs = 1000u;
     initDataTx.i_timePerSendMs = 100u;
 
-    if( MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctxTx, &initDataTx) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctxTx, &initDataTx) )
     {
         (void)printf("eFSP_TEST_msgRxTransmitterCommon 1  -- OK \n");
     }
@@ -335,7 +335,7 @@ void eFSP_TEST_msgRxTransmitterCommon(void)
     initDataRX.i_timeoutMs = 1000u;
     initDataRX.i_timePerRecMs = 100u;
     initDataRX.i_needWaitFrameStart = true;
-    if( MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctxRX, &initDataRX) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&ctxRX, &initDataRX) )
     {
         (void)printf("eFSP_TEST_msgRxTransmitterCommon 2  -- OK \n");
     }
@@ -345,7 +345,7 @@ void eFSP_TEST_msgRxTransmitterCommon(void)
     }
 
     /* Fill data */
-    if( MSGTX_RES_OK == eFSP_MSGTX_GetWherePutData(&ctxTx, &dataP, &dataL) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_GetWherePutData(&ctxTx, &dataP, &dataL) )
     {
         if( 12u == dataL )
         {
@@ -370,7 +370,7 @@ void eFSP_TEST_msgRxTransmitterCommon(void)
     dataP[6u] = ECU_SOF;
 
     /* Start TX message */
-    if( MSGTX_RES_OK == eFSP_MSGTX_NewMessage(&ctxTx, 7u) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_NewMessage(&ctxTx, 7u) )
     {
         (void)printf("eFSP_TEST_msgTransmitterCornerCase 4  -- OK \n");
     }
@@ -380,7 +380,7 @@ void eFSP_TEST_msgRxTransmitterCommon(void)
     }
 
     /* Start RX message */
-    if( MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctxRX) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&ctxRX) )
     {
         (void)printf("eFSP_TEST_msgTransmitterCornerCase 5  -- OK \n");
     }
@@ -390,7 +390,7 @@ void eFSP_TEST_msgRxTransmitterCommon(void)
     }
 
     /* Send data  */
-    if( MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&ctxTx) )
+    if( e_eFSP_MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&ctxTx) )
     {
         (void)printf("eFSP_TEST_msgTransmitterCornerCase 6  -- OK \n");
     }
@@ -400,7 +400,7 @@ void eFSP_TEST_msgRxTransmitterCommon(void)
     }
 
     /* Receive data */
-    if( MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctxRX) )
+    if( e_eFSP_MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctxRX) )
     {
         (void)printf("eFSP_TEST_msgTransmitterCornerCase 7  -- OK \n");
     }
@@ -410,7 +410,7 @@ void eFSP_TEST_msgRxTransmitterCommon(void)
     }
 
     /* Get RX data */
-    if( MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&ctxRX, &dataP, &dataL) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&ctxRX, &dataP, &dataL) )
     {
         if( 7u == dataL )
         {

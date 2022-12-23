@@ -18,32 +18,32 @@
 /***********************************************************************************************************************
  *  PRIVATE STATIC FUNCTION DECLARATION
  **********************************************************************************************************************/
-static bool_t eFSP_MSGE_isStatusStillCoherent(const s_eFSP_MSGE_Ctx* p_ctx);
-static e_eFSP_MSGE_Res eFSP_MSGE_convertReturnFromBstf(e_eCU_BSTF_RES returnedEvent);
+static bool_t eFSP_MSGE_isStatusStillCoherent(const t_eFSP_MSGE_Ctx* p_ctx);
+static e_eFSP_MSGE_RES eFSP_MSGE_convertReturnFromBstf(e_eCU_BSTF_RES returnedEvent);
 
 
 
 /***********************************************************************************************************************
  *   GLOBAL FUNCTIONS
  **********************************************************************************************************************/
-e_eFSP_MSGE_Res eFSP_MSGE_InitCtx(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_memArea, const uint32_t memAreaSize,
+e_eFSP_MSGE_RES eFSP_MSGE_InitCtx(t_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_memArea, const uint32_t memAreaSize,
 								  cb_crc32_msge f_Crc, void* const p_clbCtx)
 {
 	/* Local variable */
-	e_eFSP_MSGE_Res l_result;
+	e_eFSP_MSGE_RES l_result;
 	e_eCU_BSTF_RES l_resultByStuff;
 
 	/* Check pointer validity */
 	if( ( NULL == p_ctx ) || ( NULL == p_memArea ) || ( NULL == f_Crc ) || ( NULL == p_clbCtx ) )
 	{
-		l_result = MSGE_RES_BADPOINTER;
+		l_result = e_eFSP_MSGE_RES_BADPOINTER;
 	}
 	else
 	{
         /* Check data validity, we need some len to store the data */
         if( memAreaSize < EFSP_MIN_MSGEN_BUFFLEN )
         {
-            l_result = MSGE_RES_BADPARAM;
+            l_result = e_eFSP_MSGE_RES_BADPARAM;
         }
         else
         {
@@ -60,16 +60,16 @@ e_eFSP_MSGE_Res eFSP_MSGE_InitCtx(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_memAr
 	return l_result;
 }
 
-e_eFSP_MSGE_Res eFSP_MSGE_IsInit(s_eFSP_MSGE_Ctx* const p_ctx, bool_t* p_isInit)
+e_eFSP_MSGE_RES eFSP_MSGE_IsInit(t_eFSP_MSGE_Ctx* const p_ctx, bool_t* p_isInit)
 {
 	/* Local variable */
-	e_eFSP_MSGE_Res l_result;
+	e_eFSP_MSGE_RES l_result;
     e_eCU_BSTF_RES l_resultByStuff;
 
 	/* Check pointer validity */
 	if( ( NULL == p_ctx ) || ( NULL == p_isInit ) )
 	{
-		l_result = MSGE_RES_BADPOINTER;
+		l_result = e_eFSP_MSGE_RES_BADPOINTER;
 	}
 	else
 	{
@@ -80,10 +80,10 @@ e_eFSP_MSGE_Res eFSP_MSGE_IsInit(s_eFSP_MSGE_Ctx* const p_ctx, bool_t* p_isInit)
 	return l_result;
 }
 
-e_eFSP_MSGE_Res eFSP_MSGE_GetWherePutData(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t** pp_data, uint32_t* const p_maxDataL)
+e_eFSP_MSGE_RES eFSP_MSGE_GetWherePutData(t_eFSP_MSGE_Ctx* const p_ctx, uint8_t** pp_data, uint32_t* const p_maxDataL)
 {
 	/* Local variable */
-	e_eFSP_MSGE_Res l_result;
+	e_eFSP_MSGE_RES l_result;
 	e_eCU_BSTF_RES l_resultByStuff;
 	uint8_t* lp_data;
     uint8_t** lpp_dataP;
@@ -92,14 +92,14 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetWherePutData(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t*
 	/* Check pointer validity */
 	if( ( NULL == p_ctx ) || ( NULL == pp_data ) || ( NULL == p_maxDataL ) )
 	{
-		l_result = MSGE_RES_BADPOINTER;
+		l_result = e_eFSP_MSGE_RES_BADPOINTER;
 	}
 	else
 	{
 		/* Check internal status validity */
 		if( false == eFSP_MSGE_isStatusStillCoherent(p_ctx) )
 		{
-			l_result = MSGE_RES_CORRUPTCTX;
+			l_result = e_eFSP_MSGE_RES_CORRUPTCTX;
 		}
 		else
 		{
@@ -110,11 +110,11 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetWherePutData(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t*
 			l_resultByStuff = eCU_BSTF_GetWherePutData(&p_ctx->bstf_Ctx, lpp_dataP, &l_maxDataSizeP);
 			l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
 
-			if( MSGE_RES_OK == l_result )
+			if( e_eFSP_MSGE_RES_OK == l_result )
 			{
                 if( l_maxDataSizeP < EFSP_MIN_MSGEN_BUFFLEN )
                 {
-                    l_result = MSGE_RES_CORRUPTCTX;
+                    l_result = e_eFSP_MSGE_RES_CORRUPTCTX;
                 }
                 else
                 {
@@ -129,10 +129,10 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetWherePutData(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t*
 	return l_result;
 }
 
-e_eFSP_MSGE_Res eFSP_MSGE_NewMessage(s_eFSP_MSGE_Ctx* const p_ctx, const uint32_t messageLen)
+e_eFSP_MSGE_RES eFSP_MSGE_NewMessage(t_eFSP_MSGE_Ctx* const p_ctx, const uint32_t messageLen)
 {
 	/* Local variable */
-	e_eFSP_MSGE_Res l_result;
+	e_eFSP_MSGE_RES l_result;
 	e_eCU_BSTF_RES l_resultByStuff;
 	uint8_t* lp_data;
 	uint32_t l_maxDataSize;
@@ -144,21 +144,21 @@ e_eFSP_MSGE_Res eFSP_MSGE_NewMessage(s_eFSP_MSGE_Ctx* const p_ctx, const uint32_
 	/* Check pointer validity */
 	if( NULL == p_ctx )
 	{
-		l_result = MSGE_RES_BADPOINTER;
+		l_result = e_eFSP_MSGE_RES_BADPOINTER;
 	}
 	else
 	{
         /* Check internal status validity */
         if( false == eFSP_MSGE_isStatusStillCoherent(p_ctx) )
         {
-            l_result = MSGE_RES_CORRUPTCTX;
+            l_result = e_eFSP_MSGE_RES_CORRUPTCTX;
         }
 		else
 		{
             /* Check param validity, need at least 1 byte of paylaod */
             if( ( messageLen <= 0u ) || ( messageLen > ( MAX_UINT32VAL - EFSP_MSGEN_HEADERSIZE ) ) )
             {
-                l_result = MSGE_RES_BADPARAM;
+                l_result = e_eFSP_MSGE_RES_BADPARAM;
             }
             else
             {
@@ -169,18 +169,18 @@ e_eFSP_MSGE_Res eFSP_MSGE_NewMessage(s_eFSP_MSGE_Ctx* const p_ctx, const uint32_
 				l_resultByStuff = eCU_BSTF_GetWherePutData(&p_ctx->bstf_Ctx, &lp_data, &l_maxDataSize);
 				l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
 
-				if( MSGE_RES_OK == l_result )
+				if( e_eFSP_MSGE_RES_OK == l_result )
 				{
                     if( l_maxDataSize < EFSP_MIN_MSGEN_BUFFLEN )
                     {
-                        l_result = MSGE_RES_CORRUPTCTX;
+                        l_result = e_eFSP_MSGE_RES_CORRUPTCTX;
                     }
                     else
                     {
 						if( ( messageLen + EFSP_MSGEN_HEADERSIZE ) > l_maxDataSize )
 						{
 							/* Data payload can not be greater that max payload size */
-							l_result = MSGE_RES_BADPARAM;
+							l_result = e_eFSP_MSGE_RES_BADPARAM;
 						}
 						else
 						{
@@ -212,7 +212,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_NewMessage(s_eFSP_MSGE_Ctx* const p_ctx, const uint32_
 							}
 							else
 							{
-								l_result = MSGE_RES_CRCCLBKERROR;
+								l_result = e_eFSP_MSGE_RES_CRCCLBKERROR;
 							}
 						}
                     }
@@ -224,23 +224,23 @@ e_eFSP_MSGE_Res eFSP_MSGE_NewMessage(s_eFSP_MSGE_Ctx* const p_ctx, const uint32_
 	return l_result;
 }
 
-e_eFSP_MSGE_Res eFSP_MSGE_RestartMessage(s_eFSP_MSGE_Ctx* const p_ctx)
+e_eFSP_MSGE_RES eFSP_MSGE_RestartMessage(t_eFSP_MSGE_Ctx* const p_ctx)
 {
 	/* Local variable */
-	e_eFSP_MSGE_Res l_result;
+	e_eFSP_MSGE_RES l_result;
 	e_eCU_BSTF_RES l_resultByStuff;
 
 	/* Check pointer validity */
 	if( NULL == p_ctx )
 	{
-		l_result = MSGE_RES_BADPOINTER;
+		l_result = e_eFSP_MSGE_RES_BADPOINTER;
 	}
 	else
 	{
 		/* Check internal status validity */
 		if( false == eFSP_MSGE_isStatusStillCoherent(p_ctx) )
 		{
-			l_result = MSGE_RES_CORRUPTCTX;
+			l_result = e_eFSP_MSGE_RES_CORRUPTCTX;
 		}
 		else
 		{
@@ -253,23 +253,23 @@ e_eFSP_MSGE_Res eFSP_MSGE_RestartMessage(s_eFSP_MSGE_Ctx* const p_ctx)
 	return l_result;
 }
 
-e_eFSP_MSGE_Res eFSP_MSGE_GetRemByteToGet(s_eFSP_MSGE_Ctx* const p_ctx, uint32_t* const p_retrivedLen)
+e_eFSP_MSGE_RES eFSP_MSGE_GetRemByteToGet(t_eFSP_MSGE_Ctx* const p_ctx, uint32_t* const p_retrivedLen)
 {
 	/* Local variable */
-	e_eFSP_MSGE_Res l_result;
+	e_eFSP_MSGE_RES l_result;
 	e_eCU_BSTF_RES l_resultByStuff;
 
 	/* Check pointer validity */
 	if( ( NULL == p_ctx ) || ( NULL == p_retrivedLen ) )
 	{
-		l_result = MSGE_RES_BADPOINTER;
+		l_result = e_eFSP_MSGE_RES_BADPOINTER;
 	}
 	else
 	{
 		/* Check internal status validity */
 		if( false == eFSP_MSGE_isStatusStillCoherent(p_ctx) )
 		{
-			l_result = MSGE_RES_CORRUPTCTX;
+			l_result = e_eFSP_MSGE_RES_CORRUPTCTX;
 		}
 		else
 		{
@@ -282,24 +282,24 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetRemByteToGet(s_eFSP_MSGE_Ctx* const p_ctx, uint32_t
 	return l_result;
 }
 
-e_eFSP_MSGE_Res eFSP_MSGE_GetEncChunk(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_encodeDest, const uint32_t maxDestLen,
+e_eFSP_MSGE_RES eFSP_MSGE_GetEncChunk(t_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_encodeDest, const uint32_t maxDestLen,
                                       uint32_t* const p_filledLen)
 {
 	/* Local variable */
-	e_eFSP_MSGE_Res l_result;
+	e_eFSP_MSGE_RES l_result;
 	e_eCU_BSTF_RES l_resultByStuff;
 
 	/* Check pointer validity */
 	if( ( NULL == p_ctx )  || ( NULL == p_encodeDest ) || ( NULL == p_filledLen ) )
 	{
-		l_result = MSGE_RES_BADPOINTER;
+		l_result = e_eFSP_MSGE_RES_BADPOINTER;
 	}
 	else
 	{
 		/* Check internal status validity */
 		if( false == eFSP_MSGE_isStatusStillCoherent(p_ctx) )
 		{
-			l_result = MSGE_RES_CORRUPTCTX;
+			l_result = e_eFSP_MSGE_RES_CORRUPTCTX;
 		}
 		else
 		{
@@ -317,7 +317,7 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetEncChunk(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_e
 /***********************************************************************************************************************
  *  PRIVATE FUNCTION
  **********************************************************************************************************************/
-static bool_t eFSP_MSGE_isStatusStillCoherent(const s_eFSP_MSGE_Ctx* p_ctx)
+static bool_t eFSP_MSGE_isStatusStillCoherent(const t_eFSP_MSGE_Ctx* p_ctx)
 {
     bool_t l_result;
 
@@ -334,58 +334,58 @@ static bool_t eFSP_MSGE_isStatusStillCoherent(const s_eFSP_MSGE_Ctx* p_ctx)
     return l_result;
 }
 
-static e_eFSP_MSGE_Res eFSP_MSGE_convertReturnFromBstf(e_eCU_BSTF_RES returnedEvent)
+static e_eFSP_MSGE_RES eFSP_MSGE_convertReturnFromBstf(e_eCU_BSTF_RES returnedEvent)
 {
-	e_eFSP_MSGE_Res l_result;
+	e_eFSP_MSGE_RES l_result;
 
 	switch( returnedEvent )
 	{
 		case e_eCU_BSTF_RES_OK:
 		{
-			l_result = MSGE_RES_OK;
+			l_result = e_eFSP_MSGE_RES_OK;
             break;
 		}
 
 		case e_eCU_BSTF_RES_BADPARAM:
 		{
-			l_result = MSGE_RES_BADPARAM;
+			l_result = e_eFSP_MSGE_RES_BADPARAM;
             break;
 		}
 
 		case e_eCU_BSTF_RES_BADPOINTER:
 		{
-			l_result = MSGE_RES_BADPOINTER;
+			l_result = e_eFSP_MSGE_RES_BADPOINTER;
             break;
 		}
 
 		case e_eCU_BSTF_RES_CORRUPTCTX:
 		{
-			l_result = MSGE_RES_CORRUPTCTX;
+			l_result = e_eFSP_MSGE_RES_CORRUPTCTX;
             break;
 		}
 
 		case e_eCU_BSTF_RES_FRAMEENDED:
 		{
-			l_result = MSGE_RES_MESSAGEENDED;
+			l_result = e_eFSP_MSGE_RES_MESSAGEENDED;
             break;
 		}
 
 		case e_eCU_BSTF_RES_NOINITLIB:
 		{
-			l_result = MSGE_RES_NOINITLIB;
+			l_result = e_eFSP_MSGE_RES_NOINITLIB;
             break;
 		}
 
 		case e_eCU_BSTF_RES_NOINITFRAME :
 		{
-			l_result = MSGE_RES_NOINITMESSAGE;
+			l_result = e_eFSP_MSGE_RES_NOINITMESSAGE;
             break;
 		}
 
 		default:
 		{
             /* Impossible end here */
-			l_result = MSGE_RES_CORRUPTCTX;
+			l_result = e_eFSP_MSGE_RES_CORRUPTCTX;
             break;
 		}
 	}

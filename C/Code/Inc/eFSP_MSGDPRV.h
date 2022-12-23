@@ -7,8 +7,8 @@
  *
  **********************************************************************************************************************/
 
-#ifndef EFSPMSGDECODER_PRIV_H
-#define EFSPMSGDECODER_PRIV_H
+#ifndef EFSP_MSGDPRV_H
+#define EFSP_MSGDPRV_H
 
 
 
@@ -30,12 +30,12 @@ extern "C" {
  **********************************************************************************************************************/
 typedef enum
 {
-    MSGD_PRV_PRECHECK = 0,
-    MSGD_PRV_INSERTCHUNK,
-    MSGD_PRV_MSG_END_CHECK,
-    MSGD_PRV_MSG_OK_CHECK,
-    MSGD_PRV_ELABDONE
-}e_eFSP_MSGD_Priv_state;
+    e_eFSP_MSGDPRV_SM_PRECHECK = 0,
+    e_eFSP_MSGDPRV_SM_INSERTCHUNK,
+    e_eFSP_MSGDPRV_SM_ENDCHECK,
+    e_eFSP_MSGDPRV_SM_OKCHECK,
+    e_eFSP_MSGDPRV_SM_ELABDONE
+}e_eFSP_MSGDPRV_SM;
 
 
 
@@ -45,4 +45,4 @@ typedef enum
 
 
 
-#endif /* EFSPMSGDECODER_PRIV_H */
+#endif /* EFSP_MSGDPRV_H */

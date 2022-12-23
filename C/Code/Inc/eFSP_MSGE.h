@@ -1,5 +1,5 @@
 /**
- * @file       eFSP_MSGD.h
+ * @file       eFSP_MSGE.h
  *
  * @brief      Message encoder utils
  *
@@ -7,8 +7,8 @@
  *
  **********************************************************************************************************************/
 
-#ifndef EFSPMSGENCODER_H
-#define EFSPMSGENCODER_H
+#ifndef EFSP_MSGE_H
+#define EFSP_MSGE_H
 
 
 
@@ -37,22 +37,22 @@ typedef bool_t (*cb_crc32_msge) ( void* p_ctx, const uint32_t seed, const uint8_
 
 typedef enum
 {
-    MSGE_RES_OK = 0,
-    MSGE_RES_BADPARAM,
-    MSGE_RES_BADPOINTER,
-	MSGE_RES_CORRUPTCTX,
-    MSGE_RES_MESSAGEENDED,
-    MSGE_RES_NOINITLIB,
-    MSGE_RES_NOINITMESSAGE,
-	MSGE_RES_CRCCLBKERROR,
-}e_eFSP_MSGE_Res;
+    e_eFSP_MSGE_RES_OK = 0,
+    e_eFSP_MSGE_RES_BADPARAM,
+    e_eFSP_MSGE_RES_BADPOINTER,
+	e_eFSP_MSGE_RES_CORRUPTCTX,
+    e_eFSP_MSGE_RES_MESSAGEENDED,
+    e_eFSP_MSGE_RES_NOINITLIB,
+    e_eFSP_MSGE_RES_NOINITMESSAGE,
+	e_eFSP_MSGE_RES_CRCCLBKERROR,
+}e_eFSP_MSGE_RES;
 
 typedef struct
 {
     t_eCU_BSTF_Ctx  bstf_Ctx;
     cb_crc32_msge   f_Crc;
     void*           p_crcCtx;
-}s_eFSP_MSGE_Ctx;
+}t_eFSP_MSGE_Ctx;
 
 
 
@@ -68,11 +68,11 @@ typedef struct
  * @param[in]   f_Crc         - Pointer to a CRC 32 seed callback function
  * @param[in]   p_clbCtx      - Custom context passed to the callback function
  *
- * @return      MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
- *		        MSGE_RES_BADPARAM       - In case of an invalid parameter passed to the function
- *              MSGE_RES_OK             - Operation ended correctly
+ * @return      e_eFSP_MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
+ *		        e_eFSP_MSGE_RES_BADPARAM       - In case of an invalid parameter passed to the function
+ *              e_eFSP_MSGE_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGE_Res eFSP_MSGE_InitCtx(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_memArea, const uint32_t memAreaSize,
+e_eFSP_MSGE_RES eFSP_MSGE_InitCtx(t_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_memArea, const uint32_t memAreaSize,
 								  cb_crc32_msge f_Crc, void* const p_clbCtx);
 
 /**
@@ -81,10 +81,10 @@ e_eFSP_MSGE_Res eFSP_MSGE_InitCtx(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_memAr
  * @param[in]   p_ctx         - Message Encoder context
  * @param[out]  p_isInit      - Pointer to a bool_t variable that will be filled with true if the lib is initialized
  *
- * @return      MSGE_RES_BADPOINTER    - In case of bad pointer passed to the function
- *              MSGE_RES_OK            - Operation ended correctly
+ * @return      e_eFSP_MSGE_RES_BADPOINTER    - In case of bad pointer passed to the function
+ *              e_eFSP_MSGE_RES_OK            - Operation ended correctly
  */
-e_eFSP_MSGE_Res eFSP_MSGE_IsInit(s_eFSP_MSGE_Ctx* const p_ctx, bool_t* p_isInit);
+e_eFSP_MSGE_RES eFSP_MSGE_IsInit(t_eFSP_MSGE_Ctx* const p_ctx, bool_t* p_isInit);
 
 /**
  * @brief       Retrive the pointer of the buffer that the user can use to insert data payload that need to be encoded
@@ -94,12 +94,12 @@ e_eFSP_MSGE_Res eFSP_MSGE_IsInit(s_eFSP_MSGE_Ctx* const p_ctx, bool_t* p_isInit)
  * @param[out]  p_maxDataL    - Pointer to a uint32_t variable where the max number of data that can be copied in
  *                              pp_data will be placed
  *
- * @return      MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
- *		        MSGE_RES_NOINITLIB      - Need to init the data encoder context before taking some action
- *		        MSGE_RES_CORRUPTCTX     - In case of an corrupted context
- *              MSGE_RES_OK             - Operation ended correctly
+ * @return      e_eFSP_MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
+ *		        e_eFSP_MSGE_RES_NOINITLIB      - Need to init the data encoder context before taking some action
+ *		        e_eFSP_MSGE_RES_CORRUPTCTX     - In case of an corrupted context
+ *              e_eFSP_MSGE_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGE_Res eFSP_MSGE_GetWherePutData(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t** pp_data, uint32_t* const p_maxDataL);
+e_eFSP_MSGE_RES eFSP_MSGE_GetWherePutData(t_eFSP_MSGE_Ctx* const p_ctx, uint8_t** pp_data, uint32_t* const p_maxDataL);
 
 /**
  * @brief       Start to encode a new msg given the dimension of raw payload it self. This function suppouse that
@@ -110,27 +110,27 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetWherePutData(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t*
  * @param[in]   messageLen    - lenght of the raw payload present in the frame that we need to encode ( no header, only
  *                              raw data )
  *
- * @return      MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
- *		        MSGE_RES_BADPARAM       - In case of an invalid parameter passed to the function
- *		        MSGE_RES_NOINITLIB      - Need to init the data encoder context before taking some action
- *		        MSGE_RES_CORRUPTCTX     - In case of an corrupted context
- *				MSGE_RES_CRCCLBKERROR   - The crc callback function returned an error
- *              MSGE_RES_OK             - Operation ended correctly
+ * @return      e_eFSP_MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
+ *		        e_eFSP_MSGE_RES_BADPARAM       - In case of an invalid parameter passed to the function
+ *		        e_eFSP_MSGE_RES_NOINITLIB      - Need to init the data encoder context before taking some action
+ *		        e_eFSP_MSGE_RES_CORRUPTCTX     - In case of an corrupted context
+ *				e_eFSP_MSGE_RES_CRCCLBKERROR   - The crc callback function returned an error
+ *              e_eFSP_MSGE_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGE_Res eFSP_MSGE_NewMessage(s_eFSP_MSGE_Ctx* const p_ctx, const uint32_t messageLen);
+e_eFSP_MSGE_RES eFSP_MSGE_NewMessage(t_eFSP_MSGE_Ctx* const p_ctx, const uint32_t messageLen);
 
 /**
  * @brief       Restart to encode the already passed payload/the current frame
  *
  * @param[in]   p_ctx         - Message Encoder context
  *
- * @return      MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
- *		        MSGE_RES_NOINITLIB      - Need to init the data encoder context before taking some action
- *		        MSGE_RES_NOINITMESSAGE  - Need to start a message before restarting it
- *		        MSGE_RES_CORRUPTCTX     - In case of an corrupted context
- *              MSGE_RES_OK             - Operation ended correctly
+ * @return      e_eFSP_MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
+ *		        e_eFSP_MSGE_RES_NOINITLIB      - Need to init the data encoder context before taking some action
+ *		        e_eFSP_MSGE_RES_NOINITMESSAGE  - Need to start a message before restarting it
+ *		        e_eFSP_MSGE_RES_CORRUPTCTX     - In case of an corrupted context
+ *              e_eFSP_MSGE_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGE_Res eFSP_MSGE_RestartMessage(s_eFSP_MSGE_Ctx* const p_ctx);
+e_eFSP_MSGE_RES eFSP_MSGE_RestartMessage(t_eFSP_MSGE_Ctx* const p_ctx);
 
 /**
  * @brief       Retrive the numbers of stuffed bytes + header that can be retrived using eFSP_MSGE_GetEncChunk
@@ -140,13 +140,13 @@ e_eFSP_MSGE_Res eFSP_MSGE_RestartMessage(s_eFSP_MSGE_Ctx* const p_ctx);
  * @param[out]  p_retrivedLen - Pointer to a uint32_t variable where the numbers of retrivable encoded data will be
  *                              placed
  *
- * @return      MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
- *		        MSGE_RES_NOINITLIB      - Need to init the data encoder context before taking some action
- *		        MSGE_RES_NOINITMESSAGE  - Need to start a message before taking some action
- *		        MSGE_RES_CORRUPTCTX     - In case of an corrupted context
- *              MSGE_RES_OK             - Operation ended correctly
+ * @return      e_eFSP_MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
+ *		        e_eFSP_MSGE_RES_NOINITLIB      - Need to init the data encoder context before taking some action
+ *		        e_eFSP_MSGE_RES_NOINITMESSAGE  - Need to start a message before taking some action
+ *		        e_eFSP_MSGE_RES_CORRUPTCTX     - In case of an corrupted context
+ *              e_eFSP_MSGE_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGE_Res eFSP_MSGE_GetRemByteToGet(s_eFSP_MSGE_Ctx* const p_ctx, uint32_t* const p_retrivedLen);
+e_eFSP_MSGE_RES eFSP_MSGE_GetRemByteToGet(t_eFSP_MSGE_Ctx* const p_ctx, uint32_t* const p_retrivedLen);
 
 /**
  * @brief       Retrive encoded data chunk. The raw data copied in the buffer using the function
@@ -156,23 +156,23 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetRemByteToGet(s_eFSP_MSGE_Ctx* const p_ctx, uint32_t
  * @param[in]   p_encodeDest  - Pointer to the destination area of encoded data that will be placed by this function
  * @param[in]   maxDestLen    - Max fillable size of the destination area
  * @param[out]  p_filledLen   - Pointer to an uint32_t were we will store the number encoded data inserted in
- *                              p_encodeDest. Note that if the function return MSGE_RES_OK the value of p_filledLen
+ *                              p_encodeDest. Note that if the function return e_eFSP_MSGE_RES_OK the value of p_filledLen
  *                              will be equals to maxDestLen. The value p_filledLen infact could be lower than max dest
- *                              size only if some error is returned or if the frame is ended ( MSGE_RES_MESSAGEENDED )
+ *                              size only if some error is returned or if the frame is ended ( e_eFSP_MSGE_RES_MESSAGEENDED )
  *
- * @return      MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
- *		        MSGE_RES_NOINITLIB      - Need to init the data encoder context before taking some action
- *		        MSGE_RES_BADPARAM       - In case of an invalid parameter passed to the function
- *		        MSGE_RES_NOINITMESSAGE  - Need to start a message before taking some action
- *		        MSGE_RES_CORRUPTCTX     - In case of an corrupted context
- *              MSGE_RES_MESSAGEENDED   - No more data that we can elaborate, restart or start a new frame to proceed.
+ * @return      e_eFSP_MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
+ *		        e_eFSP_MSGE_RES_NOINITLIB      - Need to init the data encoder context before taking some action
+ *		        e_eFSP_MSGE_RES_BADPARAM       - In case of an invalid parameter passed to the function
+ *		        e_eFSP_MSGE_RES_NOINITMESSAGE  - Need to start a message before taking some action
+ *		        e_eFSP_MSGE_RES_CORRUPTCTX     - In case of an corrupted context
+ *              e_eFSP_MSGE_RES_MESSAGEENDED   - No more data that we can elaborate, restart or start a new frame to proceed.
  *                                        This means that we have finished encoding the current frame. Keep in mind
  *                                        in this case that the value of p_filledLen could be lower than maxDestLen.
- *              MSGE_RES_OK             - Operation ended correctly. This dosent mean that the encoding process is
+ *              e_eFSP_MSGE_RES_OK             - Operation ended correctly. This dosent mean that the encoding process is
  *                                        completed, but we can be sure that p_filledLen will have the same value of
  *                                        maxDestLen
  */
-e_eFSP_MSGE_Res eFSP_MSGE_GetEncChunk(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_encodeDest, const uint32_t maxDestLen,
+e_eFSP_MSGE_RES eFSP_MSGE_GetEncChunk(t_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_encodeDest, const uint32_t maxDestLen,
                                       uint32_t* const p_filledLen);
 
 #ifdef __cplusplus
@@ -181,4 +181,4 @@ e_eFSP_MSGE_Res eFSP_MSGE_GetEncChunk(s_eFSP_MSGE_Ctx* const p_ctx, uint8_t* p_e
 
 
 
-#endif /* EFSPMSGENCODER_H */
+#endif /* EFSP_MSGE_H */
