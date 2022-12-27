@@ -62,7 +62,7 @@ static void eFSP_TEST_msgEncoderGeneral2(void);
 /***********************************************************************************************************************
  *   GLOBAL FUNCTIONS
  **********************************************************************************************************************/
-void eFSP_TEST_msgEncoder(void)
+void eFSP_MSGETST_ExeTest(void)
 {
 	(void)printf("\n\nMESSAGE ENCODER TEST START \n\n");
 

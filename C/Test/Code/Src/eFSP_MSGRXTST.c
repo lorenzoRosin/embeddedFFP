@@ -94,7 +94,7 @@ static void eFSP_TEST_msgReceiverCornerCase6(void);
 /***********************************************************************************************************************
  *   GLOBAL FUNCTIONS
  **********************************************************************************************************************/
-void eFSP_TEST_msgReceiver(void)
+void eFSP_MSGRXTST_ExeTest(void)
 {
 	(void)printf("\n\nMESSAGE RECEIVER TEST START \n\n");
 

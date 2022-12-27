@@ -71,7 +71,7 @@ static void eFSP_TEST_msgDecoderCorner(void);
 /***********************************************************************************************************************
  *   GLOBAL FUNCTIONS
  **********************************************************************************************************************/
-void eFSP_TEST_msgDecoder(void)
+void eFSP_MSGDTST_ExeTest(void)
 {
 	(void)printf("\n\nMESSAGE DECODER TEST START \n\n");
 

@@ -36,7 +36,7 @@ extern "C" {
  *
  * @return      none
  */
-void eFSP_TEST_msgTransmitter(void);
+void eFSP_MSGTXTST_ExeTest(void);
 
 
 

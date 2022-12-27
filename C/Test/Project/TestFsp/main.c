@@ -12,12 +12,12 @@ int main(void);
 int main(void)
 {
     /* Start testing */
-    //  eFSP_TEST_msgEncoder();
-    //  eFSP_TEST_msgDecoder();
-    //  eFSP_TEST_msgDeEncoder();
-    //  eFSP_TEST_msgTransmitter();
-    //  eFSP_TEST_msgReceiver();
-    eFSP_TEST_msgRxTransmitter();
+    //  eFSP_MSGETST_ExeTest();
+    //  eFSP_MSGDTST_ExeTest();
+    //  eFSP_MSGDMSGETST_ExeTest();
+    //  eFSP_MSGTXTST_ExeTest();
+    //  eFSP_MSGRXTST_ExeTest();
+    eFSP_MSGRXMSGTXTST_ExeTest();
 
     return 0;
 }

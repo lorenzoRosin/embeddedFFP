@@ -99,7 +99,7 @@ static void eFSP_TEST_msgRxTransmitterCommon(void);
 /***********************************************************************************************************************
  *   GLOBAL FUNCTIONS
  **********************************************************************************************************************/
-void eFSP_TEST_msgRxTransmitter(void)
+void eFSP_MSGRXMSGTXTST_ExeTest(void)
 {
 	(void)printf("\n\nMESSAGE RECEIVER TRANSMITTER TEST START \n\n");
 
