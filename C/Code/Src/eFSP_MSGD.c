@@ -117,7 +117,7 @@ e_eFSP_MSGD_RES eFSP_MSGD_NewMsg(t_eFSP_MSGD_Ctx* const p_ptCtx)
 	return l_result;
 }
 
-e_eFSP_MSGD_RES eFSP_MSGD_GetDecodedData(t_eFSP_MSGD_Ctx* const p_ptCtx, uint8_t** pp_data, uint32_t* const p_gettedLen)
+e_eFSP_MSGD_RES eFSP_MSGD_GetDecodedData(t_eFSP_MSGD_Ctx* const p_ptCtx, uint8_t** p_ppuDat, uint32_t* const p_puGetL)
 {
 	/* Local variable */
 	e_eFSP_MSGD_RES l_result;
@@ -127,7 +127,7 @@ e_eFSP_MSGD_RES eFSP_MSGD_GetDecodedData(t_eFSP_MSGD_Ctx* const p_ptCtx, uint8_t
 	uint32_t l_dataSizeP;
 
 	/* Check pointer validity */
-	if( ( NULL == p_ptCtx ) || ( NULL == pp_data ) || ( NULL == p_gettedLen ) )
+	if( ( NULL == p_ptCtx ) || ( NULL == p_ppuDat ) || ( NULL == p_puGetL ) )
 	{
 		l_result = e_eFSP_MSGD_RES_BADPOINTER;
 	}
@@ -150,18 +150,18 @@ e_eFSP_MSGD_RES eFSP_MSGD_GetDecodedData(t_eFSP_MSGD_Ctx* const p_ptCtx, uint8_t
 			if( e_eFSP_MSGD_RES_OK == l_result )
 			{
                 /* Starting point is always the same */
-                *pp_data = &(*lpp_dataP)[EFSP_MSGDE_HEADERSIZE];
+                *p_ppuDat = &(*lpp_dataP)[EFSP_MSGDE_HEADERSIZE];
 
 				/* Removed HADER from data ( CRC + DATA LEN ) */
                 if( l_dataSizeP < EFSP_MIN_MSGDE_BUFFLEN )
                 {
 					/* No memory free */
-                    *p_gettedLen = 0u;
+                    *p_puGetL = 0u;
                 }
                 else
                 {
                     /* Return reference of only the raw payload */
-                    *p_gettedLen = l_dataSizeP - EFSP_MSGDE_HEADERSIZE;
+                    *p_puGetL = l_dataSizeP - EFSP_MSGDE_HEADERSIZE;
                 }
 
 				l_result = e_eFSP_MSGD_RES_OK;
