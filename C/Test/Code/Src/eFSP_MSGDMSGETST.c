@@ -11,6 +11,8 @@
  *      INCLUDES
  **********************************************************************************************************************/
 #include "eFSP_MSGDMSGETST.h"
+#include "eFSP_MSGE.h"
+#include "eFSP_MSGD.h"
 #include "eCU_CRC.h"
 
 #ifdef __IAR_SYSTEMS_ICC__
@@ -59,7 +61,7 @@ static void eFSP_TEST_msgDeEncoderCommon(void);
 /***********************************************************************************************************************
  *   GLOBAL FUNCTIONS
  **********************************************************************************************************************/
-void eFSP_TEST_msgDeEncoder(void)
+void eFSP_MSGDMSGETST_msgDeEncoder(void)
 {
 	(void)printf("\n\nMESSAGE DECODER ENCODER TEST START \n\n");
 

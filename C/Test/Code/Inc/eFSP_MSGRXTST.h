@@ -7,8 +7,8 @@
  *
  **********************************************************************************************************************/
 
-#ifndef EFSPMSGRECEIVERTEST_H
-#define EFSPMSGRECEIVERTEST_H
+#ifndef EFSP_MSGRXTST_H
+#define EFSP_MSGRXTST_H
 
 
 
@@ -22,7 +22,7 @@ extern "C" {
  *      INCLUDES
  **********************************************************************************************************************/
 #include "eFSP_TYPE.h"
-#include "eFSP_MSGRX.h"
+
 
 
 
@@ -46,4 +46,4 @@ void eFSP_TEST_msgReceiver(void);
 
 
 
-#endif /* EFSPMSGRECEIVERTEST_H */
+#endif /* EFSP_MSGRXTST_H */

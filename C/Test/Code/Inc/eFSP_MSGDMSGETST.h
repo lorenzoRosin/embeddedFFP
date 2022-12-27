@@ -7,8 +7,8 @@
  *
  **********************************************************************************************************************/
 
-#ifndef EFSPMSGDEENCODERTEST_H
-#define EFSPMSGDEENCODERTEST_H
+#ifndef EFSP_MSGDMSGETST_H
+#define EFSP_MSGDMSGETST_H
 
 
 
@@ -22,8 +22,6 @@ extern "C" {
  *      INCLUDES
  **********************************************************************************************************************/
 #include "eFSP_TYPE.h"
-#include "eFSP_MSGE.h"
-#include "eFSP_MSGD.h"
 
 
 
@@ -47,4 +45,4 @@ void eFSP_TEST_msgDeEncoder(void);
 
 
 
-#endif /* EFSPMSGDEENCODERTEST_H */
+#endif /* EFSP_MSGDMSGETST_H */

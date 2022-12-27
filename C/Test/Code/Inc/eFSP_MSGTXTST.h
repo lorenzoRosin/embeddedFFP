@@ -7,8 +7,8 @@
  *
  **********************************************************************************************************************/
 
-#ifndef EFSPMSGTRANSMITTERTEST_H
-#define EFSPMSGTRANSMITTERTEST_H
+#ifndef EFSP_MSGTXTST_H
+#define EFSP_MSGTXTST_H
 
 
 
@@ -22,7 +22,7 @@ extern "C" {
  *      INCLUDES
  **********************************************************************************************************************/
 #include "eFSP_TYPE.h"
-#include "eFSP_MSGTX.h"
+
 
 
 
@@ -46,4 +46,4 @@ void eFSP_TEST_msgTransmitter(void);
 
 
 
-#endif /* EFSPMSGTRANSMITTERTEST_H */
+#endif /* EFSP_MSGTXTST_H */

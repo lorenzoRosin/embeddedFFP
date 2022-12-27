@@ -13,6 +13,7 @@
  *      INCLUDES
  **********************************************************************************************************************/
 #include "eFSP_MSGTXTST.h"
+#include "eFSP_MSGTX.h"
 #include "eCU_CRC.h"
 
 #ifdef __IAR_SYSTEMS_ICC__

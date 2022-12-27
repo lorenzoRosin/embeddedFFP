@@ -7,8 +7,8 @@
  *
  **********************************************************************************************************************/
 
-#ifndef EFSPMSGENCODERTEST_H
-#define EFSPMSGENCODERTEST_H
+#ifndef EFSP_MSGETST_H
+#define EFSP_MSGETST_H
 
 
 
@@ -22,7 +22,7 @@ extern "C" {
  *      INCLUDES
  **********************************************************************************************************************/
 #include "eFSP_TYPE.h"
-#include "eFSP_MSGE.h"
+
 
 
 
@@ -46,4 +46,4 @@ void eFSP_TEST_msgEncoder(void);
 
 
 
-#endif /* EFSPMSGENCODERTEST_H */
+#endif /* EFSP_MSGETST_H */
