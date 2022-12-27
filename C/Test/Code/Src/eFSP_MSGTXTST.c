@@ -476,7 +476,7 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     /* Function */
     initData.puIMemArea = NULL;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -499,7 +499,7 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     /* Function */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = NULL;
+    initData.puITxBuffArea = NULL;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -522,7 +522,7 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     /* Function */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = NULL;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -545,7 +545,7 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     /* Function */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = NULL;
@@ -568,7 +568,7 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     /* Function */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -591,7 +591,7 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     /* Function */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -614,7 +614,7 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     /* Function */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -637,7 +637,7 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     /* Function */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -660,7 +660,7 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     /* Function */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -683,7 +683,7 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     /* Function */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = NULL;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -706,7 +706,7 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     /* Function */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = NULL;
@@ -729,7 +729,7 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     /* Function */
     initData.puIMemArea = NULL;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -938,7 +938,7 @@ void eFSP_TEST_msgTransmitterBadIniMsg(void)
     /* Init */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -1014,7 +1014,7 @@ void eFSP_TEST_msgTransmitterBadParamEntr(void)
     /* Init */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = 0u;
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -1037,7 +1037,7 @@ void eFSP_TEST_msgTransmitterBadParamEntr(void)
     /* Init */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -1060,7 +1060,7 @@ void eFSP_TEST_msgTransmitterBadParamEntr(void)
     /* Init */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -1083,7 +1083,7 @@ void eFSP_TEST_msgTransmitterBadParamEntr(void)
     /* Init */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -1106,7 +1106,7 @@ void eFSP_TEST_msgTransmitterBadParamEntr(void)
     /* Init */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = 0u;
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -1129,7 +1129,7 @@ void eFSP_TEST_msgTransmitterBadParamEntr(void)
     /* Init */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -1181,7 +1181,7 @@ void eFSP_TEST_msgTransmitterCorruptContext(void)
     /* Init */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -1601,7 +1601,7 @@ void eFSP_TEST_msgTransmitterBadClBckCrc(void)
     /* Init */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -1660,7 +1660,7 @@ void eFSP_TEST_msgTransmitterBadClBckSend(void)
     /* Init */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -1741,7 +1741,7 @@ void eFSP_TEST_msgTransmitterBadClBckTim(void)
     /* Init */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -1807,7 +1807,7 @@ void eFSP_TEST_msgTransmitterBadClBckTim(void)
     /* Init */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -1893,7 +1893,7 @@ void eFSP_TEST_msgTransmitterCornerCase(void)
     /* Init */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -2004,7 +2004,7 @@ void eFSP_TEST_msgTransmitterCornerCase(void)
     /* Init */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = 1u;
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -2080,7 +2080,7 @@ void eFSP_TEST_msgTransmitterCornerCase(void)
     /* Init */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = 1u;
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -2297,7 +2297,7 @@ void eFSP_TEST_msgTransmitterCornerCase2(void)
     /* Init */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = 5u;
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -2361,7 +2361,7 @@ void eFSP_TEST_msgTransmitterCornerCase2(void)
     /* Init */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = 3u;
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -2497,7 +2497,7 @@ void eFSP_TEST_msgTransmitterCornerCase3()
     /* Init */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
@@ -2563,7 +2563,7 @@ void eFSP_TEST_msgTransmitterCornerCase3()
     /* Init */
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
-    initData.p_i_txBuffArea = sendBuff;
+    initData.puITxBuffArea = sendBuff;
     initData.i_txBuffAreaSize = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;

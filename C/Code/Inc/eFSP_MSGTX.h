@@ -83,17 +83,17 @@ typedef struct
 
 typedef struct
 {
-    uint8_t*        puIMemArea;
-    uint32_t        uIMemAreaL;
-    uint8_t*        p_i_txBuffArea;
-    uint32_t        i_txBuffAreaSize;
+    uint8_t*            puIMemArea;
+    uint32_t            uIMemAreaL;
+    uint8_t*            puITxBuffArea;
+    uint32_t            i_txBuffAreaSize;
     f_eFSP_MSGE_CrcCb   fICrc;
-    t_eFSP_MSGE_CrcCtx*           ptICbCrcCtx;
-    f_eFSP_MSGTX_TxCb      f_i_Tx;
-    t_eFSP_MSGTX_TxCtx*           p_i_cbTxCtx;
+    t_eFSP_MSGE_CrcCtx* ptICbCrcCtx;
+    f_eFSP_MSGTX_TxCb   f_i_Tx;
+    t_eFSP_MSGTX_TxCtx* p_i_cbTxCtx;
     t_eFSP_MSGTX_Timer  i_txTim;
-    uint32_t        uITimeoutMs;
-    uint32_t        i_timePerSendMs;
+    uint32_t            uITimeoutMs;
+    uint32_t            i_timePerSendMs;
 }t_eFSP_MSGTX_InitData;
 
 

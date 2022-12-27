@@ -400,7 +400,7 @@ void eFSP_TEST_msgRxTransmitterCommon(void)
     /* Init */
     initDataTx.puIMemArea = memAreaTx;
     initDataTx.uIMemAreaL = sizeof(memAreaTx);
-    initDataTx.p_i_txBuffArea = sendBuff;
+    initDataTx.puITxBuffArea = sendBuff;
     initDataTx.i_txBuffAreaSize = sizeof(sendBuff);
     initDataTx.fICrc = &c32SAdaptTx;
     initDataTx.ptICbCrcCtx = &ctxAdapterCrcTx;

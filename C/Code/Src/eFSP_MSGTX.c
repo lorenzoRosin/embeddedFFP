@@ -40,7 +40,7 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_InitCtx(t_eFSP_MSGTX_Ctx* const p_ptCtx, const t_eFS
 	else
 	{
         /* Check pointer validity */
-        if( ( NULL == p_ptInitData->puIMemArea ) || ( NULL == p_ptInitData->p_i_txBuffArea ) ||
+        if( ( NULL == p_ptInitData->puIMemArea ) || ( NULL == p_ptInitData->puITxBuffArea ) ||
             ( NULL == p_ptInitData->fICrc ) || ( NULL == p_ptInitData->ptICbCrcCtx ) || ( NULL == p_ptInitData->f_i_Tx ) ||
             ( NULL == p_ptInitData->p_i_cbTxCtx ) || ( NULL == p_ptInitData->i_txTim.ptTimCtx ) ||
             ( NULL == p_ptInitData->i_txTim.fTimStart ) || ( NULL == p_ptInitData->i_txTim.fTimGetRemain ) )
@@ -58,7 +58,7 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_InitCtx(t_eFSP_MSGTX_Ctx* const p_ptCtx, const t_eFS
             else
             {
                 /* Initialize internal status variable */
-                p_ptCtx->p_rxBuff = p_ptInitData->p_i_txBuffArea;
+                p_ptCtx->p_rxBuff = p_ptInitData->puITxBuffArea;
                 p_ptCtx->txBuffSize = p_ptInitData->i_txBuffAreaSize;
                 p_ptCtx->txBuffCntr = 0u;
                 p_ptCtx->txBuffFill = 0u;
