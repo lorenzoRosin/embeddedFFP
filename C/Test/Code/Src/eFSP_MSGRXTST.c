@@ -50,24 +50,24 @@ struct t_eFSP_MSGRX_TimCtxUser
     bool sendIsError;
 };
 
-static bool_t c32SAdapt(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
-static bool_t c32SAdaptEr(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
-static bool_t receiveMsg( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
+static bool_t eFSP_MSGRXTST_c32SAdapt(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
+static bool_t eFSP_MSGRXTST_c32SAdaptEr(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
+static bool_t eFSP_MSGRXTST_receiveMsg( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                        const uint32_t timeToRx );
-static bool_t receiveMsgCrrupt( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
+static bool_t eFSP_MSGRXTST_receiveMsgCrrupt( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                        const uint32_t timeToRx );
-static bool_t receiveMsgJump( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
+static bool_t eFSP_MSGRXTST_receiveMsgJump( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                        const uint32_t timeToRx );
-static bool_t receiveMsgJumpLong( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
+static bool_t eFSP_MSGRXTST_receiveMsgJumpLong( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                        const uint32_t timeToRx );
-static bool_t receiveMsgErr( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
+static bool_t eFSP_MSGRXTST_receiveMsgErr( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                           const uint32_t timeToRx );
-static bool_t timStart ( t_eFSP_MSGRX_TimCtx* cntx, const uint32_t timeoutVal );
-static bool_t timGetRemaining ( t_eFSP_MSGRX_TimCtx* cntx, uint32_t* const remainings );
-static bool_t timGetRemainingCorr ( t_eFSP_MSGRX_TimCtx* cntx, uint32_t* const remainings );
-static bool_t timStartErr ( t_eFSP_MSGRX_TimCtx* cntx, const uint32_t timeoutVal );
-static bool_t timGetRemainingErr ( t_eFSP_MSGRX_TimCtx* cntx, uint32_t* const remainings );
-static bool_t timGetRemainingErrCntrl( t_eFSP_MSGRX_TimCtx* cntx, uint32_t* const remainings );
+static bool_t eFSP_MSGRXTST_timStart ( t_eFSP_MSGRX_TimCtx* cntx, const uint32_t timeoutVal );
+static bool_t eFSP_MSGRXTST_timGetRemaining ( t_eFSP_MSGRX_TimCtx* cntx, uint32_t* const remainings );
+static bool_t eFSP_MSGRXTST_timGetRemainingCorr ( t_eFSP_MSGRX_TimCtx* cntx, uint32_t* const remainings );
+static bool_t eFSP_MSGRXTST_timStartErr ( t_eFSP_MSGRX_TimCtx* cntx, const uint32_t timeoutVal );
+static bool_t eFSP_MSGRXTST_timGetRemainingErr ( t_eFSP_MSGRX_TimCtx* cntx, uint32_t* const remainings );
+static bool_t eFSP_MSGRXTST_timGetRemainingErrCntrl( t_eFSP_MSGRX_TimCtx* cntx, uint32_t* const remainings );
 
 
 
@@ -121,7 +121,7 @@ void eFSP_MSGRXTST_ExeTest(void)
 /***********************************************************************************************************************
  *   PRIVATE TEST FUNCTION DECLARATION
  **********************************************************************************************************************/
-bool_t c32SAdapt(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
+bool_t eFSP_MSGRXTST_c32SAdapt(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
 {
     bool_t result;
     t_eFSP_MSGD_CrcCtx* ctxCur;
@@ -148,7 +148,7 @@ bool_t c32SAdapt(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s, const uint8_t* d, c
     return result;
 }
 
-bool_t c32SAdaptEr(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
+bool_t eFSP_MSGRXTST_c32SAdaptEr(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
 {
     bool_t result;
     t_eFSP_MSGD_CrcCtx* ctxCur;
@@ -179,7 +179,7 @@ static uint32_t m_payloadCounter;
 static uint32_t m_read_jump;
 static uint32_t m_read_jumpLong;
 
-bool_t receiveMsg( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
+bool_t eFSP_MSGRXTST_receiveMsg( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                 const uint32_t timeToRx )
 {
     bool_t result;
@@ -220,7 +220,7 @@ bool_t receiveMsg( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const 
     return result;
 }
 
-bool_t receiveMsgCrrupt (t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
+bool_t eFSP_MSGRXTST_receiveMsgCrrupt (t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                 const uint32_t timeToRx )
 {
     bool_t result;
@@ -260,7 +260,7 @@ bool_t receiveMsgCrrupt (t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* 
     return result;
 }
 
-bool_t receiveMsgJump( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
+bool_t eFSP_MSGRXTST_receiveMsgJump( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                 const uint32_t timeToRx )
 {
     bool_t result;
@@ -309,7 +309,7 @@ bool_t receiveMsgJump( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* co
     return result;
 }
 
-bool_t receiveMsgJumpLong( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
+bool_t eFSP_MSGRXTST_receiveMsgJumpLong( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                 const uint32_t timeToRx )
 {
     bool_t result;
@@ -358,7 +358,7 @@ bool_t receiveMsgJumpLong( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t
     return result;
 }
 
-bool_t receiveMsgErr( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
+bool_t eFSP_MSGRXTST_receiveMsgErr( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                 const uint32_t timeToRx )
 {
     bool_t result;
@@ -384,7 +384,7 @@ static uint32_t m_tim_remainingTime;
 static uint32_t m_tim_timCnt;
 static uint32_t m_tim_timCntInc;
 
-bool_t timStart ( t_eFSP_MSGRX_TimCtx* cntx, const uint32_t timeoutVal )
+bool_t eFSP_MSGRXTST_timStart ( t_eFSP_MSGRX_TimCtx* cntx, const uint32_t timeoutVal )
 {
     bool_t result;
     t_eFSP_MSGRX_TimCtx* ctxCur;
@@ -406,7 +406,7 @@ bool_t timStart ( t_eFSP_MSGRX_TimCtx* cntx, const uint32_t timeoutVal )
     return result;
 }
 
-bool_t timGetRemaining ( t_eFSP_MSGRX_TimCtx* cntx, uint32_t* const remainings )
+bool_t eFSP_MSGRXTST_timGetRemaining ( t_eFSP_MSGRX_TimCtx* cntx, uint32_t* const remainings )
 {
     bool_t result;
     t_eFSP_MSGRX_TimCtx* ctxCur;
@@ -437,7 +437,7 @@ bool_t timGetRemaining ( t_eFSP_MSGRX_TimCtx* cntx, uint32_t* const remainings )
     return result;
 }
 
-bool_t timGetRemainingCorr ( t_eFSP_MSGRX_TimCtx* cntx, uint32_t* const remainings )
+bool_t eFSP_MSGRXTST_timGetRemainingCorr ( t_eFSP_MSGRX_TimCtx* cntx, uint32_t* const remainings )
 {
     bool_t result;
     t_eFSP_MSGRX_TimCtx* ctxCur;
@@ -466,7 +466,7 @@ bool_t timGetRemainingCorr ( t_eFSP_MSGRX_TimCtx* cntx, uint32_t* const remainin
     return result;
 }
 
-bool_t timStartErr ( t_eFSP_MSGRX_TimCtx* cntx, const uint32_t timeoutVal )
+bool_t eFSP_MSGRXTST_timStartErr ( t_eFSP_MSGRX_TimCtx* cntx, const uint32_t timeoutVal )
 {
     bool_t result;
     t_eFSP_MSGRX_TimCtx* ctxCur;
@@ -488,7 +488,7 @@ bool_t timStartErr ( t_eFSP_MSGRX_TimCtx* cntx, const uint32_t timeoutVal )
     return result;
 }
 
-bool_t timGetRemainingErr ( t_eFSP_MSGRX_TimCtx* cntx, uint32_t* const remainings )
+bool_t eFSP_MSGRXTST_timGetRemainingErr ( t_eFSP_MSGRX_TimCtx* cntx, uint32_t* const remainings )
 {
     bool_t result;
     t_eFSP_MSGRX_TimCtx* ctxCur;
@@ -517,7 +517,7 @@ bool_t timGetRemainingErr ( t_eFSP_MSGRX_TimCtx* cntx, uint32_t* const remaining
     return result;
 }
 
-bool_t timGetRemainingErrCntrl ( t_eFSP_MSGRX_TimCtx* cntx, uint32_t* const remainings )
+bool_t eFSP_MSGRXTST_timGetRemainingErrCntrl ( t_eFSP_MSGRX_TimCtx* cntx, uint32_t* const remainings )
 {
     bool_t result;
     t_eFSP_MSGRX_TimCtx* ctxCur;
@@ -566,7 +566,7 @@ void eFSP_MSGRXTST_BadPointer(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
     t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
     t_eFSP_MSGRX_RxCtx ctxAdapterRx;
     t_eFSP_MSGRX_TimCtx ctxAdapterTim;
@@ -603,11 +603,11 @@ void eFSP_MSGRXTST_BadPointer(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -627,11 +627,11 @@ void eFSP_MSGRXTST_BadPointer(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -651,11 +651,11 @@ void eFSP_MSGRXTST_BadPointer(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = NULL;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -675,11 +675,11 @@ void eFSP_MSGRXTST_BadPointer(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = NULL;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -702,8 +702,8 @@ void eFSP_MSGRXTST_BadPointer(void)
     initData.fIRx = NULL;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -723,11 +723,11 @@ void eFSP_MSGRXTST_BadPointer(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = NULL;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -747,11 +747,11 @@ void eFSP_MSGRXTST_BadPointer(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = NULL;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -771,11 +771,11 @@ void eFSP_MSGRXTST_BadPointer(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
     initData.tIRxTim.fTimStart = NULL;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -795,10 +795,10 @@ void eFSP_MSGRXTST_BadPointer(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
     initData.tIRxTim.fTimGetRemain = NULL;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
@@ -902,7 +902,7 @@ void eFSP_MSGRXTST_BadInit(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
     t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
     t_eFSP_MSGRX_RxCtx ctxAdapterRx;
     t_eFSP_MSGRX_TimCtx ctxAdapterTim;
@@ -919,11 +919,11 @@ void eFSP_MSGRXTST_BadInit(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -1004,7 +1004,7 @@ void eFSP_MSGRXTST_BadParamEntr(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
     t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
     t_eFSP_MSGRX_RxCtx ctxAdapterRx;
     t_eFSP_MSGRX_TimCtx ctxAdapterTim;
@@ -1019,11 +1019,11 @@ void eFSP_MSGRXTST_BadParamEntr(void)
     initData.uIRxBuffAreaL = 0u;
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -1043,11 +1043,11 @@ void eFSP_MSGRXTST_BadParamEntr(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 0u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -1067,11 +1067,11 @@ void eFSP_MSGRXTST_BadParamEntr(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 0u;
     initData.bINeedWaitFrameStart = true;
@@ -1091,11 +1091,11 @@ void eFSP_MSGRXTST_BadParamEntr(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 100u;
     initData.uITimePerRecMs = 1000u;
     initData.bINeedWaitFrameStart = true;
@@ -1115,11 +1115,11 @@ void eFSP_MSGRXTST_BadParamEntr(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -1139,11 +1139,11 @@ void eFSP_MSGRXTST_BadParamEntr(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -1182,7 +1182,7 @@ void eFSP_MSGRXTST_CorruptContext(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
     t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
     t_eFSP_MSGRX_RxCtx ctxAdapterRx;
     t_eFSP_MSGRX_TimCtx ctxAdapterTim;
@@ -1198,11 +1198,11 @@ void eFSP_MSGRXTST_CorruptContext(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -1233,11 +1233,11 @@ void eFSP_MSGRXTST_CorruptContext(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -1268,11 +1268,11 @@ void eFSP_MSGRXTST_CorruptContext(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -1303,11 +1303,11 @@ void eFSP_MSGRXTST_CorruptContext(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -1338,11 +1338,11 @@ void eFSP_MSGRXTST_CorruptContext(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -1373,11 +1373,11 @@ void eFSP_MSGRXTST_CorruptContext(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -1408,11 +1408,11 @@ void eFSP_MSGRXTST_CorruptContext(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -1443,11 +1443,11 @@ void eFSP_MSGRXTST_CorruptContext(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -1478,11 +1478,11 @@ void eFSP_MSGRXTST_CorruptContext(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -1513,11 +1513,11 @@ void eFSP_MSGRXTST_CorruptContext(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -1548,11 +1548,11 @@ void eFSP_MSGRXTST_CorruptContext(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -1583,11 +1583,11 @@ void eFSP_MSGRXTST_CorruptContext(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -1618,11 +1618,11 @@ void eFSP_MSGRXTST_CorruptContext(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -1653,11 +1653,11 @@ void eFSP_MSGRXTST_CorruptContext(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -1688,11 +1688,11 @@ void eFSP_MSGRXTST_CorruptContext(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -1723,11 +1723,11 @@ void eFSP_MSGRXTST_CorruptContext(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -1758,11 +1758,11 @@ void eFSP_MSGRXTST_CorruptContext(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -1793,11 +1793,11 @@ void eFSP_MSGRXTST_CorruptContext(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -1828,11 +1828,11 @@ void eFSP_MSGRXTST_CorruptContext(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -1866,7 +1866,7 @@ void eFSP_MSGRXTST_BadClBckCrc(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdaptEr;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdaptEr;
     t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
     t_eFSP_MSGRX_RxCtx ctxAdapterRx;
     t_eFSP_MSGRX_TimCtx ctxAdapterTim;
@@ -1880,11 +1880,11 @@ void eFSP_MSGRXTST_BadClBckCrc(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -1940,7 +1940,7 @@ void eFSP_MSGRXTST_BadClBckReceive(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
     t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
     t_eFSP_MSGRX_RxCtx ctxAdapterRx;
     t_eFSP_MSGRX_TimCtx ctxAdapterTim;
@@ -1954,11 +1954,11 @@ void eFSP_MSGRXTST_BadClBckReceive(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsgErr;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsgErr;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -2025,7 +2025,7 @@ void eFSP_MSGRXTST_BadClBckTim(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
     t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
     t_eFSP_MSGRX_RxCtx ctxAdapterRx;
     t_eFSP_MSGRX_TimCtx ctxAdapterTim;
@@ -2039,11 +2039,11 @@ void eFSP_MSGRXTST_BadClBckTim(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStartErr;
-    initData.tIRxTim.fTimGetRemain = &timGetRemainingErr;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStartErr;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemainingErr;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -2107,11 +2107,11 @@ void eFSP_MSGRXTST_BadClBckTim(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStartErr;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStartErr;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -2175,11 +2175,11 @@ void eFSP_MSGRXTST_BadClBckTim(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemainingErrCntrl;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemainingErrCntrl;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = false;
@@ -2236,7 +2236,7 @@ void eFSP_MSGRXTST_BadFrame(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
     t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
     t_eFSP_MSGRX_RxCtx ctxAdapterRx;
     t_eFSP_MSGRX_TimCtx ctxAdapterTim;
@@ -2250,11 +2250,11 @@ void eFSP_MSGRXTST_BadFrame(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -2308,11 +2308,11 @@ void eFSP_MSGRXTST_BadFrame(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -2376,11 +2376,11 @@ void eFSP_MSGRXTST_BadFrame(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -2435,11 +2435,11 @@ void eFSP_MSGRXTST_BadFrame(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = true;
@@ -2536,11 +2536,11 @@ void eFSP_MSGRXTST_BadFrame(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = false;
@@ -2598,7 +2598,7 @@ void eFSP_MSGRXTST_CornerCase(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
     t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
     t_eFSP_MSGRX_RxCtx ctxAdapterRx;
     t_eFSP_MSGRX_TimCtx ctxAdapterTim;
@@ -2612,11 +2612,11 @@ void eFSP_MSGRXTST_CornerCase(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 1u;
     initData.bINeedWaitFrameStart = false;
@@ -2698,11 +2698,11 @@ void eFSP_MSGRXTST_CornerCase(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 5u;
     initData.uITimePerRecMs = 1u;
     initData.bINeedWaitFrameStart = false;
@@ -2784,11 +2784,11 @@ void eFSP_MSGRXTST_CornerCase(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 6u;
     initData.uITimePerRecMs = 1u;
     initData.bINeedWaitFrameStart = false;
@@ -2870,11 +2870,11 @@ void eFSP_MSGRXTST_CornerCase(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsgJump;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsgJump;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = false;
@@ -2947,11 +2947,11 @@ void eFSP_MSGRXTST_CornerCase(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 100u;
     initData.bINeedWaitFrameStart = false;
@@ -3027,7 +3027,7 @@ void eFSP_MSGRXTST_CornerCase2(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
     t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
     t_eFSP_MSGRX_RxCtx ctxAdapterRx;
     t_eFSP_MSGRX_TimCtx ctxAdapterTim;
@@ -3044,11 +3044,11 @@ void eFSP_MSGRXTST_CornerCase2(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsgJump;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsgJump;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 9u;
     initData.uITimePerRecMs = 9u;
     initData.bINeedWaitFrameStart = false;
@@ -3121,11 +3121,11 @@ void eFSP_MSGRXTST_CornerCase2(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsgJump;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsgJump;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 10u;
     initData.uITimePerRecMs = 10u;
     initData.bINeedWaitFrameStart = false;
@@ -3198,11 +3198,11 @@ void eFSP_MSGRXTST_CornerCase2(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsgJump;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsgJump;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 10u;
     initData.uITimePerRecMs = 10u;
     initData.bINeedWaitFrameStart = true;
@@ -3307,11 +3307,11 @@ void eFSP_MSGRXTST_CornerCase2(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsgCrrupt;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsgCrrupt;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 10u;
     initData.uITimePerRecMs = 10u;
     initData.bINeedWaitFrameStart = false;
@@ -3366,11 +3366,11 @@ void eFSP_MSGRXTST_CornerCase2(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemainingCorr;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemainingCorr;
     initData.uITimeoutMs = 10u;
     initData.uITimePerRecMs = 10u;
     initData.bINeedWaitFrameStart = false;
@@ -3445,7 +3445,7 @@ void eFSP_MSGRXTST_CornerCase3(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
     t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
     t_eFSP_MSGRX_RxCtx ctxAdapterRx;
     t_eFSP_MSGRX_TimCtx ctxAdapterTim;
@@ -3461,11 +3461,11 @@ void eFSP_MSGRXTST_CornerCase3(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsgJump;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsgJump;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 1000u;
     initData.bINeedWaitFrameStart = true;
@@ -3745,11 +3745,11 @@ void eFSP_MSGRXTST_CornerCase3(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsgJump;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsgJump;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 1000u;
     initData.uITimePerRecMs = 1000u;
     initData.bINeedWaitFrameStart = true;
@@ -3888,7 +3888,7 @@ void eFSP_MSGRXTST_CornerCase4(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
     t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
     t_eFSP_MSGRX_RxCtx ctxAdapterRx;
     t_eFSP_MSGRX_TimCtx ctxAdapterTim;
@@ -3902,11 +3902,11 @@ void eFSP_MSGRXTST_CornerCase4(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsgJump;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsgJump;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 8u;
     initData.uITimePerRecMs = 8u;
     initData.bINeedWaitFrameStart = true;
@@ -3997,11 +3997,11 @@ void eFSP_MSGRXTST_CornerCase4(void)
     initData.uIRxBuffAreaL = 1u;
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 25u;
     initData.uITimePerRecMs = 1u;
     initData.bINeedWaitFrameStart = true;
@@ -4167,7 +4167,7 @@ void eFSP_MSGRXTST_CornerCase5(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
     t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
     t_eFSP_MSGRX_RxCtx ctxAdapterRx;
     t_eFSP_MSGRX_TimCtx ctxAdapterTim;
@@ -4183,11 +4183,11 @@ void eFSP_MSGRXTST_CornerCase5(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsgJumpLong;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsgJumpLong;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 8u;
     initData.uITimePerRecMs = 8u;
     initData.bINeedWaitFrameStart = true;
@@ -4260,7 +4260,7 @@ void eFSP_MSGRXTST_CornerCase5(void)
         (void)printf("eFSP_MSGRXTST_CornerCase5 5  -- FAIL \n");
     }
 
-    ctx.fRx = &receiveMsg;
+    ctx.fRx = &eFSP_MSGRXTST_receiveMsg;
     if( e_eFSP_MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase5 6  -- OK \n");
@@ -4286,11 +4286,11 @@ void eFSP_MSGRXTST_CornerCase5(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsgJumpLong;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsgJumpLong;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 8u;
     initData.uITimePerRecMs = 8u;
     initData.bINeedWaitFrameStart = false;
@@ -4349,7 +4349,7 @@ void eFSP_MSGRXTST_CornerCase6(void)
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
     t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
     t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
     t_eFSP_MSGRX_RxCtx ctxAdapterRx;
     t_eFSP_MSGRX_TimCtx ctxAdapterTim;
@@ -4363,11 +4363,11 @@ void eFSP_MSGRXTST_CornerCase6(void)
     initData.uIRxBuffAreaL = sizeof(recBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &receiveMsg;
+    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
     initData.ptICbRxCtx = &ctxAdapterRx;
     initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &timStart;
-    initData.tIRxTim.fTimGetRemain = &timGetRemaining;
+    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
     initData.uITimeoutMs = 2000u;
     initData.uITimePerRecMs = 2000u;
     initData.bINeedWaitFrameStart = false;
