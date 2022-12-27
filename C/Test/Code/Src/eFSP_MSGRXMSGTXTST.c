@@ -39,19 +39,19 @@
 /***********************************************************************************************************************
  *   PRIVATE TEST FUNCTION DECLARATION
  **********************************************************************************************************************/
-static bool_t c32SAdaptRx(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
-static bool_t c32SAdaptTx(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
+static bool_t eFSP_MSGRXMSGTXTST_c32SAdaptRx(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
+static bool_t eFSP_MSGRXMSGTXTST_c32SAdaptTx(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
 
-static bool_t sendMsg( t_eFSP_MSGTX_TxCtx* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
+static bool_t eFSP_MSGRXMSGTXTST_sendMsg( t_eFSP_MSGTX_TxCtx* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
                        const uint32_t timeToSend );
 
-static bool_t receiveMsg( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
+static bool_t eFSP_MSGRXMSGTXTST_receiveMsg( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                        const uint32_t timeToRx );
 
-static bool_t timStart ( t_eFSP_MSGTX_TimCtx* cntx, const uint32_t timeoutVal );
-static bool_t timGetRemaining ( t_eFSP_MSGTX_TimCtx* cntx, uint32_t* const remainings );
-static bool_t timStartRx ( t_eFSP_MSGRX_TimCtx* cntx, const uint32_t timeoutVal );
-static bool_t timGetRemainingRx ( t_eFSP_MSGRX_TimCtx* cntx, uint32_t* const remainings );
+static bool_t eFSP_MSGRXMSGTXTST_timStart ( t_eFSP_MSGTX_TimCtx* cntx, const uint32_t timeoutVal );
+static bool_t eFSP_MSGRXMSGTXTST_timGetRemaining ( t_eFSP_MSGTX_TimCtx* cntx, uint32_t* const remainings );
+static bool_t eFSP_MSGRXMSGTXTST_timStartRx ( t_eFSP_MSGRX_TimCtx* cntx, const uint32_t timeoutVal );
+static bool_t eFSP_MSGRXMSGTXTST_timGetRemainingRx ( t_eFSP_MSGRX_TimCtx* cntx, uint32_t* const remainings );
 
 /***********************************************************************************************************************
  *   PRIVATE FUNCTION DECLARATION
@@ -117,7 +117,7 @@ static uint8_t m_BufferCom[1000u];
 static uint32_t m_BufferComCounterInsert;
 static uint32_t m_BufferComCounterRetrive;
 
-bool_t c32SAdaptRx(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
+bool_t eFSP_MSGRXMSGTXTST_c32SAdaptRx(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
 {
     bool_t result;
     t_eFSP_MSGD_CrcCtx* ctxCur;
@@ -144,7 +144,7 @@ bool_t c32SAdaptRx(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s, const uint8_t* d,
     return result;
 }
 
-bool_t c32SAdaptTx(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
+bool_t eFSP_MSGRXMSGTXTST_c32SAdaptTx(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
 {
     bool_t result;
     t_eFSP_MSGE_CrcCtx* ctxCur;
@@ -171,7 +171,7 @@ bool_t c32SAdaptTx(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d,
     return result;
 }
 
-bool_t sendMsg( t_eFSP_MSGTX_TxCtx* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
+bool_t eFSP_MSGRXMSGTXTST_sendMsg( t_eFSP_MSGTX_TxCtx* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
                 const uint32_t timeToSend )
 {
     bool_t result;
@@ -206,7 +206,7 @@ bool_t sendMsg( t_eFSP_MSGTX_TxCtx* cntx, const uint8_t* dataToSend, const uint3
 }
 
 
-bool_t receiveMsg( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
+bool_t eFSP_MSGRXMSGTXTST_receiveMsg( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                 const uint32_t timeToRx )
 {
     bool_t result;
@@ -255,7 +255,7 @@ bool_t receiveMsg( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const 
     return result;
 }
 
-bool_t timStart ( t_eFSP_MSGTX_TimCtx* cntx, const uint32_t timeoutVal )
+bool_t eFSP_MSGRXMSGTXTST_timStart ( t_eFSP_MSGTX_TimCtx* cntx, const uint32_t timeoutVal )
 {
     bool_t result;
     t_eFSP_MSGTX_TimCtx* ctxCur;
@@ -277,7 +277,7 @@ bool_t timStart ( t_eFSP_MSGTX_TimCtx* cntx, const uint32_t timeoutVal )
     return result;
 }
 
-bool_t timGetRemaining ( t_eFSP_MSGTX_TimCtx* cntx, uint32_t* const remainings )
+bool_t eFSP_MSGRXMSGTXTST_timGetRemaining ( t_eFSP_MSGTX_TimCtx* cntx, uint32_t* const remainings )
 {
     bool_t result;
     t_eFSP_MSGTX_TimCtx* ctxCur;
@@ -309,7 +309,7 @@ bool_t timGetRemaining ( t_eFSP_MSGTX_TimCtx* cntx, uint32_t* const remainings )
 }
 
 
-bool_t timStartRx ( t_eFSP_MSGRX_TimCtx* cntx, const uint32_t timeoutVal )
+bool_t eFSP_MSGRXMSGTXTST_timStartRx ( t_eFSP_MSGRX_TimCtx* cntx, const uint32_t timeoutVal )
 {
     bool_t result;
     t_eFSP_MSGTX_TimCtx* ctxCur;
@@ -331,7 +331,7 @@ bool_t timStartRx ( t_eFSP_MSGRX_TimCtx* cntx, const uint32_t timeoutVal )
     return result;
 }
 
-bool_t timGetRemainingRx ( t_eFSP_MSGRX_TimCtx* cntx, uint32_t* const remainings )
+bool_t eFSP_MSGRXMSGTXTST_timGetRemainingRx ( t_eFSP_MSGRX_TimCtx* cntx, uint32_t* const remainings )
 {
     bool_t result;
     t_eFSP_MSGTX_TimCtx* ctxCur;
@@ -404,13 +404,13 @@ void eFSP_MSGRXMSGTXTST_Common(void)
     initDataTx.uIMemAreaL = sizeof(memAreaTx);
     initDataTx.puITxBuffArea = sendBuff;
     initDataTx.uITxBuffAreaL = sizeof(sendBuff);
-    initDataTx.fICrc = &c32SAdaptTx;
+    initDataTx.fICrc = &eFSP_MSGRXMSGTXTST_c32SAdaptTx;
     initDataTx.ptICbCrcCtx = &ctxAdapterCrcTx;
-    initDataTx.fITx = &sendMsg;
+    initDataTx.fITx = &eFSP_MSGRXMSGTXTST_sendMsg;
     initDataTx.ptICbTxCtx = &ctxAdapterSend;
     initDataTx.tITxTim.ptTimCtx = &ctxAdapterTimTx;
-    initDataTx.tITxTim.fTimStart = &timStart;
-    initDataTx.tITxTim.fTimGetRemain = &timGetRemaining;
+    initDataTx.tITxTim.fTimStart = &eFSP_MSGRXMSGTXTST_timStart;
+    initDataTx.tITxTim.fTimGetRemain = &eFSP_MSGRXMSGTXTST_timGetRemaining;
     initDataTx.uITimeoutMs = 1000u;
     initDataTx.uITimePerSendMs = 100u;
 
@@ -427,13 +427,13 @@ void eFSP_MSGRXMSGTXTST_Common(void)
     initDataRX.uIMemAreaL = sizeof(memAreaRX);
     initDataRX.puIRxBuffArea = recBuff;
     initDataRX.uIRxBuffAreaL = sizeof(recBuff);
-    initDataRX.fICrc = &c32SAdaptRx;
+    initDataRX.fICrc = &eFSP_MSGRXMSGTXTST_c32SAdaptRx;
     initDataRX.ptICbCrcCtx = &ctxAdapterCrcRX;
-    initDataRX.fIRx = &receiveMsg;
+    initDataRX.fIRx = &eFSP_MSGRXMSGTXTST_receiveMsg;
     initDataRX.ptICbRxCtx = &ctxAdapterRx;
     initDataRX.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initDataRX.tIRxTim.fTimStart = &timStartRx;
-    initDataRX.tIRxTim.fTimGetRemain = &timGetRemainingRx;
+    initDataRX.tIRxTim.fTimStart = &eFSP_MSGRXMSGTXTST_timStartRx;
+    initDataRX.tIRxTim.fTimGetRemain = &eFSP_MSGRXMSGTXTST_timGetRemainingRx;
     initDataRX.uITimeoutMs = 1000u;
     initDataRX.uITimePerRecMs = 100u;
     initDataRX.bINeedWaitFrameStart = true;
