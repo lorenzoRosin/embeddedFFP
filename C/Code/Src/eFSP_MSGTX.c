@@ -41,17 +41,17 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_InitCtx(t_eFSP_MSGTX_Ctx* const p_ptCtx, const t_eFS
 	{
         /* Check pointer validity */
         if( ( NULL == p_ptInitData->puIMemArea ) || ( NULL == p_ptInitData->puITxBuffArea ) ||
-            ( NULL == p_ptInitData->fICrc ) || ( NULL == p_ptInitData->ptICbCrcCtx ) || ( NULL == p_ptInitData->f_i_Tx ) ||
-            ( NULL == p_ptInitData->p_i_cbTxCtx ) || ( NULL == p_ptInitData->i_txTim.ptTimCtx ) ||
-            ( NULL == p_ptInitData->i_txTim.fTimStart ) || ( NULL == p_ptInitData->i_txTim.fTimGetRemain ) )
+            ( NULL == p_ptInitData->fICrc ) || ( NULL == p_ptInitData->ptICbCrcCtx ) || ( NULL == p_ptInitData->fITx ) ||
+            ( NULL == p_ptInitData->ptICbTxCtx ) || ( NULL == p_ptInitData->tITxTim.ptTimCtx ) ||
+            ( NULL == p_ptInitData->tITxTim.fTimStart ) || ( NULL == p_ptInitData->tITxTim.fTimGetRemain ) )
         {
             l_eRes = e_eFSP_MSGTX_RES_BADPOINTER;
         }
         else
         {
             /* Check data validity, we need some len to store the data */
-            if( ( p_ptInitData->i_txBuffAreaSize < 1u ) || ( p_ptInitData->uITimeoutMs < 1u ) ||
-                ( p_ptInitData->i_timePerSendMs < 1u ) || ( p_ptInitData->i_timePerSendMs > p_ptInitData->uITimeoutMs ) )
+            if( ( p_ptInitData->uITxBuffAreaL < 1u ) || ( p_ptInitData->uITimeoutMs < 1u ) ||
+                ( p_ptInitData->uITimePerSendMs < 1u ) || ( p_ptInitData->uITimePerSendMs > p_ptInitData->uITimeoutMs ) )
             {
                 l_eRes = e_eFSP_MSGTX_RES_BADPARAM;
             }
@@ -59,14 +59,14 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_InitCtx(t_eFSP_MSGTX_Ctx* const p_ptCtx, const t_eFS
             {
                 /* Initialize internal status variable */
                 p_ptCtx->p_rxBuff = p_ptInitData->puITxBuffArea;
-                p_ptCtx->txBuffSize = p_ptInitData->i_txBuffAreaSize;
+                p_ptCtx->txBuffSize = p_ptInitData->uITxBuffAreaL;
                 p_ptCtx->txBuffCntr = 0u;
                 p_ptCtx->txBuffFill = 0u;
-                p_ptCtx->f_Tx = p_ptInitData->f_i_Tx;
-                p_ptCtx->p_TxCtx = p_ptInitData->p_i_cbTxCtx;
-                p_ptCtx->txTim =  p_ptInitData->i_txTim;
+                p_ptCtx->f_Tx = p_ptInitData->fITx;
+                p_ptCtx->p_TxCtx = p_ptInitData->ptICbTxCtx;
+                p_ptCtx->txTim =  p_ptInitData->tITxTim;
                 p_ptCtx->timeoutMs = p_ptInitData->uITimeoutMs;
-                p_ptCtx->timePerSendMs = p_ptInitData->i_timePerSendMs;
+                p_ptCtx->timePerSendMs = p_ptInitData->uITimePerSendMs;
 
                 /* initialize internal message encoder */
                 l_eResMsgE =  eFSP_MSGE_InitCtx(&p_ptCtx->msge_Ctx, p_ptInitData->puIMemArea, p_ptInitData->uIMemAreaL,

@@ -477,16 +477,16 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     initData.puIMemArea = NULL;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
     if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgTransmitterBadPointer 3  -- OK \n");
@@ -500,16 +500,16 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = NULL;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
     if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgTransmitterBadPointer 4  -- OK \n");
@@ -523,16 +523,16 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = NULL;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
     if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgTransmitterBadPointer 5  -- OK \n");
@@ -546,16 +546,16 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = NULL;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
     if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgTransmitterBadPointer 6  -- OK \n");
@@ -569,16 +569,16 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = NULL;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = NULL;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
     if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgTransmitterBadPointer 7  -- OK \n");
@@ -592,16 +592,16 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = NULL;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = NULL;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
     if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgTransmitterBadPointer 8  -- OK \n");
@@ -615,16 +615,16 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = NULL;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = NULL;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
     if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgTransmitterBadPointer 9  -- OK \n");
@@ -638,16 +638,16 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = NULL;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = NULL;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
     if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgTransmitterBadPointer 10 -- OK \n");
@@ -661,16 +661,16 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = NULL;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = NULL;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
     if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgTransmitterBadPointer 11 -- OK \n");
@@ -684,16 +684,16 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = NULL;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
     if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgTransmitterBadPointer 12 -- OK \n");
@@ -707,16 +707,16 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = NULL;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
     if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgTransmitterBadPointer 13 -- OK \n");
@@ -730,16 +730,16 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     initData.puIMemArea = NULL;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
     if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgTransmitterBadPointer 14 -- OK \n");
@@ -939,16 +939,16 @@ void eFSP_TEST_msgTransmitterBadIniMsg(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
     if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgTransmitterBadIniMsg 1  -- OK \n");
@@ -1015,16 +1015,16 @@ void eFSP_TEST_msgTransmitterBadParamEntr(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = 0u;
+    initData.uITxBuffAreaL = 0u;
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
     if( e_eFSP_MSGTX_RES_BADPARAM == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgTransmitterBadParamEntr 1  -- OK \n");
@@ -1038,16 +1038,16 @@ void eFSP_TEST_msgTransmitterBadParamEntr(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 0u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
     if( e_eFSP_MSGTX_RES_BADPARAM == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgTransmitterBadParamEntr 2  -- OK \n");
@@ -1061,16 +1061,16 @@ void eFSP_TEST_msgTransmitterBadParamEntr(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 0u;
+    initData.uITimePerSendMs = 0u;
     if( e_eFSP_MSGTX_RES_BADPARAM == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgTransmitterBadParamEntr 3  -- OK \n");
@@ -1084,16 +1084,16 @@ void eFSP_TEST_msgTransmitterBadParamEntr(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 100u;
-    initData.i_timePerSendMs = 1000u;
+    initData.uITimePerSendMs = 1000u;
     if( e_eFSP_MSGTX_RES_BADPARAM == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgTransmitterBadParamEntr 4  -- OK \n");
@@ -1107,16 +1107,16 @@ void eFSP_TEST_msgTransmitterBadParamEntr(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = 0u;
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
     if( e_eFSP_MSGTX_RES_BADPARAM == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgTransmitterBadParamEntr 5  -- OK \n");
@@ -1130,16 +1130,16 @@ void eFSP_TEST_msgTransmitterBadParamEntr(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
     if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgTransmitterBadParamEntr 6  -- OK \n");
@@ -1182,16 +1182,16 @@ void eFSP_TEST_msgTransmitterCorruptContext(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
     if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgTransmitterCorruptContext 1  -- OK \n");
@@ -1602,16 +1602,16 @@ void eFSP_TEST_msgTransmitterBadClBckCrc(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
     if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
         (void)printf("eFSP_TEST_msgTransmitterBadClBckCrc 1  -- OK \n");
@@ -1661,16 +1661,16 @@ void eFSP_TEST_msgTransmitterBadClBckSend(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsgErr;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsgErr;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
 
     if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
@@ -1742,16 +1742,16 @@ void eFSP_TEST_msgTransmitterBadClBckTim(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStartErr;
-    initData.i_txTim.fTimGetRemain = &timGetRemainingErr;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStartErr;
+    initData.tITxTim.fTimGetRemain = &timGetRemainingErr;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
 
     if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
@@ -1808,16 +1808,16 @@ void eFSP_TEST_msgTransmitterBadClBckTim(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemainingErr;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemainingErr;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
 
     if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
@@ -1894,16 +1894,16 @@ void eFSP_TEST_msgTransmitterCornerCase(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
 
     if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
@@ -2005,16 +2005,16 @@ void eFSP_TEST_msgTransmitterCornerCase(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = 1u;
+    initData.uITxBuffAreaL = 1u;
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
 
     if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
@@ -2081,16 +2081,16 @@ void eFSP_TEST_msgTransmitterCornerCase(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = 1u;
+    initData.uITxBuffAreaL = 1u;
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 1u;
+    initData.uITimePerSendMs = 1u;
 
     if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
@@ -2298,16 +2298,16 @@ void eFSP_TEST_msgTransmitterCornerCase2(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = 5u;
+    initData.uITxBuffAreaL = 5u;
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsgOnce;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsgOnce;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 3u;
-    initData.i_timePerSendMs = 3u;
+    initData.uITimePerSendMs = 3u;
 
     if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
@@ -2362,16 +2362,16 @@ void eFSP_TEST_msgTransmitterCornerCase2(void)
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = 3u;
+    initData.uITxBuffAreaL = 3u;
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsgOnce;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsgOnce;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 12u;
-    initData.i_timePerSendMs = 5u;
+    initData.uITimePerSendMs = 5u;
 
     if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
@@ -2498,16 +2498,16 @@ void eFSP_TEST_msgTransmitterCornerCase3()
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsgCorr;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemaining;
+    initData.fITx = &sendMsgCorr;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemaining;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
 
     if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {
@@ -2564,16 +2564,16 @@ void eFSP_TEST_msgTransmitterCornerCase3()
     initData.puIMemArea = memArea;
     initData.uIMemAreaL = sizeof(memArea);
     initData.puITxBuffArea = sendBuff;
-    initData.i_txBuffAreaSize = sizeof(sendBuff);
+    initData.uITxBuffAreaL = sizeof(sendBuff);
     initData.fICrc = cbCrcPTest;
     initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.f_i_Tx = &sendMsg;
-    initData.p_i_cbTxCtx = &ctxAdapterSend;
-    initData.i_txTim.ptTimCtx = &ctxAdapterTim;
-    initData.i_txTim.fTimStart = &timStart;
-    initData.i_txTim.fTimGetRemain = &timGetRemainingCorr;
+    initData.fITx = &sendMsg;
+    initData.ptICbTxCtx = &ctxAdapterSend;
+    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
+    initData.tITxTim.fTimStart = &timStart;
+    initData.tITxTim.fTimGetRemain = &timGetRemainingCorr;
     initData.uITimeoutMs = 1000u;
-    initData.i_timePerSendMs = 100u;
+    initData.uITimePerSendMs = 100u;
 
     if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
     {

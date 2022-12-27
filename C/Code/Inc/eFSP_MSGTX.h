@@ -69,16 +69,16 @@ typedef enum
 
 typedef struct
 {
-    t_eFSP_MSGE_Ctx msge_Ctx;
-	uint8_t*        p_rxBuff;
-	uint32_t        txBuffSize;
-	uint32_t        txBuffCntr;
-    uint32_t        txBuffFill;
-    f_eFSP_MSGTX_TxCb      f_Tx;
-    t_eFSP_MSGTX_TxCtx*           p_TxCtx;
-    t_eFSP_MSGTX_Timer  txTim;
-    uint32_t        timeoutMs;
-    uint32_t        timePerSendMs;
+    t_eFSP_MSGE_Ctx      msge_Ctx;
+	uint8_t*             p_rxBuff;
+	uint32_t             txBuffSize;
+	uint32_t             txBuffCntr;
+    uint32_t             txBuffFill;
+    f_eFSP_MSGTX_TxCb    f_Tx;
+    t_eFSP_MSGTX_TxCtx*  p_TxCtx;
+    t_eFSP_MSGTX_Timer   txTim;
+    uint32_t             timeoutMs;
+    uint32_t             timePerSendMs;
 }t_eFSP_MSGTX_Ctx;
 
 typedef struct
@@ -86,14 +86,14 @@ typedef struct
     uint8_t*            puIMemArea;
     uint32_t            uIMemAreaL;
     uint8_t*            puITxBuffArea;
-    uint32_t            i_txBuffAreaSize;
+    uint32_t            uITxBuffAreaL;
     f_eFSP_MSGE_CrcCb   fICrc;
     t_eFSP_MSGE_CrcCtx* ptICbCrcCtx;
-    f_eFSP_MSGTX_TxCb   f_i_Tx;
-    t_eFSP_MSGTX_TxCtx* p_i_cbTxCtx;
-    t_eFSP_MSGTX_Timer  i_txTim;
+    f_eFSP_MSGTX_TxCb   fITx;
+    t_eFSP_MSGTX_TxCtx* ptICbTxCtx;
+    t_eFSP_MSGTX_Timer  tITxTim;
     uint32_t            uITimeoutMs;
-    uint32_t            i_timePerSendMs;
+    uint32_t            uITimePerSendMs;
 }t_eFSP_MSGTX_InitData;
 
 
@@ -175,7 +175,7 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_RestartMessage(t_eFSP_MSGTX_Ctx* const p_ptCtx);
  * @brief       Send encoded data chunk. The raw data copied in the buffer by using the function
  *              MSGTX_GetPayloadLocation will be encoded (header and byte stuffing) and sended by this function.
  *              The whole message can be sended calling multiple times this function. Eache time this function will
- *              try to send all the data that can be send in "i_timePerSendMs". The whole frame instead can be sended
+ *              try to send all the data that can be send in "uITimePerSendMs". The whole frame instead can be sended
  *              in "uITimeoutMs" milliseconds. This function can return different status, but if we keep call
  *              this function even after uITimeoutMs it will start returning only e_eFSP_MSGTX_RES_MESSAGETIMEOUT.
  *
@@ -193,7 +193,7 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_RestartMessage(t_eFSP_MSGTX_Ctx* const p_ptCtx);
  *              e_eFSP_MSGTX_RES_TXCLBKERROR    - Some error reported by the user send function. Restart to continue.
  *              e_eFSP_MSGTX_RES_TIMCLBKERROR   - The timer function returned an error
  *              e_eFSP_MSGTX_RES_OK             - Operation ended correctly, message is not fully sended. This happnes
- *                                         when the whole message wasn't sended in "i_timePerSendMs" millisecond, but
+ *                                         when the whole message wasn't sended in "uITimePerSendMs" millisecond, but
  *                                         the "uITimeoutMs" timeout is still not reached. Call this function again
  *                                         to send another chunk of data.
  */

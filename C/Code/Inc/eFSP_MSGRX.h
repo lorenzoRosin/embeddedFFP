@@ -71,17 +71,17 @@ typedef enum
 
 typedef struct
 {
-    t_eFSP_MSGD_Ctx msgd_Ctx;
-	uint8_t*        p_rxBuff;
-	uint32_t        rxBuffSize;
-	uint32_t        rxBuffCntr;
-    uint32_t        rxBuffFill;
-    f_eFSP_MSGRX_RxCb      f_Rx;
-    t_eFSP_MSGRX_RxCtx*           p_RxCtx;
-    t_eFSP_MSGRX_Timer  rxTim;
-    uint32_t        timeoutMs;
-    uint32_t        timePerRecMs;
-    bool_t          needWaitFrameStart;
+    t_eFSP_MSGD_Ctx      msgd_Ctx;
+	uint8_t*             p_rxBuff;
+	uint32_t             rxBuffSize;
+	uint32_t             rxBuffCntr;
+    uint32_t             rxBuffFill;
+    f_eFSP_MSGRX_RxCb    f_Rx;
+    t_eFSP_MSGRX_RxCtx*  p_RxCtx;
+    t_eFSP_MSGRX_Timer   rxTim;
+    uint32_t             timeoutMs;
+    uint32_t             timePerRecMs;
+    bool_t               needWaitFrameStart;
 }t_eFSP_MSGRX_Ctx;
 
 typedef struct

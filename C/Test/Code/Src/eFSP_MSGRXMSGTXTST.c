@@ -401,16 +401,16 @@ void eFSP_TEST_msgRxTransmitterCommon(void)
     initDataTx.puIMemArea = memAreaTx;
     initDataTx.uIMemAreaL = sizeof(memAreaTx);
     initDataTx.puITxBuffArea = sendBuff;
-    initDataTx.i_txBuffAreaSize = sizeof(sendBuff);
+    initDataTx.uITxBuffAreaL = sizeof(sendBuff);
     initDataTx.fICrc = &c32SAdaptTx;
     initDataTx.ptICbCrcCtx = &ctxAdapterCrcTx;
-    initDataTx.f_i_Tx = &sendMsg;
-    initDataTx.p_i_cbTxCtx = &ctxAdapterSend;
-    initDataTx.i_txTim.ptTimCtx = &ctxAdapterTimTx;
-    initDataTx.i_txTim.fTimStart = &timStart;
-    initDataTx.i_txTim.fTimGetRemain = &timGetRemaining;
+    initDataTx.fITx = &sendMsg;
+    initDataTx.ptICbTxCtx = &ctxAdapterSend;
+    initDataTx.tITxTim.ptTimCtx = &ctxAdapterTimTx;
+    initDataTx.tITxTim.fTimStart = &timStart;
+    initDataTx.tITxTim.fTimGetRemain = &timGetRemaining;
     initDataTx.uITimeoutMs = 1000u;
-    initDataTx.i_timePerSendMs = 100u;
+    initDataTx.uITimePerSendMs = 100u;
 
     if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctxTx, &initDataTx) )
     {
