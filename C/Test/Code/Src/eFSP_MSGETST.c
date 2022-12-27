@@ -39,8 +39,8 @@ struct t_eFSP_MSGE_CrcCtxUser
     e_eCU_CRC_RES lastError;
 };
 
-static bool_t c32SAdapt(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
-static bool_t c32SAdaptEr(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
+static bool_t eFSP_MSGETST_c32SAdapt(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
+static bool_t eFSP_MSGETST_c32SAdaptEr(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
 
 
 
@@ -84,7 +84,7 @@ void eFSP_MSGETST_ExeTest(void)
 /***********************************************************************************************************************
  *   PRIVATE TEST FUNCTION DECLARATION
  **********************************************************************************************************************/
-bool_t c32SAdapt(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
+bool_t eFSP_MSGETST_c32SAdapt(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
 {
     bool_t result;
     t_eFSP_MSGE_CrcCtx* ctxCur;
@@ -111,7 +111,7 @@ bool_t c32SAdapt(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, c
     return result;
 }
 
-bool_t c32SAdaptEr(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
+bool_t eFSP_MSGETST_c32SAdaptEr(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
 {
     bool_t result;
     t_eFSP_MSGE_CrcCtx* ctxCur;
@@ -146,7 +146,7 @@ void eFSP_MSGETST_BadPointer(void)
     /* Local variable */
     t_eFSP_MSGE_Ctx ctx;
     uint8_t  memArea[5u];
-    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGETST_c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
     uint32_t var32;
     uint8_t* dataP;
@@ -319,7 +319,7 @@ void eFSP_MSGETST_BadInit(void)
     uint32_t var32;
     uint8_t* dataP;
     bool_t isInit;
-    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGETST_c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
 
     /* Set value */
@@ -399,7 +399,7 @@ void eFSP_MSGETST_BadInitMsg(void)
     /* Local variable */
     t_eFSP_MSGE_Ctx ctx;
     uint8_t  memArea[10u];
-    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGETST_c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
     uint32_t var32;
     bool_t isInit;
@@ -466,7 +466,7 @@ void eFSP_MSGETST_BadParamEntr(void)
     /* Local variable */
     t_eFSP_MSGE_Ctx ctx;
     uint8_t  memArea[10u];
-    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGETST_c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
     uint32_t var32;
 
@@ -543,7 +543,7 @@ void eFSP_MSGETST_CorruptContext(void)
     /* Local variable */
     t_eFSP_MSGE_Ctx ctx;
     uint8_t  memArea[10u];
-    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGETST_c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
     uint32_t var32;
     uint8_t* dataP;
@@ -804,7 +804,7 @@ void eFSP_MSGETST_BadClBck(void)
     /* Local variable */
     t_eFSP_MSGE_Ctx ctx;
     uint8_t  memArea[10u];
-    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdaptEr;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGETST_c32SAdaptEr;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
 
     /* Set value */
@@ -843,7 +843,7 @@ void eFSP_MSGETST_MsgEnd(void)
     t_eFSP_MSGE_Ctx ctx;
     uint8_t  memArea[12u] = {0u};
     uint8_t  msgA[24u] = {0u};
-    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGETST_c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
     uint32_t var32;
     uint8_t* dataP;
@@ -936,7 +936,7 @@ void eFSP_MSGETST_General(void)
     t_eFSP_MSGE_Ctx ctx;
     uint8_t  memArea[12u] = {0u};
     uint8_t  msgA[24u] = {0u};
-    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGETST_c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
     uint32_t var32;
     uint8_t* dataP;
@@ -1215,7 +1215,7 @@ void eFSP_MSGETST_General2(void)
     t_eFSP_MSGE_Ctx ctx;
     uint8_t  memArea[12u] = {0u};
     uint8_t  msgA[24u] = {0u};
-    f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
+    f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGETST_c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
     uint32_t var32;
     uint8_t* dataP;
