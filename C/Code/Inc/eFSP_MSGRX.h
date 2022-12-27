@@ -109,13 +109,13 @@ typedef struct
  * @brief       Initialize the message receiver context
  *
  * @param[in]   p_ptCtx         - Msg receiver context
- * @param[in]   p_initData    - Init data
+ * @param[in]   p_ptInitData    - Init data
  *
  * @return      e_eFSP_MSGRX_RES_BADPOINTER     - In case of bad pointer passed to the function
  *		        e_eFSP_MSGRX_RES_BADPARAM       - In case of an invalid parameter passed to the function
  *              e_eFSP_MSGRX_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGRX_RES eFSP_MSGRX_InitCtx(t_eFSP_MSGRX_Ctx* const p_ptCtx, const t_eFSP_MSGRX_InitData* p_initData);
+e_eFSP_MSGRX_RES eFSP_MSGRX_InitCtx(t_eFSP_MSGRX_Ctx* const p_ptCtx, const t_eFSP_MSGRX_InitData* p_ptInitData);
 
 /**
  * @brief       Check if the lib is initialized
@@ -162,11 +162,11 @@ e_eFSP_MSGRX_RES eFSP_MSGRX_NewMsgNClean(t_eFSP_MSGRX_Ctx* const p_ptCtx);
 /**
  * @brief       Retrive the pointer to the stored decoded data payload ( NO HEADER ), and the data size of the frame.
  *              Keep in mind that the message parsing could be ongoing, and if an error in the frame occour the
- *              p_GetLen could be setted to 0 again. We will retrive only payload size and no CRC + LEN header
+ *              p_puGetL could be setted to 0 again. We will retrive only payload size and no CRC + LEN header
  *
  * @param[in]   p_ptCtx         - Msg receiver context
- * @param[out]  pp_data       - Pointer to a Pointer pointing to the decoded data payload ( NO CRC NO DATA SIZE )
- * @param[out]  p_GetLen      - Pointer to a uint32_t variable where the size of the decoded data will be placed ( raw
+ * @param[out]  p_ppuData       - Pointer to a Pointer pointing to the decoded data payload ( NO CRC NO DATA SIZE )
+ * @param[out]  p_puGetL      - Pointer to a uint32_t variable where the size of the decoded data will be placed ( raw
  *                              paylod data len )
  *
  * @return      e_eFSP_MSGRX_RES_BADPOINTER   	- In case of bad pointer passed to the function
@@ -174,7 +174,7 @@ e_eFSP_MSGRX_RES eFSP_MSGRX_NewMsgNClean(t_eFSP_MSGRX_Ctx* const p_ptCtx);
  *		        e_eFSP_MSGRX_RES_CORRUPTCTX   	- In case of an corrupted context
  *              e_eFSP_MSGRX_RES_OK           	- Operation ended correctly
  */
-e_eFSP_MSGRX_RES eFSP_MSGRX_GetDecodedData(t_eFSP_MSGRX_Ctx* const p_ptCtx, uint8_t** pp_data, uint32_t* const p_GetLen);
+e_eFSP_MSGRX_RES eFSP_MSGRX_GetDecodedData(t_eFSP_MSGRX_Ctx* const p_ptCtx, uint8_t** p_ppuData, uint32_t* const p_puGetL);
 
 /**
  * @brief       Receive encoded chunk that the alg will decode byte per byte.
@@ -224,6 +224,9 @@ e_eFSP_MSGRX_RES eFSP_MSGRX_GetDecodedData(t_eFSP_MSGRX_Ctx* const p_ptCtx, uint
  *                                        reached, but uITimeoutMs is not elapsed.
  */
 e_eFSP_MSGRX_RES eFSP_MSGRX_ReceiveChunk(t_eFSP_MSGRX_Ctx* const p_ptCtx);
+
+
+
 #ifdef __cplusplus
 } /* extern "C" */
 #endif

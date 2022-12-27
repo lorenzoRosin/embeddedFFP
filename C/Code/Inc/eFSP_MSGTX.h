@@ -105,13 +105,13 @@ typedef struct
  * @brief       Initialize the message transmitter context
  *
  * @param[in]   p_ptCtx         - Message transmitter context
- * @param[in]   p_initData    - Init data
+ * @param[in]   p_ptInitData    - Init data
  *
  * @return      e_eFSP_MSGTX_RES_BADPOINTER   - In case of bad pointer passed to the function
  *		        e_eFSP_MSGTX_RES_BADPARAM     - In case of an invalid parameter passed to the function
  *              e_eFSP_MSGTX_RES_OK           - Operation ended correctly
  */
-e_eFSP_MSGTX_RES eFSP_MSGTX_InitCtx(t_eFSP_MSGTX_Ctx* const p_ptCtx, const t_eFSP_MSGTX_InitData* p_initData);
+e_eFSP_MSGTX_RES eFSP_MSGTX_InitCtx(t_eFSP_MSGTX_Ctx* const p_ptCtx, const t_eFSP_MSGTX_InitData* p_ptInitData);
 
 /**
  * @brief       Check if the lib is initialized
@@ -128,16 +128,16 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_IsInit(t_eFSP_MSGTX_Ctx* const p_ptCtx, bool_t* p_pb
  * @brief       Retrive the pointer of the buffer that the user can use to insert data payload that need to be encoded
  *
  * @param[in]   p_ptCtx         - Message Transmitter context
- * @param[out]  pp_data       - Pointer to a Pointer where the raw data needs to be copied before starting a message
- * @param[out]  p_maxDL       - Pointer to a uint32_t variable where the max number of data that can be copied in
- *                              pp_data will be placed
+ * @param[out]  p_ppuData       - Pointer to a Pointer where the raw data needs to be copied before starting a message
+ * @param[out]  p_puMaxDL       - Pointer to a uint32_t variable where the max number of data that can be copied in
+ *                              p_ppuData will be placed
  *
  * @return      e_eFSP_MSGTX_RES_BADPOINTER     - In case of bad pointer passed to the function
  *		        e_eFSP_MSGTX_RES_NOINITLIB      - Need to init the data encoder context before taking some action
  *		        e_eFSP_MSGTX_RES_CORRUPTCTX     - In case of an corrupted context
  *              e_eFSP_MSGTX_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGTX_RES eFSP_MSGTX_GetWherePutData(t_eFSP_MSGTX_Ctx* const p_ptCtx, uint8_t** pp_data, uint32_t* const p_maxDL);
+e_eFSP_MSGTX_RES eFSP_MSGTX_GetWherePutData(t_eFSP_MSGTX_Ctx* const p_ptCtx, uint8_t** p_ppuData, uint32_t* const p_puMaxDL);
 
 /**
  * @brief       Start to encode a new msg given the dimension of raw payload it self. This function suppouse that
@@ -145,7 +145,7 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_GetWherePutData(t_eFSP_MSGTX_Ctx* const p_ptCtx, uin
  *              in order to know how get the data pointer, and copy the data )
  *
  * @param[in]   p_ptCtx         - Message Transmitter context
- * @param[in]   messageLen    - lenght of the raw payload present in the frame that we need to encode ( no header )
+ * @param[in]   p_uMsgL    - lenght of the raw payload present in the frame that we need to encode ( no header )
  *
  * @return      e_eFSP_MSGTX_RES_BADPOINTER     - In case of bad pointer passed to the function
  *		        e_eFSP_MSGTX_RES_BADPARAM       - In case of an invalid parameter passed to the function
@@ -155,7 +155,7 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_GetWherePutData(t_eFSP_MSGTX_Ctx* const p_ptCtx, uin
  *              e_eFSP_MSGTX_RES_TIMCLBKERROR   - The timer function returned an error
  *              e_eFSP_MSGTX_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGTX_RES eFSP_MSGTX_NewMessage(t_eFSP_MSGTX_Ctx* const p_ptCtx, const uint32_t messageLen);
+e_eFSP_MSGTX_RES eFSP_MSGTX_NewMessage(t_eFSP_MSGTX_Ctx* const p_ptCtx, const uint32_t p_uMsgL);
 
 /**
  * @brief       Restart to encode and send the already passed payload/the current frame
