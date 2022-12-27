@@ -39,7 +39,7 @@ typedef struct t_eFSP_MSGRX_TimCtxUser t_eFSP_MSGRX_TimCtx;
  * the p_ptCtx parameter is a custom pointer that can be used by the creator of this TX callback, and will not be used
  * by the MSG RECEIVER module */
 typedef bool_t (*f_eFSP_MSGRX_RxCb) ( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puDataRx, uint32_t* const p_puDataRxL,
-                               const uint32_t p_uCaxDataRxL, const uint32_t p_uTimeRx);
+                                      const uint32_t p_uCaxDataRxL, const uint32_t p_uTimeRx);
 
 /* Call backs to functions that act as a timer */
 typedef bool_t (*f_eFSP_MSGRX_TimStart) ( t_eFSP_MSGRX_TimCtx* p_ptCtx, const uint32_t p_uTimeout );
@@ -47,7 +47,7 @@ typedef bool_t (*f_eFSP_MSGRX_TimGetRemaing) ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uin
 
 typedef struct
 {
-    t_eFSP_MSGRX_TimCtx*                       ptTimCtx;
+    t_eFSP_MSGRX_TimCtx*        ptTimCtx;
     f_eFSP_MSGRX_TimStart       fTimStart;
     f_eFSP_MSGRX_TimGetRemaing  fTimGetRemain;
 }t_eFSP_MSGRX_Timer;

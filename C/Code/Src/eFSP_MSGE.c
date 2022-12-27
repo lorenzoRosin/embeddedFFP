@@ -30,20 +30,20 @@ e_eFSP_MSGE_RES eFSP_MSGE_InitCtx(t_eFSP_MSGE_Ctx* const p_ptCtx, uint8_t* p_mem
 								  f_eFSP_MSGE_CrcCb f_Crc, t_eFSP_MSGE_CrcCtx* const p_clbCtx)
 {
 	/* Local variable */
-	e_eFSP_MSGE_RES l_result;
+	e_eFSP_MSGE_RES l_eRes;
 	e_eCU_BSTF_RES l_resultByStuff;
 
 	/* Check pointer validity */
 	if( ( NULL == p_ptCtx ) || ( NULL == p_memArea ) || ( NULL == f_Crc ) || ( NULL == p_clbCtx ) )
 	{
-		l_result = e_eFSP_MSGE_RES_BADPOINTER;
+		l_eRes = e_eFSP_MSGE_RES_BADPOINTER;
 	}
 	else
 	{
         /* Check data validity, we need some len to store the data */
         if( memAreaSize < EFSP_MIN_MSGEN_BUFFLEN )
         {
-            l_result = e_eFSP_MSGE_RES_BADPARAM;
+            l_eRes = e_eFSP_MSGE_RES_BADPARAM;
         }
         else
         {
@@ -53,37 +53,37 @@ e_eFSP_MSGE_RES eFSP_MSGE_InitCtx(t_eFSP_MSGE_Ctx* const p_ptCtx, uint8_t* p_mem
 
 			/* initialize internal bytestuffer */
 			l_resultByStuff =  eCU_BSTF_InitCtx(&p_ptCtx->tBSTFCtx, p_memArea, memAreaSize);
-			l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
+			l_eRes = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
         }
 	}
 
-	return l_result;
+	return l_eRes;
 }
 
 e_eFSP_MSGE_RES eFSP_MSGE_IsInit(t_eFSP_MSGE_Ctx* const p_ptCtx, bool_t* p_pbIsInit)
 {
 	/* Local variable */
-	e_eFSP_MSGE_RES l_result;
+	e_eFSP_MSGE_RES l_eRes;
     e_eCU_BSTF_RES l_resultByStuff;
 
 	/* Check pointer validity */
 	if( ( NULL == p_ptCtx ) || ( NULL == p_pbIsInit ) )
 	{
-		l_result = e_eFSP_MSGE_RES_BADPOINTER;
+		l_eRes = e_eFSP_MSGE_RES_BADPOINTER;
 	}
 	else
 	{
         l_resultByStuff = eCU_BSTF_IsInit(&p_ptCtx->tBSTFCtx, p_pbIsInit);
-        l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
+        l_eRes = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
 	}
 
-	return l_result;
+	return l_eRes;
 }
 
 e_eFSP_MSGE_RES eFSP_MSGE_GetWherePutData(t_eFSP_MSGE_Ctx* const p_ptCtx, uint8_t** pp_data, uint32_t* const p_maxDataL)
 {
 	/* Local variable */
-	e_eFSP_MSGE_RES l_result;
+	e_eFSP_MSGE_RES l_eRes;
 	e_eCU_BSTF_RES l_resultByStuff;
 	uint8_t* lp_data;
     uint8_t** lpp_dataP;
@@ -92,14 +92,14 @@ e_eFSP_MSGE_RES eFSP_MSGE_GetWherePutData(t_eFSP_MSGE_Ctx* const p_ptCtx, uint8_
 	/* Check pointer validity */
 	if( ( NULL == p_ptCtx ) || ( NULL == pp_data ) || ( NULL == p_maxDataL ) )
 	{
-		l_result = e_eFSP_MSGE_RES_BADPOINTER;
+		l_eRes = e_eFSP_MSGE_RES_BADPOINTER;
 	}
 	else
 	{
 		/* Check internal status validity */
 		if( false == eFSP_MSGE_isStatusStillCoherent(p_ptCtx) )
 		{
-			l_result = e_eFSP_MSGE_RES_CORRUPTCTX;
+			l_eRes = e_eFSP_MSGE_RES_CORRUPTCTX;
 		}
 		else
 		{
@@ -108,13 +108,13 @@ e_eFSP_MSGE_RES eFSP_MSGE_GetWherePutData(t_eFSP_MSGE_Ctx* const p_ptCtx, uint8_
             lp_data = NULL;
             lpp_dataP = &lp_data;
 			l_resultByStuff = eCU_BSTF_GetWherePutData(&p_ptCtx->tBSTFCtx, lpp_dataP, &l_maxDataSizeP);
-			l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
+			l_eRes = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
 
-			if( e_eFSP_MSGE_RES_OK == l_result )
+			if( e_eFSP_MSGE_RES_OK == l_eRes )
 			{
                 if( l_maxDataSizeP < EFSP_MIN_MSGEN_BUFFLEN )
                 {
-                    l_result = e_eFSP_MSGE_RES_CORRUPTCTX;
+                    l_eRes = e_eFSP_MSGE_RES_CORRUPTCTX;
                 }
                 else
                 {
@@ -126,13 +126,13 @@ e_eFSP_MSGE_RES eFSP_MSGE_GetWherePutData(t_eFSP_MSGE_Ctx* const p_ptCtx, uint8_
 		}
 	}
 
-	return l_result;
+	return l_eRes;
 }
 
 e_eFSP_MSGE_RES eFSP_MSGE_NewMessage(t_eFSP_MSGE_Ctx* const p_ptCtx, const uint32_t messageLen)
 {
 	/* Local variable */
-	e_eFSP_MSGE_RES l_result;
+	e_eFSP_MSGE_RES l_eRes;
 	e_eCU_BSTF_RES l_resultByStuff;
 	uint8_t* lp_data;
 	uint32_t l_maxDataSize;
@@ -144,21 +144,21 @@ e_eFSP_MSGE_RES eFSP_MSGE_NewMessage(t_eFSP_MSGE_Ctx* const p_ptCtx, const uint3
 	/* Check pointer validity */
 	if( NULL == p_ptCtx )
 	{
-		l_result = e_eFSP_MSGE_RES_BADPOINTER;
+		l_eRes = e_eFSP_MSGE_RES_BADPOINTER;
 	}
 	else
 	{
         /* Check internal status validity */
         if( false == eFSP_MSGE_isStatusStillCoherent(p_ptCtx) )
         {
-            l_result = e_eFSP_MSGE_RES_CORRUPTCTX;
+            l_eRes = e_eFSP_MSGE_RES_CORRUPTCTX;
         }
 		else
 		{
             /* Check param validity, need at least 1 byte of paylaod */
             if( ( messageLen <= 0u ) || ( messageLen > ( MAX_UINT32VAL - EFSP_MSGEN_HEADERSIZE ) ) )
             {
-                l_result = e_eFSP_MSGE_RES_BADPARAM;
+                l_eRes = e_eFSP_MSGE_RES_BADPARAM;
             }
             else
             {
@@ -167,20 +167,20 @@ e_eFSP_MSGE_RES eFSP_MSGE_NewMessage(t_eFSP_MSGE_Ctx* const p_ptCtx, const uint3
                 l_maxDataSize = 0u;
                 lp_data = NULL;
 				l_resultByStuff = eCU_BSTF_GetWherePutData(&p_ptCtx->tBSTFCtx, &lp_data, &l_maxDataSize);
-				l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
+				l_eRes = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
 
-				if( e_eFSP_MSGE_RES_OK == l_result )
+				if( e_eFSP_MSGE_RES_OK == l_eRes )
 				{
                     if( l_maxDataSize < EFSP_MIN_MSGEN_BUFFLEN )
                     {
-                        l_result = e_eFSP_MSGE_RES_CORRUPTCTX;
+                        l_eRes = e_eFSP_MSGE_RES_CORRUPTCTX;
                     }
                     else
                     {
 						if( ( messageLen + EFSP_MSGEN_HEADERSIZE ) > l_maxDataSize )
 						{
 							/* Data payload can not be greater that max payload size */
-							l_result = e_eFSP_MSGE_RES_BADPARAM;
+							l_eRes = e_eFSP_MSGE_RES_BADPARAM;
 						}
 						else
 						{
@@ -208,11 +208,11 @@ e_eFSP_MSGE_RES eFSP_MSGE_NewMessage(t_eFSP_MSGE_Ctx* const p_ptCtx, const uint3
 								* of len + real number of data */
 								l_nByteToSf = ( EFSP_MSGEN_HEADERSIZE + messageLen );
 								l_resultByStuff = eCU_BSTF_NewFrame(&p_ptCtx->tBSTFCtx, l_nByteToSf);
-								l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
+								l_eRes = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
 							}
 							else
 							{
-								l_result = e_eFSP_MSGE_RES_CRCCLBKERROR;
+								l_eRes = e_eFSP_MSGE_RES_CRCCLBKERROR;
 							}
 						}
                     }
@@ -221,95 +221,95 @@ e_eFSP_MSGE_RES eFSP_MSGE_NewMessage(t_eFSP_MSGE_Ctx* const p_ptCtx, const uint3
 		}
 	}
 
-	return l_result;
+	return l_eRes;
 }
 
 e_eFSP_MSGE_RES eFSP_MSGE_RestartMessage(t_eFSP_MSGE_Ctx* const p_ptCtx)
 {
 	/* Local variable */
-	e_eFSP_MSGE_RES l_result;
+	e_eFSP_MSGE_RES l_eRes;
 	e_eCU_BSTF_RES l_resultByStuff;
 
 	/* Check pointer validity */
 	if( NULL == p_ptCtx )
 	{
-		l_result = e_eFSP_MSGE_RES_BADPOINTER;
+		l_eRes = e_eFSP_MSGE_RES_BADPOINTER;
 	}
 	else
 	{
 		/* Check internal status validity */
 		if( false == eFSP_MSGE_isStatusStillCoherent(p_ptCtx) )
 		{
-			l_result = e_eFSP_MSGE_RES_CORRUPTCTX;
+			l_eRes = e_eFSP_MSGE_RES_CORRUPTCTX;
 		}
 		else
 		{
 			/* Restart only the byte stuffer */
 			l_resultByStuff = eCU_BSTF_RestartFrame(&p_ptCtx->tBSTFCtx);
-			l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
+			l_eRes = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
 		}
 	}
 
-	return l_result;
+	return l_eRes;
 }
 
 e_eFSP_MSGE_RES eFSP_MSGE_GetRemByteToGet(t_eFSP_MSGE_Ctx* const p_ptCtx, uint32_t* const p_retrivedLen)
 {
 	/* Local variable */
-	e_eFSP_MSGE_RES l_result;
+	e_eFSP_MSGE_RES l_eRes;
 	e_eCU_BSTF_RES l_resultByStuff;
 
 	/* Check pointer validity */
 	if( ( NULL == p_ptCtx ) || ( NULL == p_retrivedLen ) )
 	{
-		l_result = e_eFSP_MSGE_RES_BADPOINTER;
+		l_eRes = e_eFSP_MSGE_RES_BADPOINTER;
 	}
 	else
 	{
 		/* Check internal status validity */
 		if( false == eFSP_MSGE_isStatusStillCoherent(p_ptCtx) )
 		{
-			l_result = e_eFSP_MSGE_RES_CORRUPTCTX;
+			l_eRes = e_eFSP_MSGE_RES_CORRUPTCTX;
 		}
 		else
 		{
 			/* Get memory reference */
 			l_resultByStuff = eCU_BSTF_GetRemByteToGet(&p_ptCtx->tBSTFCtx, p_retrivedLen);
-			l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
+			l_eRes = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
 		}
 	}
 
-	return l_result;
+	return l_eRes;
 }
 
 e_eFSP_MSGE_RES eFSP_MSGE_GetEncChunk(t_eFSP_MSGE_Ctx* const p_ptCtx, uint8_t* p_encodeDest, const uint32_t maxDestLen,
                                       uint32_t* const p_filledLen)
 {
 	/* Local variable */
-	e_eFSP_MSGE_RES l_result;
+	e_eFSP_MSGE_RES l_eRes;
 	e_eCU_BSTF_RES l_resultByStuff;
 
 	/* Check pointer validity */
 	if( ( NULL == p_ptCtx )  || ( NULL == p_encodeDest ) || ( NULL == p_filledLen ) )
 	{
-		l_result = e_eFSP_MSGE_RES_BADPOINTER;
+		l_eRes = e_eFSP_MSGE_RES_BADPOINTER;
 	}
 	else
 	{
 		/* Check internal status validity */
 		if( false == eFSP_MSGE_isStatusStillCoherent(p_ptCtx) )
 		{
-			l_result = e_eFSP_MSGE_RES_CORRUPTCTX;
+			l_eRes = e_eFSP_MSGE_RES_CORRUPTCTX;
 		}
 		else
 		{
 			/* Get memory reference */
 			l_resultByStuff = eCU_BSTF_GetStufChunk(&p_ptCtx->tBSTFCtx, p_encodeDest, maxDestLen, p_filledLen);
-			l_result = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
+			l_eRes = eFSP_MSGE_convertReturnFromBstf(l_resultByStuff);
 		}
 	}
 
-	return l_result;
+	return l_eRes;
 }
 
 
@@ -319,76 +319,76 @@ e_eFSP_MSGE_RES eFSP_MSGE_GetEncChunk(t_eFSP_MSGE_Ctx* const p_ptCtx, uint8_t* p
  **********************************************************************************************************************/
 static bool_t eFSP_MSGE_isStatusStillCoherent(const t_eFSP_MSGE_Ctx* p_ptCtx)
 {
-    bool_t l_result;
+    bool_t l_eRes;
 
 	/* Check context validity */
 	if( ( NULL == p_ptCtx->fCrc ) || ( NULL == p_ptCtx->ptCrcCtx ) )
 	{
-		l_result = false;
+		l_eRes = false;
 	}
 	else
 	{
-		l_result = true;
+		l_eRes = true;
 	}
 
-    return l_result;
+    return l_eRes;
 }
 
 static e_eFSP_MSGE_RES eFSP_MSGE_convertReturnFromBstf(e_eCU_BSTF_RES returnedEvent)
 {
-	e_eFSP_MSGE_RES l_result;
+	e_eFSP_MSGE_RES l_eRes;
 
 	switch( returnedEvent )
 	{
 		case e_eCU_BSTF_RES_OK:
 		{
-			l_result = e_eFSP_MSGE_RES_OK;
+			l_eRes = e_eFSP_MSGE_RES_OK;
             break;
 		}
 
 		case e_eCU_BSTF_RES_BADPARAM:
 		{
-			l_result = e_eFSP_MSGE_RES_BADPARAM;
+			l_eRes = e_eFSP_MSGE_RES_BADPARAM;
             break;
 		}
 
 		case e_eCU_BSTF_RES_BADPOINTER:
 		{
-			l_result = e_eFSP_MSGE_RES_BADPOINTER;
+			l_eRes = e_eFSP_MSGE_RES_BADPOINTER;
             break;
 		}
 
 		case e_eCU_BSTF_RES_CORRUPTCTX:
 		{
-			l_result = e_eFSP_MSGE_RES_CORRUPTCTX;
+			l_eRes = e_eFSP_MSGE_RES_CORRUPTCTX;
             break;
 		}
 
 		case e_eCU_BSTF_RES_FRAMEENDED:
 		{
-			l_result = e_eFSP_MSGE_RES_MESSAGEENDED;
+			l_eRes = e_eFSP_MSGE_RES_MESSAGEENDED;
             break;
 		}
 
 		case e_eCU_BSTF_RES_NOINITLIB:
 		{
-			l_result = e_eFSP_MSGE_RES_NOINITLIB;
+			l_eRes = e_eFSP_MSGE_RES_NOINITLIB;
             break;
 		}
 
 		case e_eCU_BSTF_RES_NOINITFRAME :
 		{
-			l_result = e_eFSP_MSGE_RES_NOINITMESSAGE;
+			l_eRes = e_eFSP_MSGE_RES_NOINITMESSAGE;
             break;
 		}
 
 		default:
 		{
             /* Impossible end here */
-			l_result = e_eFSP_MSGE_RES_CORRUPTCTX;
+			l_eRes = e_eFSP_MSGE_RES_CORRUPTCTX;
             break;
 		}
 	}
 
-	return l_result;
+	return l_eRes;
 }
