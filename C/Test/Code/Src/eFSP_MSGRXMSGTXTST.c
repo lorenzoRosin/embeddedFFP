@@ -39,19 +39,19 @@
 /***********************************************************************************************************************
  *   PRIVATE TEST FUNCTION DECLARATION
  **********************************************************************************************************************/
-static bool_t eFSP_MSGRXMSGTXTST_c32SAdaptRx(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
-static bool_t eFSP_MSGRXMSGTXTST_c32SAdaptTx(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
+static bool_t eFSP_MSGRXMSGTXTST_c32SAdaptRx(t_eFSP_MSGD_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val);
+static bool_t eFSP_MSGRXMSGTXTST_c32SAdaptTx(t_eFSP_MSGE_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val);
 
-static bool_t eFSP_MSGRXMSGTXTST_sendMsg( t_eFSP_MSGTX_TxCtx* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
+static bool_t eFSP_MSGRXMSGTXTST_sendMsg( t_eFSP_MSGTX_TxCtx* p_ptCtx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
                        const uint32_t timeToSend );
 
-static bool_t eFSP_MSGRXMSGTXTST_receiveMsg( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
+static bool_t eFSP_MSGRXMSGTXTST_receiveMsg( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                        const uint32_t timeToRx );
 
-static bool_t eFSP_MSGRXMSGTXTST_timStart ( t_eFSP_MSGTX_TimCtx* cntx, const uint32_t timeoutVal );
-static bool_t eFSP_MSGRXMSGTXTST_timGetRemaining ( t_eFSP_MSGTX_TimCtx* cntx, uint32_t* const remainings );
-static bool_t eFSP_MSGRXMSGTXTST_timStartRx ( t_eFSP_MSGRX_TimCtx* cntx, const uint32_t timeoutVal );
-static bool_t eFSP_MSGRXMSGTXTST_timGetRemainingRx ( t_eFSP_MSGRX_TimCtx* cntx, uint32_t* const remainings );
+static bool_t eFSP_MSGRXMSGTXTST_timStart ( t_eFSP_MSGTX_TimCtx* p_ptCtx, const uint32_t timeoutVal );
+static bool_t eFSP_MSGRXMSGTXTST_timGetRemaining ( t_eFSP_MSGTX_TimCtx* p_ptCtx, uint32_t* const remainings );
+static bool_t eFSP_MSGRXMSGTXTST_timStartRx ( t_eFSP_MSGRX_TimCtx* p_ptCtx, const uint32_t timeoutVal );
+static bool_t eFSP_MSGRXMSGTXTST_timGetRemainingRx ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* const remainings );
 
 /***********************************************************************************************************************
  *   PRIVATE FUNCTION DECLARATION
@@ -117,20 +117,20 @@ static uint8_t m_BufferCom[1000u];
 static uint32_t m_BufferComCounterInsert;
 static uint32_t m_BufferComCounterRetrive;
 
-bool_t eFSP_MSGRXMSGTXTST_c32SAdaptRx(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
+bool_t eFSP_MSGRXMSGTXTST_c32SAdaptRx(t_eFSP_MSGD_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val)
 {
     bool_t result;
     t_eFSP_MSGD_CrcCtx* ctxCur;
 
-    if( ( NULL == cntx ) || ( NULL == c32Val ) )
+    if( ( NULL == p_ptCtx ) || ( NULL == p_puC32Val ) )
     {
         result = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGD_CrcCtx*)cntx;
+        ctxCur = (t_eFSP_MSGD_CrcCtx*)p_ptCtx;
 
-        ctxCur->lastError = eCU_CRC_32Seed(s, (const uint8_t*)d, dLen, c32Val);
+        ctxCur->lastError = eCU_CRC_32Seed(p_uS, (const uint8_t*)p_puD, p_uDLen, p_puC32Val);
         if( e_eCU_CRC_RES_OK == ctxCur->lastError )
         {
             result = true;
@@ -144,20 +144,20 @@ bool_t eFSP_MSGRXMSGTXTST_c32SAdaptRx(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s
     return result;
 }
 
-bool_t eFSP_MSGRXMSGTXTST_c32SAdaptTx(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
+bool_t eFSP_MSGRXMSGTXTST_c32SAdaptTx(t_eFSP_MSGE_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val)
 {
     bool_t result;
     t_eFSP_MSGE_CrcCtx* ctxCur;
 
-    if( ( NULL == cntx ) || ( NULL == c32Val ) )
+    if( ( NULL == p_ptCtx ) || ( NULL == p_puC32Val ) )
     {
         result = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGE_CrcCtx*)cntx;
+        ctxCur = (t_eFSP_MSGE_CrcCtx*)p_ptCtx;
 
-        ctxCur->lastError = eCU_CRC_32Seed(s, (const uint8_t*)d, dLen, c32Val);
+        ctxCur->lastError = eCU_CRC_32Seed(p_uS, (const uint8_t*)p_puD, p_uDLen, p_puC32Val);
         if( e_eCU_CRC_RES_OK == ctxCur->lastError )
         {
             result = true;
@@ -171,7 +171,7 @@ bool_t eFSP_MSGRXMSGTXTST_c32SAdaptTx(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s
     return result;
 }
 
-bool_t eFSP_MSGRXMSGTXTST_sendMsg( t_eFSP_MSGTX_TxCtx* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
+bool_t eFSP_MSGRXMSGTXTST_sendMsg( t_eFSP_MSGTX_TxCtx* p_ptCtx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
                 const uint32_t timeToSend )
 {
     bool_t result;
@@ -179,13 +179,13 @@ bool_t eFSP_MSGRXMSGTXTST_sendMsg( t_eFSP_MSGTX_TxCtx* cntx, const uint8_t* data
 
     (void)timeToSend;
 
-    if( ( NULL == cntx ) || ( NULL == dataToSend ) || ( NULL == dataSended ) )
+    if( ( NULL == p_ptCtx ) || ( NULL == dataToSend ) || ( NULL == dataSended ) )
     {
         result = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGTX_TxCtx*)cntx;
+        ctxCur = (t_eFSP_MSGTX_TxCtx*)p_ptCtx;
         ctxCur->sendIsError = true;
 
         if( ( m_BufferComCounterInsert + dataToSendLen ) < sizeof( m_BufferCom ) )
@@ -206,14 +206,14 @@ bool_t eFSP_MSGRXMSGTXTST_sendMsg( t_eFSP_MSGTX_TxCtx* cntx, const uint8_t* data
 }
 
 
-bool_t eFSP_MSGRXMSGTXTST_receiveMsg( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
+bool_t eFSP_MSGRXMSGTXTST_receiveMsg( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
                 const uint32_t timeToRx )
 {
     bool_t result;
     t_eFSP_MSGRX_RxCtx* ctxCur;
     uint32_t dataAvaiable;
 
-    if( ( NULL == cntx ) || ( NULL == dataToRx ) || ( NULL == dataRecevd ) )
+    if( ( NULL == p_ptCtx ) || ( NULL == dataToRx ) || ( NULL == dataRecevd ) )
     {
         result = false;
     }
@@ -228,7 +228,7 @@ bool_t eFSP_MSGRXMSGTXTST_receiveMsg( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToR
         else
         {
             result = true;
-            ctxCur = (t_eFSP_MSGRX_RxCtx*)cntx;
+            ctxCur = (t_eFSP_MSGRX_RxCtx*)p_ptCtx;
             ctxCur->sendIsError = false;
             dataAvaiable = m_BufferComCounterInsert - m_BufferComCounterRetrive;
 
@@ -255,18 +255,18 @@ bool_t eFSP_MSGRXMSGTXTST_receiveMsg( t_eFSP_MSGRX_RxCtx* cntx, uint8_t* dataToR
     return result;
 }
 
-bool_t eFSP_MSGRXMSGTXTST_timStart ( t_eFSP_MSGTX_TimCtx* cntx, const uint32_t timeoutVal )
+bool_t eFSP_MSGRXMSGTXTST_timStart ( t_eFSP_MSGTX_TimCtx* p_ptCtx, const uint32_t timeoutVal )
 {
     bool_t result;
     t_eFSP_MSGTX_TimCtx* ctxCur;
 
-    if( NULL == cntx )
+    if( NULL == p_ptCtx )
     {
         result = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGTX_TimCtx*)cntx;
+        ctxCur = (t_eFSP_MSGTX_TimCtx*)p_ptCtx;
         ctxCur->sendIsError = true;
         ctxCur->tim_timCnt = 0u;
         ctxCur->tim_timCntInc = 0u;
@@ -277,18 +277,18 @@ bool_t eFSP_MSGRXMSGTXTST_timStart ( t_eFSP_MSGTX_TimCtx* cntx, const uint32_t t
     return result;
 }
 
-bool_t eFSP_MSGRXMSGTXTST_timGetRemaining ( t_eFSP_MSGTX_TimCtx* cntx, uint32_t* const remainings )
+bool_t eFSP_MSGRXMSGTXTST_timGetRemaining ( t_eFSP_MSGTX_TimCtx* p_ptCtx, uint32_t* const remainings )
 {
     bool_t result;
     t_eFSP_MSGTX_TimCtx* ctxCur;
 
-    if( ( NULL == cntx ) || ( NULL == remainings ) )
+    if( ( NULL == p_ptCtx ) || ( NULL == remainings ) )
     {
         result = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGTX_TimCtx*)cntx;
+        ctxCur = (t_eFSP_MSGTX_TimCtx*)p_ptCtx;
         ctxCur->sendIsError = true;
 
         if( ctxCur->tim_timCnt < MAX_UINT32VAL )
@@ -309,18 +309,18 @@ bool_t eFSP_MSGRXMSGTXTST_timGetRemaining ( t_eFSP_MSGTX_TimCtx* cntx, uint32_t*
 }
 
 
-bool_t eFSP_MSGRXMSGTXTST_timStartRx ( t_eFSP_MSGRX_TimCtx* cntx, const uint32_t timeoutVal )
+bool_t eFSP_MSGRXMSGTXTST_timStartRx ( t_eFSP_MSGRX_TimCtx* p_ptCtx, const uint32_t timeoutVal )
 {
     bool_t result;
     t_eFSP_MSGTX_TimCtx* ctxCur;
 
-    if( NULL == cntx )
+    if( NULL == p_ptCtx )
     {
         result = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGTX_TimCtx*)cntx;
+        ctxCur = (t_eFSP_MSGTX_TimCtx*)p_ptCtx;
         ctxCur->sendIsError = true;
         ctxCur->tim_timCnt = 0u;
         ctxCur->tim_timCntInc = 0u;
@@ -331,18 +331,18 @@ bool_t eFSP_MSGRXMSGTXTST_timStartRx ( t_eFSP_MSGRX_TimCtx* cntx, const uint32_t
     return result;
 }
 
-bool_t eFSP_MSGRXMSGTXTST_timGetRemainingRx ( t_eFSP_MSGRX_TimCtx* cntx, uint32_t* const remainings )
+bool_t eFSP_MSGRXMSGTXTST_timGetRemainingRx ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* const remainings )
 {
     bool_t result;
     t_eFSP_MSGTX_TimCtx* ctxCur;
 
-    if( ( NULL == cntx ) || ( NULL == remainings ) )
+    if( ( NULL == p_ptCtx ) || ( NULL == remainings ) )
     {
         result = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGTX_TimCtx*)cntx;
+        ctxCur = (t_eFSP_MSGTX_TimCtx*)p_ptCtx;
         ctxCur->sendIsError = true;
 
         if( ctxCur->tim_timCnt < MAX_UINT32VAL )

@@ -39,8 +39,8 @@ struct t_eFSP_MSGE_CrcCtxUser
     e_eCU_CRC_RES lastError;
 };
 
-static bool_t eFSP_MSGETST_c32SAdapt(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
-static bool_t eFSP_MSGETST_c32SAdaptEr(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
+static bool_t eFSP_MSGETST_c32SAdapt(t_eFSP_MSGE_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val);
+static bool_t eFSP_MSGETST_c32SAdaptEr(t_eFSP_MSGE_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val);
 
 
 
@@ -84,20 +84,20 @@ void eFSP_MSGETST_ExeTest(void)
 /***********************************************************************************************************************
  *   PRIVATE TEST FUNCTION DECLARATION
  **********************************************************************************************************************/
-bool_t eFSP_MSGETST_c32SAdapt(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
+bool_t eFSP_MSGETST_c32SAdapt(t_eFSP_MSGE_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val)
 {
     bool_t result;
     t_eFSP_MSGE_CrcCtx* ctxCur;
 
-    if( ( NULL == cntx ) || ( NULL == c32Val ) )
+    if( ( NULL == p_ptCtx ) || ( NULL == p_puC32Val ) )
     {
         result = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGE_CrcCtx*)cntx;
+        ctxCur = (t_eFSP_MSGE_CrcCtx*)p_ptCtx;
 
-        ctxCur->lastError = eCU_CRC_32Seed(s, (const uint8_t*)d, dLen, c32Val);
+        ctxCur->lastError = eCU_CRC_32Seed(p_uS, (const uint8_t*)p_puD, p_uDLen, p_puC32Val);
         if( e_eCU_CRC_RES_OK == ctxCur->lastError )
         {
             result = true;
@@ -111,26 +111,26 @@ bool_t eFSP_MSGETST_c32SAdapt(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const 
     return result;
 }
 
-bool_t eFSP_MSGETST_c32SAdaptEr(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
+bool_t eFSP_MSGETST_c32SAdaptEr(t_eFSP_MSGE_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val)
 {
     bool_t result;
     t_eFSP_MSGE_CrcCtx* ctxCur;
 
-    (void)s;
-    (void)d;
-    (void)dLen;
+    (void)p_uS;
+    (void)p_puD;
+    (void)p_uDLen;
 
-    if( ( NULL == cntx ) || ( NULL == c32Val ) )
+    if( ( NULL == p_ptCtx ) || ( NULL == p_puC32Val ) )
     {
         result = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGE_CrcCtx*)cntx;
+        ctxCur = (t_eFSP_MSGE_CrcCtx*)p_ptCtx;
 
         ctxCur->lastError = e_eCU_CRC_RES_BADPOINTER;
         result = false;
-        *c32Val = 0u;
+        *p_puC32Val = 0u;
     }
 
     return result;
