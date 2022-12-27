@@ -58,18 +58,18 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_InitCtx(t_eFSP_MSGTX_Ctx* const p_ptCtx, const t_eFS
             else
             {
                 /* Initialize internal status variable */
-                p_ptCtx->p_rxBuff = p_ptInitData->puITxBuffArea;
-                p_ptCtx->txBuffSize = p_ptInitData->uITxBuffAreaL;
-                p_ptCtx->txBuffCntr = 0u;
-                p_ptCtx->txBuffFill = 0u;
-                p_ptCtx->f_Tx = p_ptInitData->fITx;
-                p_ptCtx->p_TxCtx = p_ptInitData->ptICbTxCtx;
-                p_ptCtx->txTim =  p_ptInitData->tITxTim;
-                p_ptCtx->timeoutMs = p_ptInitData->uITimeoutMs;
-                p_ptCtx->timePerSendMs = p_ptInitData->uITimePerSendMs;
+                p_ptCtx->puRxBuff = p_ptInitData->puITxBuffArea;
+                p_ptCtx->uTxBuffL = p_ptInitData->uITxBuffAreaL;
+                p_ptCtx->uTxBuffCntr = 0u;
+                p_ptCtx->uTxBuffFill = 0u;
+                p_ptCtx->fTx = p_ptInitData->fITx;
+                p_ptCtx->ptTxCtx = p_ptInitData->ptICbTxCtx;
+                p_ptCtx->tTxTim =  p_ptInitData->tITxTim;
+                p_ptCtx->uTimeoutMs = p_ptInitData->uITimeoutMs;
+                p_ptCtx->uTimePerSendMs = p_ptInitData->uITimePerSendMs;
 
                 /* initialize internal message encoder */
-                l_eResMsgE =  eFSP_MSGE_InitCtx(&p_ptCtx->msge_Ctx, p_ptInitData->puIMemArea, p_ptInitData->uIMemAreaL,
+                l_eResMsgE =  eFSP_MSGE_InitCtx(&p_ptCtx->tMsgeCtx, p_ptInitData->puIMemArea, p_ptInitData->uIMemAreaL,
                                                    p_ptInitData->fICrc, p_ptInitData->ptICbCrcCtx);
                 l_eRes = eFSP_MSGTX_ConvertRetFromMSGE(l_eResMsgE);
             }
@@ -92,7 +92,7 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_IsInit(t_eFSP_MSGTX_Ctx* const p_ptCtx, bool_t* p_pb
 	}
 	else
 	{
-        l_eResMsgE = eFSP_MSGE_IsInit(&p_ptCtx->msge_Ctx, p_pbIsInit);
+        l_eResMsgE = eFSP_MSGE_IsInit(&p_ptCtx->tMsgeCtx, p_pbIsInit);
         l_eRes = eFSP_MSGTX_ConvertRetFromMSGE(l_eResMsgE);
 	}
 
@@ -120,7 +120,7 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_GetWherePutData(t_eFSP_MSGTX_Ctx* const p_ptCtx, uin
 		else
 		{
 			/* Get only the payload data reference */
-			l_eResMsgE = eFSP_MSGE_GetWherePutData(&p_ptCtx->msge_Ctx, p_ppuData, p_puMaxDL);
+			l_eResMsgE = eFSP_MSGE_GetWherePutData(&p_ptCtx->tMsgeCtx, p_ppuData, p_puMaxDL);
 			l_eRes = eFSP_MSGTX_ConvertRetFromMSGE(l_eResMsgE);
 		}
 	}
@@ -156,17 +156,17 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_NewMessage(t_eFSP_MSGTX_Ctx* const p_ptCtx, const ui
             else
             {
                 /* Reset internal variable */
-                p_ptCtx->txBuffCntr = 0u;
-                p_ptCtx->txBuffFill = 0u;
+                p_ptCtx->uTxBuffCntr = 0u;
+                p_ptCtx->uTxBuffFill = 0u;
 
                 /* Init message encoder */
-                l_eResMsgE = eFSP_MSGE_NewMessage(&p_ptCtx->msge_Ctx, p_uMsgL);
+                l_eResMsgE = eFSP_MSGE_NewMessage(&p_ptCtx->tMsgeCtx, p_uMsgL);
                 l_eRes = eFSP_MSGTX_ConvertRetFromMSGE(l_eResMsgE);
 
                 /* Start timer */
                 if( e_eFSP_MSGTX_RES_OK == l_eRes )
                 {
-                    if( true != p_ptCtx->txTim.fTimStart( p_ptCtx->txTim.ptTimCtx, p_ptCtx->timeoutMs ) )
+                    if( true != p_ptCtx->tTxTim.fTimStart( p_ptCtx->tTxTim.ptTimCtx, p_ptCtx->uTimeoutMs ) )
                     {
                         l_eRes = e_eFSP_MSGTX_RES_TIMCLBKERROR;
                     }
@@ -199,17 +199,17 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_RestartMessage(t_eFSP_MSGTX_Ctx* const p_ptCtx)
 		else
 		{
             /* Reset internal variable */
-            p_ptCtx->txBuffCntr = 0u;
-            p_ptCtx->txBuffFill = 0u;
+            p_ptCtx->uTxBuffCntr = 0u;
+            p_ptCtx->uTxBuffFill = 0u;
 
 			/* Restart only the byte stuffer */
-			l_eResMsgE = eFSP_MSGE_RestartMessage(&p_ptCtx->msge_Ctx);
+			l_eResMsgE = eFSP_MSGE_RestartMessage(&p_ptCtx->tMsgeCtx);
 			l_eRes = eFSP_MSGTX_ConvertRetFromMSGE(l_eResMsgE);
 
             /* Start timer */
             if( e_eFSP_MSGTX_RES_OK == l_eRes )
             {
-                if( true != p_ptCtx->txTim.fTimStart( p_ptCtx->txTim.ptTimCtx, p_ptCtx->timeoutMs ) )
+                if( true != p_ptCtx->tTxTim.fTimStart( p_ptCtx->tTxTim.ptTimCtx, p_ptCtx->uTimeoutMs ) )
                 {
                     l_eRes = e_eFSP_MSGTX_RES_TIMCLBKERROR;
                 }
@@ -270,7 +270,7 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_SendChunk(t_eFSP_MSGTX_Ctx* const p_ptCtx)
                     {
                         /* Check if lib is initialized */
                         l_bIsInit = false;
-                        l_eResMsgE = eFSP_MSGE_IsInit(&p_ptCtx->msge_Ctx, &l_bIsInit);
+                        l_eResMsgE = eFSP_MSGE_IsInit(&p_ptCtx->tMsgeCtx, &l_bIsInit);
                         l_eRes = eFSP_MSGTX_ConvertRetFromMSGE(l_eResMsgE);
 
                         /* Check if frame timeout is eplased */
@@ -299,7 +299,7 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_SendChunk(t_eFSP_MSGTX_Ctx* const p_ptCtx)
                     case e_eFSP_MSGTXPRV_SM_CHECKINITTIMEOUT:
                     {
                         /* Check if frame timeout is eplased */
-                        if( true == p_ptCtx->txTim.fTimGetRemain(p_ptCtx->txTim.ptTimCtx, &l_uSRemainTxT) )
+                        if( true == p_ptCtx->tTxTim.fTimGetRemain(p_ptCtx->tTxTim.ptTimCtx, &l_uSRemainTxT) )
                         {
                             if( l_uSRemainTxT <= 0u )
                             {
@@ -310,10 +310,10 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_SendChunk(t_eFSP_MSGTX_Ctx* const p_ptCtx)
                             else
                             {
                                 /* Frame timeout is not elapsed, calculate frame session timeout */
-                                if( l_uSRemainTxT >= p_ptCtx->timePerSendMs )
+                                if( l_uSRemainTxT >= p_ptCtx->uTimePerSendMs )
                                 {
                                     /* Time elapsed */
-                                    l_uSessionRem = p_ptCtx->timePerSendMs;
+                                    l_uSessionRem = p_ptCtx->uTimePerSendMs;
                                 }
                                 else
                                 {
@@ -337,7 +337,7 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_SendChunk(t_eFSP_MSGTX_Ctx* const p_ptCtx)
                     case e_eFSP_MSGTXPRV_SM_CHECKIFBUFFERTX:
                     {
                         /* Is data present in send buffer? */
-                        l_uCDToTxL = p_ptCtx->txBuffFill - p_ptCtx->txBuffCntr;
+                        l_uCDToTxL = p_ptCtx->uTxBuffFill - p_ptCtx->uTxBuffCntr;
 
                         if( l_uCDToTxL > 0u )
                         {
@@ -348,8 +348,8 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_SendChunk(t_eFSP_MSGTX_Ctx* const p_ptCtx)
                         {
                             /* No data in msg buffer, retrive some other chunk of data, only if the message send is
                              * not completed of course */
-                            p_ptCtx->txBuffFill = 0u;
-                            p_ptCtx->txBuffCntr = 0u;
+                            p_ptCtx->uTxBuffFill = 0u;
+                            p_ptCtx->uTxBuffCntr = 0u;
                             l_eSM = e_eFSP_MSGTXPRV_SM_RETRIVECHUNK;
                         }
                         break;
@@ -358,12 +358,12 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_SendChunk(t_eFSP_MSGTX_Ctx* const p_ptCtx)
                     case e_eFSP_MSGTXPRV_SM_RETRIVECHUNK:
                     {
                         /* Ok, the send buffer is empty, need to load remainings data */
-                        p_ptCtx->txBuffCntr = 0u;
-                        p_ptCtx->txBuffFill = 0u;
+                        p_ptCtx->uTxBuffCntr = 0u;
+                        p_ptCtx->uTxBuffFill = 0u;
 
                         /* Is data present in message encoder buffer? */
-                        l_eResMsgE = eFSP_MSGE_GetEncChunk(&p_ptCtx->msge_Ctx, p_ptCtx->p_rxBuff, p_ptCtx->txBuffSize,
-                                                        &p_ptCtx->txBuffFill);
+                        l_eResMsgE = eFSP_MSGE_GetEncChunk(&p_ptCtx->tMsgeCtx, p_ptCtx->puRxBuff, p_ptCtx->uTxBuffL,
+                                                        &p_ptCtx->uTxBuffFill);
                         l_eRes = eFSP_MSGTX_ConvertRetFromMSGE(l_eResMsgE);
 
                         if( e_eFSP_MSGTX_RES_OK == l_eRes )
@@ -377,7 +377,7 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_SendChunk(t_eFSP_MSGTX_Ctx* const p_ptCtx)
                         else if( e_eFSP_MSGTX_RES_MESSAGESENDED == l_eRes )
                         {
                             /* Ok we retrived all the possible data */
-                            if( 0u == p_ptCtx->txBuffFill )
+                            if( 0u == p_ptCtx->uTxBuffFill )
                             {
                                 /* No more data to send or retrive */
                                 l_eSM = e_eFSP_MSGTXPRV_SM_ELABDONE;
@@ -400,11 +400,11 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_SendChunk(t_eFSP_MSGTX_Ctx* const p_ptCtx)
                     case e_eFSP_MSGTXPRV_SM_SENDBUFF:
                     {
                         /* Get data to send */
-                        l_puCDToTx = &p_ptCtx->p_rxBuff[p_ptCtx->txBuffCntr];
-                        l_uCDToTxL = p_ptCtx->txBuffFill - p_ptCtx->txBuffCntr;
+                        l_puCDToTx = &p_ptCtx->puRxBuff[p_ptCtx->uTxBuffCntr];
+                        l_uCDToTxL = p_ptCtx->uTxBuffFill - p_ptCtx->uTxBuffCntr;
 
                         /* Can send data from send buffer */
-                        if( true == (*p_ptCtx->f_Tx)(p_ptCtx->p_TxCtx, l_puCDToTx, l_uCDToTxL, &l_uCDTxed, l_uSessionRem) )
+                        if( true == (*p_ptCtx->fTx)(p_ptCtx->ptTxCtx, l_puCDToTx, l_uCDToTxL, &l_uCDTxed, l_uSessionRem) )
                         {
                             /* Check for some strangeness */
                             if( l_uCDTxed > l_uCDToTxL )
@@ -415,7 +415,7 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_SendChunk(t_eFSP_MSGTX_Ctx* const p_ptCtx)
                             else
                             {
                                 /* Update sended counter */
-                                p_ptCtx->txBuffCntr += l_uCDTxed;
+                                p_ptCtx->uTxBuffCntr += l_uCDTxed;
 
                                 /* Check if time is elapsed */
                                 l_eSM = e_eFSP_MSGTXPRV_SM_CHECKTIMEOUTAFTERTX;
@@ -433,7 +433,7 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_SendChunk(t_eFSP_MSGTX_Ctx* const p_ptCtx)
                     case e_eFSP_MSGTXPRV_SM_CHECKTIMEOUTAFTERTX:
                     {
                         /* Check if frame timeout is eplased */
-                        if( true == p_ptCtx->txTim.fTimGetRemain(p_ptCtx->txTim.ptTimCtx, &l_uCRemainTxT) )
+                        if( true == p_ptCtx->tTxTim.fTimGetRemain(p_ptCtx->tTxTim.ptTimCtx, &l_uCRemainTxT) )
                         {
                             /* Check time validity */
                             if( l_uCRemainTxT > l_uSRemainTxT )
@@ -454,13 +454,13 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_SendChunk(t_eFSP_MSGTX_Ctx* const p_ptCtx)
                                 else
                                 {
                                     /* During start do we had the whole time slice? */
-                                    if( l_uSRemainTxT >= p_ptCtx->timePerSendMs )
+                                    if( l_uSRemainTxT >= p_ptCtx->uTimePerSendMs )
                                     {
                                         /* Started with a whole time slice */
                                         l_uElapFromStart = l_uSRemainTxT - l_uCRemainTxT;
 
                                         /* Frame timeout is not elapsed, check current session if expired */
-                                        if( l_uElapFromStart >= p_ptCtx->timePerSendMs )
+                                        if( l_uElapFromStart >= p_ptCtx->uTimePerSendMs )
                                         {
                                             /* Time elapsed */
                                             l_eRes = e_eFSP_MSGTX_RES_OK;
@@ -469,7 +469,7 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_SendChunk(t_eFSP_MSGTX_Ctx* const p_ptCtx)
                                         else
                                         {
                                             /* Session timeout not elapsed, can send data */
-                                            l_uSessionRem = p_ptCtx->timePerSendMs - l_uElapFromStart;
+                                            l_uSessionRem = p_ptCtx->uTimePerSendMs - l_uElapFromStart;
 
                                             /* Check if something to send is present */
                                             l_eSM = e_eFSP_MSGTXPRV_SM_CHECKIFBUFFERTX;
@@ -520,37 +520,37 @@ static bool_t eFSP_MSGTX_IsStatusStillCoherent(const t_eFSP_MSGTX_Ctx* p_ptCtx)
     bool_t l_eRes;
 
 	/* Check pointer validity */
-	if( ( NULL == p_ptCtx->p_rxBuff ) || ( NULL == p_ptCtx->f_Tx ) || ( NULL == p_ptCtx->p_TxCtx ) ||
-        ( NULL == p_ptCtx->txTim.ptTimCtx ) || ( NULL == p_ptCtx->txTim.fTimStart ) ||
-        ( NULL == p_ptCtx->txTim.fTimGetRemain ) )
+	if( ( NULL == p_ptCtx->puRxBuff ) || ( NULL == p_ptCtx->fTx ) || ( NULL == p_ptCtx->ptTxCtx ) ||
+        ( NULL == p_ptCtx->tTxTim.ptTimCtx ) || ( NULL == p_ptCtx->tTxTim.fTimStart ) ||
+        ( NULL == p_ptCtx->tTxTim.fTimGetRemain ) )
 	{
 		l_eRes = false;
 	}
 	else
 	{
         /* Check send buffer validity */
-        if( p_ptCtx->txBuffSize < 1u )
+        if( p_ptCtx->uTxBuffL < 1u )
         {
             l_eRes =  false;
         }
         else
         {
             /* Check send buffer validity */
-            if( ( p_ptCtx->txBuffFill > p_ptCtx->txBuffSize )  || ( p_ptCtx->txBuffCntr > p_ptCtx->txBuffFill ) )
+            if( ( p_ptCtx->uTxBuffFill > p_ptCtx->uTxBuffL )  || ( p_ptCtx->uTxBuffCntr > p_ptCtx->uTxBuffFill ) )
             {
                 l_eRes =  false;
             }
             else
             {
                 /* Check timings validity */
-                if( ( p_ptCtx->timeoutMs < 1u ) || ( p_ptCtx->timePerSendMs < 1u ) )
+                if( ( p_ptCtx->uTimeoutMs < 1u ) || ( p_ptCtx->uTimePerSendMs < 1u ) )
                 {
                     l_eRes = false;
                 }
                 else
                 {
                     /* Check timings validity */
-                    if( p_ptCtx->timePerSendMs > p_ptCtx->timeoutMs )
+                    if( p_ptCtx->uTimePerSendMs > p_ptCtx->uTimeoutMs )
                     {
                         l_eRes = false;
                     }
