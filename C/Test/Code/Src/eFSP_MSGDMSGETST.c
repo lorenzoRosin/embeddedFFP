@@ -47,8 +47,8 @@ struct t_eFSP_MSGE_CrcCtxUser
     e_eCU_CRC_RES lastError;
 };
 
-static bool_t c32SAdapt(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
-static bool_t c32SAdaptE(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
+static bool_t eFSP_MSGDMSGETST_c32SAdapt(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
+static bool_t eFSP_MSGDMSGETST_c32SAdaptE(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
 
 
 /***********************************************************************************************************************
@@ -75,7 +75,7 @@ void eFSP_MSGDMSGETST_ExeTest(void)
 /***********************************************************************************************************************
  *   PRIVATE TEST FUNCTION IMPLEMENTATION
  **********************************************************************************************************************/
-bool_t c32SAdapt(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
+bool_t eFSP_MSGDMSGETST_c32SAdapt(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
 {
     bool_t result;
     t_eFSP_MSGD_CrcCtx* ctxCur;
@@ -102,7 +102,7 @@ bool_t c32SAdapt(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s, const uint8_t* d, c
     return result;
 }
 
-bool_t c32SAdaptE(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
+bool_t eFSP_MSGDMSGETST_c32SAdaptE(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
 {
     bool_t result;
     t_eFSP_MSGE_CrcCtx* ctxCur;
@@ -137,7 +137,7 @@ void eFSP_MSGDMSGETST_Common(void)
     /* Local variable for message ENCODER */
     t_eFSP_MSGE_Ctx ctxEnc;
     t_eFSP_MSGE_CrcCtx  ctxCrcEnc;
-    f_eFSP_MSGE_CrcCb cbCrcPEnc = &c32SAdaptE;
+    f_eFSP_MSGE_CrcCb cbCrcPEnc = &eFSP_MSGDMSGETST_c32SAdaptE;
     uint8_t  memEncoderArea[100u] = {0u};
     uint32_t encMaxPaySize;
     uint8_t* encPayLoc;
@@ -149,7 +149,7 @@ void eFSP_MSGDMSGETST_Common(void)
     /* Local variable for message ENCODER */
     t_eFSP_MSGD_Ctx ctxDec;
     t_eFSP_MSGD_CrcCtx  ctxCrcDec;
-    f_eFSP_MSGD_CrcCb cbCrcPDec = &c32SAdapt;
+    f_eFSP_MSGD_CrcCb cbCrcPDec = &eFSP_MSGDMSGETST_c32SAdapt;
     uint8_t  memDecoderArea[100u] = {0u};
     uint32_t decTotCounter;
     uint32_t decCurCounter;
