@@ -1,7 +1,11 @@
 /**
- * @file eFSP_STANDARDTYPE.h
+ * @file       eFSP_STANDARDTYPE.h
  *
- */
+ * @brief      Ecu standard type header
+ *
+ * @author     Lorenzo Rosin
+ *
+ **********************************************************************************************************************/
 
 #ifndef EFSP_STANDARDTYPE_H
 #define EFSP_STANDARDTYPE_H

@@ -1,7 +1,11 @@
 /**
- * @file eFSP_TYPE.h
+ * @file       eFSP_TYPE.h
  *
- */
+ * @brief      Ecu lib type header
+ *
+ * @author     Lorenzo Rosin
+ *
+ **********************************************************************************************************************/
 
 #ifndef EFSP_TYPE_H
 #define EFSP_TYPE_H
