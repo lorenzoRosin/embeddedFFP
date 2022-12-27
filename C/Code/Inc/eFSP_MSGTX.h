@@ -83,7 +83,7 @@ typedef struct
     uint8_t*        p_i_txBuffArea;
     uint32_t        i_txBuffAreaSize;
     f_eFSP_MSGE_CrcCb   fICrc;
-    void*           ptICbCrcCtx;
+    t_eFSP_MSGE_CrcCtx*           ptICbCrcCtx;
     f_eFSP_MSGTX_TxCb      f_i_Tx;
     void*           p_i_cbTxCtx;
     t_eFSP_MSGTX_Timer  i_txTim;

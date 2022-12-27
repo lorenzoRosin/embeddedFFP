@@ -29,10 +29,13 @@ extern "C" {
 /***********************************************************************************************************************
  *      TYPEDEFS
  **********************************************************************************************************************/
+/* Define a generic crc callback context that must be implemented by the user */
+typedef struct t_eFSP_MSGE_CrcCtxUser t_eFSP_MSGE_CrcCtx;
+
 /* Call back to a function that will calculate the CRC for this modules
  * the p_ptCtx parameter is a custom pointer that can be used by the creator of this CRC callback, and will not be used
  * by the MSG ENCODER module */
-typedef bool_t (*f_eFSP_MSGE_CrcCb) ( void* p_ptCtx, const uint32_t p_uSeed, const uint8_t* p_puData, const uint32_t p_uDataL,
+typedef bool_t (*f_eFSP_MSGE_CrcCb) ( t_eFSP_MSGE_CrcCtx* p_ptCtx, const uint32_t p_uSeed, const uint8_t* p_puData, const uint32_t p_uDataL,
                                   uint32_t* const p_puCrc32Val );
 
 typedef enum
@@ -51,7 +54,7 @@ typedef struct
 {
     t_eCU_BSTF_Ctx      tBSTFCtx;
     f_eFSP_MSGE_CrcCb   fCrc;
-    void*               ptCrcCtx;
+    t_eFSP_MSGE_CrcCtx*               ptCrcCtx;
 }t_eFSP_MSGE_Ctx;
 
 
@@ -73,7 +76,7 @@ typedef struct
  *              e_eFSP_MSGE_RES_OK             - Operation ended correctly
  */
 e_eFSP_MSGE_RES eFSP_MSGE_InitCtx(t_eFSP_MSGE_Ctx* const p_ptCtx, uint8_t* p_memArea, const uint32_t memAreaSize,
-								  f_eFSP_MSGE_CrcCb f_Crc, void* const p_clbCtx);
+								  f_eFSP_MSGE_CrcCb f_Crc, t_eFSP_MSGE_CrcCtx* const p_clbCtx);
 
 /**
  * @brief       Check if the lib is initialized

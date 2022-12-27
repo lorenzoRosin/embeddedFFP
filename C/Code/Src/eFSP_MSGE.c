@@ -27,7 +27,7 @@ static e_eFSP_MSGE_RES eFSP_MSGE_convertReturnFromBstf(e_eCU_BSTF_RES returnedEv
  *   GLOBAL FUNCTIONS
  **********************************************************************************************************************/
 e_eFSP_MSGE_RES eFSP_MSGE_InitCtx(t_eFSP_MSGE_Ctx* const p_ptCtx, uint8_t* p_memArea, const uint32_t memAreaSize,
-								  f_eFSP_MSGE_CrcCb f_Crc, void* const p_clbCtx)
+								  f_eFSP_MSGE_CrcCb f_Crc, t_eFSP_MSGE_CrcCtx* const p_clbCtx)
 {
 	/* Local variable */
 	e_eFSP_MSGE_RES l_result;

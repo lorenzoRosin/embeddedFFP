@@ -37,7 +37,8 @@
 /***********************************************************************************************************************
  *   PRIVATE TEST FUNCTION DECLARATION
  **********************************************************************************************************************/
-static bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
+static bool_t c32SAdaptRx(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
+static bool_t c32SAdaptTx(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
 
 static bool_t sendMsg( void* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
                        const uint32_t timeToSend );
@@ -51,10 +52,16 @@ static bool_t timGetRemaining ( void* cntx, uint32_t* const remainings );
 /***********************************************************************************************************************
  *   PRIVATE FUNCTION DECLARATION
  **********************************************************************************************************************/
-typedef struct
+struct t_eFSP_MSGD_CrcCtxUser
 {
     e_eCU_CRC_RES lastError;
-}s_eCU_crcAdapterCtx;
+};
+
+struct t_eFSP_MSGE_CrcCtxUser
+{
+    e_eCU_CRC_RES lastError;
+};
+
 
 typedef struct
 {
@@ -94,10 +101,10 @@ static uint8_t m_BufferCom[1000u];
 static uint32_t m_BufferComCounterInsert;
 static uint32_t m_BufferComCounterRetrive;
 
-bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
+bool_t c32SAdaptRx(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
 {
     bool_t result;
-    s_eCU_crcAdapterCtx* ctxCur;
+    t_eFSP_MSGD_CrcCtx* ctxCur;
 
     if( ( NULL == cntx ) || ( NULL == c32Val ) )
     {
@@ -105,7 +112,34 @@ bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t 
     }
     else
     {
-        ctxCur = (s_eCU_crcAdapterCtx*)cntx;
+        ctxCur = (t_eFSP_MSGD_CrcCtx*)cntx;
+
+        ctxCur->lastError = eCU_CRC_32Seed(s, (const uint8_t*)d, dLen, c32Val);
+        if( e_eCU_CRC_RES_OK == ctxCur->lastError )
+        {
+            result = true;
+        }
+        else
+        {
+            result = false;
+        }
+    }
+
+    return result;
+}
+
+bool_t c32SAdaptTx(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
+{
+    bool_t result;
+    t_eFSP_MSGE_CrcCtx* ctxCur;
+
+    if( ( NULL == cntx ) || ( NULL == c32Val ) )
+    {
+        result = false;
+    }
+    else
+    {
+        ctxCur = (t_eFSP_MSGE_CrcCtx*)cntx;
 
         ctxCur->lastError = eCU_CRC_32Seed(s, (const uint8_t*)d, dLen, c32Val);
         if( e_eCU_CRC_RES_OK == ctxCur->lastError )
@@ -272,7 +306,7 @@ void eFSP_TEST_msgRxTransmitterCommon(void)
     /* Local variable RECEIVER */
     t_eFSP_MSGRX_Ctx ctxRX;
     t_eFSP_MSGRX_InitData initDataRX;
-    s_eCU_crcAdapterCtx ctxAdapterCrcRX;
+    t_eFSP_MSGD_CrcCtx ctxAdapterCrcRX;
     s_eCU_msgSendAdapterCtx ctxAdapterRx;
     s_eCU_timerAdapterCtx ctxAdapterTim;
     uint8_t  memAreaRX[20u];
@@ -281,7 +315,7 @@ void eFSP_TEST_msgRxTransmitterCommon(void)
     /* Local variable TRANSMITTER */
     t_eFSP_MSGTX_Ctx ctxTx;
     t_eFSP_MSGTX_InitData initDataTx;
-    s_eCU_crcAdapterCtx ctxAdapterCrcTx;
+    t_eFSP_MSGE_CrcCtx ctxAdapterCrcTx;
     s_eCU_msgSendAdapterCtx ctxAdapterSend;
     s_eCU_timerAdapterCtx ctxAdapterTimTx;
     uint8_t  memAreaTx[20u];
@@ -302,7 +336,7 @@ void eFSP_TEST_msgRxTransmitterCommon(void)
     initDataTx.uIMemAreaL = sizeof(memAreaTx);
     initDataTx.p_i_txBuffArea = sendBuff;
     initDataTx.i_txBuffAreaSize = sizeof(sendBuff);
-    initDataTx.fICrc = &c32SAdapt;
+    initDataTx.fICrc = &c32SAdaptTx;
     initDataTx.ptICbCrcCtx = &ctxAdapterCrcTx;
     initDataTx.f_i_Tx = &sendMsg;
     initDataTx.p_i_cbTxCtx = &ctxAdapterSend;
@@ -325,7 +359,7 @@ void eFSP_TEST_msgRxTransmitterCommon(void)
     initDataRX.uIMemAreaL = sizeof(memAreaRX);
     initDataRX.puIRxBuffArea = recBuff;
     initDataRX.uIRxBuffAreaL = sizeof(recBuff);
-    initDataRX.fICrc = &c32SAdapt;
+    initDataRX.fICrc = &c32SAdaptRx;
     initDataRX.ptICbCrcCtx = &ctxAdapterCrcRX;
     initDataRX.fIRx = &receiveMsg;
     initDataRX.ptICbRxCtx = &ctxAdapterRx;

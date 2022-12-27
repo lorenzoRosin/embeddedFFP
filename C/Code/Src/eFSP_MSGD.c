@@ -24,7 +24,7 @@ static e_eFSP_MSGD_RES eFSP_MSGD_convertReturnFromBstf(e_eCU_BUNSTF_RES returned
 static e_eFSP_MSGD_RES eFSP_MSGD_IsFullMsgDec(t_eFSP_MSGD_Ctx* const p_ptCtx, bool_t* const p_isMsgDec);
 static e_eFSP_MSGD_RES eFSP_MSGD_IsFrmBad(t_eFSP_MSGD_Ctx* const p_ptCtx, bool_t* const p_isFrameBad);
 static e_eFSP_MSGD_RES eFSP_MSGD_isMsgCorr(t_eCU_BUNSTF_Ctx* p_ptCtx, bool_t* p_isCor, f_eFSP_MSGD_CrcCb p_fCrc,
-                                           void* p_crcCtx);
+                                           t_eFSP_MSGD_CrcCtx* p_crcCtx);
 static e_eFSP_MSGD_RES eFSP_MSGD_isMsgCohe(t_eCU_BUNSTF_Ctx* p_ptCtx, bool_t* p_isCoherent);
 static uint32_t eFSP_MSGD_composeU32LE(uint8_t v1, uint8_t v2, uint8_t v3, uint8_t v4);
 
@@ -35,7 +35,7 @@ static uint32_t eFSP_MSGD_composeU32LE(uint8_t v1, uint8_t v2, uint8_t v3, uint8
  **********************************************************************************************************************/
 
 e_eFSP_MSGD_RES eFSP_MSGD_InitCtx(t_eFSP_MSGD_Ctx* const p_ptCtx, uint8_t* p_puBuff, const uint32_t p_uBuffL,
-								  f_eFSP_MSGD_CrcCb p_fCrc, void* const p_ptFctx)
+								  f_eFSP_MSGD_CrcCb p_fCrc, t_eFSP_MSGD_CrcCtx* const p_ptFctx)
 {
 	/* Local variable */
 	e_eFSP_MSGD_RES l_result;
@@ -816,7 +816,7 @@ static e_eFSP_MSGD_RES eFSP_MSGD_IsFrmBad(t_eFSP_MSGD_Ctx* const p_ptCtx, bool_t
 }
 
 static e_eFSP_MSGD_RES eFSP_MSGD_isMsgCorr(t_eCU_BUNSTF_Ctx* p_ptCtx, bool_t* p_isCor, f_eFSP_MSGD_CrcCb p_fCrc,
-                                           void* p_crcCtx)
+                                           t_eFSP_MSGD_CrcCtx* p_crcCtx)
 {
     e_eFSP_MSGD_RES l_result;
     e_eCU_BUNSTF_RES l_byteUnstuffRes;

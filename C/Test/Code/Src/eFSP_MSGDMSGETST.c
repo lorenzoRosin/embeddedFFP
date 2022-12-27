@@ -35,13 +35,18 @@
 /***********************************************************************************************************************
  *   PRIVATE TEST FUNCTION DECLARATION
  **********************************************************************************************************************/
-typedef struct
+struct t_eFSP_MSGD_CrcCtxUser
 {
     e_eCU_CRC_RES lastError;
-}s_eCU_crcAdapterCtx;
+};
 
-static bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
+struct t_eFSP_MSGE_CrcCtxUser
+{
+    e_eCU_CRC_RES lastError;
+};
 
+static bool_t c32SAdapt(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
+static bool_t c32SAdaptE(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
 
 
 /***********************************************************************************************************************
@@ -68,10 +73,10 @@ void eFSP_TEST_msgDeEncoder(void)
 /***********************************************************************************************************************
  *   PRIVATE TEST FUNCTION IMPLEMENTATION
  **********************************************************************************************************************/
-bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
+bool_t c32SAdapt(t_eFSP_MSGD_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
 {
     bool_t result;
-    s_eCU_crcAdapterCtx* ctxCur;
+    t_eFSP_MSGD_CrcCtx* ctxCur;
 
     if( ( NULL == cntx ) || ( NULL == c32Val ) )
     {
@@ -79,7 +84,7 @@ bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t 
     }
     else
     {
-        ctxCur = (s_eCU_crcAdapterCtx*)cntx;
+        ctxCur = (t_eFSP_MSGD_CrcCtx*)cntx;
 
         ctxCur->lastError = eCU_CRC_32Seed(s, (const uint8_t*)d, dLen, c32Val);
         if( e_eCU_CRC_RES_OK == ctxCur->lastError )
@@ -95,7 +100,32 @@ bool_t c32SAdapt(void* cntx, const uint32_t s, const uint8_t* d, const uint32_t 
     return result;
 }
 
+bool_t c32SAdaptE(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val)
+{
+    bool_t result;
+    t_eFSP_MSGE_CrcCtx* ctxCur;
 
+    if( ( NULL == cntx ) || ( NULL == c32Val ) )
+    {
+        result = false;
+    }
+    else
+    {
+        ctxCur = (t_eFSP_MSGE_CrcCtx*)cntx;
+
+        ctxCur->lastError = eCU_CRC_32Seed(s, (const uint8_t*)d, dLen, c32Val);
+        if( e_eCU_CRC_RES_OK == ctxCur->lastError )
+        {
+            result = true;
+        }
+        else
+        {
+            result = false;
+        }
+    }
+
+    return result;
+}
 
 /***********************************************************************************************************************
  *   PRIVATE FUNCTION
@@ -104,8 +134,8 @@ void eFSP_TEST_msgDeEncoderCommon(void)
 {
     /* Local variable for message ENCODER */
     t_eFSP_MSGE_Ctx ctxEnc;
-    s_eCU_crcAdapterCtx  ctxCrcEnc;
-    f_eFSP_MSGE_CrcCb cbCrcPEnc = &c32SAdapt;
+    t_eFSP_MSGE_CrcCtx  ctxCrcEnc;
+    f_eFSP_MSGE_CrcCb cbCrcPEnc = &c32SAdaptE;
     uint8_t  memEncoderArea[100u] = {0u};
     uint32_t encMaxPaySize;
     uint8_t* encPayLoc;
@@ -116,7 +146,7 @@ void eFSP_TEST_msgDeEncoderCommon(void)
 
     /* Local variable for message ENCODER */
     t_eFSP_MSGD_Ctx ctxDec;
-    s_eCU_crcAdapterCtx  ctxCrcDec;
+    t_eFSP_MSGD_CrcCtx  ctxCrcDec;
     f_eFSP_MSGD_CrcCb cbCrcPDec = &c32SAdapt;
     uint8_t  memDecoderArea[100u] = {0u};
     uint32_t decTotCounter;

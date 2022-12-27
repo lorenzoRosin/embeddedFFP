@@ -86,7 +86,7 @@ typedef struct
     uint8_t*            puIRxBuffArea;
     uint32_t            uIRxBuffAreaL;
     f_eFSP_MSGD_CrcCb   fICrc;
-    void*               ptICbCrcCtx;
+    t_eFSP_MSGD_CrcCtx*               ptICbCrcCtx;
     f_eFSP_MSGRX_RxCb   fIRx;
     void*               ptICbRxCtx;
     t_eFSP_MSGRX_Timer  tIRxTim;
