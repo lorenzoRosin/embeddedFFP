@@ -29,20 +29,25 @@ extern "C" {
 /***********************************************************************************************************************
  *      TYPEDEFS
  **********************************************************************************************************************/
+/* Define a generic receiver func callback context that must be implemented by the user */
+typedef struct t_eFSP_MSGRX_RxCtxUser t_eFSP_MSGRX_RxCtx;
+
+/* Define a generic timer func callback context that must be implemented by the user */
+typedef struct t_eFSP_MSGRX_TimCtxUser t_eFSP_MSGRX_TimCtx;
 
 /* Call back to a function that will receive data.
  * the p_ptCtx parameter is a custom pointer that can be used by the creator of this TX callback, and will not be used
  * by the MSG RECEIVER module */
-typedef bool_t (*f_eFSP_MSGRX_RxCb) ( void* p_ptCtx, uint8_t* p_puDataRx, uint32_t* const p_puDataRxL,
+typedef bool_t (*f_eFSP_MSGRX_RxCb) ( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puDataRx, uint32_t* const p_puDataRxL,
                                const uint32_t p_uCaxDataRxL, const uint32_t p_uTimeRx);
 
 /* Call backs to functions that act as a timer */
-typedef bool_t (*f_eFSP_MSGRX_TimStart) ( void* p_ptCtx, const uint32_t p_uTimeout );
-typedef bool_t (*f_eFSP_MSGRX_TimGetRemaing) ( void* p_ptCtx, uint32_t* const p_puRemain );
+typedef bool_t (*f_eFSP_MSGRX_TimStart) ( t_eFSP_MSGRX_TimCtx* p_ptCtx, const uint32_t p_uTimeout );
+typedef bool_t (*f_eFSP_MSGRX_TimGetRemaing) ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* const p_puRemain );
 
 typedef struct
 {
-    void*                       ptTimCtx;
+    t_eFSP_MSGRX_TimCtx*                       ptTimCtx;
     f_eFSP_MSGRX_TimStart       fTimStart;
     f_eFSP_MSGRX_TimGetRemaing  fTimGetRemain;
 }t_eFSP_MSGRX_Timer;
@@ -72,7 +77,7 @@ typedef struct
 	uint32_t        rxBuffCntr;
     uint32_t        rxBuffFill;
     f_eFSP_MSGRX_RxCb      f_Rx;
-    void*           p_RxCtx;
+    t_eFSP_MSGRX_RxCtx*           p_RxCtx;
     t_eFSP_MSGRX_Timer  rxTim;
     uint32_t        timeoutMs;
     uint32_t        timePerRecMs;
@@ -88,7 +93,7 @@ typedef struct
     f_eFSP_MSGD_CrcCb   fICrc;
     t_eFSP_MSGD_CrcCtx*               ptICbCrcCtx;
     f_eFSP_MSGRX_RxCb   fIRx;
-    void*               ptICbRxCtx;
+    t_eFSP_MSGRX_RxCtx*               ptICbRxCtx;
     t_eFSP_MSGRX_Timer  tIRxTim;
     uint32_t            uITimeoutMs;
     uint32_t            uITimePerRecMs;

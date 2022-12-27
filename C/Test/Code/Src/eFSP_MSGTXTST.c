@@ -42,31 +42,31 @@ struct t_eFSP_MSGE_CrcCtxUser
     e_eCU_CRC_RES lastError;
 };
 
-typedef struct
+struct t_eFSP_MSGTX_TxCtxUser
 {
     bool sendIsError;
-}s_eCU_msgSendAdapterCtx;
+};
 
-typedef struct
+struct t_eFSP_MSGTX_TimCtxUser
 {
     bool sendIsError;
-}s_eCU_timerAdapterCtx;
+};
 
 static bool_t c32SAdapt(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
 static bool_t c32SAdaptEr(t_eFSP_MSGE_CrcCtx* cntx, const uint32_t s, const uint8_t* d, const uint32_t dLen, uint32_t* const c32Val);
-static bool_t sendMsg( void* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
+static bool_t sendMsg( t_eFSP_MSGTX_TxCtx* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
                        const uint32_t timeToSend );
-static bool_t sendMsgCorr( void* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
+static bool_t sendMsgCorr( t_eFSP_MSGTX_TxCtx* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
                        const uint32_t timeToSend );
-static bool_t sendMsgOnce( void* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
+static bool_t sendMsgOnce( t_eFSP_MSGTX_TxCtx* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
                        const uint32_t timeToSend );
-static bool_t sendMsgErr( void* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
+static bool_t sendMsgErr( t_eFSP_MSGTX_TxCtx* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
                           const uint32_t timeToSend );
-static bool_t timStart ( void* cntx, const uint32_t timeoutVal );
-static bool_t timGetRemaining ( void* cntx, uint32_t* const remainings );
-static bool_t timStartErr ( void* cntx, const uint32_t timeoutVal );
-static bool_t timGetRemainingErr ( void* cntx, uint32_t* const remainings );
-static bool_t timGetRemainingCorr ( void* cntx, uint32_t* const remainings );
+static bool_t timStart ( t_eFSP_MSGTX_TimCtx* cntx, const uint32_t timeoutVal );
+static bool_t timGetRemaining ( t_eFSP_MSGTX_TimCtx* cntx, uint32_t* const remainings );
+static bool_t timStartErr ( t_eFSP_MSGTX_TimCtx* cntx, const uint32_t timeoutVal );
+static bool_t timGetRemainingErr ( t_eFSP_MSGTX_TimCtx* cntx, uint32_t* const remainings );
+static bool_t timGetRemainingCorr ( t_eFSP_MSGTX_TimCtx* cntx, uint32_t* const remainings );
 
 
 
@@ -171,11 +171,11 @@ static uint8_t m_txBuff[100u];
 static uint32_t m_txBuffCounter;
 static uint32_t m_send_when;
 
-bool_t sendMsg( void* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
+bool_t sendMsg( t_eFSP_MSGTX_TxCtx* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
                 const uint32_t timeToSend )
 {
     bool_t result;
-    s_eCU_msgSendAdapterCtx* ctxCur;
+    t_eFSP_MSGTX_TxCtx* ctxCur;
 
     (void)timeToSend;
 
@@ -185,7 +185,7 @@ bool_t sendMsg( void* cntx, const uint8_t* dataToSend, const uint32_t dataToSend
     }
     else
     {
-        ctxCur = (s_eCU_msgSendAdapterCtx*)cntx;
+        ctxCur = (t_eFSP_MSGTX_TxCtx*)cntx;
         ctxCur->sendIsError = true;
 
 
@@ -207,11 +207,11 @@ bool_t sendMsg( void* cntx, const uint8_t* dataToSend, const uint32_t dataToSend
 }
 
 
-bool_t sendMsgCorr( void* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
+bool_t sendMsgCorr( t_eFSP_MSGTX_TxCtx* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
                 const uint32_t timeToSend )
 {
     bool_t result;
-    s_eCU_msgSendAdapterCtx* ctxCur;
+    t_eFSP_MSGTX_TxCtx* ctxCur;
 
     (void)timeToSend;
 
@@ -221,7 +221,7 @@ bool_t sendMsgCorr( void* cntx, const uint8_t* dataToSend, const uint32_t dataTo
     }
     else
     {
-        ctxCur = (s_eCU_msgSendAdapterCtx*)cntx;
+        ctxCur = (t_eFSP_MSGTX_TxCtx*)cntx;
         ctxCur->sendIsError = true;
 
 
@@ -242,11 +242,11 @@ bool_t sendMsgCorr( void* cntx, const uint8_t* dataToSend, const uint32_t dataTo
     return result;
 }
 
-bool_t sendMsgOnce( void* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
+bool_t sendMsgOnce( t_eFSP_MSGTX_TxCtx* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
                 const uint32_t timeToSend )
 {
     bool_t result;
-    s_eCU_msgSendAdapterCtx* ctxCur;
+    t_eFSP_MSGTX_TxCtx* ctxCur;
 
     (void)timeToSend;
 
@@ -256,7 +256,7 @@ bool_t sendMsgOnce( void* cntx, const uint8_t* dataToSend, const uint32_t dataTo
     }
     else
     {
-        ctxCur = (s_eCU_msgSendAdapterCtx*)cntx;
+        ctxCur = (t_eFSP_MSGTX_TxCtx*)cntx;
         ctxCur->sendIsError = true;
 
 
@@ -286,11 +286,11 @@ bool_t sendMsgOnce( void* cntx, const uint8_t* dataToSend, const uint32_t dataTo
     return result;
 }
 
-bool_t sendMsgErr( void* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
+bool_t sendMsgErr( t_eFSP_MSGTX_TxCtx* cntx, const uint8_t* dataToSend, const uint32_t dataToSendLen, uint32_t* const dataSended,
                 const uint32_t timeToSend )
 {
     bool_t result;
-    s_eCU_msgSendAdapterCtx* ctxCur;
+    t_eFSP_MSGTX_TxCtx* ctxCur;
 
     (void)dataToSendLen;
     (void)timeToSend;
@@ -301,7 +301,7 @@ bool_t sendMsgErr( void* cntx, const uint8_t* dataToSend, const uint32_t dataToS
     }
     else
     {
-        ctxCur = (s_eCU_msgSendAdapterCtx*)cntx;
+        ctxCur = (t_eFSP_MSGTX_TxCtx*)cntx;
         ctxCur->sendIsError = true;
         result = false;
     }
@@ -311,10 +311,10 @@ bool_t sendMsgErr( void* cntx, const uint8_t* dataToSend, const uint32_t dataToS
 
 static uint32_t m_tim_remainingTime;
 
-bool_t timStart ( void* cntx, const uint32_t timeoutVal )
+bool_t timStart ( t_eFSP_MSGTX_TimCtx* cntx, const uint32_t timeoutVal )
 {
     bool_t result;
-    s_eCU_timerAdapterCtx* ctxCur;
+    t_eFSP_MSGTX_TimCtx* ctxCur;
 
     if( NULL == cntx )
     {
@@ -322,7 +322,7 @@ bool_t timStart ( void* cntx, const uint32_t timeoutVal )
     }
     else
     {
-        ctxCur = (s_eCU_timerAdapterCtx*)cntx;
+        ctxCur = (t_eFSP_MSGTX_TimCtx*)cntx;
         ctxCur->sendIsError = true;
 
         m_tim_remainingTime = timeoutVal;
@@ -332,10 +332,10 @@ bool_t timStart ( void* cntx, const uint32_t timeoutVal )
     return result;
 }
 
-bool_t timGetRemaining ( void* cntx, uint32_t* const remainings )
+bool_t timGetRemaining ( t_eFSP_MSGTX_TimCtx* cntx, uint32_t* const remainings )
 {
     bool_t result;
-    s_eCU_timerAdapterCtx* ctxCur;
+    t_eFSP_MSGTX_TimCtx* ctxCur;
 
     if( ( NULL == cntx ) || ( NULL == remainings ) )
     {
@@ -343,7 +343,7 @@ bool_t timGetRemaining ( void* cntx, uint32_t* const remainings )
     }
     else
     {
-        ctxCur = (s_eCU_timerAdapterCtx*)cntx;
+        ctxCur = (t_eFSP_MSGTX_TimCtx*)cntx;
         ctxCur->sendIsError = true;
 
         if( m_tim_remainingTime > 0u )
@@ -359,10 +359,10 @@ bool_t timGetRemaining ( void* cntx, uint32_t* const remainings )
 }
 
 
-bool_t timStartErr ( void* cntx, const uint32_t timeoutVal )
+bool_t timStartErr ( t_eFSP_MSGTX_TimCtx* cntx, const uint32_t timeoutVal )
 {
     bool_t result;
-    s_eCU_timerAdapterCtx* ctxCur;
+    t_eFSP_MSGTX_TimCtx* ctxCur;
 
     if( NULL == cntx )
     {
@@ -370,7 +370,7 @@ bool_t timStartErr ( void* cntx, const uint32_t timeoutVal )
     }
     else
     {
-        ctxCur = (s_eCU_timerAdapterCtx*)cntx;
+        ctxCur = (t_eFSP_MSGTX_TimCtx*)cntx;
         ctxCur->sendIsError = true;
 
         m_tim_remainingTime = timeoutVal;
@@ -380,10 +380,10 @@ bool_t timStartErr ( void* cntx, const uint32_t timeoutVal )
     return result;
 }
 
-bool_t timGetRemainingErr ( void* cntx, uint32_t* const remainings )
+bool_t timGetRemainingErr ( t_eFSP_MSGTX_TimCtx* cntx, uint32_t* const remainings )
 {
     bool_t result;
-    s_eCU_timerAdapterCtx* ctxCur;
+    t_eFSP_MSGTX_TimCtx* ctxCur;
 
     if( ( NULL == cntx ) || ( NULL == remainings ) )
     {
@@ -391,7 +391,7 @@ bool_t timGetRemainingErr ( void* cntx, uint32_t* const remainings )
     }
     else
     {
-        ctxCur = (s_eCU_timerAdapterCtx*)cntx;
+        ctxCur = (t_eFSP_MSGTX_TimCtx*)cntx;
         ctxCur->sendIsError = true;
 
         if( m_tim_remainingTime > 0u )
@@ -406,10 +406,10 @@ bool_t timGetRemainingErr ( void* cntx, uint32_t* const remainings )
     return result;
 }
 
-bool_t timGetRemainingCorr ( void* cntx, uint32_t* const remainings )
+bool_t timGetRemainingCorr ( t_eFSP_MSGTX_TimCtx* cntx, uint32_t* const remainings )
 {
     bool_t result;
-    s_eCU_timerAdapterCtx* ctxCur;
+    t_eFSP_MSGTX_TimCtx* ctxCur;
 
     if( ( NULL == cntx ) || ( NULL == remainings ) )
     {
@@ -417,7 +417,7 @@ bool_t timGetRemainingCorr ( void* cntx, uint32_t* const remainings )
     }
     else
     {
-        ctxCur = (s_eCU_timerAdapterCtx*)cntx;
+        ctxCur = (t_eFSP_MSGTX_TimCtx*)cntx;
         ctxCur->sendIsError = true;
         if( m_tim_remainingTime < MAX_UINT32VAL )
         {
@@ -445,8 +445,8 @@ void eFSP_TEST_msgTransmitterBadPointer(void)
     t_eFSP_MSGTX_InitData initData;
     f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    s_eCU_msgSendAdapterCtx ctxAdapterSend;
-    s_eCU_timerAdapterCtx ctxAdapterTim;
+    t_eFSP_MSGTX_TxCtx ctxAdapterSend;
+    t_eFSP_MSGTX_TimCtx ctxAdapterTim;
     uint8_t  memArea[10u];
     uint8_t  sendBuff[10u];
     uint8_t* dataP;
@@ -836,8 +836,8 @@ void eFSP_TEST_msgTransmitterBadInit(void)
     t_eFSP_MSGTX_Ctx ctx;
     f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    s_eCU_msgSendAdapterCtx ctxAdapterSend;
-    s_eCU_timerAdapterCtx ctxAdapterTim;
+    t_eFSP_MSGTX_TxCtx ctxAdapterSend;
+    t_eFSP_MSGTX_TimCtx ctxAdapterTim;
     uint8_t  sendBuff[10u];
     uint8_t* dataP;
     uint32_t dataL;
@@ -925,8 +925,8 @@ void eFSP_TEST_msgTransmitterBadIniMsg(void)
     t_eFSP_MSGTX_InitData initData;
     f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    s_eCU_msgSendAdapterCtx ctxAdapterSend;
-    s_eCU_timerAdapterCtx ctxAdapterTim;
+    t_eFSP_MSGTX_TxCtx ctxAdapterSend;
+    t_eFSP_MSGTX_TimCtx ctxAdapterTim;
     uint8_t  memArea[10u];
     uint8_t  sendBuff[10u];
     bool_t isInit;
@@ -1002,8 +1002,8 @@ void eFSP_TEST_msgTransmitterBadParamEntr(void)
     t_eFSP_MSGTX_InitData initData;
     f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    s_eCU_msgSendAdapterCtx ctxAdapterSend;
-    s_eCU_timerAdapterCtx ctxAdapterTim;
+    t_eFSP_MSGTX_TxCtx ctxAdapterSend;
+    t_eFSP_MSGTX_TimCtx ctxAdapterTim;
     uint8_t  memArea[10u];
     uint8_t  sendBuff[10u];
 
@@ -1167,8 +1167,8 @@ void eFSP_TEST_msgTransmitterCorruptContext(void)
     t_eFSP_MSGTX_InitData initData;
     f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    s_eCU_msgSendAdapterCtx ctxAdapterSend;
-    s_eCU_timerAdapterCtx ctxAdapterTim;
+    t_eFSP_MSGTX_TxCtx ctxAdapterSend;
+    t_eFSP_MSGTX_TimCtx ctxAdapterTim;
     uint8_t  memArea[10u];
     uint8_t  sendBuff[10u];
     uint8_t* dataP;
@@ -1589,8 +1589,8 @@ void eFSP_TEST_msgTransmitterBadClBckCrc(void)
     t_eFSP_MSGTX_InitData initData;
     f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdaptEr;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    s_eCU_msgSendAdapterCtx ctxAdapterSend;
-    s_eCU_timerAdapterCtx ctxAdapterTim;
+    t_eFSP_MSGTX_TxCtx ctxAdapterSend;
+    t_eFSP_MSGTX_TimCtx ctxAdapterTim;
     uint8_t  memArea[10u];
     uint8_t  sendBuff[10u];
 
@@ -1646,8 +1646,8 @@ void eFSP_TEST_msgTransmitterBadClBckSend(void)
     t_eFSP_MSGTX_InitData initData;
     f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    s_eCU_msgSendAdapterCtx ctxAdapterSend;
-    s_eCU_timerAdapterCtx ctxAdapterTim;
+    t_eFSP_MSGTX_TxCtx ctxAdapterSend;
+    t_eFSP_MSGTX_TimCtx ctxAdapterTim;
     uint8_t  memArea[10u];
     uint8_t  sendBuff[10u];
     uint8_t* dataP;
@@ -1727,8 +1727,8 @@ void eFSP_TEST_msgTransmitterBadClBckTim(void)
     t_eFSP_MSGTX_InitData initData;
     f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    s_eCU_msgSendAdapterCtx ctxAdapterSend;
-    s_eCU_timerAdapterCtx ctxAdapterTim;
+    t_eFSP_MSGTX_TxCtx ctxAdapterSend;
+    t_eFSP_MSGTX_TimCtx ctxAdapterTim;
     uint8_t  memArea[10u];
     uint8_t  sendBuff[10u];
     uint8_t* dataP;
@@ -1879,8 +1879,8 @@ void eFSP_TEST_msgTransmitterCornerCase(void)
     t_eFSP_MSGTX_InitData initData;
     f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    s_eCU_msgSendAdapterCtx ctxAdapterSend;
-    s_eCU_timerAdapterCtx ctxAdapterTim;
+    t_eFSP_MSGTX_TxCtx ctxAdapterSend;
+    t_eFSP_MSGTX_TimCtx ctxAdapterTim;
     uint8_t  memArea[10u];
     uint8_t  sendBuff[10u];
     uint8_t* dataP;
@@ -2283,8 +2283,8 @@ void eFSP_TEST_msgTransmitterCornerCase2(void)
     t_eFSP_MSGTX_InitData initData;
     f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    s_eCU_msgSendAdapterCtx ctxAdapterSend;
-    s_eCU_timerAdapterCtx ctxAdapterTim;
+    t_eFSP_MSGTX_TxCtx ctxAdapterSend;
+    t_eFSP_MSGTX_TimCtx ctxAdapterTim;
     uint8_t  memArea[10u];
     uint8_t  sendBuff[10u];
     uint8_t* dataP;
@@ -2483,8 +2483,8 @@ void eFSP_TEST_msgTransmitterCornerCase3()
     t_eFSP_MSGTX_InitData initData;
     f_eFSP_MSGE_CrcCb cbCrcPTest = &c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    s_eCU_msgSendAdapterCtx ctxAdapterSend;
-    s_eCU_timerAdapterCtx ctxAdapterTim;
+    t_eFSP_MSGTX_TxCtx ctxAdapterSend;
+    t_eFSP_MSGTX_TimCtx ctxAdapterTim;
     uint8_t  memArea[10u];
     uint8_t  sendBuff[10u];
     uint8_t* dataP;
