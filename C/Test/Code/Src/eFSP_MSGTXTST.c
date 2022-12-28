@@ -18,8 +18,7 @@
 #include <stdio.h>
 
 #ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_disable = "MISRAC2012-Rule-10.3", "MISRAC2012-Rule-11.5",  \
-                            "MISRAC2012-Rule-8.9_a", "MISRAC2012-Rule-8.13", "MISRAC2012-Rule-2.2_b"
+    #pragma cstat_disable = "MISRAC2012-Rule-8.13"
     /* Suppressed for code clarity in test execution*/
 #endif
 
@@ -2629,6 +2628,5 @@ void eFSP_MSGTXTST_CornerCase3()
 }
 
 #ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MISRAC2012-Rule-10.3", "MISRAC2012-Rule-11.5",  \
-                            "MISRAC2012-Rule-8.9_a", "MISRAC2012-Rule-8.13", "MISRAC2012-Rule-2.2_b"
+    #pragma cstat_restore = "MISRAC2012-Rule-8.13"
 #endif
