@@ -15,11 +15,6 @@
 #include "eCU_CRC.h"
 #include <stdio.h>
 
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_disable = "MISRAC2012-Rule-10.3", "CERT-STR32-C", "MISRAC2012-Rule-11.5", "CERT-EXP36-C_b"
-    /* Suppressed for code clarity in test execution*/
-#endif
-
 
 
 /***********************************************************************************************************************
@@ -4362,7 +4357,3 @@ void eFSP_MSGDTST_Corner(void)
         (void)printf("eFSP_MSGDTST_Corner 4  -- FAIL \n");
     }
 }
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MISRAC2012-Rule-10.3", "CERT-STR32-C", "MISRAC2012-Rule-11.5", "CERT-EXP36-C_b"
-#endif

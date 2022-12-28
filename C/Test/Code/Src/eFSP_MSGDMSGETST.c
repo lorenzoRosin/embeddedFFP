@@ -16,14 +16,6 @@
 #include "eCU_CRC.h"
 #include <stdio.h>
 
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_disable = "MISRAC2012-Rule-10.3", "CERT-STR32-C", "MISRAC2012-Rule-11.5", "CERT-EXP36-C_b", \
-                            "CERT-INT30-C_b"
-    /* Suppressed for code clarity in test execution*/
-#endif
-
-
-
 
 
 /***********************************************************************************************************************
@@ -223,7 +215,10 @@ void eFSP_MSGDMSGETST_Common(void)
 
         if( ( e_eFSP_MSGE_RES_OK == l_eRncoderRet ) || ( e_eFSP_MSGE_RES_MESSAGEENDED == l_eRncoderRet ) )
         {
-            l_uEncCounter += l_uEncToSendSize;
+            if( l_uEncCounter < ( MAX_UINT32VAL - l_uEncToSendSize ) )
+            {
+                l_uEncCounter += l_uEncToSendSize;
+            }
         }
     }
 
@@ -333,7 +328,3 @@ void eFSP_MSGDMSGETST_Common(void)
 
 }
 
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MISRAC2012-Rule-10.3", "CERT-STR32-C", "MISRAC2012-Rule-11.5", "CERT-EXP36-C_b", \
-                            "CERT-INT30-C_b"
-#endif

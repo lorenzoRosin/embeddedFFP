@@ -15,11 +15,7 @@
 #include "eCU_CRC.h"
 #include <stdio.h>
 
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_disable = "MISRAC2012-Rule-10.3", "CERT-STR32-C", "MISRAC2012-Rule-11.5", "CERT-EXP36-C_b", \
-                            "MISRAC2012-Rule-2.2_b"
-    /* Suppressed for code clarity in test execution*/
-#endif
+
 
 /***********************************************************************************************************************
  *   PRIVATE TEST STRUCT DECLARATION
@@ -316,6 +312,7 @@ void eFSP_MSGETST_BadInit(void)
     l_tCtx.ptCrcCtx = &l_tCtxAdapterCrc;
     l_tCtx.fCrc = l_fCrcTest;
 
+    (void)l_tCtxAdapterCrc.eLastEr;
     /* Function */
     if( e_eFSP_MSGE_RES_NOINITLIB == eFSP_MSGE_NewMessage(&l_tCtx, 1u) )
     {
@@ -1386,8 +1383,3 @@ void eFSP_MSGETST_General2(void)
         (void)printf("eFSP_MSGETST_General2 10 -- FAIL \n");
     }
 }
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MISRAC2012-Rule-10.3", "CERT-STR32-C", "MISRAC2012-Rule-11.5", "CERT-EXP36-C_b", \
-                            "MISRAC2012-Rule-2.2_b"
-#endif
