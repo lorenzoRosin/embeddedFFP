@@ -123,35 +123,35 @@ void eFSP_MSGRXTST_ExeTest(void)
  **********************************************************************************************************************/
 bool_t eFSP_MSGRXTST_c32SAdapt(t_eFSP_MSGD_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val)
 {
-    bool_t result;
-    t_eFSP_MSGD_CrcCtx* ctxCur;
+    bool_t l_bResult;
+    t_eFSP_MSGD_CrcCtx* l_ptCtxCur;
 
     if( ( NULL == p_ptCtx ) || ( NULL == p_puC32Val ) )
     {
-        result = false;
+        l_bResult = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGD_CrcCtx*)p_ptCtx;
+        l_ptCtxCur = (t_eFSP_MSGD_CrcCtx*)p_ptCtx;
 
-        ctxCur->eLastEr = eCU_CRC_32Seed(p_uS, (const uint8_t*)p_puD, p_uDLen, p_puC32Val);
-        if( e_eCU_CRC_RES_OK == ctxCur->eLastEr )
+        l_ptCtxCur->eLastEr = eCU_CRC_32Seed(p_uS, (const uint8_t*)p_puD, p_uDLen, p_puC32Val);
+        if( e_eCU_CRC_RES_OK == l_ptCtxCur->eLastEr )
         {
-            result = true;
+            l_bResult = true;
         }
         else
         {
-            result = false;
+            l_bResult = false;
         }
     }
 
-    return result;
+    return l_bResult;
 }
 
 bool_t eFSP_MSGRXTST_c32SAdaptEr(t_eFSP_MSGD_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val)
 {
-    bool_t result;
-    t_eFSP_MSGD_CrcCtx* ctxCur;
+    bool_t l_bResult;
+    t_eFSP_MSGD_CrcCtx* l_ptCtxCur;
 
     (void)p_uS;
     (void)p_puD;
@@ -159,18 +159,18 @@ bool_t eFSP_MSGRXTST_c32SAdaptEr(t_eFSP_MSGD_CrcCtx* p_ptCtx, const uint32_t p_u
 
     if( ( NULL == p_ptCtx ) || ( NULL == p_puC32Val ) )
     {
-        result = false;
+        l_bResult = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGD_CrcCtx*)p_ptCtx;
+        l_ptCtxCur = (t_eFSP_MSGD_CrcCtx*)p_ptCtx;
 
-        ctxCur->eLastEr = e_eCU_CRC_RES_BADPOINTER;
-        result = false;
+        l_ptCtxCur->eLastEr = e_eCU_CRC_RES_BADPOINTER;
+        l_bResult = false;
         *p_puC32Val = 0u;
     }
 
-    return result;
+    return l_bResult;
 }
 
 static uint8_t  m_auRxPayload[120u];
@@ -182,18 +182,18 @@ static uint32_t m_uReadJumpLong;
 bool_t eFSP_MSGRXTST_receiveMsg( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puDataToRx, uint32_t* const p_puDataRxedL, const uint32_t p_uDataRxMax,
                 const uint32_t p_uTimeToTx )
 {
-    bool_t result;
-    t_eFSP_MSGRX_RxCtx* ctxCur;
+    bool_t l_bResult;
+    t_eFSP_MSGRX_RxCtx* l_ptCtxCur;
 
     if( ( NULL == p_ptCtx ) || ( NULL == p_puDataToRx ) || ( NULL == p_puDataRxedL ) )
     {
-        result = false;
+        l_bResult = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGRX_RxCtx*)p_ptCtx;
-        ctxCur->bTxIsError = true;
-        result = true;
+        l_ptCtxCur = (t_eFSP_MSGRX_RxCtx*)p_ptCtx;
+        l_ptCtxCur->bTxIsError = true;
+        l_bResult = true;
 
 
         if( m_uPayloadCounter < m_uPayloadSize )
@@ -217,24 +217,24 @@ bool_t eFSP_MSGRXTST_receiveMsg( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puDataT
         }
     }
 
-    return result;
+    return l_bResult;
 }
 
 bool_t eFSP_MSGRXTST_receiveMsgCrrupt (t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puDataToRx, uint32_t* const p_puDataRxedL, const uint32_t p_uDataRxMax,
                 const uint32_t p_uTimeToTx )
 {
-    bool_t result;
-    t_eFSP_MSGRX_RxCtx* ctxCur;
+    bool_t l_bResult;
+    t_eFSP_MSGRX_RxCtx* l_ptCtxCur;
 
     if( ( NULL == p_ptCtx ) || ( NULL == p_puDataToRx ) || ( NULL == p_puDataRxedL ) )
     {
-        result = false;
+        l_bResult = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGRX_RxCtx*)p_ptCtx;
-        ctxCur->bTxIsError = true;
-        result = true;
+        l_ptCtxCur = (t_eFSP_MSGRX_RxCtx*)p_ptCtx;
+        l_ptCtxCur->bTxIsError = true;
+        l_bResult = true;
 
         if( m_uPayloadCounter < m_uPayloadSize )
         {
@@ -257,22 +257,22 @@ bool_t eFSP_MSGRXTST_receiveMsgCrrupt (t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_p
         }
     }
 
-    return result;
+    return l_bResult;
 }
 
 bool_t eFSP_MSGRXTST_receiveMsgJump( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puDataToRx, uint32_t* const p_puDataRxedL, const uint32_t p_uDataRxMax,
                 const uint32_t p_uTimeToTx )
 {
-    bool_t result;
-    t_eFSP_MSGRX_RxCtx* ctxCur;
+    bool_t l_bResult;
+    t_eFSP_MSGRX_RxCtx* l_ptCtxCur;
 
-    ctxCur = (t_eFSP_MSGRX_RxCtx*)p_ptCtx;
-    ctxCur->bTxIsError = true;
-    result = true;
+    l_ptCtxCur = (t_eFSP_MSGRX_RxCtx*)p_ptCtx;
+    l_ptCtxCur->bTxIsError = true;
+    l_bResult = true;
 
     if( ( NULL == p_ptCtx ) || ( NULL == p_puDataToRx ) || ( NULL == p_puDataRxedL ) )
     {
-        result = false;
+        l_bResult = false;
     }
     else
     {
@@ -306,22 +306,22 @@ bool_t eFSP_MSGRXTST_receiveMsgJump( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puD
         }
     }
 
-    return result;
+    return l_bResult;
 }
 
 bool_t eFSP_MSGRXTST_receiveMsgJumpLong( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puDataToRx, uint32_t* const p_puDataRxedL, const uint32_t p_uDataRxMax,
                 const uint32_t p_uTimeToTx )
 {
-    bool_t result;
-    t_eFSP_MSGRX_RxCtx* ctxCur;
+    bool_t l_bResult;
+    t_eFSP_MSGRX_RxCtx* l_ptCtxCur;
 
-    ctxCur = (t_eFSP_MSGRX_RxCtx*)p_ptCtx;
-    ctxCur->bTxIsError = true;
-    result = true;
+    l_ptCtxCur = (t_eFSP_MSGRX_RxCtx*)p_ptCtx;
+    l_ptCtxCur->bTxIsError = true;
+    l_bResult = true;
 
     if( ( NULL == p_ptCtx ) || ( NULL == p_puDataToRx ) || ( NULL == p_puDataRxedL ) )
     {
-        result = false;
+        l_bResult = false;
     }
     else
     {
@@ -355,203 +355,203 @@ bool_t eFSP_MSGRXTST_receiveMsgJumpLong( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p
         }
     }
 
-    return result;
+    return l_bResult;
 }
 
 bool_t eFSP_MSGRXTST_receiveMsgErr( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puDataToRx, uint32_t* const p_puDataRxedL, const uint32_t p_uDataRxMax,
                 const uint32_t p_uTimeToTx )
 {
-    bool_t result;
-    t_eFSP_MSGRX_RxCtx* ctxCur;
+    bool_t l_bResult;
+    t_eFSP_MSGRX_RxCtx* l_ptCtxCur;
 
     (void)p_uTimeToTx;
     (void)p_uDataRxMax;
     if( ( NULL == p_ptCtx ) || ( NULL == p_puDataToRx ) || ( NULL == p_puDataRxedL ) )
     {
-        result = false;
+        l_bResult = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGRX_RxCtx*)p_ptCtx;
-        ctxCur->bTxIsError = true;
-        result = false;
+        l_ptCtxCur = (t_eFSP_MSGRX_RxCtx*)p_ptCtx;
+        l_ptCtxCur->bTxIsError = true;
+        l_bResult = false;
     }
 
-    return result;
+    return l_bResult;
 }
 
-static uint32_t m_tim_remainingTime;
+static uint32_t m_uTimRemainingTime;
 static uint32_t m_tim_timCnt;
 static uint32_t m_tim_timCntInc;
 
 bool_t eFSP_MSGRXTST_timStart ( t_eFSP_MSGRX_TimCtx* p_ptCtx, const uint32_t p_uTimeoutVal )
 {
-    bool_t result;
-    t_eFSP_MSGRX_TimCtx* ctxCur;
+    bool_t l_bResult;
+    t_eFSP_MSGRX_TimCtx* l_ptCtxCur;
 
     if( NULL == p_ptCtx )
     {
-        result = false;
+        l_bResult = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGRX_TimCtx*)p_ptCtx;
-        ctxCur->bTxIsError = true;
+        l_ptCtxCur = (t_eFSP_MSGRX_TimCtx*)p_ptCtx;
+        l_ptCtxCur->bTxIsError = true;
         m_tim_timCnt = 0u;
         m_tim_timCntInc = 0u;
-        m_tim_remainingTime = p_uTimeoutVal;
-        result = true;
+        m_uTimRemainingTime = p_uTimeoutVal;
+        l_bResult = true;
     }
 
-    return result;
+    return l_bResult;
 }
 
 bool_t eFSP_MSGRXTST_timGetRemaining ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* const p_puRemainings )
 {
-    bool_t result;
-    t_eFSP_MSGRX_TimCtx* ctxCur;
+    bool_t l_bResult;
+    t_eFSP_MSGRX_TimCtx* l_ptCtxCur;
 
     if( ( NULL == p_ptCtx ) || ( NULL == p_puRemainings ) )
     {
-        result = false;
+        l_bResult = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGRX_TimCtx*)p_ptCtx;
-        ctxCur->bTxIsError = true;
+        l_ptCtxCur = (t_eFSP_MSGRX_TimCtx*)p_ptCtx;
+        l_ptCtxCur->bTxIsError = true;
 
         if( m_tim_timCnt < MAX_UINT32VAL )
         {
             m_tim_timCnt++;
         }
 
-        if( m_tim_remainingTime > 0u )
+        if( m_uTimRemainingTime > 0u )
         {
-            m_tim_remainingTime--;
+            m_uTimRemainingTime--;
         }
 
-        *p_puRemainings = m_tim_remainingTime;
-        result = true;
+        *p_puRemainings = m_uTimRemainingTime;
+        l_bResult = true;
     }
 
-    return result;
+    return l_bResult;
 }
 
 bool_t eFSP_MSGRXTST_timGetRemainingCorr ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* const p_puRemainings )
 {
-    bool_t result;
-    t_eFSP_MSGRX_TimCtx* ctxCur;
+    bool_t l_bResult;
+    t_eFSP_MSGRX_TimCtx* l_ptCtxCur;
 
     if( ( NULL == p_ptCtx ) || ( NULL == p_puRemainings ) )
     {
-        result = false;
+        l_bResult = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGRX_TimCtx*)p_ptCtx;
-        ctxCur->bTxIsError = true;
+        l_ptCtxCur = (t_eFSP_MSGRX_TimCtx*)p_ptCtx;
+        l_ptCtxCur->bTxIsError = true;
         if( m_tim_timCnt < MAX_UINT32VAL )
         {
             m_tim_timCnt++;
         }
-        *p_puRemainings = m_tim_remainingTime + m_tim_timCntInc;
+        *p_puRemainings = m_uTimRemainingTime + m_tim_timCntInc;
 
         if( m_tim_timCntInc < MAX_UINT32VAL )
         {
             m_tim_timCntInc++;
         }
-        result = true;
+        l_bResult = true;
     }
 
-    return result;
+    return l_bResult;
 }
 
 bool_t eFSP_MSGRXTST_timStartErr ( t_eFSP_MSGRX_TimCtx* p_ptCtx, const uint32_t p_uTimeoutVal )
 {
-    bool_t result;
-    t_eFSP_MSGRX_TimCtx* ctxCur;
+    bool_t l_bResult;
+    t_eFSP_MSGRX_TimCtx* l_ptCtxCur;
 
     if( NULL == p_ptCtx )
     {
-        result = false;
+        l_bResult = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGRX_TimCtx*)p_ptCtx;
-        ctxCur->bTxIsError = true;
+        l_ptCtxCur = (t_eFSP_MSGRX_TimCtx*)p_ptCtx;
+        l_ptCtxCur->bTxIsError = true;
         m_tim_timCnt = 0u;
 
-        m_tim_remainingTime = p_uTimeoutVal;
-        result = false;
+        m_uTimRemainingTime = p_uTimeoutVal;
+        l_bResult = false;
     }
 
-    return result;
+    return l_bResult;
 }
 
 bool_t eFSP_MSGRXTST_timGetRemainingErr ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* const p_puRemainings )
 {
-    bool_t result;
-    t_eFSP_MSGRX_TimCtx* ctxCur;
+    bool_t l_bResult;
+    t_eFSP_MSGRX_TimCtx* l_ptCtxCur;
 
     if( ( NULL == p_ptCtx ) || ( NULL == p_puRemainings) )
     {
-        result = false;
+        l_bResult = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGRX_TimCtx*)p_ptCtx;
-        ctxCur->bTxIsError = true;
+        l_ptCtxCur = (t_eFSP_MSGRX_TimCtx*)p_ptCtx;
+        l_ptCtxCur->bTxIsError = true;
         if( m_tim_timCnt < MAX_UINT32VAL )
         {
             m_tim_timCnt++;
         }
-        if( m_tim_remainingTime > 0u )
+        if( m_uTimRemainingTime > 0u )
         {
-            m_tim_remainingTime--;
+            m_uTimRemainingTime--;
         }
 
-        *p_puRemainings = m_tim_remainingTime;
-        result = false;
+        *p_puRemainings = m_uTimRemainingTime;
+        l_bResult = false;
     }
 
-    return result;
+    return l_bResult;
 }
 
 bool_t eFSP_MSGRXTST_timGetRemainingErrCntrl ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* const p_puRemainings )
 {
-    bool_t result;
-    t_eFSP_MSGRX_TimCtx* ctxCur;
+    bool_t l_bResult;
+    t_eFSP_MSGRX_TimCtx* l_ptCtxCur;
 
     if( ( NULL == p_ptCtx ) || ( NULL == p_puRemainings) )
     {
-        result = false;
+        l_bResult = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGRX_TimCtx*)p_ptCtx;
-        ctxCur->bTxIsError = true;
+        l_ptCtxCur = (t_eFSP_MSGRX_TimCtx*)p_ptCtx;
+        l_ptCtxCur->bTxIsError = true;
         if( m_tim_timCnt < MAX_UINT32VAL )
         {
             m_tim_timCnt++;
         }
-        if( m_tim_remainingTime > 0u )
+        if( m_uTimRemainingTime > 0u )
         {
-            m_tim_remainingTime--;
+            m_uTimRemainingTime--;
         }
 
-        *p_puRemainings = m_tim_remainingTime;
+        *p_puRemainings = m_uTimRemainingTime;
 
         if( m_tim_timCnt < 2u )
         {
-            result = true;
+            l_bResult = true;
         }
         else
         {
-            result = false;
+            l_bResult = false;
         }
     }
 
-    return result;
+    return l_bResult;
 }
 
 /***********************************************************************************************************************
@@ -565,19 +565,19 @@ void eFSP_MSGRXTST_BadPointer(void)
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx l_tCtx;
-    t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
-    t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
-    t_eFSP_MSGRX_RxCtx ctxAdapterRx;
-    t_eFSP_MSGRX_TimCtx ctxAdapterTim;
-    uint8_t  memArea[10u];
-    uint8_t  recBuff[10u];
-    uint8_t* dataP;
-    uint32_t dataL;
-    bool_t isInit;
+    t_eFSP_MSGRX_InitData l_tInitData;
+    f_eFSP_MSGD_CrcCb l_fCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
+    t_eFSP_MSGD_CrcCtx l_tCtxAdapterCrc;
+    t_eFSP_MSGRX_RxCtx l_tCtxAdapterRx;
+    t_eFSP_MSGRX_TimCtx l_tCtxAdapterTim;
+    uint8_t  l_auMemArea[10u];
+    uint8_t  l_auRecBuff[10u];
+    uint8_t* l_puData;
+    uint32_t l_uDataL;
+    bool_t l_bIsInit;
 
     /* Function */
-    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(NULL, &initData) )
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(NULL, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadPointer 1  -- OK \n");
     }
@@ -597,21 +597,21 @@ void eFSP_MSGRXTST_BadPointer(void)
     }
 
     /* Function */
-    initData.puIMemArea = NULL;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = NULL;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadPointer 3  -- OK \n");
     }
@@ -621,21 +621,21 @@ void eFSP_MSGRXTST_BadPointer(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = NULL;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = NULL;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadPointer 4  -- OK \n");
     }
@@ -645,21 +645,21 @@ void eFSP_MSGRXTST_BadPointer(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = NULL;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = NULL;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadPointer 5  -- OK \n");
     }
@@ -669,21 +669,21 @@ void eFSP_MSGRXTST_BadPointer(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = NULL;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = NULL;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadPointer 6  -- OK \n");
     }
@@ -693,21 +693,21 @@ void eFSP_MSGRXTST_BadPointer(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = NULL;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = NULL;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadPointer 7  -- OK \n");
     }
@@ -717,21 +717,21 @@ void eFSP_MSGRXTST_BadPointer(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = NULL;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = NULL;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadPointer 8  -- OK \n");
     }
@@ -741,21 +741,21 @@ void eFSP_MSGRXTST_BadPointer(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = NULL;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = NULL;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadPointer 9  -- OK \n");
     }
@@ -765,21 +765,21 @@ void eFSP_MSGRXTST_BadPointer(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = NULL;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = NULL;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadPointer 10 -- OK \n");
     }
@@ -789,21 +789,21 @@ void eFSP_MSGRXTST_BadPointer(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = NULL;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = NULL;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadPointer 11 -- OK \n");
     }
@@ -813,7 +813,7 @@ void eFSP_MSGRXTST_BadPointer(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_IsInit(NULL, &isInit) )
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_IsInit(NULL, &l_bIsInit) )
     {
         (void)printf("eFSP_MSGRXTST_BadPointer 12 -- OK \n");
     }
@@ -853,7 +853,7 @@ void eFSP_MSGRXTST_BadPointer(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_GetDecodedData(NULL, &dataP, &dataL) )
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_GetDecodedData(NULL, &l_puData, &l_uDataL) )
     {
         (void)printf("eFSP_MSGRXTST_BadPointer 16 -- OK \n");
     }
@@ -863,7 +863,7 @@ void eFSP_MSGRXTST_BadPointer(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_GetDecodedData(&l_tCtx, NULL, &dataL) )
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_GetDecodedData(&l_tCtx, NULL, &l_uDataL) )
     {
         (void)printf("eFSP_MSGRXTST_BadPointer 17 -- OK \n");
     }
@@ -873,7 +873,7 @@ void eFSP_MSGRXTST_BadPointer(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_GetDecodedData(&l_tCtx, &dataP, NULL) )
+    if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_GetDecodedData(&l_tCtx, &l_puData, NULL) )
     {
         (void)printf("eFSP_MSGRXTST_BadPointer 18 -- OK \n");
     }
@@ -901,34 +901,34 @@ void eFSP_MSGRXTST_BadInit(void)
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx l_tCtx;
-    t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
-    t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
-    t_eFSP_MSGRX_RxCtx ctxAdapterRx;
-    t_eFSP_MSGRX_TimCtx ctxAdapterTim;
-    uint8_t  memArea[10u];
-    uint8_t  recBuff[10u];
-    uint8_t* dataP;
-    uint32_t dataL;
-    bool_t isInit;
+    t_eFSP_MSGRX_InitData l_tInitData;
+    f_eFSP_MSGD_CrcCb l_fCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
+    t_eFSP_MSGD_CrcCtx l_tCtxAdapterCrc;
+    t_eFSP_MSGRX_RxCtx l_tCtxAdapterRx;
+    t_eFSP_MSGRX_TimCtx l_tCtxAdapterTim;
+    uint8_t  l_auMemArea[10u];
+    uint8_t  l_auRecBuff[10u];
+    uint8_t* l_puData;
+    uint32_t l_uDataL;
+    bool_t l_bIsInit;
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
 
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadInit 1  -- OK \n");
     }
@@ -938,9 +938,9 @@ void eFSP_MSGRXTST_BadInit(void)
     }
 
     l_tCtx.tMsgdCtx.tBUNSTFCtx.bIsInit = false;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_IsInit(&l_tCtx, &isInit) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_IsInit(&l_tCtx, &l_bIsInit) )
     {
-        if( false == isInit )
+        if( false == l_bIsInit )
         {
             (void)printf("eFSP_MSGRXTST_BadInit 2  -- OK \n");
         }
@@ -975,7 +975,7 @@ void eFSP_MSGRXTST_BadInit(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGRX_RES_NOINITLIB == eFSP_MSGRX_GetDecodedData(&l_tCtx, &dataP, &dataL) )
+    if( e_eFSP_MSGRX_RES_NOINITLIB == eFSP_MSGRX_GetDecodedData(&l_tCtx, &l_puData, &l_uDataL) )
     {
         (void)printf("eFSP_MSGRXTST_BadInit 5  -- OK \n");
     }
@@ -1003,31 +1003,31 @@ void eFSP_MSGRXTST_BadParamEntr(void)
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx l_tCtx;
-    t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
-    t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
-    t_eFSP_MSGRX_RxCtx ctxAdapterRx;
-    t_eFSP_MSGRX_TimCtx ctxAdapterTim;
-    uint8_t  memArea[10u];
-    uint8_t  recBuff[10u];
-    bool_t isInit;
+    t_eFSP_MSGRX_InitData l_tInitData;
+    f_eFSP_MSGD_CrcCb l_fCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
+    t_eFSP_MSGD_CrcCtx l_tCtxAdapterCrc;
+    t_eFSP_MSGRX_RxCtx l_tCtxAdapterRx;
+    t_eFSP_MSGRX_TimCtx l_tCtxAdapterTim;
+    uint8_t  l_auMemArea[10u];
+    uint8_t  l_auRecBuff[10u];
+    bool_t l_bIsInit;
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = 0u;
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_BADPARAM == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = 0u;
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_BADPARAM == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadParamEntr 1  -- OK \n");
     }
@@ -1037,21 +1037,21 @@ void eFSP_MSGRXTST_BadParamEntr(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 0u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_BADPARAM == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 0u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_BADPARAM == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadParamEntr 2  -- OK \n");
     }
@@ -1061,21 +1061,21 @@ void eFSP_MSGRXTST_BadParamEntr(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 0u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_BADPARAM == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 0u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_BADPARAM == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadParamEntr 3  -- OK \n");
     }
@@ -1085,21 +1085,21 @@ void eFSP_MSGRXTST_BadParamEntr(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 100u;
-    initData.uITimePerRecMs = 1000u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_BADPARAM == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 100u;
+    l_tInitData.uITimePerRecMs = 1000u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_BADPARAM == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadParamEntr 4  -- OK \n");
     }
@@ -1109,21 +1109,21 @@ void eFSP_MSGRXTST_BadParamEntr(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = 1u;
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_BADPARAM == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = 1u;
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_BADPARAM == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadParamEntr 5  -- OK \n");
     }
@@ -1133,21 +1133,21 @@ void eFSP_MSGRXTST_BadParamEntr(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadParamEntr 6  -- OK \n");
     }
@@ -1156,9 +1156,9 @@ void eFSP_MSGRXTST_BadParamEntr(void)
         (void)printf("eFSP_MSGRXTST_BadParamEntr 6  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_IsInit(&l_tCtx, &isInit) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_IsInit(&l_tCtx, &l_bIsInit) )
     {
-        if( true == isInit )
+        if( true == l_bIsInit )
         {
             (void)printf("eFSP_MSGRXTST_BadParamEntr 7  -- OK \n");
         }
@@ -1181,32 +1181,32 @@ void eFSP_MSGRXTST_CorruptContext(void)
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx l_tCtx;
-    t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
-    t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
-    t_eFSP_MSGRX_RxCtx ctxAdapterRx;
-    t_eFSP_MSGRX_TimCtx ctxAdapterTim;
-    uint8_t  memArea[10u];
-    uint8_t  recBuff[10u];
-    uint8_t* dataP;
-    uint32_t dataL;
+    t_eFSP_MSGRX_InitData l_tInitData;
+    f_eFSP_MSGD_CrcCb l_fCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
+    t_eFSP_MSGD_CrcCtx l_tCtxAdapterCrc;
+    t_eFSP_MSGRX_RxCtx l_tCtxAdapterRx;
+    t_eFSP_MSGRX_TimCtx l_tCtxAdapterTim;
+    uint8_t  l_auMemArea[10u];
+    uint8_t  l_auRecBuff[10u];
+    uint8_t* l_puData;
+    uint32_t l_uDataL;
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CorruptContext 1  -- OK \n");
     }
@@ -1227,21 +1227,21 @@ void eFSP_MSGRXTST_CorruptContext(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CorruptContext 3  -- OK \n");
     }
@@ -1262,21 +1262,21 @@ void eFSP_MSGRXTST_CorruptContext(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CorruptContext 5  -- OK \n");
     }
@@ -1297,21 +1297,21 @@ void eFSP_MSGRXTST_CorruptContext(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CorruptContext 7  -- OK \n");
     }
@@ -1332,21 +1332,21 @@ void eFSP_MSGRXTST_CorruptContext(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CorruptContext 9  -- OK \n");
     }
@@ -1367,21 +1367,21 @@ void eFSP_MSGRXTST_CorruptContext(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CorruptContext 11 -- OK \n");
     }
@@ -1402,21 +1402,21 @@ void eFSP_MSGRXTST_CorruptContext(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CorruptContext 13 -- OK \n");
     }
@@ -1437,21 +1437,21 @@ void eFSP_MSGRXTST_CorruptContext(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CorruptContext 15 -- OK \n");
     }
@@ -1472,21 +1472,21 @@ void eFSP_MSGRXTST_CorruptContext(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CorruptContext 17 -- OK \n");
     }
@@ -1507,21 +1507,21 @@ void eFSP_MSGRXTST_CorruptContext(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CorruptContext 19 -- OK \n");
     }
@@ -1542,21 +1542,21 @@ void eFSP_MSGRXTST_CorruptContext(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CorruptContext 21 -- OK \n");
     }
@@ -1577,21 +1577,21 @@ void eFSP_MSGRXTST_CorruptContext(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CorruptContext 23 -- OK \n");
     }
@@ -1612,21 +1612,21 @@ void eFSP_MSGRXTST_CorruptContext(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CorruptContext 25 -- OK \n");
     }
@@ -1647,21 +1647,21 @@ void eFSP_MSGRXTST_CorruptContext(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CorruptContext 27 -- OK \n");
     }
@@ -1672,7 +1672,7 @@ void eFSP_MSGRXTST_CorruptContext(void)
 
     /* Function */
     l_tCtx.uTimePerRecMs = l_tCtx.uTimeoutMs + 1u;
-    if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_GetDecodedData(&l_tCtx, &dataP, &dataL) )
+    if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_GetDecodedData(&l_tCtx, &l_puData, &l_uDataL) )
     {
         (void)printf("eFSP_MSGRXTST_CorruptContext 28 -- OK \n");
     }
@@ -1682,21 +1682,21 @@ void eFSP_MSGRXTST_CorruptContext(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CorruptContext 29 -- OK \n");
     }
@@ -1717,21 +1717,21 @@ void eFSP_MSGRXTST_CorruptContext(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CorruptContext 31 -- OK \n");
     }
@@ -1752,21 +1752,21 @@ void eFSP_MSGRXTST_CorruptContext(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CorruptContext 33 -- OK \n");
     }
@@ -1787,21 +1787,21 @@ void eFSP_MSGRXTST_CorruptContext(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CorruptContext 35 -- OK \n");
     }
@@ -1812,7 +1812,7 @@ void eFSP_MSGRXTST_CorruptContext(void)
 
     /* Function */
     l_tCtx.tMsgdCtx.ptCrcCtx = NULL;
-    if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_GetDecodedData(&l_tCtx, &dataP, &dataL ) )
+    if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_GetDecodedData(&l_tCtx, &l_puData, &l_uDataL ) )
     {
         (void)printf("eFSP_MSGRXTST_CorruptContext 36 -- OK \n");
     }
@@ -1822,21 +1822,21 @@ void eFSP_MSGRXTST_CorruptContext(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CorruptContext 37 -- OK \n");
     }
@@ -1865,30 +1865,30 @@ void eFSP_MSGRXTST_BadClBckCrc(void)
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx l_tCtx;
-    t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdaptEr;
-    t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
-    t_eFSP_MSGRX_RxCtx ctxAdapterRx;
-    t_eFSP_MSGRX_TimCtx ctxAdapterTim;
-    uint8_t  memArea[10u];
-    uint8_t  recBuff[10u];
+    t_eFSP_MSGRX_InitData l_tInitData;
+    f_eFSP_MSGD_CrcCb l_fCrcPTest = &eFSP_MSGRXTST_c32SAdaptEr;
+    t_eFSP_MSGD_CrcCtx l_tCtxAdapterCrc;
+    t_eFSP_MSGRX_RxCtx l_tCtxAdapterRx;
+    t_eFSP_MSGRX_TimCtx l_tCtxAdapterTim;
+    uint8_t  l_auMemArea[10u];
+    uint8_t  l_auRecBuff[10u];
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadClBckCrc 1  -- OK \n");
     }
@@ -1939,30 +1939,30 @@ void eFSP_MSGRXTST_BadClBckReceive(void)
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx l_tCtx;
-    t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
-    t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
-    t_eFSP_MSGRX_RxCtx ctxAdapterRx;
-    t_eFSP_MSGRX_TimCtx ctxAdapterTim;
-    uint8_t  memArea[10u];
-    uint8_t  recBuff[10u];
+    t_eFSP_MSGRX_InitData l_tInitData;
+    f_eFSP_MSGD_CrcCb l_fCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
+    t_eFSP_MSGD_CrcCtx l_tCtxAdapterCrc;
+    t_eFSP_MSGRX_RxCtx l_tCtxAdapterRx;
+    t_eFSP_MSGRX_TimCtx l_tCtxAdapterTim;
+    uint8_t  l_auMemArea[10u];
+    uint8_t  l_auRecBuff[10u];
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsgErr;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsgErr;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadClBckReceive 1  -- OK \n");
     }
@@ -2024,30 +2024,30 @@ void eFSP_MSGRXTST_BadClBckTim(void)
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx l_tCtx;
-    t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
-    t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
-    t_eFSP_MSGRX_RxCtx ctxAdapterRx;
-    t_eFSP_MSGRX_TimCtx ctxAdapterTim;
-    uint8_t  memArea[10u];
-    uint8_t  recBuff[10u];
+    t_eFSP_MSGRX_InitData l_tInitData;
+    f_eFSP_MSGD_CrcCb l_fCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
+    t_eFSP_MSGD_CrcCtx l_tCtxAdapterCrc;
+    t_eFSP_MSGRX_RxCtx l_tCtxAdapterRx;
+    t_eFSP_MSGRX_TimCtx l_tCtxAdapterTim;
+    uint8_t  l_auMemArea[10u];
+    uint8_t  l_auRecBuff[10u];
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStartErr;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemainingErr;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStartErr;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemainingErr;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadClBckTim 1  -- OK \n");
     }
@@ -2101,21 +2101,21 @@ void eFSP_MSGRXTST_BadClBckTim(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStartErr;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStartErr;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadClBckTim 5  -- OK \n");
     }
@@ -2169,21 +2169,21 @@ void eFSP_MSGRXTST_BadClBckTim(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemainingErrCntrl;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = false;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemainingErrCntrl;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = false;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadClBckTim 9  -- OK \n");
     }
@@ -2235,30 +2235,30 @@ void eFSP_MSGRXTST_BadFrame(void)
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx l_tCtx;
-    t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
-    t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
-    t_eFSP_MSGRX_RxCtx ctxAdapterRx;
-    t_eFSP_MSGRX_TimCtx ctxAdapterTim;
-    uint8_t  memArea[10u];
-    uint8_t  recBuff[10u];
+    t_eFSP_MSGRX_InitData l_tInitData;
+    f_eFSP_MSGD_CrcCb l_fCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
+    t_eFSP_MSGD_CrcCtx l_tCtxAdapterCrc;
+    t_eFSP_MSGRX_RxCtx l_tCtxAdapterRx;
+    t_eFSP_MSGRX_TimCtx l_tCtxAdapterTim;
+    uint8_t  l_auMemArea[10u];
+    uint8_t  l_auRecBuff[10u];
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadFrame 1  -- OK \n");
     }
@@ -2302,21 +2302,21 @@ void eFSP_MSGRXTST_BadFrame(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadFrame 4  -- OK \n");
     }
@@ -2370,21 +2370,21 @@ void eFSP_MSGRXTST_BadFrame(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadFrame 7  -- OK \n");
     }
@@ -2429,21 +2429,21 @@ void eFSP_MSGRXTST_BadFrame(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadFrame 10 -- OK \n");
     }
@@ -2487,7 +2487,7 @@ void eFSP_MSGRXTST_BadFrame(void)
         (void)printf("eFSP_MSGRXTST_BadFrame 12 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadFrame 13 -- OK \n");
     }
@@ -2530,21 +2530,21 @@ void eFSP_MSGRXTST_BadFrame(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = false;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = false;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_BadFrame 16 -- OK \n");
     }
@@ -2597,30 +2597,30 @@ void eFSP_MSGRXTST_CornerCase(void)
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx l_tCtx;
-    t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
-    t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
-    t_eFSP_MSGRX_RxCtx ctxAdapterRx;
-    t_eFSP_MSGRX_TimCtx ctxAdapterTim;
-    uint8_t  memArea[10u];
-    uint8_t  recBuff[10u];
+    t_eFSP_MSGRX_InitData l_tInitData;
+    f_eFSP_MSGD_CrcCb l_fCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
+    t_eFSP_MSGD_CrcCtx l_tCtxAdapterCrc;
+    t_eFSP_MSGRX_RxCtx l_tCtxAdapterRx;
+    t_eFSP_MSGRX_TimCtx l_tCtxAdapterTim;
+    uint8_t  l_auMemArea[10u];
+    uint8_t  l_auRecBuff[10u];
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 1u;
-    initData.bINeedWaitFrameStart = false;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 1u;
+    l_tInitData.bINeedWaitFrameStart = false;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase 1  -- OK \n");
     }
@@ -2692,21 +2692,21 @@ void eFSP_MSGRXTST_CornerCase(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 5u;
-    initData.uITimePerRecMs = 1u;
-    initData.bINeedWaitFrameStart = false;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 5u;
+    l_tInitData.uITimePerRecMs = 1u;
+    l_tInitData.bINeedWaitFrameStart = false;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase 7  -- OK \n");
     }
@@ -2778,21 +2778,21 @@ void eFSP_MSGRXTST_CornerCase(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 6u;
-    initData.uITimePerRecMs = 1u;
-    initData.bINeedWaitFrameStart = false;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 6u;
+    l_tInitData.uITimePerRecMs = 1u;
+    l_tInitData.bINeedWaitFrameStart = false;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase 13 -- OK \n");
     }
@@ -2864,21 +2864,21 @@ void eFSP_MSGRXTST_CornerCase(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsgJump;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = false;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsgJump;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = false;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase 19 -- OK \n");
     }
@@ -2941,21 +2941,21 @@ void eFSP_MSGRXTST_CornerCase(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 100u;
-    initData.bINeedWaitFrameStart = false;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 100u;
+    l_tInitData.bINeedWaitFrameStart = false;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase 24 -- OK \n");
     }
@@ -3026,33 +3026,33 @@ void eFSP_MSGRXTST_CornerCase2(void)
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx l_tCtx;
-    t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
-    t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
-    t_eFSP_MSGRX_RxCtx ctxAdapterRx;
-    t_eFSP_MSGRX_TimCtx ctxAdapterTim;
-    uint8_t  memArea[10u];
-    uint8_t  recBuff[10u];
-    uint8_t* dataP;
-    uint32_t dataL;
+    t_eFSP_MSGRX_InitData l_tInitData;
+    f_eFSP_MSGD_CrcCb l_fCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
+    t_eFSP_MSGD_CrcCtx l_tCtxAdapterCrc;
+    t_eFSP_MSGRX_RxCtx l_tCtxAdapterRx;
+    t_eFSP_MSGRX_TimCtx l_tCtxAdapterTim;
+    uint8_t  l_auMemArea[10u];
+    uint8_t  l_auRecBuff[10u];
+    uint8_t* l_puData;
+    uint32_t l_uDataL;
 
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsgJump;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 9u;
-    initData.uITimePerRecMs = 9u;
-    initData.bINeedWaitFrameStart = false;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsgJump;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 9u;
+    l_tInitData.uITimePerRecMs = 9u;
+    l_tInitData.bINeedWaitFrameStart = false;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase2 1  -- OK \n");
     }
@@ -3115,21 +3115,21 @@ void eFSP_MSGRXTST_CornerCase2(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsgJump;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 10u;
-    initData.uITimePerRecMs = 10u;
-    initData.bINeedWaitFrameStart = false;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsgJump;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 10u;
+    l_tInitData.uITimePerRecMs = 10u;
+    l_tInitData.bINeedWaitFrameStart = false;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase2 6  -- OK \n");
     }
@@ -3192,21 +3192,21 @@ void eFSP_MSGRXTST_CornerCase2(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsgJump;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 10u;
-    initData.uITimePerRecMs = 10u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsgJump;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 10u;
+    l_tInitData.uITimePerRecMs = 10u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase2 11 -- OK \n");
     }
@@ -3277,11 +3277,11 @@ void eFSP_MSGRXTST_CornerCase2(void)
         (void)printf("eFSP_MSGRXTST_CornerCase2 16 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&l_tCtx, &dataP, &dataL) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&l_tCtx, &l_puData, &l_uDataL) )
     {
-        if( 2u == dataL )
+        if( 2u == l_uDataL )
         {
-            if( (  0xCCu == dataP[0u] ) || (  0xC1u == dataP[1u] ) )
+            if( (  0xCCu == l_puData[0u] ) || (  0xC1u == l_puData[1u] ) )
             {
                 (void)printf("eFSP_MSGRXTST_CornerCase2 17 -- OK \n");
             }
@@ -3301,21 +3301,21 @@ void eFSP_MSGRXTST_CornerCase2(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsgCrrupt;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 10u;
-    initData.uITimePerRecMs = 10u;
-    initData.bINeedWaitFrameStart = false;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsgCrrupt;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 10u;
+    l_tInitData.uITimePerRecMs = 10u;
+    l_tInitData.bINeedWaitFrameStart = false;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase2 18 -- OK \n");
     }
@@ -3360,21 +3360,21 @@ void eFSP_MSGRXTST_CornerCase2(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemainingCorr;
-    initData.uITimeoutMs = 10u;
-    initData.uITimePerRecMs = 10u;
-    initData.bINeedWaitFrameStart = false;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemainingCorr;
+    l_tInitData.uITimeoutMs = 10u;
+    l_tInitData.uITimePerRecMs = 10u;
+    l_tInitData.bINeedWaitFrameStart = false;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase2 21 -- OK \n");
     }
@@ -3393,9 +3393,9 @@ void eFSP_MSGRXTST_CornerCase2(void)
         (void)printf("eFSP_MSGRXTST_CornerCase2 22 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&l_tCtx, &dataP, &dataL) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&l_tCtx, &l_puData, &l_uDataL) )
     {
-        if( 0u == dataL )
+        if( 0u == l_uDataL )
         {
             (void)printf("eFSP_MSGRXTST_CornerCase2 23 -- OK \n");
         }
@@ -3444,32 +3444,32 @@ void eFSP_MSGRXTST_CornerCase3(void)
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx l_tCtx;
-    t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
-    t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
-    t_eFSP_MSGRX_RxCtx ctxAdapterRx;
-    t_eFSP_MSGRX_TimCtx ctxAdapterTim;
-    uint8_t  memArea[10u];
-    uint8_t  recBuff[10u];
-    uint8_t* dataP;
-    uint32_t dataL;
+    t_eFSP_MSGRX_InitData l_tInitData;
+    f_eFSP_MSGD_CrcCb l_fCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
+    t_eFSP_MSGD_CrcCtx l_tCtxAdapterCrc;
+    t_eFSP_MSGRX_RxCtx l_tCtxAdapterRx;
+    t_eFSP_MSGRX_TimCtx l_tCtxAdapterTim;
+    uint8_t  l_auMemArea[10u];
+    uint8_t  l_auRecBuff[10u];
+    uint8_t* l_puData;
+    uint32_t l_uDataL;
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsgJump;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 1000u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsgJump;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 1000u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase3 1  -- OK \n");
     }
@@ -3665,9 +3665,9 @@ void eFSP_MSGRXTST_CornerCase3(void)
         (void)printf("eFSP_MSGRXTST_CornerCase3 19 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&l_tCtx, &dataP, &dataL) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&l_tCtx, &l_puData, &l_uDataL) )
     {
-        if( 0u == dataL )
+        if( 0u == l_uDataL )
         {
             (void)printf("eFSP_MSGRXTST_CornerCase3 20 -- OK \n");
         }
@@ -3690,9 +3690,9 @@ void eFSP_MSGRXTST_CornerCase3(void)
         (void)printf("eFSP_MSGRXTST_CornerCase3 21 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&l_tCtx, &dataP, &dataL) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&l_tCtx, &l_puData, &l_uDataL) )
     {
-        if( 0u == dataL )
+        if( 0u == l_uDataL )
         {
             (void)printf("eFSP_MSGRXTST_CornerCase3 22 -- OK \n");
         }
@@ -3715,11 +3715,11 @@ void eFSP_MSGRXTST_CornerCase3(void)
         (void)printf("eFSP_MSGRXTST_CornerCase3 23 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&l_tCtx, &dataP, &dataL) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&l_tCtx, &l_puData, &l_uDataL) )
     {
-        if( 2u == dataL )
+        if( 2u == l_uDataL )
         {
-            if( (  0xCCu == dataP[0u] ) || (  0xC1u == dataP[1u] ) )
+            if( (  0xCCu == l_puData[0u] ) || (  0xC1u == l_puData[1u] ) )
             {
                 (void)printf("eFSP_MSGRXTST_CornerCase3 24 -- OK \n");
             }
@@ -3739,21 +3739,21 @@ void eFSP_MSGRXTST_CornerCase3(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsgJump;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerRecMs = 1000u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsgJump;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerRecMs = 1000u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase3 25 -- OK \n");
     }
@@ -3805,9 +3805,9 @@ void eFSP_MSGRXTST_CornerCase3(void)
         (void)printf("eFSP_MSGRXTST_CornerCase3 24 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&l_tCtx, &dataP, &dataL) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&l_tCtx, &l_puData, &l_uDataL) )
     {
-        if( 0u == dataL )
+        if( 0u == l_uDataL )
         {
             (void)printf("eFSP_MSGRXTST_CornerCase3 25 -- OK \n");
         }
@@ -3830,9 +3830,9 @@ void eFSP_MSGRXTST_CornerCase3(void)
         (void)printf("eFSP_MSGRXTST_CornerCase3 26 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&l_tCtx, &dataP, &dataL) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&l_tCtx, &l_puData, &l_uDataL) )
     {
-        if( 0u == dataL )
+        if( 0u == l_uDataL )
         {
             (void)printf("eFSP_MSGRXTST_CornerCase3 27 -- OK \n");
         }
@@ -3855,11 +3855,11 @@ void eFSP_MSGRXTST_CornerCase3(void)
         (void)printf("eFSP_MSGRXTST_CornerCase3 28 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&l_tCtx, &dataP, &dataL) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&l_tCtx, &l_puData, &l_uDataL) )
     {
-        if( 2u == dataL )
+        if( 2u == l_uDataL )
         {
-            if( (  0xCCu == dataP[0u] ) || (  0xC1u == dataP[1u] ) )
+            if( (  0xCCu == l_puData[0u] ) || (  0xC1u == l_puData[1u] ) )
             {
                 (void)printf("eFSP_MSGRXTST_CornerCase3 29 -- OK \n");
             }
@@ -3887,30 +3887,30 @@ void eFSP_MSGRXTST_CornerCase4(void)
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx l_tCtx;
-    t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
-    t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
-    t_eFSP_MSGRX_RxCtx ctxAdapterRx;
-    t_eFSP_MSGRX_TimCtx ctxAdapterTim;
-    uint8_t  memArea[10u];
-    uint8_t  recBuff[5u];
+    t_eFSP_MSGRX_InitData l_tInitData;
+    f_eFSP_MSGD_CrcCb l_fCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
+    t_eFSP_MSGD_CrcCtx l_tCtxAdapterCrc;
+    t_eFSP_MSGRX_RxCtx l_tCtxAdapterRx;
+    t_eFSP_MSGRX_TimCtx l_tCtxAdapterTim;
+    uint8_t  l_auMemArea[10u];
+    uint8_t  l_auRecBuff[5u];
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsgJump;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 8u;
-    initData.uITimePerRecMs = 8u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsgJump;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 8u;
+    l_tInitData.uITimePerRecMs = 8u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase4 1  -- OK \n");
     }
@@ -3991,21 +3991,21 @@ void eFSP_MSGRXTST_CornerCase4(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = 1u;
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 25u;
-    initData.uITimePerRecMs = 1u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = 1u;
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 25u;
+    l_tInitData.uITimePerRecMs = 1u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase4 8  -- OK \n");
     }
@@ -4166,32 +4166,32 @@ void eFSP_MSGRXTST_CornerCase5(void)
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx l_tCtx;
-    t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
-    t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
-    t_eFSP_MSGRX_RxCtx ctxAdapterRx;
-    t_eFSP_MSGRX_TimCtx ctxAdapterTim;
-    uint8_t  memArea[20u];
-    uint8_t  recBuff[20u];
-    uint8_t* dataP;
-    uint32_t dataL;
+    t_eFSP_MSGRX_InitData l_tInitData;
+    f_eFSP_MSGD_CrcCb l_fCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
+    t_eFSP_MSGD_CrcCtx l_tCtxAdapterCrc;
+    t_eFSP_MSGRX_RxCtx l_tCtxAdapterRx;
+    t_eFSP_MSGRX_TimCtx l_tCtxAdapterTim;
+    uint8_t  l_auMemArea[20u];
+    uint8_t  l_auRecBuff[20u];
+    uint8_t* l_puData;
+    uint32_t l_uDataL;
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsgJumpLong;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 8u;
-    initData.uITimePerRecMs = 8u;
-    initData.bINeedWaitFrameStart = true;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsgJumpLong;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 8u;
+    l_tInitData.uITimePerRecMs = 8u;
+    l_tInitData.bINeedWaitFrameStart = true;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase5 1  -- OK \n");
     }
@@ -4244,9 +4244,9 @@ void eFSP_MSGRXTST_CornerCase5(void)
         (void)printf("eFSP_MSGRXTST_CornerCase5 4  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&l_tCtx, &dataP, &dataL) )
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_GetDecodedData(&l_tCtx, &l_puData, &l_uDataL) )
     {
-        if( 0u == dataL )
+        if( 0u == l_uDataL )
         {
             (void)printf("eFSP_MSGRXTST_CornerCase5 5  -- OK \n");
         }
@@ -4280,21 +4280,21 @@ void eFSP_MSGRXTST_CornerCase5(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsgJumpLong;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 8u;
-    initData.uITimePerRecMs = 8u;
-    initData.bINeedWaitFrameStart = false;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsgJumpLong;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 8u;
+    l_tInitData.uITimePerRecMs = 8u;
+    l_tInitData.bINeedWaitFrameStart = false;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase5 7  -- OK \n");
     }
@@ -4348,30 +4348,30 @@ void eFSP_MSGRXTST_CornerCase6(void)
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx l_tCtx;
-    t_eFSP_MSGRX_InitData initData;
-    f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
-    t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
-    t_eFSP_MSGRX_RxCtx ctxAdapterRx;
-    t_eFSP_MSGRX_TimCtx ctxAdapterTim;
-    uint8_t  memArea[100u];
-    uint8_t  recBuff[100u];
+    t_eFSP_MSGRX_InitData l_tInitData;
+    f_eFSP_MSGD_CrcCb l_fCrcPTest = &eFSP_MSGRXTST_c32SAdapt;
+    t_eFSP_MSGD_CrcCtx l_tCtxAdapterCrc;
+    t_eFSP_MSGRX_RxCtx l_tCtxAdapterRx;
+    t_eFSP_MSGRX_TimCtx l_tCtxAdapterTim;
+    uint8_t  l_auMemArea[100u];
+    uint8_t  l_auRecBuff[100u];
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puIRxBuffArea = recBuff;
-    initData.uIRxBuffAreaL = sizeof(recBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fIRx = &eFSP_MSGRXTST_receiveMsg;
-    initData.ptICbRxCtx = &ctxAdapterRx;
-    initData.tIRxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
-    initData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
-    initData.uITimeoutMs = 2000u;
-    initData.uITimePerRecMs = 2000u;
-    initData.bINeedWaitFrameStart = false;
-    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puIRxBuffArea = l_auRecBuff;
+    l_tInitData.uIRxBuffAreaL = sizeof(l_auRecBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fIRx = &eFSP_MSGRXTST_receiveMsg;
+    l_tInitData.ptICbRxCtx = &l_tCtxAdapterRx;
+    l_tInitData.tIRxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tIRxTim.fTimStart = &eFSP_MSGRXTST_timStart;
+    l_tInitData.tIRxTim.fTimGetRemain = &eFSP_MSGRXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 2000u;
+    l_tInitData.uITimePerRecMs = 2000u;
+    l_tInitData.bINeedWaitFrameStart = false;
+    if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase6 1  -- OK \n");
     }

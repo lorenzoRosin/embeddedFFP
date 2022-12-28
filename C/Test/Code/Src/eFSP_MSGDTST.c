@@ -162,7 +162,7 @@ void eFSP_MSGDTST_BadPointer(void)
     f_eFSP_MSGD_CrcCb l_fCrcPTest = &eFSP_MSGDTST_c32SAdapt;
     t_eFSP_MSGD_CrcCtx l_tCtxAdapterCrc;
     uint32_t l_uVar32;
-    uint8_t* dataP;
+    uint8_t* l_puData;
     bool_t l_bIsMsgDec;
     bool_t l_bIsInit;
 
@@ -217,7 +217,7 @@ void eFSP_MSGDTST_BadPointer(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGD_RES_BADPOINTER == eFSP_MSGD_GetDecodedData(NULL, &dataP, &l_uVar32) )
+    if( e_eFSP_MSGD_RES_BADPOINTER == eFSP_MSGD_GetDecodedData(NULL, &l_puData, &l_uVar32) )
     {
         (void)printf("eFSP_MSGDTST_BadPointer 6  -- OK \n");
     }
@@ -237,7 +237,7 @@ void eFSP_MSGDTST_BadPointer(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGD_RES_BADPOINTER == eFSP_MSGD_GetDecodedData(&l_tCtx, &dataP, NULL) )
+    if( e_eFSP_MSGD_RES_BADPOINTER == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puData, NULL) )
     {
         (void)printf("eFSP_MSGDTST_BadPointer 8  -- OK \n");
     }
@@ -401,7 +401,7 @@ void eFSP_MSGDTST_BadInit(void)
     t_eFSP_MSGD_Ctx l_tCtx;
     uint8_t  l_auMemArea[10u];
     uint32_t l_uVar32;
-    uint8_t* dataP;
+    uint8_t* l_puData;
     bool_t l_bIsMsgDec;
     f_eFSP_MSGD_CrcCb l_fCrcPTest = &eFSP_MSGDTST_c32SAdapt;
     t_eFSP_MSGD_CrcCtx l_tCtxAdapterCrc;
@@ -423,7 +423,7 @@ void eFSP_MSGDTST_BadInit(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGD_RES_NOINITLIB == eFSP_MSGD_GetDecodedData(&l_tCtx, &dataP, &l_uVar32) )
+    if( e_eFSP_MSGD_RES_NOINITLIB == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puData, &l_uVar32) )
     {
         (void)printf("eFSP_MSGDTST_BadInit 2  -- OK \n");
     }
@@ -581,7 +581,7 @@ void eFSP_MSGDTST_CorruptedCtx(void)
     f_eFSP_MSGD_CrcCb l_fCrcPTest = &eFSP_MSGDTST_c32SAdapt;
     t_eFSP_MSGD_CrcCtx l_tCtxAdapterCrc;
     uint32_t l_uVar32;
-    uint8_t* dataP;
+    uint8_t* l_puData;
     bool_t l_bIsMsgDec;
 
     /* Function */
@@ -635,7 +635,7 @@ void eFSP_MSGDTST_CorruptedCtx(void)
     }
 
     l_tCtx.ptCrcCtx = NULL;
-    if( e_eFSP_MSGD_RES_CORRUPTCTX == eFSP_MSGD_GetDecodedData(&l_tCtx, &dataP, &l_uVar32) )
+    if( e_eFSP_MSGD_RES_CORRUPTCTX == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puData, &l_uVar32) )
     {
         (void)printf("eFSP_MSGDTST_CorruptedCtx 6  -- OK \n");
     }
@@ -795,7 +795,7 @@ void eFSP_MSGDTST_CorruptedCtx(void)
     }
 
     l_tCtx.tBUNSTFCtx.puBuff = NULL;
-    if( e_eFSP_MSGD_RES_CORRUPTCTX == eFSP_MSGD_GetDecodedData(&l_tCtx, &dataP, &l_uVar32) )
+    if( e_eFSP_MSGD_RES_CORRUPTCTX == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puData, &l_uVar32) )
     {
         (void)printf("eFSP_MSGDTST_CorruptedCtx 22 -- OK \n");
     }
@@ -1166,7 +1166,7 @@ void eFSP_MSGDTST_General(void)
     uint32_t l_uConsumed;
     uint32_t l_uMostEfficient;
     uint32_t l_uPayLoadLen;
-    uint8_t* payLoadLoc;
+    uint8_t* l_puPayLoadLoc;
     bool_t l_bIsMsgDec;
 
     /* Function */
@@ -1188,7 +1188,7 @@ void eFSP_MSGDTST_General(void)
         (void)printf("eFSP_MSGDTST_General 2  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x00u == l_uPayLoadLen )
         {
@@ -1384,7 +1384,7 @@ void eFSP_MSGDTST_General(void)
         (void)printf("eFSP_MSGDTST_General 14 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x02u == l_uPayLoadLen )
         {
@@ -1400,7 +1400,7 @@ void eFSP_MSGDTST_General(void)
         (void)printf("eFSP_MSGDTST_General 15 -- FAIL \n");
     }
 
-    if( ( ECU_SOF == payLoadLoc[0u] ) && ( ECU_EOF == payLoadLoc[1u] ) )
+    if( ( ECU_SOF == l_puPayLoadLoc[0u] ) && ( ECU_EOF == l_puPayLoadLoc[1u] ) )
     {
         (void)printf("eFSP_MSGDTST_General 16 -- OK \n");
     }
@@ -1436,7 +1436,7 @@ void eFSP_MSGDTST_General2(void)
     uint32_t l_uConsumed;
     uint32_t l_uMostEfficient;
     uint32_t l_uPayLoadLen;
-    uint8_t* payLoadLoc;
+    uint8_t* l_puPayLoadLoc;
     bool_t l_bIsMsgDec;
 
     /* Function */
@@ -1458,7 +1458,7 @@ void eFSP_MSGDTST_General2(void)
         (void)printf("eFSP_MSGDTST_General2 2  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x00u == l_uPayLoadLen )
         {
@@ -1654,7 +1654,7 @@ void eFSP_MSGDTST_General2(void)
         (void)printf("eFSP_MSGDTST_General2 14 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x00u == l_uPayLoadLen )
         {
@@ -1766,7 +1766,7 @@ void eFSP_MSGDTST_General2(void)
         (void)printf("eFSP_MSGDTST_General2 21 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x00u == l_uPayLoadLen )
         {
@@ -1878,7 +1878,7 @@ void eFSP_MSGDTST_General2(void)
         (void)printf("eFSP_MSGDTST_General2 28 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x00u == l_uPayLoadLen )
         {
@@ -1990,7 +1990,7 @@ void eFSP_MSGDTST_General2(void)
         (void)printf("eFSP_MSGDTST_General2 35 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x01u == l_uPayLoadLen )
         {
@@ -2102,7 +2102,7 @@ void eFSP_MSGDTST_General2(void)
         (void)printf("eFSP_MSGDTST_General2 42 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x02u == l_uPayLoadLen )
         {
@@ -2129,7 +2129,7 @@ void eFSP_MSGDTST_CorernerMulti(void)
     uint32_t l_uConsumed;
     uint32_t l_uMostEfficient;
     uint32_t l_uPayLoadLen;
-    uint8_t* payLoadLoc;
+    uint8_t* l_puPayLoadLoc;
     bool_t l_bIsMsgDec;
 
     /* Function */
@@ -2151,7 +2151,7 @@ void eFSP_MSGDTST_CorernerMulti(void)
         (void)printf("eFSP_MSGDTST_CorernerMulti 2  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x00u == l_uPayLoadLen )
         {
@@ -2283,7 +2283,7 @@ void eFSP_MSGDTST_CorernerMulti(void)
         (void)printf("eFSP_MSGDTST_CorernerMulti 10 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x00u == l_uPayLoadLen )
         {
@@ -2364,7 +2364,7 @@ void eFSP_MSGDTST_CorernerMulti(void)
         (void)printf("eFSP_MSGDTST_CorernerMulti 15 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x00u == l_uPayLoadLen )
         {
@@ -2445,7 +2445,7 @@ void eFSP_MSGDTST_CorernerMulti(void)
         (void)printf("eFSP_MSGDTST_CorernerMulti 20 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x00u == l_uPayLoadLen )
         {
@@ -2526,7 +2526,7 @@ void eFSP_MSGDTST_CorernerMulti(void)
         (void)printf("eFSP_MSGDTST_CorernerMulti 25 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x03u == l_uPayLoadLen )
         {
@@ -2607,7 +2607,7 @@ void eFSP_MSGDTST_CorernerMulti(void)
         (void)printf("eFSP_MSGDTST_CorernerMulti 30 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x07u == l_uPayLoadLen )
         {
@@ -2623,9 +2623,9 @@ void eFSP_MSGDTST_CorernerMulti(void)
         (void)printf("eFSP_MSGDTST_CorernerMulti 31 -- FAIL \n");
     }
 
-    if( ( ECU_SOF == payLoadLoc[0u] ) && ( ECU_EOF == payLoadLoc[1u] ) && ( 0x01u == payLoadLoc[2u] ) &&
-        ( 0x02u == payLoadLoc[3u] ) && ( 0x03u == payLoadLoc[4u] ) && ( 0x04u == payLoadLoc[5u] ) &&
-        ( 0x05u == payLoadLoc[6u] ) )
+    if( ( ECU_SOF == l_puPayLoadLoc[0u] ) && ( ECU_EOF == l_puPayLoadLoc[1u] ) && ( 0x01u == l_puPayLoadLoc[2u] ) &&
+        ( 0x02u == l_puPayLoadLoc[3u] ) && ( 0x03u == l_puPayLoadLoc[4u] ) && ( 0x04u == l_puPayLoadLoc[5u] ) &&
+        ( 0x05u == l_puPayLoadLoc[6u] ) )
     {
         (void)printf("eFSP_MSGDTST_CorernerMulti 32 -- OK \n");
     }
@@ -2645,7 +2645,7 @@ void eFSP_MSGDTST_ErrorAndContinue(void)
     uint32_t l_uConsumed;
     uint32_t l_uMostEfficient;
     uint32_t l_uPayLoadLen;
-    uint8_t* payLoadLoc;
+    uint8_t* l_puPayLoadLoc;
     bool_t l_bIsMsgDec;
 
     /* Function */
@@ -2667,7 +2667,7 @@ void eFSP_MSGDTST_ErrorAndContinue(void)
         (void)printf("eFSP_MSGDTST_ErrorAndContinue 2  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x00u == l_uPayLoadLen )
         {
@@ -2847,7 +2847,7 @@ void eFSP_MSGDTST_ErrorAndContinue(void)
         (void)printf("eFSP_MSGDTST_ErrorAndContinue 13 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x02u == l_uPayLoadLen )
         {
@@ -2959,7 +2959,7 @@ void eFSP_MSGDTST_ErrorAndContinue(void)
         (void)printf("eFSP_MSGDTST_ErrorAndContinue 21 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x03u == l_uPayLoadLen )
         {
@@ -3029,7 +3029,7 @@ void eFSP_MSGDTST_ErrorAndContinueEx(void)
     uint32_t l_uConsumed;
     uint32_t l_uMostEfficient;
     uint32_t l_uPayLoadLen;
-    uint8_t* payLoadLoc;
+    uint8_t* l_puPayLoadLoc;
     bool_t l_bIsMsgDec;
 
     /* Function */
@@ -3051,7 +3051,7 @@ void eFSP_MSGDTST_ErrorAndContinueEx(void)
         (void)printf("eFSP_MSGDTST_ErrorAndContinueEx 2  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x00u == l_uPayLoadLen )
         {
@@ -3231,7 +3231,7 @@ void eFSP_MSGDTST_ErrorAndContinueEx(void)
         (void)printf("eFSP_MSGDTST_ErrorAndContinueEx 13 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x02u == l_uPayLoadLen )
         {
@@ -3343,7 +3343,7 @@ void eFSP_MSGDTST_ErrorAndContinueEx(void)
         (void)printf("eFSP_MSGDTST_ErrorAndContinueEx 21 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x02u == l_uPayLoadLen )
         {
@@ -3413,7 +3413,7 @@ void eFSP_MSGDTST_ErrorShortFrame(void)
     uint32_t l_uConsumed;
     uint32_t l_uMostEfficient;
     uint32_t l_uPayLoadLen;
-    uint8_t* payLoadLoc;
+    uint8_t* l_puPayLoadLoc;
     bool_t l_bIsMsgDec;
 
     /* Function */
@@ -3435,7 +3435,7 @@ void eFSP_MSGDTST_ErrorShortFrame(void)
         (void)printf("eFSP_MSGDTST_ErrorShortFrame 2  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x00u == l_uPayLoadLen )
         {
@@ -3614,7 +3614,7 @@ void eFSP_MSGDTST_ErrorShortFrame(void)
         (void)printf("eFSP_MSGDTST_ErrorShortFrame 13 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x01u == l_uPayLoadLen )
         {
@@ -3726,7 +3726,7 @@ void eFSP_MSGDTST_ErrorShortFrame(void)
         (void)printf("eFSP_MSGDTST_ErrorShortFrame 21 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x01u == l_uPayLoadLen )
         {
@@ -3909,7 +3909,7 @@ void eFSP_MSGDTST_ErrorShortFrame(void)
         (void)printf("eFSP_MSGDTST_ErrorShortFrame 33 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x00u == l_uPayLoadLen )
         {
@@ -3936,7 +3936,7 @@ void eFSP_MSGDTST_ErrorBadStuff(void)
     uint32_t l_uConsumed;
     uint32_t l_uMostEfficient;
     uint32_t l_uPayLoadLen;
-    uint8_t* payLoadLoc;
+    uint8_t* l_puPayLoadLoc;
     bool_t l_bIsMsgDec;
 
     /* Function */
@@ -3958,7 +3958,7 @@ void eFSP_MSGDTST_ErrorBadStuff(void)
         (void)printf("eFSP_MSGDTST_ErrorBadStuff 2  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x00u == l_uPayLoadLen )
         {
@@ -4138,7 +4138,7 @@ void eFSP_MSGDTST_ErrorBadStuff(void)
         (void)printf("eFSP_MSGDTST_ErrorBadStuff 13 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x01u == l_uPayLoadLen )
         {
@@ -4250,7 +4250,7 @@ void eFSP_MSGDTST_ErrorBadStuff(void)
         (void)printf("eFSP_MSGDTST_ErrorBadStuff 21 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &payLoadLoc, &l_uPayLoadLen) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetDecodedData(&l_tCtx, &l_puPayLoadLoc, &l_uPayLoadLen) )
     {
         if( 0x01u == l_uPayLoadLen )
         {

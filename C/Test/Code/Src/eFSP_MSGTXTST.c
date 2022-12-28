@@ -117,35 +117,35 @@ void eFSP_MSGTXTST_ExeTest(void)
  **********************************************************************************************************************/
 bool_t eFSP_MSGTXTST_c32SAdapt(t_eFSP_MSGE_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val)
 {
-    bool_t result;
-    t_eFSP_MSGE_CrcCtx* ctxCur;
+    bool_t l_bResult;
+    t_eFSP_MSGE_CrcCtx* l_ptCtxCur;
 
     if( ( NULL == p_ptCtx ) || ( NULL == p_puC32Val ) )
     {
-        result = false;
+        l_bResult = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGE_CrcCtx*)p_ptCtx;
+        l_ptCtxCur = (t_eFSP_MSGE_CrcCtx*)p_ptCtx;
 
-        ctxCur->eLastEr = eCU_CRC_32Seed(p_uS, (const uint8_t*)p_puD, p_uDLen, p_puC32Val);
-        if( e_eCU_CRC_RES_OK == ctxCur->eLastEr )
+        l_ptCtxCur->eLastEr = eCU_CRC_32Seed(p_uS, (const uint8_t*)p_puD, p_uDLen, p_puC32Val);
+        if( e_eCU_CRC_RES_OK == l_ptCtxCur->eLastEr )
         {
-            result = true;
+            l_bResult = true;
         }
         else
         {
-            result = false;
+            l_bResult = false;
         }
     }
 
-    return result;
+    return l_bResult;
 }
 
 bool_t eFSP_MSGTXTST_c32SAdaptEr(t_eFSP_MSGE_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val)
 {
-    bool_t result;
-    t_eFSP_MSGE_CrcCtx* ctxCur;
+    bool_t l_bResult;
+    t_eFSP_MSGE_CrcCtx* l_ptCtxCur;
 
     (void)p_uS;
     (void)p_puD;
@@ -153,18 +153,18 @@ bool_t eFSP_MSGTXTST_c32SAdaptEr(t_eFSP_MSGE_CrcCtx* p_ptCtx, const uint32_t p_u
 
     if( ( NULL == p_ptCtx ) || ( NULL == p_puC32Val ) )
     {
-        result = false;
+        l_bResult = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGE_CrcCtx*)p_ptCtx;
+        l_ptCtxCur = (t_eFSP_MSGE_CrcCtx*)p_ptCtx;
 
-        ctxCur->eLastEr = e_eCU_CRC_RES_BADPOINTER;
-        result = false;
+        l_ptCtxCur->eLastEr = e_eCU_CRC_RES_BADPOINTER;
+        l_bResult = false;
         *p_puC32Val = 0u;
     }
 
-    return result;
+    return l_bResult;
 }
 
 
@@ -175,19 +175,19 @@ static uint32_t m_uSendWhen;
 bool_t eFSP_MSGTXTST_sendMsg( t_eFSP_MSGTX_TxCtx* p_ptCtx, const uint8_t* p_puDataToTx, const uint32_t p_uDataToTxL, uint32_t* const p_uDataTxed,
                 const uint32_t p_uTimeToTx )
 {
-    bool_t result;
-    t_eFSP_MSGTX_TxCtx* ctxCur;
+    bool_t l_bResult;
+    t_eFSP_MSGTX_TxCtx* l_ptCtxCur;
 
     (void)p_uTimeToTx;
 
     if( ( NULL == p_ptCtx ) || ( NULL == p_puDataToTx ) || ( NULL == p_uDataTxed ) )
     {
-        result = false;
+        l_bResult = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGTX_TxCtx*)p_ptCtx;
-        ctxCur->bTxIsError = true;
+        l_ptCtxCur = (t_eFSP_MSGTX_TxCtx*)p_ptCtx;
+        l_ptCtxCur->bTxIsError = true;
 
 
         if( ( m_uTxBuffCounter + p_uDataToTxL ) < sizeof(m_auTxBuff) )
@@ -196,34 +196,34 @@ bool_t eFSP_MSGTXTST_sendMsg( t_eFSP_MSGTX_TxCtx* p_ptCtx, const uint8_t* p_puDa
             m_uTxBuffCounter += p_uDataToTxL;
             *p_uDataTxed = p_uDataToTxL;
 
-            result = true;
+            l_bResult = true;
         }
         else
         {
-            result = false;
+            l_bResult = false;
         }
     }
 
-    return result;
+    return l_bResult;
 }
 
 
 bool_t eFSP_MSGTXTST_sendMsgCorr( t_eFSP_MSGTX_TxCtx* p_ptCtx, const uint8_t* p_puDataToTx, const uint32_t p_uDataToTxL, uint32_t* const p_uDataTxed,
                 const uint32_t p_uTimeToTx )
 {
-    bool_t result;
-    t_eFSP_MSGTX_TxCtx* ctxCur;
+    bool_t l_bResult;
+    t_eFSP_MSGTX_TxCtx* l_ptCtxCur;
 
     (void)p_uTimeToTx;
 
     if( ( NULL == p_ptCtx ) || ( NULL == p_puDataToTx ) || ( NULL == p_uDataTxed ) )
     {
-        result = false;
+        l_bResult = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGTX_TxCtx*)p_ptCtx;
-        ctxCur->bTxIsError = true;
+        l_ptCtxCur = (t_eFSP_MSGTX_TxCtx*)p_ptCtx;
+        l_ptCtxCur->bTxIsError = true;
 
 
         if( ( m_uTxBuffCounter + p_uDataToTxL ) < sizeof(m_auTxBuff) )
@@ -232,33 +232,33 @@ bool_t eFSP_MSGTXTST_sendMsgCorr( t_eFSP_MSGTX_TxCtx* p_ptCtx, const uint8_t* p_
             m_uTxBuffCounter += p_uDataToTxL;
             *p_uDataTxed = p_uDataToTxL + 1u;
 
-            result = true;
+            l_bResult = true;
         }
         else
         {
-            result = false;
+            l_bResult = false;
         }
     }
 
-    return result;
+    return l_bResult;
 }
 
 bool_t eFSP_MSGTXTST_sendMsgOnce( t_eFSP_MSGTX_TxCtx* p_ptCtx, const uint8_t* p_puDataToTx, const uint32_t p_uDataToTxL, uint32_t* const p_uDataTxed,
                 const uint32_t p_uTimeToTx )
 {
-    bool_t result;
-    t_eFSP_MSGTX_TxCtx* ctxCur;
+    bool_t l_bResult;
+    t_eFSP_MSGTX_TxCtx* l_ptCtxCur;
 
     (void)p_uTimeToTx;
 
     if( ( NULL == p_ptCtx ) || ( NULL == p_puDataToTx ) || ( NULL == p_uDataTxed ) )
     {
-        result = false;
+        l_bResult = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGTX_TxCtx*)p_ptCtx;
-        ctxCur->bTxIsError = true;
+        l_ptCtxCur = (t_eFSP_MSGTX_TxCtx*)p_ptCtx;
+        l_ptCtxCur->bTxIsError = true;
 
 
         if( ( m_uTxBuffCounter + p_uDataToTxL ) < sizeof(m_auTxBuff) )
@@ -276,164 +276,164 @@ bool_t eFSP_MSGTXTST_sendMsgOnce( t_eFSP_MSGTX_TxCtx* p_ptCtx, const uint8_t* p_
                 m_uSendWhen = 0u;
             }
 
-            result = true;
+            l_bResult = true;
         }
         else
         {
-            result = false;
+            l_bResult = false;
         }
     }
 
-    return result;
+    return l_bResult;
 }
 
 bool_t eFSP_MSGTXTST_sendMsgErr( t_eFSP_MSGTX_TxCtx* p_ptCtx, const uint8_t* p_puDataToTx, const uint32_t p_uDataToTxL, uint32_t* const p_uDataTxed,
                 const uint32_t p_uTimeToTx )
 {
-    bool_t result;
-    t_eFSP_MSGTX_TxCtx* ctxCur;
+    bool_t l_bResult;
+    t_eFSP_MSGTX_TxCtx* l_ptCtxCur;
 
     (void)p_uDataToTxL;
     (void)p_uTimeToTx;
 
     if( ( NULL == p_ptCtx ) || ( NULL == p_puDataToTx ) || ( NULL == p_uDataTxed ) )
     {
-        result = false;
+        l_bResult = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGTX_TxCtx*)p_ptCtx;
-        ctxCur->bTxIsError = true;
-        result = false;
+        l_ptCtxCur = (t_eFSP_MSGTX_TxCtx*)p_ptCtx;
+        l_ptCtxCur->bTxIsError = true;
+        l_bResult = false;
     }
 
-    return result;
+    return l_bResult;
 }
 
-static uint32_t m_tim_remainingTime;
+static uint32_t m_uTimRemainingTime;
 
 bool_t eFSP_MSGTXTST_timStart ( t_eFSP_MSGTX_TimCtx* p_ptCtx, const uint32_t p_uTimeoutVal )
 {
-    bool_t result;
-    t_eFSP_MSGTX_TimCtx* ctxCur;
+    bool_t l_bResult;
+    t_eFSP_MSGTX_TimCtx* l_ptCtxCur;
 
     if( NULL == p_ptCtx )
     {
-        result = false;
+        l_bResult = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGTX_TimCtx*)p_ptCtx;
-        ctxCur->bTxIsError = true;
+        l_ptCtxCur = (t_eFSP_MSGTX_TimCtx*)p_ptCtx;
+        l_ptCtxCur->bTxIsError = true;
 
-        m_tim_remainingTime = p_uTimeoutVal;
-        result = true;
+        m_uTimRemainingTime = p_uTimeoutVal;
+        l_bResult = true;
     }
 
-    return result;
+    return l_bResult;
 }
 
 bool_t eFSP_MSGTXTST_timGetRemaining ( t_eFSP_MSGTX_TimCtx* p_ptCtx, uint32_t* const p_puRemainings )
 {
-    bool_t result;
-    t_eFSP_MSGTX_TimCtx* ctxCur;
+    bool_t l_bResult;
+    t_eFSP_MSGTX_TimCtx* l_ptCtxCur;
 
     if( ( NULL == p_ptCtx ) || ( NULL == p_puRemainings ) )
     {
-        result = false;
+        l_bResult = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGTX_TimCtx*)p_ptCtx;
-        ctxCur->bTxIsError = true;
+        l_ptCtxCur = (t_eFSP_MSGTX_TimCtx*)p_ptCtx;
+        l_ptCtxCur->bTxIsError = true;
 
-        if( m_tim_remainingTime > 0u )
+        if( m_uTimRemainingTime > 0u )
         {
-            m_tim_remainingTime--;
+            m_uTimRemainingTime--;
         }
 
-        *p_puRemainings = m_tim_remainingTime;
-        result = true;
+        *p_puRemainings = m_uTimRemainingTime;
+        l_bResult = true;
     }
 
-    return result;
+    return l_bResult;
 }
 
 
 bool_t eFSP_MSGTXTST_timStartErr ( t_eFSP_MSGTX_TimCtx* p_ptCtx, const uint32_t p_uTimeoutVal )
 {
-    bool_t result;
-    t_eFSP_MSGTX_TimCtx* ctxCur;
+    bool_t l_bResult;
+    t_eFSP_MSGTX_TimCtx* l_ptCtxCur;
 
     if( NULL == p_ptCtx )
     {
-        result = false;
+        l_bResult = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGTX_TimCtx*)p_ptCtx;
-        ctxCur->bTxIsError = true;
+        l_ptCtxCur = (t_eFSP_MSGTX_TimCtx*)p_ptCtx;
+        l_ptCtxCur->bTxIsError = true;
 
-        m_tim_remainingTime = p_uTimeoutVal;
-        result = false;
+        m_uTimRemainingTime = p_uTimeoutVal;
+        l_bResult = false;
     }
 
-    return result;
+    return l_bResult;
 }
 
 bool_t eFSP_MSGTXTST_timGetRemainingErr ( t_eFSP_MSGTX_TimCtx* p_ptCtx, uint32_t* const p_puRemainings )
 {
-    bool_t result;
-    t_eFSP_MSGTX_TimCtx* ctxCur;
+    bool_t l_bResult;
+    t_eFSP_MSGTX_TimCtx* l_ptCtxCur;
 
     if( ( NULL == p_ptCtx ) || ( NULL == p_puRemainings ) )
     {
-        result = false;
+        l_bResult = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGTX_TimCtx*)p_ptCtx;
-        ctxCur->bTxIsError = true;
+        l_ptCtxCur = (t_eFSP_MSGTX_TimCtx*)p_ptCtx;
+        l_ptCtxCur->bTxIsError = true;
 
-        if( m_tim_remainingTime > 0u )
+        if( m_uTimRemainingTime > 0u )
         {
-            m_tim_remainingTime--;
+            m_uTimRemainingTime--;
         }
 
-        *p_puRemainings = m_tim_remainingTime;
-        result = false;
+        *p_puRemainings = m_uTimRemainingTime;
+        l_bResult = false;
     }
 
-    return result;
+    return l_bResult;
 }
 
 bool_t eFSP_MSGTXTST_timGetRemainingCorr ( t_eFSP_MSGTX_TimCtx* p_ptCtx, uint32_t* const p_puRemainings )
 {
-    bool_t result;
-    t_eFSP_MSGTX_TimCtx* ctxCur;
+    bool_t l_bResult;
+    t_eFSP_MSGTX_TimCtx* l_ptCtxCur;
 
     if( ( NULL == p_ptCtx ) || ( NULL == p_puRemainings ) )
     {
-        result = false;
+        l_bResult = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGTX_TimCtx*)p_ptCtx;
-        ctxCur->bTxIsError = true;
-        if( m_tim_remainingTime < MAX_UINT32VAL )
+        l_ptCtxCur = (t_eFSP_MSGTX_TimCtx*)p_ptCtx;
+        l_ptCtxCur->bTxIsError = true;
+        if( m_uTimRemainingTime < MAX_UINT32VAL )
         {
-            m_tim_remainingTime++;
+            m_uTimRemainingTime++;
         }
-        *p_puRemainings = m_tim_remainingTime + m_tim_remainingTime;
+        *p_puRemainings = m_uTimRemainingTime + m_uTimRemainingTime;
 
-        if( m_tim_remainingTime < MAX_UINT32VAL )
+        if( m_uTimRemainingTime < MAX_UINT32VAL )
         {
-            m_tim_remainingTime++;
+            m_uTimRemainingTime++;
         }
-        result = true;
+        l_bResult = true;
     }
 
-    return result;
+    return l_bResult;
 }
 
 /***********************************************************************************************************************
@@ -442,20 +442,20 @@ bool_t eFSP_MSGTXTST_timGetRemainingCorr ( t_eFSP_MSGTX_TimCtx* p_ptCtx, uint32_
 void eFSP_MSGTXTST_BadPointer(void)
 {
     /* Local variable */
-    t_eFSP_MSGTX_Ctx ctx;
-    t_eFSP_MSGTX_InitData initData;
-    f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGTXTST_c32SAdapt;
-    t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    t_eFSP_MSGTX_TxCtx ctxAdapterSend;
-    t_eFSP_MSGTX_TimCtx ctxAdapterTim;
-    uint8_t  memArea[10u];
-    uint8_t  sendBuff[10u];
-    uint8_t* dataP;
-    uint32_t dataL;
-    bool_t isInit;
+    t_eFSP_MSGTX_Ctx l_tCtx;
+    t_eFSP_MSGTX_InitData l_tInitData;
+    f_eFSP_MSGE_CrcCb l_fCrcPTest = &eFSP_MSGTXTST_c32SAdapt;
+    t_eFSP_MSGE_CrcCtx l_tCtxAdapterCrc;
+    t_eFSP_MSGTX_TxCtx l_tCtxAdapterSend;
+    t_eFSP_MSGTX_TimCtx l_tCtxAdapterTim;
+    uint8_t  l_auMemArea[10u];
+    uint8_t  l_auSendBuff[10u];
+    uint8_t* l_puData;
+    uint32_t l_uDataL;
+    bool_t l_bIsInit;
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(NULL, &initData) )
+    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(NULL, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_BadPointer 1  -- OK \n");
     }
@@ -465,7 +465,7 @@ void eFSP_MSGTXTST_BadPointer(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, NULL) )
+    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&l_tCtx, NULL) )
     {
         (void)printf("eFSP_MSGTXTST_BadPointer 2  -- OK \n");
     }
@@ -475,20 +475,20 @@ void eFSP_MSGTXTST_BadPointer(void)
     }
 
     /* Function */
-    initData.puIMemArea = NULL;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 100u;
-    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    l_tInitData.puIMemArea = NULL;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 100u;
+    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_BadPointer 3  -- OK \n");
     }
@@ -498,20 +498,20 @@ void eFSP_MSGTXTST_BadPointer(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = NULL;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 100u;
-    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = NULL;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 100u;
+    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_BadPointer 4  -- OK \n");
     }
@@ -521,20 +521,20 @@ void eFSP_MSGTXTST_BadPointer(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = NULL;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 100u;
-    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = NULL;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 100u;
+    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_BadPointer 5  -- OK \n");
     }
@@ -544,20 +544,20 @@ void eFSP_MSGTXTST_BadPointer(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = NULL;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 100u;
-    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = NULL;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 100u;
+    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_BadPointer 6  -- OK \n");
     }
@@ -567,20 +567,20 @@ void eFSP_MSGTXTST_BadPointer(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = NULL;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 100u;
-    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = NULL;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 100u;
+    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_BadPointer 7  -- OK \n");
     }
@@ -590,20 +590,20 @@ void eFSP_MSGTXTST_BadPointer(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = NULL;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 100u;
-    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = NULL;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 100u;
+    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_BadPointer 8  -- OK \n");
     }
@@ -613,20 +613,20 @@ void eFSP_MSGTXTST_BadPointer(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = NULL;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 100u;
-    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = NULL;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 100u;
+    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_BadPointer 9  -- OK \n");
     }
@@ -636,20 +636,20 @@ void eFSP_MSGTXTST_BadPointer(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = NULL;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 100u;
-    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = NULL;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 100u;
+    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_BadPointer 10 -- OK \n");
     }
@@ -659,20 +659,20 @@ void eFSP_MSGTXTST_BadPointer(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = NULL;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 100u;
-    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = NULL;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 100u;
+    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_BadPointer 11 -- OK \n");
     }
@@ -682,20 +682,20 @@ void eFSP_MSGTXTST_BadPointer(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = NULL;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 100u;
-    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = NULL;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 100u;
+    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_BadPointer 12 -- OK \n");
     }
@@ -705,20 +705,20 @@ void eFSP_MSGTXTST_BadPointer(void)
     }
 
     /* Function */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = NULL;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 100u;
-    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = NULL;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 100u;
+    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_BadPointer 13 -- OK \n");
     }
@@ -728,20 +728,20 @@ void eFSP_MSGTXTST_BadPointer(void)
     }
 
     /* Function */
-    initData.puIMemArea = NULL;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 100u;
-    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    l_tInitData.puIMemArea = NULL;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 100u;
+    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_BadPointer 14 -- OK \n");
     }
@@ -751,7 +751,7 @@ void eFSP_MSGTXTST_BadPointer(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_IsInit(NULL, &isInit) )
+    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_IsInit(NULL, &l_bIsInit) )
     {
         (void)printf("eFSP_MSGTXTST_BadPointer 15 -- OK \n");
     }
@@ -761,7 +761,7 @@ void eFSP_MSGTXTST_BadPointer(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_IsInit(&ctx, NULL) )
+    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_IsInit(&l_tCtx, NULL) )
     {
         (void)printf("eFSP_MSGTXTST_BadPointer 16 -- OK \n");
     }
@@ -781,7 +781,7 @@ void eFSP_MSGTXTST_BadPointer(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_GetWherePutData(NULL, &dataP, &dataL) )
+    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_GetWherePutData(NULL, &l_puData, &l_uDataL) )
     {
         (void)printf("eFSP_MSGTXTST_BadPointer 18 -- OK \n");
     }
@@ -791,7 +791,7 @@ void eFSP_MSGTXTST_BadPointer(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_GetWherePutData(&ctx, NULL, &dataL) )
+    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_GetWherePutData(&l_tCtx, NULL, &l_uDataL) )
     {
         (void)printf("eFSP_MSGTXTST_BadPointer 19 -- OK \n");
     }
@@ -801,7 +801,7 @@ void eFSP_MSGTXTST_BadPointer(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_GetWherePutData(&ctx, &dataP, NULL) )
+    if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_GetWherePutData(&l_tCtx, &l_puData, NULL) )
     {
         (void)printf("eFSP_MSGTXTST_BadPointer 20 -- OK \n");
     }
@@ -834,37 +834,37 @@ void eFSP_MSGTXTST_BadPointer(void)
 void eFSP_MSGTXTST_BadInit(void)
 {
     /* Local variable */
-    t_eFSP_MSGTX_Ctx ctx;
-    f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGTXTST_c32SAdapt;
-    t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    t_eFSP_MSGTX_TxCtx ctxAdapterSend;
-    t_eFSP_MSGTX_TimCtx ctxAdapterTim;
-    uint8_t  sendBuff[10u];
-    uint8_t* dataP;
-    uint32_t dataL;
-    bool_t isInit;
+    t_eFSP_MSGTX_Ctx l_tCtx;
+    f_eFSP_MSGE_CrcCb l_fCrcPTest = &eFSP_MSGTXTST_c32SAdapt;
+    t_eFSP_MSGE_CrcCtx l_tCtxAdapterCrc;
+    t_eFSP_MSGTX_TxCtx l_tCtxAdapterSend;
+    t_eFSP_MSGTX_TimCtx l_tCtxAdapterTim;
+    uint8_t  l_auSendBuff[10u];
+    uint8_t* l_puData;
+    uint32_t l_uDataL;
+    bool_t l_bIsInit;
 
     /* Function */
-    (void)memset(&ctx, 0, sizeof(t_eFSP_MSGTX_Ctx));
-    ctx.tMsgeCtx.tBSTFCtx.bIsInit = false;
-    ctx.tMsgeCtx.ptCrcCtx = &ctxAdapterCrc;
-    ctx.tMsgeCtx.fCrc = cbCrcPTest;
-    ctx.puRxBuff = sendBuff;
-    ctx.uTxBuffL = sizeof(sendBuff);
-    ctx.uTxBuffCntr = 0u;
-    ctx.uTxBuffFill = 0u;
-    ctx.fTx = &eFSP_MSGTXTST_sendMsg;
-    ctx.ptTxCtx = &ctxAdapterSend;
-    ctx.tTxTim.ptTimCtx = &ctxAdapterTim;
-    ctx.tTxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    ctx.tTxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    ctx.uTimeoutMs = 1000u;
-    ctx.uTimePerSendMs = 100u;
+    (void)memset(&l_tCtx, 0, sizeof(t_eFSP_MSGTX_Ctx));
+    l_tCtx.tMsgeCtx.tBSTFCtx.bIsInit = false;
+    l_tCtx.tMsgeCtx.ptCrcCtx = &l_tCtxAdapterCrc;
+    l_tCtx.tMsgeCtx.fCrc = l_fCrcPTest;
+    l_tCtx.puRxBuff = l_auSendBuff;
+    l_tCtx.uTxBuffL = sizeof(l_auSendBuff);
+    l_tCtx.uTxBuffCntr = 0u;
+    l_tCtx.uTxBuffFill = 0u;
+    l_tCtx.fTx = &eFSP_MSGTXTST_sendMsg;
+    l_tCtx.ptTxCtx = &l_tCtxAdapterSend;
+    l_tCtx.tTxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tCtx.tTxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tCtx.tTxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tCtx.uTimeoutMs = 1000u;
+    l_tCtx.uTimePerSendMs = 100u;
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_IsInit(&ctx, &isInit) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_IsInit(&l_tCtx, &l_bIsInit) )
     {
-        if( false == isInit )
+        if( false == l_bIsInit )
         {
             (void)printf("eFSP_MSGTXTST_BadInit 1  -- OK \n");
         }
@@ -879,7 +879,7 @@ void eFSP_MSGTXTST_BadInit(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_NOINITLIB == eFSP_MSGTX_NewMessage(&ctx, 10u) )
+    if( e_eFSP_MSGTX_RES_NOINITLIB == eFSP_MSGTX_NewMessage(&l_tCtx, 10u) )
     {
         (void)printf("eFSP_MSGTXTST_BadInit 2  -- OK \n");
     }
@@ -889,7 +889,7 @@ void eFSP_MSGTXTST_BadInit(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_NOINITLIB == eFSP_MSGTX_GetWherePutData(&ctx, &dataP, &dataL) )
+    if( e_eFSP_MSGTX_RES_NOINITLIB == eFSP_MSGTX_GetWherePutData(&l_tCtx, &l_puData, &l_uDataL) )
     {
         (void)printf("eFSP_MSGTXTST_BadInit 3  -- OK \n");
     }
@@ -899,7 +899,7 @@ void eFSP_MSGTXTST_BadInit(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_NOINITLIB == eFSP_MSGTX_RestartMessage(&ctx) )
+    if( e_eFSP_MSGTX_RES_NOINITLIB == eFSP_MSGTX_RestartMessage(&l_tCtx) )
     {
         (void)printf("eFSP_MSGTXTST_BadInit 4  -- OK \n");
     }
@@ -909,7 +909,7 @@ void eFSP_MSGTXTST_BadInit(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_NOINITLIB == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_NOINITLIB == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("eFSP_MSGTXTST_BadInit 5  -- OK \n");
     }
@@ -922,35 +922,35 @@ void eFSP_MSGTXTST_BadInit(void)
 void eFSP_MSGTXTST_BadIniMsg(void)
 {
     /* Local variable */
-    t_eFSP_MSGTX_Ctx ctx;
-    t_eFSP_MSGTX_InitData initData;
-    f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGTXTST_c32SAdapt;
-    t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    t_eFSP_MSGTX_TxCtx ctxAdapterSend;
-    t_eFSP_MSGTX_TimCtx ctxAdapterTim;
-    uint8_t  memArea[10u];
-    uint8_t  sendBuff[10u];
-    bool_t isInit;
+    t_eFSP_MSGTX_Ctx l_tCtx;
+    t_eFSP_MSGTX_InitData l_tInitData;
+    f_eFSP_MSGE_CrcCb l_fCrcPTest = &eFSP_MSGTXTST_c32SAdapt;
+    t_eFSP_MSGE_CrcCtx l_tCtxAdapterCrc;
+    t_eFSP_MSGTX_TxCtx l_tCtxAdapterSend;
+    t_eFSP_MSGTX_TimCtx l_tCtxAdapterTim;
+    uint8_t  l_auMemArea[10u];
+    uint8_t  l_auSendBuff[10u];
+    bool_t l_bIsInit;
 
     /* Clear */
-    (void)memset(&ctx, 0, sizeof(t_eFSP_MSGTX_Ctx));
-    (void)memset(&initData, 0, sizeof(t_eFSP_MSGTX_InitData));
+    (void)memset(&l_tCtx, 0, sizeof(t_eFSP_MSGTX_Ctx));
+    (void)memset(&l_tInitData, 0, sizeof(t_eFSP_MSGTX_InitData));
 
     /* Init */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 100u;
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 100u;
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_BadIniMsg 1  -- OK \n");
     }
@@ -959,7 +959,7 @@ void eFSP_MSGTXTST_BadIniMsg(void)
         (void)printf("eFSP_MSGTXTST_BadIniMsg 1  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGTX_RES_NOINITMESSAGE == eFSP_MSGTX_RestartMessage(&ctx) )
+    if( e_eFSP_MSGTX_RES_NOINITMESSAGE == eFSP_MSGTX_RestartMessage(&l_tCtx) )
     {
         (void)printf("eFSP_MSGTXTST_BadIniMsg 2  -- OK \n");
     }
@@ -968,8 +968,8 @@ void eFSP_MSGTXTST_BadIniMsg(void)
         (void)printf("eFSP_MSGTXTST_BadIniMsg 2  -- FAIL \n");
     }
 
-    m_tim_remainingTime = 100u;
-    if( e_eFSP_MSGTX_RES_NOINITMESSAGE == eFSP_MSGTX_SendChunk(&ctx) )
+    m_uTimRemainingTime = 100u;
+    if( e_eFSP_MSGTX_RES_NOINITMESSAGE == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("eFSP_MSGTXTST_BadIniMsg 3  -- OK \n");
     }
@@ -979,9 +979,9 @@ void eFSP_MSGTXTST_BadIniMsg(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_IsInit(&ctx, &isInit) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_IsInit(&l_tCtx, &l_bIsInit) )
     {
-        if( true == isInit )
+        if( true == l_bIsInit )
         {
             (void)printf("eFSP_MSGTXTST_BadIniMsg 4  -- OK \n");
         }
@@ -999,34 +999,34 @@ void eFSP_MSGTXTST_BadIniMsg(void)
 void eFSP_MSGTXTST_BadParamEntr(void)
 {
     /* Local variable */
-    t_eFSP_MSGTX_Ctx ctx;
-    t_eFSP_MSGTX_InitData initData;
-    f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGTXTST_c32SAdapt;
-    t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    t_eFSP_MSGTX_TxCtx ctxAdapterSend;
-    t_eFSP_MSGTX_TimCtx ctxAdapterTim;
-    uint8_t  memArea[10u];
-    uint8_t  sendBuff[10u];
+    t_eFSP_MSGTX_Ctx l_tCtx;
+    t_eFSP_MSGTX_InitData l_tInitData;
+    f_eFSP_MSGE_CrcCb l_fCrcPTest = &eFSP_MSGTXTST_c32SAdapt;
+    t_eFSP_MSGE_CrcCtx l_tCtxAdapterCrc;
+    t_eFSP_MSGTX_TxCtx l_tCtxAdapterSend;
+    t_eFSP_MSGTX_TimCtx l_tCtxAdapterTim;
+    uint8_t  l_auMemArea[10u];
+    uint8_t  l_auSendBuff[10u];
 
     /* Clear */
-    (void)memset(&ctx, 0, sizeof(t_eFSP_MSGTX_Ctx));
-    (void)memset(&initData, 0, sizeof(t_eFSP_MSGTX_InitData));
+    (void)memset(&l_tCtx, 0, sizeof(t_eFSP_MSGTX_Ctx));
+    (void)memset(&l_tInitData, 0, sizeof(t_eFSP_MSGTX_InitData));
 
     /* Init */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = 0u;
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 100u;
-    if( e_eFSP_MSGTX_RES_BADPARAM == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = 0u;
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 100u;
+    if( e_eFSP_MSGTX_RES_BADPARAM == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_BadParamEntr 1  -- OK \n");
     }
@@ -1036,20 +1036,20 @@ void eFSP_MSGTXTST_BadParamEntr(void)
     }
 
     /* Init */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 0u;
-    initData.uITimePerSendMs = 100u;
-    if( e_eFSP_MSGTX_RES_BADPARAM == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 0u;
+    l_tInitData.uITimePerSendMs = 100u;
+    if( e_eFSP_MSGTX_RES_BADPARAM == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_BadParamEntr 2  -- OK \n");
     }
@@ -1059,20 +1059,20 @@ void eFSP_MSGTXTST_BadParamEntr(void)
     }
 
     /* Init */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 0u;
-    if( e_eFSP_MSGTX_RES_BADPARAM == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 0u;
+    if( e_eFSP_MSGTX_RES_BADPARAM == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_BadParamEntr 3  -- OK \n");
     }
@@ -1082,20 +1082,20 @@ void eFSP_MSGTXTST_BadParamEntr(void)
     }
 
     /* Init */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 100u;
-    initData.uITimePerSendMs = 1000u;
-    if( e_eFSP_MSGTX_RES_BADPARAM == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 100u;
+    l_tInitData.uITimePerSendMs = 1000u;
+    if( e_eFSP_MSGTX_RES_BADPARAM == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_BadParamEntr 4  -- OK \n");
     }
@@ -1105,20 +1105,20 @@ void eFSP_MSGTXTST_BadParamEntr(void)
     }
 
     /* Init */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = 0u;
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 100u;
-    if( e_eFSP_MSGTX_RES_BADPARAM == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = 0u;
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 100u;
+    if( e_eFSP_MSGTX_RES_BADPARAM == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_BadParamEntr 5  -- OK \n");
     }
@@ -1128,20 +1128,20 @@ void eFSP_MSGTXTST_BadParamEntr(void)
     }
 
     /* Init */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 100u;
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 100u;
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_BadParamEntr 6  -- OK \n");
     }
@@ -1151,7 +1151,7 @@ void eFSP_MSGTXTST_BadParamEntr(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_BADPARAM == eFSP_MSGTX_NewMessage(&ctx, 0u) )
+    if( e_eFSP_MSGTX_RES_BADPARAM == eFSP_MSGTX_NewMessage(&l_tCtx, 0u) )
     {
         (void)printf("eFSP_MSGTXTST_BadParamEntr 2  -- OK \n");
     }
@@ -1164,36 +1164,36 @@ void eFSP_MSGTXTST_BadParamEntr(void)
 void eFSP_MSGTXTST_CorruptContext(void)
 {
     /* Local variable */
-    t_eFSP_MSGTX_Ctx ctx;
-    t_eFSP_MSGTX_InitData initData;
-    f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGTXTST_c32SAdapt;
-    t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    t_eFSP_MSGTX_TxCtx ctxAdapterSend;
-    t_eFSP_MSGTX_TimCtx ctxAdapterTim;
-    uint8_t  memArea[10u];
-    uint8_t  sendBuff[10u];
-    uint8_t* dataP;
-    uint32_t dataL;
+    t_eFSP_MSGTX_Ctx l_tCtx;
+    t_eFSP_MSGTX_InitData l_tInitData;
+    f_eFSP_MSGE_CrcCb l_fCrcPTest = &eFSP_MSGTXTST_c32SAdapt;
+    t_eFSP_MSGE_CrcCtx l_tCtxAdapterCrc;
+    t_eFSP_MSGTX_TxCtx l_tCtxAdapterSend;
+    t_eFSP_MSGTX_TimCtx l_tCtxAdapterTim;
+    uint8_t  l_auMemArea[10u];
+    uint8_t  l_auSendBuff[10u];
+    uint8_t* l_puData;
+    uint32_t l_uDataL;
 
     /* Clear */
-    (void)memset(&ctx, 0, sizeof(t_eFSP_MSGTX_Ctx));
-    (void)memset(&initData, 0, sizeof(t_eFSP_MSGTX_InitData));
+    (void)memset(&l_tCtx, 0, sizeof(t_eFSP_MSGTX_Ctx));
+    (void)memset(&l_tInitData, 0, sizeof(t_eFSP_MSGTX_InitData));
 
     /* Init */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 100u;
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 100u;
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 1  -- OK \n");
     }
@@ -1203,8 +1203,8 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    ctx.puRxBuff = NULL;
-    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&ctx, 2u) )
+    l_tCtx.puRxBuff = NULL;
+    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 2  -- OK \n");
     }
@@ -1214,7 +1214,7 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 3  -- OK \n");
     }
@@ -1224,8 +1224,8 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    ctx.fTx = NULL;
-    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&ctx, 2u) )
+    l_tCtx.fTx = NULL;
+    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 4  -- OK \n");
     }
@@ -1235,7 +1235,7 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 5  -- OK \n");
     }
@@ -1245,8 +1245,8 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    ctx.ptTxCtx = NULL;
-    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&ctx, 2u) )
+    l_tCtx.ptTxCtx = NULL;
+    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 6  -- OK \n");
     }
@@ -1256,7 +1256,7 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 7  -- OK \n");
     }
@@ -1266,8 +1266,8 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    ctx.tTxTim.ptTimCtx = NULL;
-    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&ctx, 2u) )
+    l_tCtx.tTxTim.ptTimCtx = NULL;
+    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 8  -- OK \n");
     }
@@ -1277,7 +1277,7 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 9  -- OK \n");
     }
@@ -1287,8 +1287,8 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    ctx.tTxTim.fTimStart = NULL;
-    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&ctx, 2u) )
+    l_tCtx.tTxTim.fTimStart = NULL;
+    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 10 -- OK \n");
     }
@@ -1299,7 +1299,7 @@ void eFSP_MSGTXTST_CorruptContext(void)
 
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 11 -- OK \n");
     }
@@ -1309,8 +1309,8 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    ctx.tTxTim.fTimGetRemain = NULL;
-    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&ctx, 2u) )
+    l_tCtx.tTxTim.fTimGetRemain = NULL;
+    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 12 -- OK \n");
     }
@@ -1320,7 +1320,7 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 13 -- OK \n");
     }
@@ -1330,8 +1330,8 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    ctx.uTxBuffL = 0u;
-    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&ctx, 2u) )
+    l_tCtx.uTxBuffL = 0u;
+    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 14 -- OK \n");
     }
@@ -1341,7 +1341,7 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 15 -- OK \n");
     }
@@ -1351,8 +1351,8 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    ctx.uTxBuffFill = ctx.uTxBuffL + 1u;
-    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&ctx, 2u) )
+    l_tCtx.uTxBuffFill = l_tCtx.uTxBuffL + 1u;
+    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 16 -- OK \n");
     }
@@ -1362,7 +1362,7 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 17 -- OK \n");
     }
@@ -1372,8 +1372,8 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    ctx.uTxBuffCntr = ctx.uTxBuffFill + 1u;
-    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&ctx, 2u) )
+    l_tCtx.uTxBuffCntr = l_tCtx.uTxBuffFill + 1u;
+    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 18 -- OK \n");
     }
@@ -1383,7 +1383,7 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 19 -- OK \n");
     }
@@ -1393,8 +1393,8 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    ctx.uTimeoutMs = 0u;
-    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&ctx, 2u) )
+    l_tCtx.uTimeoutMs = 0u;
+    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 20 -- OK \n");
     }
@@ -1404,7 +1404,7 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 21 -- OK \n");
     }
@@ -1414,8 +1414,8 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    ctx.uTimePerSendMs = 0u;
-    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&ctx, 2u) )
+    l_tCtx.uTimePerSendMs = 0u;
+    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 22 -- OK \n");
     }
@@ -1425,7 +1425,7 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 23 -- OK \n");
     }
@@ -1435,8 +1435,8 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    ctx.uTimePerSendMs = ctx.uTimeoutMs + 1u;
-    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&ctx, 2u) )
+    l_tCtx.uTimePerSendMs = l_tCtx.uTimeoutMs + 1u;
+    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 24 -- OK \n");
     }
@@ -1446,7 +1446,7 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 25 -- OK \n");
     }
@@ -1456,8 +1456,8 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    ctx.uTimePerSendMs = 0u;
-    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_GetWherePutData(&ctx, &dataP, &dataL) )
+    l_tCtx.uTimePerSendMs = 0u;
+    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_GetWherePutData(&l_tCtx, &l_puData, &l_uDataL) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 26 -- OK \n");
     }
@@ -1467,7 +1467,7 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 27 -- OK \n");
     }
@@ -1477,8 +1477,8 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    ctx.uTimePerSendMs = 0u;
-    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_RestartMessage(&ctx) )
+    l_tCtx.uTimePerSendMs = 0u;
+    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_RestartMessage(&l_tCtx) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 28 -- OK \n");
     }
@@ -1488,7 +1488,7 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 29 -- OK \n");
     }
@@ -1498,8 +1498,8 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    ctx.uTimePerSendMs = 0u;
-    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_SendChunk(&ctx) )
+    l_tCtx.uTimePerSendMs = 0u;
+    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 30 -- OK \n");
     }
@@ -1509,8 +1509,8 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    ctx.tMsgeCtx.ptCrcCtx = NULL;
-    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&ctx, 2u) )
+    l_tCtx.tMsgeCtx.ptCrcCtx = NULL;
+    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 31 -- OK \n");
     }
@@ -1520,7 +1520,7 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 32 -- OK \n");
     }
@@ -1530,8 +1530,8 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    ctx.tMsgeCtx.ptCrcCtx = NULL;
-    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_GetWherePutData(&ctx, &dataP, &dataL) )
+    l_tCtx.tMsgeCtx.ptCrcCtx = NULL;
+    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_GetWherePutData(&l_tCtx, &l_puData, &l_uDataL) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 33 -- OK \n");
     }
@@ -1541,7 +1541,7 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 34 -- OK \n");
     }
@@ -1551,8 +1551,8 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    ctx.tMsgeCtx.ptCrcCtx = NULL;
-    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_RestartMessage(&ctx) )
+    l_tCtx.tMsgeCtx.ptCrcCtx = NULL;
+    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_RestartMessage(&l_tCtx) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 35 -- OK \n");
     }
@@ -1562,7 +1562,7 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 36 -- OK \n");
     }
@@ -1572,8 +1572,8 @@ void eFSP_MSGTXTST_CorruptContext(void)
     }
 
     /* Function */
-    ctx.tMsgeCtx.ptCrcCtx = NULL;
-    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_SendChunk(&ctx) )
+    l_tCtx.tMsgeCtx.ptCrcCtx = NULL;
+    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("eFSP_MSGTXTST_CorruptContext 37 -- OK \n");
     }
@@ -1586,34 +1586,34 @@ void eFSP_MSGTXTST_CorruptContext(void)
 void eFSP_MSGTXTST_BadClBckCrc(void)
 {
     /* Local variable */
-    t_eFSP_MSGTX_Ctx ctx;
-    t_eFSP_MSGTX_InitData initData;
-    f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGTXTST_c32SAdaptEr;
-    t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    t_eFSP_MSGTX_TxCtx ctxAdapterSend;
-    t_eFSP_MSGTX_TimCtx ctxAdapterTim;
-    uint8_t  memArea[10u];
-    uint8_t  sendBuff[10u];
+    t_eFSP_MSGTX_Ctx l_tCtx;
+    t_eFSP_MSGTX_InitData l_tInitData;
+    f_eFSP_MSGE_CrcCb l_fCrcPTest = &eFSP_MSGTXTST_c32SAdaptEr;
+    t_eFSP_MSGE_CrcCtx l_tCtxAdapterCrc;
+    t_eFSP_MSGTX_TxCtx l_tCtxAdapterSend;
+    t_eFSP_MSGTX_TimCtx l_tCtxAdapterTim;
+    uint8_t  l_auMemArea[10u];
+    uint8_t  l_auSendBuff[10u];
 
     /* Clear */
-    (void)memset(&ctx, 0, sizeof(t_eFSP_MSGTX_Ctx));
-    (void)memset(&initData, 0, sizeof(t_eFSP_MSGTX_InitData));
+    (void)memset(&l_tCtx, 0, sizeof(t_eFSP_MSGTX_Ctx));
+    (void)memset(&l_tInitData, 0, sizeof(t_eFSP_MSGTX_InitData));
 
     /* Init */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 100u;
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 100u;
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_BadClBckCrc 1  -- OK \n");
     }
@@ -1623,9 +1623,9 @@ void eFSP_MSGTXTST_BadClBckCrc(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_CRCCLBKERROR == eFSP_MSGTX_NewMessage(&ctx, 2u) )
+    if( e_eFSP_MSGTX_RES_CRCCLBKERROR == eFSP_MSGTX_NewMessage(&l_tCtx, 2u) )
     {
-        if( e_eCU_CRC_RES_BADPOINTER == ctxAdapterCrc.eLastEr )
+        if( e_eCU_CRC_RES_BADPOINTER == l_tCtxAdapterCrc.eLastEr )
         {
             (void)printf("eFSP_MSGTXTST_BadClBckCrc 2  -- OK \n");
         }
@@ -1643,37 +1643,37 @@ void eFSP_MSGTXTST_BadClBckCrc(void)
 void eFSP_MSGTXTST_BadClBckSend(void)
 {
     /* Local variable */
-    t_eFSP_MSGTX_Ctx ctx;
-    t_eFSP_MSGTX_InitData initData;
-    f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGTXTST_c32SAdapt;
-    t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    t_eFSP_MSGTX_TxCtx ctxAdapterSend;
-    t_eFSP_MSGTX_TimCtx ctxAdapterTim;
-    uint8_t  memArea[10u];
-    uint8_t  sendBuff[10u];
-    uint8_t* dataP;
-    uint32_t dataL;
+    t_eFSP_MSGTX_Ctx l_tCtx;
+    t_eFSP_MSGTX_InitData l_tInitData;
+    f_eFSP_MSGE_CrcCb l_fCrcPTest = &eFSP_MSGTXTST_c32SAdapt;
+    t_eFSP_MSGE_CrcCtx l_tCtxAdapterCrc;
+    t_eFSP_MSGTX_TxCtx l_tCtxAdapterSend;
+    t_eFSP_MSGTX_TimCtx l_tCtxAdapterTim;
+    uint8_t  l_auMemArea[10u];
+    uint8_t  l_auSendBuff[10u];
+    uint8_t* l_puData;
+    uint32_t l_uDataL;
 
     /* Clear */
-    (void)memset(&ctx, 0, sizeof(t_eFSP_MSGTX_Ctx));
-    (void)memset(&initData, 0, sizeof(t_eFSP_MSGTX_InitData));
+    (void)memset(&l_tCtx, 0, sizeof(t_eFSP_MSGTX_Ctx));
+    (void)memset(&l_tInitData, 0, sizeof(t_eFSP_MSGTX_InitData));
 
     /* Init */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsgErr;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 100u;
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsgErr;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 100u;
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_BadClBckSend 1  -- OK \n");
     }
@@ -1682,9 +1682,9 @@ void eFSP_MSGTXTST_BadClBckSend(void)
         (void)printf("eFSP_MSGTXTST_BadClBckSend 1  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_GetWherePutData(&ctx, &dataP, &dataL) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_GetWherePutData(&l_tCtx, &l_puData, &l_uDataL) )
     {
-        if( 2u == dataL )
+        if( 2u == l_uDataL )
         {
             (void)printf("eFSP_MSGTXTST_BadClBckSend 2  -- OK \n");
         }
@@ -1699,9 +1699,9 @@ void eFSP_MSGTXTST_BadClBckSend(void)
     }
 
     /* Function */
-    dataP[0u] = 0x01u;
-    dataP[1u] = 0x02u;
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_NewMessage(&ctx, 2u) )
+    l_puData[0u] = 0x01u;
+    l_puData[1u] = 0x02u;
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGTXTST_BadClBckSend 3  -- OK \n");
     }
@@ -1711,7 +1711,7 @@ void eFSP_MSGTXTST_BadClBckSend(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_TXCLBKERROR == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_TXCLBKERROR == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("eFSP_MSGTXTST_BadClBckSend 4  -- OK \n");
     }
@@ -1724,37 +1724,37 @@ void eFSP_MSGTXTST_BadClBckSend(void)
 void eFSP_MSGTXTST_BadClBckTim(void)
 {
     /* Local variable */
-    t_eFSP_MSGTX_Ctx ctx;
-    t_eFSP_MSGTX_InitData initData;
-    f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGTXTST_c32SAdapt;
-    t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    t_eFSP_MSGTX_TxCtx ctxAdapterSend;
-    t_eFSP_MSGTX_TimCtx ctxAdapterTim;
-    uint8_t  memArea[10u];
-    uint8_t  sendBuff[10u];
-    uint8_t* dataP;
-    uint32_t dataL;
+    t_eFSP_MSGTX_Ctx l_tCtx;
+    t_eFSP_MSGTX_InitData l_tInitData;
+    f_eFSP_MSGE_CrcCb l_fCrcPTest = &eFSP_MSGTXTST_c32SAdapt;
+    t_eFSP_MSGE_CrcCtx l_tCtxAdapterCrc;
+    t_eFSP_MSGTX_TxCtx l_tCtxAdapterSend;
+    t_eFSP_MSGTX_TimCtx l_tCtxAdapterTim;
+    uint8_t  l_auMemArea[10u];
+    uint8_t  l_auSendBuff[10u];
+    uint8_t* l_puData;
+    uint32_t l_uDataL;
 
     /* Clear */
-    (void)memset(&ctx, 0, sizeof(t_eFSP_MSGTX_Ctx));
-    (void)memset(&initData, 0, sizeof(t_eFSP_MSGTX_InitData));
+    (void)memset(&l_tCtx, 0, sizeof(t_eFSP_MSGTX_Ctx));
+    (void)memset(&l_tInitData, 0, sizeof(t_eFSP_MSGTX_InitData));
 
     /* Init */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStartErr;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemainingErr;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 100u;
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStartErr;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemainingErr;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 100u;
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_BadClBckTim 1  -- OK \n");
     }
@@ -1763,9 +1763,9 @@ void eFSP_MSGTXTST_BadClBckTim(void)
         (void)printf("eFSP_MSGTXTST_BadClBckTim 1  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_GetWherePutData(&ctx, &dataP, &dataL) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_GetWherePutData(&l_tCtx, &l_puData, &l_uDataL) )
     {
-        if( 2u == dataL )
+        if( 2u == l_uDataL )
         {
             (void)printf("eFSP_MSGTXTST_BadClBckTim 2  -- OK \n");
         }
@@ -1780,9 +1780,9 @@ void eFSP_MSGTXTST_BadClBckTim(void)
     }
 
     /* Function */
-    dataP[0u] = 0x01u;
-    dataP[1u] = 0x02u;
-    if( e_eFSP_MSGTX_RES_TIMCLBKERROR == eFSP_MSGTX_NewMessage(&ctx, 2u) )
+    l_puData[0u] = 0x01u;
+    l_puData[1u] = 0x02u;
+    if( e_eFSP_MSGTX_RES_TIMCLBKERROR == eFSP_MSGTX_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGTXTST_BadClBckTim 3  -- OK \n");
     }
@@ -1792,7 +1792,7 @@ void eFSP_MSGTXTST_BadClBckTim(void)
     }
 
      /* Function */
-    if( e_eFSP_MSGTX_RES_TIMCLBKERROR == eFSP_MSGTX_RestartMessage(&ctx) )
+    if( e_eFSP_MSGTX_RES_TIMCLBKERROR == eFSP_MSGTX_RestartMessage(&l_tCtx) )
     {
         (void)printf("eFSP_MSGTXTST_BadClBckTim 4  -- OK \n");
     }
@@ -1802,25 +1802,25 @@ void eFSP_MSGTXTST_BadClBckTim(void)
     }
 
     /* Clear */
-    (void)memset(&ctx, 0, sizeof(t_eFSP_MSGTX_Ctx));
-    (void)memset(&initData, 0, sizeof(t_eFSP_MSGTX_InitData));
+    (void)memset(&l_tCtx, 0, sizeof(t_eFSP_MSGTX_Ctx));
+    (void)memset(&l_tInitData, 0, sizeof(t_eFSP_MSGTX_InitData));
 
     /* Init */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemainingErr;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 100u;
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemainingErr;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 100u;
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_BadClBckTim 5  -- OK \n");
     }
@@ -1829,9 +1829,9 @@ void eFSP_MSGTXTST_BadClBckTim(void)
         (void)printf("eFSP_MSGTXTST_BadClBckTim 5  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_GetWherePutData(&ctx, &dataP, &dataL) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_GetWherePutData(&l_tCtx, &l_puData, &l_uDataL) )
     {
-        if( 2u == dataL )
+        if( 2u == l_uDataL )
         {
             (void)printf("eFSP_MSGTXTST_BadClBckTim 6  -- OK \n");
         }
@@ -1846,9 +1846,9 @@ void eFSP_MSGTXTST_BadClBckTim(void)
     }
 
     /* Function */
-    dataP[0u] = 0x01u;
-    dataP[1u] = 0x02u;
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_NewMessage(&ctx, 2u) )
+    l_puData[0u] = 0x01u;
+    l_puData[1u] = 0x02u;
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGTXTST_BadClBckTim 7  -- OK \n");
     }
@@ -1858,7 +1858,7 @@ void eFSP_MSGTXTST_BadClBckTim(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_TIMCLBKERROR == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_TIMCLBKERROR == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("eFSP_MSGTXTST_BadClBckTim 8  -- OK \n");
     }
@@ -1876,37 +1876,37 @@ void eFSP_MSGTXTST_CornerCase(void)
     m_uTxBuffCounter = 0u;
 
     /* Local variable */
-    t_eFSP_MSGTX_Ctx ctx;
-    t_eFSP_MSGTX_InitData initData;
-    f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGTXTST_c32SAdapt;
-    t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    t_eFSP_MSGTX_TxCtx ctxAdapterSend;
-    t_eFSP_MSGTX_TimCtx ctxAdapterTim;
-    uint8_t  memArea[10u];
-    uint8_t  sendBuff[10u];
-    uint8_t* dataP;
-    uint32_t dataL;
+    t_eFSP_MSGTX_Ctx l_tCtx;
+    t_eFSP_MSGTX_InitData l_tInitData;
+    f_eFSP_MSGE_CrcCb l_fCrcPTest = &eFSP_MSGTXTST_c32SAdapt;
+    t_eFSP_MSGE_CrcCtx l_tCtxAdapterCrc;
+    t_eFSP_MSGTX_TxCtx l_tCtxAdapterSend;
+    t_eFSP_MSGTX_TimCtx l_tCtxAdapterTim;
+    uint8_t  l_auMemArea[10u];
+    uint8_t  l_auSendBuff[10u];
+    uint8_t* l_puData;
+    uint32_t l_uDataL;
 
     /* Clear */
-    (void)memset(&ctx, 0, sizeof(t_eFSP_MSGTX_Ctx));
-    (void)memset(&initData, 0, sizeof(t_eFSP_MSGTX_InitData));
+    (void)memset(&l_tCtx, 0, sizeof(t_eFSP_MSGTX_Ctx));
+    (void)memset(&l_tInitData, 0, sizeof(t_eFSP_MSGTX_InitData));
 
     /* Init */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 100u;
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 100u;
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("msgTransmitterTestCornerCase 1  -- OK \n");
     }
@@ -1915,9 +1915,9 @@ void eFSP_MSGTXTST_CornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 1  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_GetWherePutData(&ctx, &dataP, &dataL) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_GetWherePutData(&l_tCtx, &l_puData, &l_uDataL) )
     {
-        if( 2u == dataL )
+        if( 2u == l_uDataL )
         {
             (void)printf("msgTransmitterTestCornerCase 2  -- OK \n");
         }
@@ -1932,11 +1932,11 @@ void eFSP_MSGTXTST_CornerCase(void)
     }
 
     /* Function */
-    dataP[0u] = 0x01u;
-    dataP[1u] = 0x02u;
+    l_puData[0u] = 0x01u;
+    l_puData[1u] = 0x02u;
     m_uTxBuffCounter = 0u;
     m_uSendWhen = 0u;
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_NewMessage(&ctx, 2u) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("msgTransmitterTestCornerCase 3  -- OK \n");
     }
@@ -1946,7 +1946,7 @@ void eFSP_MSGTXTST_CornerCase(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("msgTransmitterTestCornerCase 4  -- OK \n");
     }
@@ -1971,7 +1971,7 @@ void eFSP_MSGTXTST_CornerCase(void)
     /* Function */
     m_uTxBuffCounter = 0u;
     m_uSendWhen = 0u;
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_RestartMessage(&ctx) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_RestartMessage(&l_tCtx) )
     {
         (void)printf("msgTransmitterTestCornerCase 6  -- OK \n");
     }
@@ -1981,7 +1981,7 @@ void eFSP_MSGTXTST_CornerCase(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("msgTransmitterTestCornerCase 7  -- OK \n");
     }
@@ -2003,21 +2003,21 @@ void eFSP_MSGTXTST_CornerCase(void)
     }
 
     /* Init */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = 1u;
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 100u;
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = 1u;
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 100u;
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("msgTransmitterTestCornerCase 9  -- OK \n");
     }
@@ -2026,9 +2026,9 @@ void eFSP_MSGTXTST_CornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 9  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_GetWherePutData(&ctx, &dataP, &dataL) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_GetWherePutData(&l_tCtx, &l_puData, &l_uDataL) )
     {
-        if( 2u == dataL )
+        if( 2u == l_uDataL )
         {
             (void)printf("msgTransmitterTestCornerCase 10 -- OK \n");
         }
@@ -2043,11 +2043,11 @@ void eFSP_MSGTXTST_CornerCase(void)
     }
 
     /* Function */
-    dataP[0u] = 0x01u;
-    dataP[1u] = 0x02u;
+    l_puData[0u] = 0x01u;
+    l_puData[1u] = 0x02u;
     m_uTxBuffCounter = 0u;
     m_uSendWhen = 0u;
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_NewMessage(&ctx, 2u) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("msgTransmitterTestCornerCase 11 -- OK \n");
     }
@@ -2057,7 +2057,7 @@ void eFSP_MSGTXTST_CornerCase(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("msgTransmitterTestCornerCase 12 -- OK \n");
     }
@@ -2079,21 +2079,21 @@ void eFSP_MSGTXTST_CornerCase(void)
     }
 
     /* Init */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = 1u;
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 1u;
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = 1u;
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 1u;
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("msgTransmitterTestCornerCase 14 -- OK \n");
     }
@@ -2102,9 +2102,9 @@ void eFSP_MSGTXTST_CornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 14 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_GetWherePutData(&ctx, &dataP, &dataL) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_GetWherePutData(&l_tCtx, &l_puData, &l_uDataL) )
     {
-        if( 2u == dataL )
+        if( 2u == l_uDataL )
         {
             (void)printf("msgTransmitterTestCornerCase 15 -- OK \n");
         }
@@ -2119,11 +2119,11 @@ void eFSP_MSGTXTST_CornerCase(void)
     }
 
     /* Function */
-    dataP[0u] = 0x01u;
-    dataP[1u] = 0x02u;
+    l_puData[0u] = 0x01u;
+    l_puData[1u] = 0x02u;
     m_uTxBuffCounter = 0u;
     m_uSendWhen = 0u;
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_NewMessage(&ctx, 2u) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("msgTransmitterTestCornerCase 16 -- OK \n");
     }
@@ -2133,7 +2133,7 @@ void eFSP_MSGTXTST_CornerCase(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("msgTransmitterTestCornerCase 17 -- OK \n");
     }
@@ -2142,7 +2142,7 @@ void eFSP_MSGTXTST_CornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 17 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("msgTransmitterTestCornerCase 18 -- OK \n");
     }
@@ -2151,7 +2151,7 @@ void eFSP_MSGTXTST_CornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 18 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("msgTransmitterTestCornerCase 19 -- OK \n");
     }
@@ -2160,7 +2160,7 @@ void eFSP_MSGTXTST_CornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 19 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("msgTransmitterTestCornerCase 20 -- OK \n");
     }
@@ -2169,7 +2169,7 @@ void eFSP_MSGTXTST_CornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 20 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("msgTransmitterTestCornerCase 21 -- OK \n");
     }
@@ -2178,7 +2178,7 @@ void eFSP_MSGTXTST_CornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 21 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("msgTransmitterTestCornerCase 22 -- OK \n");
     }
@@ -2187,7 +2187,7 @@ void eFSP_MSGTXTST_CornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 22 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("msgTransmitterTestCornerCase 23 -- OK \n");
     }
@@ -2196,7 +2196,7 @@ void eFSP_MSGTXTST_CornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 23 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("msgTransmitterTestCornerCase 24 -- OK \n");
     }
@@ -2205,7 +2205,7 @@ void eFSP_MSGTXTST_CornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 24 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("msgTransmitterTestCornerCase 25 -- OK \n");
     }
@@ -2214,7 +2214,7 @@ void eFSP_MSGTXTST_CornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 25 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("msgTransmitterTestCornerCase 26 -- OK \n");
     }
@@ -2223,7 +2223,7 @@ void eFSP_MSGTXTST_CornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 26 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("msgTransmitterTestCornerCase 27 -- OK \n");
     }
@@ -2232,7 +2232,7 @@ void eFSP_MSGTXTST_CornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 27 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("msgTransmitterTestCornerCase 28 -- OK \n");
     }
@@ -2241,7 +2241,7 @@ void eFSP_MSGTXTST_CornerCase(void)
         (void)printf("msgTransmitterTestCornerCase 28 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("msgTransmitterTestCornerCase 29 -- OK \n");
     }
@@ -2251,7 +2251,7 @@ void eFSP_MSGTXTST_CornerCase(void)
     }
 
 
-    if( e_eFSP_MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("msgTransmitterTestCornerCase 30 -- OK \n");
     }
@@ -2280,37 +2280,37 @@ void eFSP_MSGTXTST_CornerCase2(void)
     m_uTxBuffCounter = 0u;
 
     /* Local variable */
-    t_eFSP_MSGTX_Ctx ctx;
-    t_eFSP_MSGTX_InitData initData;
-    f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGTXTST_c32SAdapt;
-    t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    t_eFSP_MSGTX_TxCtx ctxAdapterSend;
-    t_eFSP_MSGTX_TimCtx ctxAdapterTim;
-    uint8_t  memArea[10u];
-    uint8_t  sendBuff[10u];
-    uint8_t* dataP;
-    uint32_t dataL;
+    t_eFSP_MSGTX_Ctx l_tCtx;
+    t_eFSP_MSGTX_InitData l_tInitData;
+    f_eFSP_MSGE_CrcCb l_fCrcPTest = &eFSP_MSGTXTST_c32SAdapt;
+    t_eFSP_MSGE_CrcCtx l_tCtxAdapterCrc;
+    t_eFSP_MSGTX_TxCtx l_tCtxAdapterSend;
+    t_eFSP_MSGTX_TimCtx l_tCtxAdapterTim;
+    uint8_t  l_auMemArea[10u];
+    uint8_t  l_auSendBuff[10u];
+    uint8_t* l_puData;
+    uint32_t l_uDataL;
 
     /* Clear */
-    (void)memset(&ctx, 0, sizeof(t_eFSP_MSGTX_Ctx));
-    (void)memset(&initData, 0, sizeof(t_eFSP_MSGTX_InitData));
+    (void)memset(&l_tCtx, 0, sizeof(t_eFSP_MSGTX_Ctx));
+    (void)memset(&l_tInitData, 0, sizeof(t_eFSP_MSGTX_InitData));
 
     /* Init */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = 5u;
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsgOnce;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 3u;
-    initData.uITimePerSendMs = 3u;
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = 5u;
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsgOnce;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 3u;
+    l_tInitData.uITimePerSendMs = 3u;
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_CornerCase2 1  -- OK \n");
     }
@@ -2319,9 +2319,9 @@ void eFSP_MSGTXTST_CornerCase2(void)
         (void)printf("eFSP_MSGTXTST_CornerCase2 1  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_GetWherePutData(&ctx, &dataP, &dataL) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_GetWherePutData(&l_tCtx, &l_puData, &l_uDataL) )
     {
-        if( 2u == dataL )
+        if( 2u == l_uDataL )
         {
             (void)printf("eFSP_MSGTXTST_CornerCase2 2  -- OK \n");
         }
@@ -2336,11 +2336,11 @@ void eFSP_MSGTXTST_CornerCase2(void)
     }
 
     /* Function */
-    dataP[0u] = 0x01u;
-    dataP[1u] = 0x02u;
+    l_puData[0u] = 0x01u;
+    l_puData[1u] = 0x02u;
     m_uTxBuffCounter = 0u;
     m_uSendWhen = 0u;
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_NewMessage(&ctx, 2u) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGTXTST_CornerCase2 3  -- OK \n");
     }
@@ -2350,7 +2350,7 @@ void eFSP_MSGTXTST_CornerCase2(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_MESSAGETIMEOUT == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_MESSAGETIMEOUT == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("eFSP_MSGTXTST_CornerCase2 4  -- OK \n");
     }
@@ -2360,21 +2360,21 @@ void eFSP_MSGTXTST_CornerCase2(void)
     }
 
     /* Init */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = 3u;
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsgOnce;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 12u;
-    initData.uITimePerSendMs = 5u;
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = 3u;
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsgOnce;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 12u;
+    l_tInitData.uITimePerSendMs = 5u;
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_CornerCase2 6  -- OK \n");
     }
@@ -2383,9 +2383,9 @@ void eFSP_MSGTXTST_CornerCase2(void)
         (void)printf("eFSP_MSGTXTST_CornerCase2 6  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_GetWherePutData(&ctx, &dataP, &dataL) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_GetWherePutData(&l_tCtx, &l_puData, &l_uDataL) )
     {
-        if( 2u == dataL )
+        if( 2u == l_uDataL )
         {
             (void)printf("eFSP_MSGTXTST_CornerCase2 7  -- OK \n");
         }
@@ -2400,11 +2400,11 @@ void eFSP_MSGTXTST_CornerCase2(void)
     }
 
     /* Function */
-    dataP[0u] = 0x01u;
-    dataP[1u] = 0x02u;
+    l_puData[0u] = 0x01u;
+    l_puData[1u] = 0x02u;
     m_uTxBuffCounter = 0u;
     m_uSendWhen = 0u;
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_NewMessage(&ctx, 2u) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGTXTST_CornerCase2 8  -- OK \n");
     }
@@ -2414,7 +2414,7 @@ void eFSP_MSGTXTST_CornerCase2(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("eFSP_MSGTXTST_CornerCase2 9  -- OK \n");
     }
@@ -2424,7 +2424,7 @@ void eFSP_MSGTXTST_CornerCase2(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("eFSP_MSGTXTST_CornerCase2 10 -- OK \n");
     }
@@ -2434,7 +2434,7 @@ void eFSP_MSGTXTST_CornerCase2(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("eFSP_MSGTXTST_CornerCase2 11 -- OK \n");
     }
@@ -2445,7 +2445,7 @@ void eFSP_MSGTXTST_CornerCase2(void)
 
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("eFSP_MSGTXTST_CornerCase2 12 -- OK \n");
     }
@@ -2455,7 +2455,7 @@ void eFSP_MSGTXTST_CornerCase2(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_MESSAGETIMEOUT == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_MESSAGETIMEOUT == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("eFSP_MSGTXTST_CornerCase2 13 -- OK \n");
     }
@@ -2480,37 +2480,37 @@ void eFSP_MSGTXTST_CornerCase2(void)
 void eFSP_MSGTXTST_CornerCase3()
 {
     /* Local variable */
-    t_eFSP_MSGTX_Ctx ctx;
-    t_eFSP_MSGTX_InitData initData;
-    f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGTXTST_c32SAdapt;
-    t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    t_eFSP_MSGTX_TxCtx ctxAdapterSend;
-    t_eFSP_MSGTX_TimCtx ctxAdapterTim;
-    uint8_t  memArea[10u];
-    uint8_t  sendBuff[10u];
-    uint8_t* dataP;
-    uint32_t dataL;
+    t_eFSP_MSGTX_Ctx l_tCtx;
+    t_eFSP_MSGTX_InitData l_tInitData;
+    f_eFSP_MSGE_CrcCb l_fCrcPTest = &eFSP_MSGTXTST_c32SAdapt;
+    t_eFSP_MSGE_CrcCtx l_tCtxAdapterCrc;
+    t_eFSP_MSGTX_TxCtx l_tCtxAdapterSend;
+    t_eFSP_MSGTX_TimCtx l_tCtxAdapterTim;
+    uint8_t  l_auMemArea[10u];
+    uint8_t  l_auSendBuff[10u];
+    uint8_t* l_puData;
+    uint32_t l_uDataL;
 
     /* Clear */
-    (void)memset(&ctx, 0, sizeof(t_eFSP_MSGTX_Ctx));
-    (void)memset(&initData, 0, sizeof(t_eFSP_MSGTX_InitData));
+    (void)memset(&l_tCtx, 0, sizeof(t_eFSP_MSGTX_Ctx));
+    (void)memset(&l_tInitData, 0, sizeof(t_eFSP_MSGTX_InitData));
 
     /* Init */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsgCorr;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 100u;
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsgCorr;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemaining;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 100u;
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_CornerCase3 1  -- OK \n");
     }
@@ -2519,9 +2519,9 @@ void eFSP_MSGTXTST_CornerCase3()
         (void)printf("eFSP_MSGTXTST_CornerCase3 1  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_GetWherePutData(&ctx, &dataP, &dataL) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_GetWherePutData(&l_tCtx, &l_puData, &l_uDataL) )
     {
-        if( 2u == dataL )
+        if( 2u == l_uDataL )
         {
             (void)printf("eFSP_MSGTXTST_CornerCase3 2  -- OK \n");
         }
@@ -2536,9 +2536,9 @@ void eFSP_MSGTXTST_CornerCase3()
     }
 
     /* Function */
-    dataP[0u] = 0x01u;
-    dataP[1u] = 0x02u;
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_NewMessage(&ctx, 2u) )
+    l_puData[0u] = 0x01u;
+    l_puData[1u] = 0x02u;
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGTXTST_CornerCase3 3  -- OK \n");
     }
@@ -2548,7 +2548,7 @@ void eFSP_MSGTXTST_CornerCase3()
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("eFSP_MSGTXTST_CornerCase3 4  -- OK \n");
     }
@@ -2558,25 +2558,25 @@ void eFSP_MSGTXTST_CornerCase3()
     }
 
     /* Clear */
-    (void)memset(&ctx, 0, sizeof(t_eFSP_MSGTX_Ctx));
-    (void)memset(&initData, 0, sizeof(t_eFSP_MSGTX_InitData));
+    (void)memset(&l_tCtx, 0, sizeof(t_eFSP_MSGTX_Ctx));
+    (void)memset(&l_tInitData, 0, sizeof(t_eFSP_MSGTX_InitData));
 
     /* Init */
-    initData.puIMemArea = memArea;
-    initData.uIMemAreaL = sizeof(memArea);
-    initData.puITxBuffArea = sendBuff;
-    initData.uITxBuffAreaL = sizeof(sendBuff);
-    initData.fICrc = cbCrcPTest;
-    initData.ptICbCrcCtx = &ctxAdapterCrc;
-    initData.fITx = &eFSP_MSGTXTST_sendMsg;
-    initData.ptICbTxCtx = &ctxAdapterSend;
-    initData.tITxTim.ptTimCtx = &ctxAdapterTim;
-    initData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
-    initData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemainingCorr;
-    initData.uITimeoutMs = 1000u;
-    initData.uITimePerSendMs = 100u;
+    l_tInitData.puIMemArea = l_auMemArea;
+    l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
+    l_tInitData.puITxBuffArea = l_auSendBuff;
+    l_tInitData.uITxBuffAreaL = sizeof(l_auSendBuff);
+    l_tInitData.fICrc = l_fCrcPTest;
+    l_tInitData.ptICbCrcCtx = &l_tCtxAdapterCrc;
+    l_tInitData.fITx = &eFSP_MSGTXTST_sendMsg;
+    l_tInitData.ptICbTxCtx = &l_tCtxAdapterSend;
+    l_tInitData.tITxTim.ptTimCtx = &l_tCtxAdapterTim;
+    l_tInitData.tITxTim.fTimStart = &eFSP_MSGTXTST_timStart;
+    l_tInitData.tITxTim.fTimGetRemain = &eFSP_MSGTXTST_timGetRemainingCorr;
+    l_tInitData.uITimeoutMs = 1000u;
+    l_tInitData.uITimePerSendMs = 100u;
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&ctx, &initData) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_InitCtx(&l_tCtx, &l_tInitData) )
     {
         (void)printf("eFSP_MSGTXTST_CornerCase3 5  -- OK \n");
     }
@@ -2585,9 +2585,9 @@ void eFSP_MSGTXTST_CornerCase3()
         (void)printf("eFSP_MSGTXTST_CornerCase3 5  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_GetWherePutData(&ctx, &dataP, &dataL) )
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_GetWherePutData(&l_tCtx, &l_puData, &l_uDataL) )
     {
-        if( 2u == dataL )
+        if( 2u == l_uDataL )
         {
             (void)printf("eFSP_MSGTXTST_CornerCase3 6  -- OK \n");
         }
@@ -2602,9 +2602,9 @@ void eFSP_MSGTXTST_CornerCase3()
     }
 
     /* Function */
-    dataP[0u] = 0x01u;
-    dataP[1u] = 0x02u;
-    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_NewMessage(&ctx, 2u) )
+    l_puData[0u] = 0x01u;
+    l_puData[1u] = 0x02u;
+    if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGTXTST_CornerCase3 7  -- OK \n");
     }
@@ -2614,7 +2614,7 @@ void eFSP_MSGTXTST_CornerCase3()
     }
 
     /* Function */
-    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_SendChunk(&ctx) )
+    if( e_eFSP_MSGTX_RES_CORRUPTCTX == eFSP_MSGTX_SendChunk(&l_tCtx) )
     {
         (void)printf("eFSP_MSGTXTST_CornerCase3 8  -- OK \n");
     }

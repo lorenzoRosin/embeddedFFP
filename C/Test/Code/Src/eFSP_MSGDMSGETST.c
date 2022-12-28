@@ -140,8 +140,8 @@ void eFSP_MSGDMSGETST_Common(void)
     f_eFSP_MSGE_CrcCb l_fCrcEnc = &eFSP_MSGDMSGETST_c32SAdaptE;
     uint8_t  l_auEemEncoderArea[100u] = {0u};
     uint32_t l_uEncMaxPaySize;
-    uint8_t* encPayLoc;
-    uint8_t encDataSend[200u];
+    uint8_t* l_puEncPayLoc;
+    uint8_t l_auEncDataSend[200u];
     uint32_t l_uEncToSendSize;
     e_eFSP_MSGE_RES l_eRncoderRet;
     uint32_t l_uEncCounter;
@@ -150,7 +150,7 @@ void eFSP_MSGDMSGETST_Common(void)
     t_eFSP_MSGD_Ctx l_tCtxDec;
     t_eFSP_MSGD_CrcCtx  l_tCtxCrcDec;
     f_eFSP_MSGD_CrcCb l_fCrcPDec = &eFSP_MSGDMSGETST_c32SAdapt;
-    uint8_t  memDecoderArea[100u] = {0u};
+    uint8_t  l_auMemDecoderArea[100u] = {0u};
     uint32_t l_uDecTotCounter;
     uint32_t l_uDecCurCounter;
     uint32_t l_uMostEfficientDataExtr;
@@ -166,7 +166,7 @@ void eFSP_MSGDMSGETST_Common(void)
     }
 
     /* INIT MESSAGE DECODER */
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_InitCtx(&l_tCtxDec, memDecoderArea, sizeof(memDecoderArea), l_fCrcPDec, &l_tCtxCrcDec) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_InitCtx(&l_tCtxDec, l_auMemDecoderArea, sizeof(l_auMemDecoderArea), l_fCrcPDec, &l_tCtxCrcDec) )
     {
         (void)printf("eFSP_MSGDMSGETST_Common 2  -- OK \n");
     }
@@ -176,7 +176,7 @@ void eFSP_MSGDMSGETST_Common(void)
     }
 
     /* LOAD A MESSAGE IN THE ENCODER */
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetWherePutData(&l_tCtxEnc, &encPayLoc, &l_uEncMaxPaySize) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetWherePutData(&l_tCtxEnc, &l_puEncPayLoc, &l_uEncMaxPaySize) )
     {
         if( ( sizeof(l_auEemEncoderArea) - EFSP_MSGEN_HEADERSIZE ) == l_uEncMaxPaySize )
         {
@@ -193,13 +193,13 @@ void eFSP_MSGDMSGETST_Common(void)
     }
 
     /* Inserte data to encode */
-    encPayLoc[0u] = ECU_SOF;
-    encPayLoc[1u] = ECU_ESC;
-    encPayLoc[2u] = ECU_ESC;
-    encPayLoc[3u] = ECU_EOF;
-    encPayLoc[4u] = 0xFFu;
-    encPayLoc[5u] = 0xCCu;
-    encPayLoc[6u] = ECU_SOF;
+    l_puEncPayLoc[0u] = ECU_SOF;
+    l_puEncPayLoc[1u] = ECU_ESC;
+    l_puEncPayLoc[2u] = ECU_ESC;
+    l_puEncPayLoc[3u] = ECU_EOF;
+    l_puEncPayLoc[4u] = 0xFFu;
+    l_puEncPayLoc[5u] = 0xCCu;
+    l_puEncPayLoc[6u] = ECU_SOF;
 
     /* Start encoding a new message */
     if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_NewMessage(&l_tCtxEnc, 0x07u) )
@@ -227,7 +227,7 @@ void eFSP_MSGDMSGETST_Common(void)
 
     while( e_eFSP_MSGE_RES_OK == l_eRncoderRet )
     {
-        l_eRncoderRet = eFSP_MSGE_GetEncChunk(&l_tCtxEnc, &encDataSend[l_uEncCounter], 1u, &l_uEncToSendSize);
+        l_eRncoderRet = eFSP_MSGE_GetEncChunk(&l_tCtxEnc, &l_auEncDataSend[l_uEncCounter], 1u, &l_uEncToSendSize);
 
         if( ( e_eFSP_MSGE_RES_OK == l_eRncoderRet ) || ( e_eFSP_MSGE_RES_MESSAGEENDED == l_eRncoderRet ) )
         {
@@ -271,7 +271,7 @@ void eFSP_MSGDMSGETST_Common(void)
         (void)printf("eFSP_MSGDMSGETST_Common 7  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&l_tCtxDec, encDataSend, 8u, &l_uDecCurCounter) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&l_tCtxDec, l_auEncDataSend, 8u, &l_uDecCurCounter) )
     {
         (void)printf("eFSP_MSGDMSGETST_Common 8  -- OK \n");
     }
@@ -297,7 +297,7 @@ void eFSP_MSGDMSGETST_Common(void)
         (void)printf("eFSP_MSGDMSGETST_Common 9  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&l_tCtxDec, &encDataSend[l_uDecTotCounter], l_uMostEfficientDataExtr, &l_uDecCurCounter) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&l_tCtxDec, &l_auEncDataSend[l_uDecTotCounter], l_uMostEfficientDataExtr, &l_uDecCurCounter) )
     {
         (void)printf("eFSP_MSGDMSGETST_Common 10 -- OK \n");
     }
@@ -323,7 +323,7 @@ void eFSP_MSGDMSGETST_Common(void)
         (void)printf("eFSP_MSGDMSGETST_Common 11 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_MESSAGEENDED == eFSP_MSGD_InsEncChunk(&l_tCtxDec, &encDataSend[l_uDecTotCounter], 30u, &l_uDecCurCounter) )
+    if( e_eFSP_MSGD_RES_MESSAGEENDED == eFSP_MSGD_InsEncChunk(&l_tCtxDec, &l_auEncDataSend[l_uDecTotCounter], 30u, &l_uDecCurCounter) )
     {
         if( 13u == l_uDecCurCounter )
         {
