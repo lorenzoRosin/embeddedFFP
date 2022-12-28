@@ -41,17 +41,20 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_InitCtx(t_eFSP_MSGTX_Ctx* const p_ptCtx, const t_eFS
 	{
         /* Check pointer validity */
         if( ( NULL == p_ptInitData->puIMemArea ) || ( NULL == p_ptInitData->puITxBuffArea ) ||
-            ( NULL == p_ptInitData->fICrc ) || ( NULL == p_ptInitData->ptICbCrcCtx ) || ( NULL == p_ptInitData->fITx ) ||
-            ( NULL == p_ptInitData->ptICbTxCtx ) || ( NULL == p_ptInitData->tITxTim.ptTimCtx ) ||
-            ( NULL == p_ptInitData->tITxTim.fTimStart ) || ( NULL == p_ptInitData->tITxTim.fTimGetRemain ) )
+            ( NULL == p_ptInitData->fICrc ) || ( NULL == p_ptInitData->ptICbCrcCtx ) ||
+            ( NULL == p_ptInitData->fITx ) || ( NULL == p_ptInitData->ptICbTxCtx ) ||
+            ( NULL == p_ptInitData->tITxTim.ptTimCtx ) || ( NULL == p_ptInitData->tITxTim.fTimStart ) ||
+            ( NULL == p_ptInitData->tITxTim.fTimGetRemain ) )
         {
             l_eRes = e_eFSP_MSGTX_RES_BADPOINTER;
         }
         else
         {
             /* Check data validity, we need some len to store the data */
-            if( ( p_ptInitData->uITxBuffAreaL < 1u ) || ( p_ptInitData->uITimeoutMs < 1u ) ||
-                ( p_ptInitData->uITimePerSendMs < 1u ) || ( p_ptInitData->uITimePerSendMs > p_ptInitData->uITimeoutMs ) )
+            if( ( p_ptInitData->uITxBuffAreaL < 1u ) ||
+                ( p_ptInitData->uITimeoutMs < 1u ) ||
+                ( p_ptInitData->uITimePerSendMs < 1u ) ||
+                ( p_ptInitData->uITimePerSendMs > p_ptInitData->uITimeoutMs ) )
             {
                 l_eRes = e_eFSP_MSGTX_RES_BADPARAM;
             }
@@ -70,7 +73,7 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_InitCtx(t_eFSP_MSGTX_Ctx* const p_ptCtx, const t_eFS
 
                 /* initialize internal message encoder */
                 l_eResMsgE =  eFSP_MSGE_InitCtx(&p_ptCtx->tMsgeCtx, p_ptInitData->puIMemArea, p_ptInitData->uIMemAreaL,
-                                                   p_ptInitData->fICrc, p_ptInitData->ptICbCrcCtx);
+                                                p_ptInitData->fICrc, p_ptInitData->ptICbCrcCtx);
                 l_eRes = eFSP_MSGTX_ConvertRetFromMSGE(l_eResMsgE);
             }
         }
@@ -99,7 +102,8 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_IsInit(t_eFSP_MSGTX_Ctx* const p_ptCtx, bool_t* p_pb
 	return l_eRes;
 }
 
-e_eFSP_MSGTX_RES eFSP_MSGTX_GetWherePutData(t_eFSP_MSGTX_Ctx* const p_ptCtx, uint8_t** p_ppuData, uint32_t* const p_puMaxDL)
+e_eFSP_MSGTX_RES eFSP_MSGTX_GetWherePutData(t_eFSP_MSGTX_Ctx* const p_ptCtx, uint8_t** p_ppuData,
+                                            uint32_t* const p_puMaxDL)
 {
 	/* Local variable */
 	e_eFSP_MSGTX_RES l_eRes;
@@ -233,7 +237,7 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_SendChunk(t_eFSP_MSGTX_Ctx* const p_ptCtx)
     /* Local variable to keep track of the start, current etc remaining time */
     uint32_t l_uSRemainTxT;
     uint32_t l_uCRemainTxT;
-    uint32_t l_uSessionRem;
+    uint32_t l_uSesRem;
     uint32_t l_uElapFromStart;
 
     /* Local variable usend for the current data calculation */
@@ -256,7 +260,7 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_SendChunk(t_eFSP_MSGTX_Ctx* const p_ptCtx)
 		else
 		{
             /* Init state machine value */
-            l_uSessionRem = 0u;
+            l_uSesRem = 0u;
             l_uSRemainTxT = 0u;
             l_eRes = e_eFSP_MSGTX_RES_OK;
             l_eSM = e_eFSP_MSGTXPRV_SM_CHECKINIT;
@@ -313,12 +317,12 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_SendChunk(t_eFSP_MSGTX_Ctx* const p_ptCtx)
                                 if( l_uSRemainTxT >= p_ptCtx->uTimePerSendMs )
                                 {
                                     /* Time elapsed */
-                                    l_uSessionRem = p_ptCtx->uTimePerSendMs;
+                                    l_uSesRem = p_ptCtx->uTimePerSendMs;
                                 }
                                 else
                                 {
                                     /* Session timeout not elapsed, can send data */
-                                    l_uSessionRem = l_uSRemainTxT;
+                                    l_uSesRem = l_uSRemainTxT;
                                 }
 
                                 /* check if we have some data to send in TX buffer */
@@ -368,8 +372,8 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_SendChunk(t_eFSP_MSGTX_Ctx* const p_ptCtx)
 
                         if( e_eFSP_MSGTX_RES_OK == l_eRes )
                         {
-                            /* Retrived some data to send, by design if MSGE_RetriveEChunk return e_eFSP_MSGE_RES_OK this
-                             * means that the value of loaded data inside send buffer is equals to it's size */
+                            /* Retrived some data to send, by design if MSGE_RetriveEChunk return e_eFSP_MSGE_RES_OK
+                             * this means that the value of loaded data inside send buffer is equals to it's size */
 
                             /* Can go to send loaded data now */
                             l_eSM = e_eFSP_MSGTXPRV_SM_SENDBUFF;
@@ -404,7 +408,7 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_SendChunk(t_eFSP_MSGTX_Ctx* const p_ptCtx)
                         l_uCDToTxL = p_ptCtx->uTxBuffFill - p_ptCtx->uTxBuffCntr;
 
                         /* Can send data from send buffer */
-                        if( true == (*p_ptCtx->fTx)(p_ptCtx->ptTxCtx, l_puCDToTx, l_uCDToTxL, &l_uCDTxed, l_uSessionRem) )
+                        if( true == (*p_ptCtx->fTx)(p_ptCtx->ptTxCtx, l_puCDToTx, l_uCDToTxL, &l_uCDTxed, l_uSesRem) )
                         {
                             /* Check for some strangeness */
                             if( l_uCDTxed > l_uCDToTxL )
@@ -469,7 +473,7 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_SendChunk(t_eFSP_MSGTX_Ctx* const p_ptCtx)
                                         else
                                         {
                                             /* Session timeout not elapsed, can send data */
-                                            l_uSessionRem = p_ptCtx->uTimePerSendMs - l_uElapFromStart;
+                                            l_uSesRem = p_ptCtx->uTimePerSendMs - l_uElapFromStart;
 
                                             /* Check if something to send is present */
                                             l_eSM = e_eFSP_MSGTXPRV_SM_CHECKIFBUFFERTX;
@@ -478,7 +482,7 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_SendChunk(t_eFSP_MSGTX_Ctx* const p_ptCtx)
                                     else
                                     {
                                         /* Started only with remaining time */
-                                        l_uSessionRem = l_uCRemainTxT;
+                                        l_uSesRem = l_uCRemainTxT;
 
                                         /* Check if something to send is present */
                                         l_eSM = e_eFSP_MSGTXPRV_SM_CHECKIFBUFFERTX;

@@ -35,7 +35,7 @@ typedef struct t_eFSP_MSGD_CrcCtxUser t_eFSP_MSGD_CrcCtx;
 /* Call back to a function that will calculate the CRC for this modules
  * the p_ptCtx parameter is a custom pointer that can be used by the creator of this CRC callback, and will not be used
  * by the MSG DECODER module */
-typedef bool_t (*f_eFSP_MSGD_CrcCb) ( t_eFSP_MSGD_CrcCtx* p_ptCtx, const uint32_t p_uSeed, const uint8_t* p_puData,
+typedef bool_t (*f_eFSP_MSGD_CrcCb) ( t_eFSP_MSGD_CrcCtx* const p_ptCtx, const uint32_t p_uSeed, const uint8_t* p_puDat,
                                       const uint32_t p_uDataL, uint32_t* const p_puCrc32Val );
 
 typedef enum

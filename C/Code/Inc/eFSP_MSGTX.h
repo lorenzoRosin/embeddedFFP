@@ -38,12 +38,12 @@ typedef struct t_eFSP_MSGTX_TimCtxUser t_eFSP_MSGTX_TimCtx;
 /* Call back to a function that will trasmit the passed data.
  * the p_ptCtx parameter is a custom pointer that can be used by the creator of this TX callback, and will not be used
  * by the MSG TRANSMITTER module */
-typedef bool_t (*f_eFSP_MSGTX_TxCb) ( t_eFSP_MSGTX_TxCtx* p_ptCtx, const uint8_t* p_puDataToTx, const uint32_t p_uDataToTxL,
-                               uint32_t* const p_puDataTxL, const uint32_t p_uTimeTx );
+typedef bool_t (*f_eFSP_MSGTX_TxCb) ( t_eFSP_MSGTX_TxCtx* const p_ptCtx, const uint8_t* p_puDataToTx,
+                                      const uint32_t p_uDToTxL, uint32_t* const p_puDTxedL, const uint32_t p_uTimeTx );
 
 /* Call backs to functions that act as a timer */
-typedef bool_t (*f_eFSP_MSGTX_TimStart) ( t_eFSP_MSGTX_TimCtx* p_ptCtx, const uint32_t p_uTimeout );
-typedef bool_t (*f_eFSP_MSGTX_TimGetRemaing) ( t_eFSP_MSGTX_TimCtx* p_ptCtx, uint32_t* const p_puRemain );
+typedef bool_t (*f_eFSP_MSGTX_TimStart) ( t_eFSP_MSGTX_TimCtx* const p_ptCtx, const uint32_t p_uTimeout );
+typedef bool_t (*f_eFSP_MSGTX_TimGetRemaing) ( t_eFSP_MSGTX_TimCtx* const p_ptCtx, uint32_t* const p_puRemain );
 
 typedef struct
 {
@@ -130,21 +130,22 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_IsInit(t_eFSP_MSGTX_Ctx* const p_ptCtx, bool_t* p_pb
  * @param[in]   p_ptCtx         - Message Transmitter context
  * @param[out]  p_ppuData       - Pointer to a Pointer where the raw data needs to be copied before starting a message
  * @param[out]  p_puMaxDL       - Pointer to a uint32_t variable where the max number of data that can be copied in
- *                              p_ppuData will be placed
+ *                                p_ppuData will be placed
  *
  * @return      e_eFSP_MSGTX_RES_BADPOINTER     - In case of bad pointer passed to the function
  *		        e_eFSP_MSGTX_RES_NOINITLIB      - Need to init the data encoder context before taking some action
  *		        e_eFSP_MSGTX_RES_CORRUPTCTX     - In case of an corrupted context
  *              e_eFSP_MSGTX_RES_OK             - Operation ended correctly
  */
-e_eFSP_MSGTX_RES eFSP_MSGTX_GetWherePutData(t_eFSP_MSGTX_Ctx* const p_ptCtx, uint8_t** p_ppuData, uint32_t* const p_puMaxDL);
+e_eFSP_MSGTX_RES eFSP_MSGTX_GetWherePutData(t_eFSP_MSGTX_Ctx* const p_ptCtx, uint8_t** p_ppuData,
+                                            uint32_t* const p_puMaxDL);
 
 /**
  * @brief       Start to encode a new msg given the dimension of raw payload it self. This function suppouse that
  *              data payload that need to be encoded were already copied in memory.( see MSGTX_GetPayloadLocation
  *              in order to know how get the data pointer, and copy the data )
  *
- * @param[in]   p_ptCtx         - Message Transmitter context
+ * @param[in]   p_ptCtx    - Message Transmitter context
  * @param[in]   p_uMsgL    - lenght of the raw payload present in the frame that we need to encode ( no header )
  *
  * @return      e_eFSP_MSGTX_RES_BADPOINTER     - In case of bad pointer passed to the function
@@ -187,15 +188,15 @@ e_eFSP_MSGTX_RES eFSP_MSGTX_RestartMessage(t_eFSP_MSGTX_Ctx* const p_ptCtx);
  *		        e_eFSP_MSGTX_RES_NOINITMESSAGE  - Need to start a message before taking some action
  *		        e_eFSP_MSGTX_RES_CORRUPTCTX     - In case of an corrupted context
  *              e_eFSP_MSGTX_RES_MESSAGESENDED  - No more data that we can send, restart or start a new msg to proceed.
- *                                         This means that we have finished sending the current message, without
- *                                         any particular error or timeout.
+ *                                                This means that we have finished sending the current message, without
+ *                                                any particular error or timeout.
  *              e_eFSP_MSGTX_RES_MESSAGETIMEOUT - The message is not sended before "uITimeoutMs". Restart to continue.
  *              e_eFSP_MSGTX_RES_TXCLBKERROR    - Some error reported by the user send function. Restart to continue.
  *              e_eFSP_MSGTX_RES_TIMCLBKERROR   - The timer function returned an error
  *              e_eFSP_MSGTX_RES_OK             - Operation ended correctly, message is not fully sended. This happnes
- *                                         when the whole message wasn't sended in "uITimePerSendMs" millisecond, but
- *                                         the "uITimeoutMs" timeout is still not reached. Call this function again
- *                                         to send another chunk of data.
+ *                                                when the whole message wasn't sended in "uITimePerSendMs" millisecond,
+ *                                                but the "uITimeoutMs" timeout is still not reached. Call this
+ *                                                function again to send another chunk of data.
  */
 e_eFSP_MSGTX_RES eFSP_MSGTX_SendChunk(t_eFSP_MSGTX_Ctx* const p_ptCtx);
 

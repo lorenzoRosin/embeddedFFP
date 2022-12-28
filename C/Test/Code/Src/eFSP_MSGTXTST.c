@@ -15,17 +15,7 @@
 #include "eFSP_MSGTXTST.h"
 #include "eFSP_MSGTX.h"
 #include "eCU_CRC.h"
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_disable = "MISRAC2004-20.9", "MISRAC2012-Rule-21.6"
-    /* Suppressed for code clarity in test execution*/
-#endif
-
 #include <stdio.h>
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MISRAC2004-20.9", "MISRAC2012-Rule-21.6"
-#endif
 
 #ifdef __IAR_SYSTEMS_ICC__
     #pragma cstat_disable = "MISRAC2012-Rule-10.3", "CERT-STR32-C", "MISRAC2012-Rule-11.5", "CERT-EXP36-C_b", \
@@ -33,10 +23,18 @@
     /* Suppressed for code clarity in test execution*/
 #endif
 
+/***********************************************************************************************************************
+ *   PRIVATE TEST VARIABLE DECLARATION
+ **********************************************************************************************************************/
+static uint8_t  m_auTxBuff[100u];
+static uint32_t m_uTxBuffCounter;
+static uint32_t m_uSendWhen;
+static uint32_t m_uTimRemainingTime;
+
 
 
 /***********************************************************************************************************************
- *   PRIVATE TEST FUNCTION DECLARATION
+ *   PRIVATE TEST STRUCT DECLARATION
  **********************************************************************************************************************/
 struct t_eFSP_MSGE_CrcCtxUser
 {
@@ -52,6 +50,13 @@ struct t_eFSP_MSGTX_TimCtxUser
 {
     bool bTxIsError;
 };
+
+
+
+/***********************************************************************************************************************
+ *   PRIVATE TEST FUNCTION DECLARATION
+ **********************************************************************************************************************/
+
 
 static bool_t eFSP_MSGTXTST_c32SAdapt(t_eFSP_MSGE_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val);
 static bool_t eFSP_MSGTXTST_c32SAdaptEr(t_eFSP_MSGE_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val);
@@ -168,9 +173,7 @@ bool_t eFSP_MSGTXTST_c32SAdaptEr(t_eFSP_MSGE_CrcCtx* p_ptCtx, const uint32_t p_u
 }
 
 
-static uint8_t m_auTxBuff[100u];
-static uint32_t m_uTxBuffCounter;
-static uint32_t m_uSendWhen;
+
 
 bool_t eFSP_MSGTXTST_sendMsg( t_eFSP_MSGTX_TxCtx* p_ptCtx, const uint8_t* p_puDataToTx, const uint32_t p_uDataToTxL, uint32_t* const p_uDataTxed,
                 const uint32_t p_uTimeToTx )
@@ -310,7 +313,7 @@ bool_t eFSP_MSGTXTST_sendMsgErr( t_eFSP_MSGTX_TxCtx* p_ptCtx, const uint8_t* p_p
     return l_bResult;
 }
 
-static uint32_t m_uTimRemainingTime;
+
 
 bool_t eFSP_MSGTXTST_timStart ( t_eFSP_MSGTX_TimCtx* p_ptCtx, const uint32_t p_uTimeoutVal )
 {

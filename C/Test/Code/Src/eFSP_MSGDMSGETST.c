@@ -14,17 +14,7 @@
 #include "eFSP_MSGE.h"
 #include "eFSP_MSGD.h"
 #include "eCU_CRC.h"
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_disable = "MISRAC2004-20.9", "MISRAC2012-Rule-21.6"
-    /* Suppressed for code clarity in test execution*/
-#endif
-
 #include <stdio.h>
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MISRAC2004-20.9", "MISRAC2012-Rule-21.6"
-#endif
 
 #ifdef __IAR_SYSTEMS_ICC__
     #pragma cstat_disable = "MISRAC2012-Rule-10.3", "CERT-STR32-C", "MISRAC2012-Rule-11.5", "CERT-EXP36-C_b", \
@@ -34,8 +24,10 @@
 
 
 
+
+
 /***********************************************************************************************************************
- *   PRIVATE TEST FUNCTION DECLARATION
+ *   PRIVATE TEST STRUCT DECLARATION
  **********************************************************************************************************************/
 struct t_eFSP_MSGD_CrcCtxUser
 {
@@ -47,8 +39,14 @@ struct t_eFSP_MSGE_CrcCtxUser
     e_eCU_CRC_RES eLastEr;
 };
 
+
+
+/***********************************************************************************************************************
+ *   PRIVATE TEST FUNCTION DECLARATION
+ **********************************************************************************************************************/
 static bool_t eFSP_MSGDMSGETST_c32SAdapt(t_eFSP_MSGD_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val);
 static bool_t eFSP_MSGDMSGETST_c32SAdaptE(t_eFSP_MSGE_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val);
+
 
 
 /***********************************************************************************************************************
@@ -78,7 +76,6 @@ void eFSP_MSGDMSGETST_ExeTest(void)
 bool_t eFSP_MSGDMSGETST_c32SAdapt(t_eFSP_MSGD_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val)
 {
     bool_t l_bRes;
-    t_eFSP_MSGD_CrcCtx* l_ptCtx;
 
     if( ( NULL == p_ptCtx ) || ( NULL == p_puC32Val ) )
     {
@@ -86,10 +83,8 @@ bool_t eFSP_MSGDMSGETST_c32SAdapt(t_eFSP_MSGD_CrcCtx* p_ptCtx, const uint32_t p_
     }
     else
     {
-        l_ptCtx = (t_eFSP_MSGD_CrcCtx*)p_ptCtx;
-
-        l_ptCtx->eLastEr = eCU_CRC_32Seed(p_uS, (const uint8_t*)p_puD, p_uDLen, p_puC32Val);
-        if( e_eCU_CRC_RES_OK == l_ptCtx->eLastEr )
+        p_ptCtx->eLastEr = eCU_CRC_32Seed(p_uS, (const uint8_t*)p_puD, p_uDLen, p_puC32Val);
+        if( e_eCU_CRC_RES_OK == p_ptCtx->eLastEr )
         {
             l_bRes = true;
         }
@@ -105,7 +100,6 @@ bool_t eFSP_MSGDMSGETST_c32SAdapt(t_eFSP_MSGD_CrcCtx* p_ptCtx, const uint32_t p_
 bool_t eFSP_MSGDMSGETST_c32SAdaptE(t_eFSP_MSGE_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val)
 {
     bool_t l_bRes;
-    t_eFSP_MSGE_CrcCtx* l_ptCtx;
 
     if( ( NULL == p_ptCtx ) || ( NULL == p_puC32Val ) )
     {
@@ -113,10 +107,8 @@ bool_t eFSP_MSGDMSGETST_c32SAdaptE(t_eFSP_MSGE_CrcCtx* p_ptCtx, const uint32_t p
     }
     else
     {
-        l_ptCtx = (t_eFSP_MSGE_CrcCtx*)p_ptCtx;
-
-        l_ptCtx->eLastEr = eCU_CRC_32Seed(p_uS, (const uint8_t*)p_puD, p_uDLen, p_puC32Val);
-        if( e_eCU_CRC_RES_OK == l_ptCtx->eLastEr )
+        p_ptCtx->eLastEr = eCU_CRC_32Seed(p_uS, (const uint8_t*)p_puD, p_uDLen, p_puC32Val);
+        if( e_eCU_CRC_RES_OK == p_ptCtx->eLastEr )
         {
             l_bRes = true;
         }

@@ -13,17 +13,7 @@
 #include "eFSP_MSGRXTST.h"
 #include "eFSP_MSGRX.h"
 #include "eCU_CRC.h"
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_disable = "MISRAC2004-20.9", "MISRAC2012-Rule-21.6"
-    /* Suppressed for code clarity in test execution*/
-#endif
-
 #include <stdio.h>
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MISRAC2004-20.9", "MISRAC2012-Rule-21.6"
-#endif
 
 #ifdef __IAR_SYSTEMS_ICC__
     #pragma cstat_disable = "MISRAC2012-Rule-10.3", "CERT-STR32-C", "MISRAC2012-Rule-11.5", "CERT-EXP36-C_b", \
@@ -31,9 +21,22 @@
     /* Suppressed for code clarity in test execution*/
 #endif
 
+/***********************************************************************************************************************
+ *   PRIVATE TEST VARIABLE DECLARATION
+ **********************************************************************************************************************/
+static uint8_t  m_auRxPayload[120u];
+static uint32_t m_uPayloadSize;
+static uint32_t m_uPayloadCounter;
+static uint32_t m_uReadJump;
+static uint32_t m_uReadJumpLong;
+static uint32_t m_uTimRemainingTime;
+static uint32_t m_uTimTimCnt;
+static uint32_t m_uTimTimCntInc;
+
+
 
 /***********************************************************************************************************************
- *   PRIVATE TEST FUNCTION DECLARATION
+ *   PRIVATE TEST STRUCT DECLARATION
  **********************************************************************************************************************/
 struct t_eFSP_MSGD_CrcCtxUser
 {
@@ -50,6 +53,11 @@ struct t_eFSP_MSGRX_TimCtxUser
     bool bTxIsError;
 };
 
+
+
+/***********************************************************************************************************************
+ *   PRIVATE TEST FUNCTION DECLARATION
+ **********************************************************************************************************************/
 static bool_t eFSP_MSGRXTST_c32SAdapt(t_eFSP_MSGD_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val);
 static bool_t eFSP_MSGRXTST_c32SAdaptEr(t_eFSP_MSGD_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val);
 static bool_t eFSP_MSGRXTST_receiveMsg( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puDataToRx, uint32_t* const p_puDataRxedL, const uint32_t p_uDataRxMax,
@@ -173,11 +181,7 @@ bool_t eFSP_MSGRXTST_c32SAdaptEr(t_eFSP_MSGD_CrcCtx* p_ptCtx, const uint32_t p_u
     return l_bResult;
 }
 
-static uint8_t  m_auRxPayload[120u];
-static uint32_t m_uPayloadSize;
-static uint32_t m_uPayloadCounter;
-static uint32_t m_uReadJump;
-static uint32_t m_uReadJumpLong;
+
 
 bool_t eFSP_MSGRXTST_receiveMsg( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puDataToRx, uint32_t* const p_puDataRxedL, const uint32_t p_uDataRxMax,
                 const uint32_t p_uTimeToTx )
@@ -380,9 +384,6 @@ bool_t eFSP_MSGRXTST_receiveMsgErr( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puDa
     return l_bResult;
 }
 
-static uint32_t m_uTimRemainingTime;
-static uint32_t m_tim_timCnt;
-static uint32_t m_tim_timCntInc;
 
 bool_t eFSP_MSGRXTST_timStart ( t_eFSP_MSGRX_TimCtx* p_ptCtx, const uint32_t p_uTimeoutVal )
 {
@@ -397,8 +398,8 @@ bool_t eFSP_MSGRXTST_timStart ( t_eFSP_MSGRX_TimCtx* p_ptCtx, const uint32_t p_u
     {
         l_ptCtxCur = (t_eFSP_MSGRX_TimCtx*)p_ptCtx;
         l_ptCtxCur->bTxIsError = true;
-        m_tim_timCnt = 0u;
-        m_tim_timCntInc = 0u;
+        m_uTimTimCnt = 0u;
+        m_uTimTimCntInc = 0u;
         m_uTimRemainingTime = p_uTimeoutVal;
         l_bResult = true;
     }
@@ -420,9 +421,9 @@ bool_t eFSP_MSGRXTST_timGetRemaining ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* c
         l_ptCtxCur = (t_eFSP_MSGRX_TimCtx*)p_ptCtx;
         l_ptCtxCur->bTxIsError = true;
 
-        if( m_tim_timCnt < MAX_UINT32VAL )
+        if( m_uTimTimCnt < MAX_UINT32VAL )
         {
-            m_tim_timCnt++;
+            m_uTimTimCnt++;
         }
 
         if( m_uTimRemainingTime > 0u )
@@ -450,15 +451,15 @@ bool_t eFSP_MSGRXTST_timGetRemainingCorr ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_
     {
         l_ptCtxCur = (t_eFSP_MSGRX_TimCtx*)p_ptCtx;
         l_ptCtxCur->bTxIsError = true;
-        if( m_tim_timCnt < MAX_UINT32VAL )
+        if( m_uTimTimCnt < MAX_UINT32VAL )
         {
-            m_tim_timCnt++;
+            m_uTimTimCnt++;
         }
-        *p_puRemainings = m_uTimRemainingTime + m_tim_timCntInc;
+        *p_puRemainings = m_uTimRemainingTime + m_uTimTimCntInc;
 
-        if( m_tim_timCntInc < MAX_UINT32VAL )
+        if( m_uTimTimCntInc < MAX_UINT32VAL )
         {
-            m_tim_timCntInc++;
+            m_uTimTimCntInc++;
         }
         l_bResult = true;
     }
@@ -479,7 +480,7 @@ bool_t eFSP_MSGRXTST_timStartErr ( t_eFSP_MSGRX_TimCtx* p_ptCtx, const uint32_t 
     {
         l_ptCtxCur = (t_eFSP_MSGRX_TimCtx*)p_ptCtx;
         l_ptCtxCur->bTxIsError = true;
-        m_tim_timCnt = 0u;
+        m_uTimTimCnt = 0u;
 
         m_uTimRemainingTime = p_uTimeoutVal;
         l_bResult = false;
@@ -501,9 +502,9 @@ bool_t eFSP_MSGRXTST_timGetRemainingErr ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t
     {
         l_ptCtxCur = (t_eFSP_MSGRX_TimCtx*)p_ptCtx;
         l_ptCtxCur->bTxIsError = true;
-        if( m_tim_timCnt < MAX_UINT32VAL )
+        if( m_uTimTimCnt < MAX_UINT32VAL )
         {
-            m_tim_timCnt++;
+            m_uTimTimCnt++;
         }
         if( m_uTimRemainingTime > 0u )
         {
@@ -530,9 +531,9 @@ bool_t eFSP_MSGRXTST_timGetRemainingErrCntrl ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uin
     {
         l_ptCtxCur = (t_eFSP_MSGRX_TimCtx*)p_ptCtx;
         l_ptCtxCur->bTxIsError = true;
-        if( m_tim_timCnt < MAX_UINT32VAL )
+        if( m_uTimTimCnt < MAX_UINT32VAL )
         {
-            m_tim_timCnt++;
+            m_uTimTimCnt++;
         }
         if( m_uTimRemainingTime > 0u )
         {
@@ -541,7 +542,7 @@ bool_t eFSP_MSGRXTST_timGetRemainingErrCntrl ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uin
 
         *p_puRemainings = m_uTimRemainingTime;
 
-        if( m_tim_timCnt < 2u )
+        if( m_uTimTimCnt < 2u )
         {
             l_bResult = true;
         }
@@ -1461,7 +1462,7 @@ void eFSP_MSGRXTST_CorruptContext(void)
     }
 
     /* Function */
-    l_tCtx.uRxBuffFill = l_tCtx.uRxBuffL + 1u;
+    l_tCtx.uRxBufFil = l_tCtx.uRxBuffL + 1u;
     if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&l_tCtx) )
     {
         (void)printf("eFSP_MSGRXTST_CorruptContext 16 -- OK \n");
@@ -1496,7 +1497,7 @@ void eFSP_MSGRXTST_CorruptContext(void)
     }
 
     /* Function */
-    l_tCtx.uRxBuffCntr = l_tCtx.uRxBuffFill + 1u;
+    l_tCtx.uRxBuffCntr = l_tCtx.uRxBufFil + 1u;
     if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_NewMsg(&l_tCtx) )
     {
         (void)printf("eFSP_MSGRXTST_CorruptContext 18 -- OK \n");
@@ -4429,7 +4430,7 @@ void eFSP_MSGRXTST_CornerCase6(void)
         (void)printf("eFSP_MSGRXTST_CornerCase6 3  -- FAIL \n");
     }
 
-    if( ( 81u == l_tCtx.uRxBuffFill) || ( 1u == l_tCtx.uRxBuffCntr ) )
+    if( ( 81u == l_tCtx.uRxBufFil) || ( 1u == l_tCtx.uRxBuffCntr ) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase6 4  -- OK \n");
     }
@@ -4447,7 +4448,7 @@ void eFSP_MSGRXTST_CornerCase6(void)
         (void)printf("eFSP_MSGRXTST_CornerCase6 5  -- FAIL \n");
     }
 
-    if( ( 81u == l_tCtx.uRxBuffFill) || ( 12u == l_tCtx.uRxBuffCntr ) )
+    if( ( 81u == l_tCtx.uRxBufFil) || ( 12u == l_tCtx.uRxBuffCntr ) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase6 6  -- OK \n");
     }

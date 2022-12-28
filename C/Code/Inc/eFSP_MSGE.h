@@ -35,7 +35,7 @@ typedef struct t_eFSP_MSGE_CrcCtxUser t_eFSP_MSGE_CrcCtx;
 /* Call back to a function that will calculate the CRC for this modules
  * the p_ptCtx parameter is a custom pointer that can be used by the creator of this CRC callback, and will not be used
  * by the MSG ENCODER module */
-typedef bool_t (*f_eFSP_MSGE_CrcCb) ( t_eFSP_MSGE_CrcCtx* p_ptCtx, const uint32_t p_uSeed, const uint8_t* p_puData,
+typedef bool_t (*f_eFSP_MSGE_CrcCb) ( t_eFSP_MSGE_CrcCtx* const p_ptCtx, const uint32_t p_uSeed, const uint8_t* p_puDat,
                                       const uint32_t p_uDataL, uint32_t* const p_puCrc32Val );
 
 typedef enum
@@ -161,7 +161,7 @@ e_eFSP_MSGE_RES eFSP_MSGE_GetRemByteToGet(t_eFSP_MSGE_Ctx* const p_ptCtx, uint32
  * @param[out]  p_puGettedL - Pointer to an uint32_t were we will store the number encoded data inserted in
  *                            p_puEncBuff. Note that if the function return e_eFSP_MSGE_RES_OK the value of p_puGettedL
  *                            will be equals to p_uMaxBufL. The value p_puGettedL infact could be lower than max dest
- *                            size only if some error is returned or if the frame is ended ( 
+ *                            size only if some error is returned or if the frame is ended (
  *                            e_eFSP_MSGE_RES_MESSAGEENDED )
  *
  * @return      e_eFSP_MSGE_RES_BADPOINTER     - In case of bad pointer passed to the function
@@ -169,12 +169,12 @@ e_eFSP_MSGE_RES eFSP_MSGE_GetRemByteToGet(t_eFSP_MSGE_Ctx* const p_ptCtx, uint32
  *		        e_eFSP_MSGE_RES_BADPARAM       - In case of an invalid parameter passed to the function
  *		        e_eFSP_MSGE_RES_NOINITMESSAGE  - Need to start a message before taking some action
  *		        e_eFSP_MSGE_RES_CORRUPTCTX     - In case of an corrupted context
- *              e_eFSP_MSGE_RES_MESSAGEENDED   - No more data that we can elaborate, restart or start a new frame to 
- *                                               proceed. This means that we have finished encoding the current frame. 
- *                                               Keep in mind in this case that the value of p_puGettedL could be lower 
+ *              e_eFSP_MSGE_RES_MESSAGEENDED   - No more data that we can elaborate, restart or start a new frame to
+ *                                               proceed. This means that we have finished encoding the current frame.
+ *                                               Keep in mind in this case that the value of p_puGettedL could be lower
  *                                               than p_uMaxBufL.
- *              e_eFSP_MSGE_RES_OK             - Operation ended correctly. This dosent mean that the encoding process 
- *                                               is completed, but we can be sure that p_puGettedL will have the same 
+ *              e_eFSP_MSGE_RES_OK             - Operation ended correctly. This dosent mean that the encoding process
+ *                                               is completed, but we can be sure that p_puGettedL will have the same
  *                                               value of p_uMaxBufL.
  */
 e_eFSP_MSGE_RES eFSP_MSGE_GetEncChunk(t_eFSP_MSGE_Ctx* const p_ptCtx, uint8_t* p_puEncBuff, const uint32_t p_uMaxBufL,
