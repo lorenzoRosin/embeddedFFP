@@ -39,12 +39,12 @@
  **********************************************************************************************************************/
 struct t_eFSP_MSGD_CrcCtxUser
 {
-    e_eCU_CRC_RES lastError;
+    e_eCU_CRC_RES eLastEr;
 };
 
 struct t_eFSP_MSGE_CrcCtxUser
 {
-    e_eCU_CRC_RES lastError;
+    e_eCU_CRC_RES eLastEr;
 };
 
 static bool_t eFSP_MSGDMSGETST_c32SAdapt(t_eFSP_MSGD_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val);
@@ -88,8 +88,8 @@ bool_t eFSP_MSGDMSGETST_c32SAdapt(t_eFSP_MSGD_CrcCtx* p_ptCtx, const uint32_t p_
     {
         ctxCur = (t_eFSP_MSGD_CrcCtx*)p_ptCtx;
 
-        ctxCur->lastError = eCU_CRC_32Seed(p_uS, (const uint8_t*)p_puD, p_uDLen, p_puC32Val);
-        if( e_eCU_CRC_RES_OK == ctxCur->lastError )
+        ctxCur->eLastEr = eCU_CRC_32Seed(p_uS, (const uint8_t*)p_puD, p_uDLen, p_puC32Val);
+        if( e_eCU_CRC_RES_OK == ctxCur->eLastEr )
         {
             result = true;
         }
@@ -115,8 +115,8 @@ bool_t eFSP_MSGDMSGETST_c32SAdaptE(t_eFSP_MSGE_CrcCtx* p_ptCtx, const uint32_t p
     {
         ctxCur = (t_eFSP_MSGE_CrcCtx*)p_ptCtx;
 
-        ctxCur->lastError = eCU_CRC_32Seed(p_uS, (const uint8_t*)p_puD, p_uDLen, p_puC32Val);
-        if( e_eCU_CRC_RES_OK == ctxCur->lastError )
+        ctxCur->eLastEr = eCU_CRC_32Seed(p_uS, (const uint8_t*)p_puD, p_uDLen, p_puC32Val);
+        if( e_eCU_CRC_RES_OK == ctxCur->eLastEr )
         {
             result = true;
         }

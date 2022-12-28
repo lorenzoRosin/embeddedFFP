@@ -37,37 +37,37 @@
  **********************************************************************************************************************/
 struct t_eFSP_MSGD_CrcCtxUser
 {
-    e_eCU_CRC_RES lastError;
+    e_eCU_CRC_RES eLastEr;
 };
 
 struct t_eFSP_MSGRX_RxCtxUser
 {
-    bool sendIsError;
+    bool bTxIsError;
 };
 
 struct t_eFSP_MSGRX_TimCtxUser
 {
-    bool sendIsError;
+    bool bTxIsError;
 };
 
 static bool_t eFSP_MSGRXTST_c32SAdapt(t_eFSP_MSGD_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val);
 static bool_t eFSP_MSGRXTST_c32SAdaptEr(t_eFSP_MSGD_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val);
-static bool_t eFSP_MSGRXTST_receiveMsg( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
-                       const uint32_t timeToRx );
-static bool_t eFSP_MSGRXTST_receiveMsgCrrupt( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
-                       const uint32_t timeToRx );
-static bool_t eFSP_MSGRXTST_receiveMsgJump( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
-                       const uint32_t timeToRx );
-static bool_t eFSP_MSGRXTST_receiveMsgJumpLong( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
-                       const uint32_t timeToRx );
-static bool_t eFSP_MSGRXTST_receiveMsgErr( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
-                          const uint32_t timeToRx );
-static bool_t eFSP_MSGRXTST_timStart ( t_eFSP_MSGRX_TimCtx* p_ptCtx, const uint32_t timeoutVal );
-static bool_t eFSP_MSGRXTST_timGetRemaining ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* const remainings );
-static bool_t eFSP_MSGRXTST_timGetRemainingCorr ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* const remainings );
-static bool_t eFSP_MSGRXTST_timStartErr ( t_eFSP_MSGRX_TimCtx* p_ptCtx, const uint32_t timeoutVal );
-static bool_t eFSP_MSGRXTST_timGetRemainingErr ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* const remainings );
-static bool_t eFSP_MSGRXTST_timGetRemainingErrCntrl( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* const remainings );
+static bool_t eFSP_MSGRXTST_receiveMsg( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puDataToRx, uint32_t* const p_puDataRxedL, const uint32_t p_uDataRxMax,
+                       const uint32_t p_uTimeToTx );
+static bool_t eFSP_MSGRXTST_receiveMsgCrrupt( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puDataToRx, uint32_t* const p_puDataRxedL, const uint32_t p_uDataRxMax,
+                       const uint32_t p_uTimeToTx );
+static bool_t eFSP_MSGRXTST_receiveMsgJump( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puDataToRx, uint32_t* const p_puDataRxedL, const uint32_t p_uDataRxMax,
+                       const uint32_t p_uTimeToTx );
+static bool_t eFSP_MSGRXTST_receiveMsgJumpLong( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puDataToRx, uint32_t* const p_puDataRxedL, const uint32_t p_uDataRxMax,
+                       const uint32_t p_uTimeToTx );
+static bool_t eFSP_MSGRXTST_receiveMsgErr( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puDataToRx, uint32_t* const p_puDataRxedL, const uint32_t p_uDataRxMax,
+                          const uint32_t p_uTimeToTx );
+static bool_t eFSP_MSGRXTST_timStart ( t_eFSP_MSGRX_TimCtx* p_ptCtx, const uint32_t p_uTimeoutVal );
+static bool_t eFSP_MSGRXTST_timGetRemaining ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* const p_puRemainings );
+static bool_t eFSP_MSGRXTST_timGetRemainingCorr ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* const p_puRemainings );
+static bool_t eFSP_MSGRXTST_timStartErr ( t_eFSP_MSGRX_TimCtx* p_ptCtx, const uint32_t p_uTimeoutVal );
+static bool_t eFSP_MSGRXTST_timGetRemainingErr ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* const p_puRemainings );
+static bool_t eFSP_MSGRXTST_timGetRemainingErrCntrl( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* const p_puRemainings );
 
 
 
@@ -134,8 +134,8 @@ bool_t eFSP_MSGRXTST_c32SAdapt(t_eFSP_MSGD_CrcCtx* p_ptCtx, const uint32_t p_uS,
     {
         ctxCur = (t_eFSP_MSGD_CrcCtx*)p_ptCtx;
 
-        ctxCur->lastError = eCU_CRC_32Seed(p_uS, (const uint8_t*)p_puD, p_uDLen, p_puC32Val);
-        if( e_eCU_CRC_RES_OK == ctxCur->lastError )
+        ctxCur->eLastEr = eCU_CRC_32Seed(p_uS, (const uint8_t*)p_puD, p_uDLen, p_puC32Val);
+        if( e_eCU_CRC_RES_OK == ctxCur->eLastEr )
         {
             result = true;
         }
@@ -165,7 +165,7 @@ bool_t eFSP_MSGRXTST_c32SAdaptEr(t_eFSP_MSGD_CrcCtx* p_ptCtx, const uint32_t p_u
     {
         ctxCur = (t_eFSP_MSGD_CrcCtx*)p_ptCtx;
 
-        ctxCur->lastError = e_eCU_CRC_RES_BADPOINTER;
+        ctxCur->eLastEr = e_eCU_CRC_RES_BADPOINTER;
         result = false;
         *p_puC32Val = 0u;
     }
@@ -173,207 +173,207 @@ bool_t eFSP_MSGRXTST_c32SAdaptEr(t_eFSP_MSGD_CrcCtx* p_ptCtx, const uint32_t p_u
     return result;
 }
 
-static uint8_t  m_rxPayload[120u];
-static uint32_t m_payloadSize;
-static uint32_t m_payloadCounter;
-static uint32_t m_read_jump;
-static uint32_t m_read_jumpLong;
+static uint8_t  m_auRxPayload[120u];
+static uint32_t m_uPayloadSize;
+static uint32_t m_uPayloadCounter;
+static uint32_t m_uReadJump;
+static uint32_t m_uReadJumpLong;
 
-bool_t eFSP_MSGRXTST_receiveMsg( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
-                const uint32_t timeToRx )
+bool_t eFSP_MSGRXTST_receiveMsg( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puDataToRx, uint32_t* const p_puDataRxedL, const uint32_t p_uDataRxMax,
+                const uint32_t p_uTimeToTx )
 {
     bool_t result;
     t_eFSP_MSGRX_RxCtx* ctxCur;
 
-    if( ( NULL == p_ptCtx ) || ( NULL == dataToRx ) || ( NULL == dataRecevd ) )
+    if( ( NULL == p_ptCtx ) || ( NULL == p_puDataToRx ) || ( NULL == p_puDataRxedL ) )
     {
         result = false;
     }
     else
     {
         ctxCur = (t_eFSP_MSGRX_RxCtx*)p_ptCtx;
-        ctxCur->sendIsError = true;
+        ctxCur->bTxIsError = true;
         result = true;
 
 
-        if( m_payloadCounter < m_payloadSize )
+        if( m_uPayloadCounter < m_uPayloadSize )
         {
-            if( ( m_payloadSize - m_payloadCounter ) >= dataRxMax )
+            if( ( m_uPayloadSize - m_uPayloadCounter ) >= p_uDataRxMax )
             {
-                (void)memcpy(dataToRx, &m_rxPayload[m_payloadCounter], dataRxMax);
-                m_payloadCounter += dataRxMax;
-                *dataRecevd = dataRxMax;
+                (void)memcpy(p_puDataToRx, &m_auRxPayload[m_uPayloadCounter], p_uDataRxMax);
+                m_uPayloadCounter += p_uDataRxMax;
+                *p_puDataRxedL = p_uDataRxMax;
             }
             else
             {
-                (void)memcpy(dataToRx, &m_rxPayload[m_payloadCounter], ( m_payloadSize - m_payloadCounter ) );
-                m_payloadCounter += ( m_payloadSize - m_payloadCounter ) ;
-                *dataRecevd = ( m_payloadSize - m_payloadCounter );
+                (void)memcpy(p_puDataToRx, &m_auRxPayload[m_uPayloadCounter], ( m_uPayloadSize - m_uPayloadCounter ) );
+                m_uPayloadCounter += ( m_uPayloadSize - m_uPayloadCounter ) ;
+                *p_puDataRxedL = ( m_uPayloadSize - m_uPayloadCounter );
             }
         }
         else
         {
-            *dataRecevd = 0u;
+            *p_puDataRxedL = 0u;
         }
     }
 
     return result;
 }
 
-bool_t eFSP_MSGRXTST_receiveMsgCrrupt (t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
-                const uint32_t timeToRx )
+bool_t eFSP_MSGRXTST_receiveMsgCrrupt (t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puDataToRx, uint32_t* const p_puDataRxedL, const uint32_t p_uDataRxMax,
+                const uint32_t p_uTimeToTx )
 {
     bool_t result;
     t_eFSP_MSGRX_RxCtx* ctxCur;
 
-    if( ( NULL == p_ptCtx ) || ( NULL == dataToRx ) || ( NULL == dataRecevd ) )
+    if( ( NULL == p_ptCtx ) || ( NULL == p_puDataToRx ) || ( NULL == p_puDataRxedL ) )
     {
         result = false;
     }
     else
     {
         ctxCur = (t_eFSP_MSGRX_RxCtx*)p_ptCtx;
-        ctxCur->sendIsError = true;
+        ctxCur->bTxIsError = true;
         result = true;
 
-        if( m_payloadCounter < m_payloadSize )
+        if( m_uPayloadCounter < m_uPayloadSize )
         {
-            if( ( m_payloadSize - m_payloadCounter ) >= dataRxMax )
+            if( ( m_uPayloadSize - m_uPayloadCounter ) >= p_uDataRxMax )
             {
-                (void)memcpy(dataToRx, &m_rxPayload[m_payloadCounter], dataRxMax);
-                m_payloadCounter += dataRxMax;
-                *dataRecevd = dataRxMax +1u;
+                (void)memcpy(p_puDataToRx, &m_auRxPayload[m_uPayloadCounter], p_uDataRxMax);
+                m_uPayloadCounter += p_uDataRxMax;
+                *p_puDataRxedL = p_uDataRxMax +1u;
             }
             else
             {
-                (void)memcpy(dataToRx, &m_rxPayload[m_payloadCounter], ( m_payloadSize - m_payloadCounter ) );
-                m_payloadCounter += ( m_payloadSize - m_payloadCounter ) ;
-                *dataRecevd = ( m_payloadSize - m_payloadCounter );
+                (void)memcpy(p_puDataToRx, &m_auRxPayload[m_uPayloadCounter], ( m_uPayloadSize - m_uPayloadCounter ) );
+                m_uPayloadCounter += ( m_uPayloadSize - m_uPayloadCounter ) ;
+                *p_puDataRxedL = ( m_uPayloadSize - m_uPayloadCounter );
             }
         }
         else
         {
-            *dataRecevd = 0u;
+            *p_puDataRxedL = 0u;
         }
     }
 
     return result;
 }
 
-bool_t eFSP_MSGRXTST_receiveMsgJump( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
-                const uint32_t timeToRx )
+bool_t eFSP_MSGRXTST_receiveMsgJump( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puDataToRx, uint32_t* const p_puDataRxedL, const uint32_t p_uDataRxMax,
+                const uint32_t p_uTimeToTx )
 {
     bool_t result;
     t_eFSP_MSGRX_RxCtx* ctxCur;
 
     ctxCur = (t_eFSP_MSGRX_RxCtx*)p_ptCtx;
-    ctxCur->sendIsError = true;
+    ctxCur->bTxIsError = true;
     result = true;
 
-    if( ( NULL == p_ptCtx ) || ( NULL == dataToRx ) || ( NULL == dataRecevd ) )
+    if( ( NULL == p_ptCtx ) || ( NULL == p_puDataToRx ) || ( NULL == p_puDataRxedL ) )
     {
         result = false;
     }
     else
     {
-        if( 0u == m_read_jump )
+        if( 0u == m_uReadJump )
         {
-            if( m_payloadCounter < m_payloadSize )
+            if( m_uPayloadCounter < m_uPayloadSize )
             {
-                if( ( m_payloadSize - m_payloadCounter ) >= dataRxMax )
+                if( ( m_uPayloadSize - m_uPayloadCounter ) >= p_uDataRxMax )
                 {
-                    (void)memcpy(dataToRx, &m_rxPayload[m_payloadCounter], dataRxMax);
-                    m_payloadCounter += dataRxMax;
-                    *dataRecevd = dataRxMax;
+                    (void)memcpy(p_puDataToRx, &m_auRxPayload[m_uPayloadCounter], p_uDataRxMax);
+                    m_uPayloadCounter += p_uDataRxMax;
+                    *p_puDataRxedL = p_uDataRxMax;
                 }
                 else
                 {
-                    (void)memcpy(dataToRx, &m_rxPayload[m_payloadCounter], ( m_payloadSize - m_payloadCounter ) );
-                    m_payloadCounter += ( m_payloadSize - m_payloadCounter ) ;
-                    *dataRecevd = ( m_payloadSize - m_payloadCounter );
+                    (void)memcpy(p_puDataToRx, &m_auRxPayload[m_uPayloadCounter], ( m_uPayloadSize - m_uPayloadCounter ) );
+                    m_uPayloadCounter += ( m_uPayloadSize - m_uPayloadCounter ) ;
+                    *p_puDataRxedL = ( m_uPayloadSize - m_uPayloadCounter );
                 }
             }
             else
             {
-                *dataRecevd = 0u;
+                *p_puDataRxedL = 0u;
             }
-            m_read_jump = 1u;
+            m_uReadJump = 1u;
         }
         else
         {
-            m_read_jump = 0u;
-            *dataRecevd = 0u;
+            m_uReadJump = 0u;
+            *p_puDataRxedL = 0u;
         }
     }
 
     return result;
 }
 
-bool_t eFSP_MSGRXTST_receiveMsgJumpLong( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
-                const uint32_t timeToRx )
+bool_t eFSP_MSGRXTST_receiveMsgJumpLong( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puDataToRx, uint32_t* const p_puDataRxedL, const uint32_t p_uDataRxMax,
+                const uint32_t p_uTimeToTx )
 {
     bool_t result;
     t_eFSP_MSGRX_RxCtx* ctxCur;
 
     ctxCur = (t_eFSP_MSGRX_RxCtx*)p_ptCtx;
-    ctxCur->sendIsError = true;
+    ctxCur->bTxIsError = true;
     result = true;
 
-    if( ( NULL == p_ptCtx ) || ( NULL == dataToRx ) || ( NULL == dataRecevd ) )
+    if( ( NULL == p_ptCtx ) || ( NULL == p_puDataToRx ) || ( NULL == p_puDataRxedL ) )
     {
         result = false;
     }
     else
     {
-        if( m_read_jumpLong >= 10u )
+        if( m_uReadJumpLong >= 10u )
         {
-            if( m_payloadCounter < m_payloadSize )
+            if( m_uPayloadCounter < m_uPayloadSize )
             {
-                if( ( m_payloadSize - m_payloadCounter ) >= dataRxMax )
+                if( ( m_uPayloadSize - m_uPayloadCounter ) >= p_uDataRxMax )
                 {
-                    (void)memcpy(dataToRx, &m_rxPayload[m_payloadCounter], dataRxMax);
-                    m_payloadCounter += dataRxMax;
-                    *dataRecevd = dataRxMax;
+                    (void)memcpy(p_puDataToRx, &m_auRxPayload[m_uPayloadCounter], p_uDataRxMax);
+                    m_uPayloadCounter += p_uDataRxMax;
+                    *p_puDataRxedL = p_uDataRxMax;
                 }
                 else
                 {
-                    (void)memcpy(dataToRx, &m_rxPayload[m_payloadCounter], ( m_payloadSize - m_payloadCounter ) );
-                    m_payloadCounter += ( m_payloadSize - m_payloadCounter ) ;
-                    *dataRecevd = ( m_payloadSize - m_payloadCounter );
+                    (void)memcpy(p_puDataToRx, &m_auRxPayload[m_uPayloadCounter], ( m_uPayloadSize - m_uPayloadCounter ) );
+                    m_uPayloadCounter += ( m_uPayloadSize - m_uPayloadCounter ) ;
+                    *p_puDataRxedL = ( m_uPayloadSize - m_uPayloadCounter );
                 }
             }
             else
             {
-                *dataRecevd = 0u;
+                *p_puDataRxedL = 0u;
             }
-            m_read_jumpLong = 0u;
+            m_uReadJumpLong = 0u;
         }
         else
         {
-            m_read_jumpLong++;
-            *dataRecevd = 0u;
+            m_uReadJumpLong++;
+            *p_puDataRxedL = 0u;
         }
     }
 
     return result;
 }
 
-bool_t eFSP_MSGRXTST_receiveMsgErr( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* dataToRx, uint32_t* const dataRecevd, const uint32_t dataRxMax,
-                const uint32_t timeToRx )
+bool_t eFSP_MSGRXTST_receiveMsgErr( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puDataToRx, uint32_t* const p_puDataRxedL, const uint32_t p_uDataRxMax,
+                const uint32_t p_uTimeToTx )
 {
     bool_t result;
     t_eFSP_MSGRX_RxCtx* ctxCur;
 
-    (void)timeToRx;
-    (void)dataRxMax;
-    if( ( NULL == p_ptCtx ) || ( NULL == dataToRx ) || ( NULL == dataRecevd ) )
+    (void)p_uTimeToTx;
+    (void)p_uDataRxMax;
+    if( ( NULL == p_ptCtx ) || ( NULL == p_puDataToRx ) || ( NULL == p_puDataRxedL ) )
     {
         result = false;
     }
     else
     {
         ctxCur = (t_eFSP_MSGRX_RxCtx*)p_ptCtx;
-        ctxCur->sendIsError = true;
+        ctxCur->bTxIsError = true;
         result = false;
     }
 
@@ -384,7 +384,7 @@ static uint32_t m_tim_remainingTime;
 static uint32_t m_tim_timCnt;
 static uint32_t m_tim_timCntInc;
 
-bool_t eFSP_MSGRXTST_timStart ( t_eFSP_MSGRX_TimCtx* p_ptCtx, const uint32_t timeoutVal )
+bool_t eFSP_MSGRXTST_timStart ( t_eFSP_MSGRX_TimCtx* p_ptCtx, const uint32_t p_uTimeoutVal )
 {
     bool_t result;
     t_eFSP_MSGRX_TimCtx* ctxCur;
@@ -396,29 +396,29 @@ bool_t eFSP_MSGRXTST_timStart ( t_eFSP_MSGRX_TimCtx* p_ptCtx, const uint32_t tim
     else
     {
         ctxCur = (t_eFSP_MSGRX_TimCtx*)p_ptCtx;
-        ctxCur->sendIsError = true;
+        ctxCur->bTxIsError = true;
         m_tim_timCnt = 0u;
         m_tim_timCntInc = 0u;
-        m_tim_remainingTime = timeoutVal;
+        m_tim_remainingTime = p_uTimeoutVal;
         result = true;
     }
 
     return result;
 }
 
-bool_t eFSP_MSGRXTST_timGetRemaining ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* const remainings )
+bool_t eFSP_MSGRXTST_timGetRemaining ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* const p_puRemainings )
 {
     bool_t result;
     t_eFSP_MSGRX_TimCtx* ctxCur;
 
-    if( ( NULL == p_ptCtx ) || ( NULL == remainings ) )
+    if( ( NULL == p_ptCtx ) || ( NULL == p_puRemainings ) )
     {
         result = false;
     }
     else
     {
         ctxCur = (t_eFSP_MSGRX_TimCtx*)p_ptCtx;
-        ctxCur->sendIsError = true;
+        ctxCur->bTxIsError = true;
 
         if( m_tim_timCnt < MAX_UINT32VAL )
         {
@@ -430,31 +430,31 @@ bool_t eFSP_MSGRXTST_timGetRemaining ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* c
             m_tim_remainingTime--;
         }
 
-        *remainings = m_tim_remainingTime;
+        *p_puRemainings = m_tim_remainingTime;
         result = true;
     }
 
     return result;
 }
 
-bool_t eFSP_MSGRXTST_timGetRemainingCorr ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* const remainings )
+bool_t eFSP_MSGRXTST_timGetRemainingCorr ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* const p_puRemainings )
 {
     bool_t result;
     t_eFSP_MSGRX_TimCtx* ctxCur;
 
-    if( ( NULL == p_ptCtx ) || ( NULL == remainings ) )
+    if( ( NULL == p_ptCtx ) || ( NULL == p_puRemainings ) )
     {
         result = false;
     }
     else
     {
         ctxCur = (t_eFSP_MSGRX_TimCtx*)p_ptCtx;
-        ctxCur->sendIsError = true;
+        ctxCur->bTxIsError = true;
         if( m_tim_timCnt < MAX_UINT32VAL )
         {
             m_tim_timCnt++;
         }
-        *remainings = m_tim_remainingTime + m_tim_timCntInc;
+        *p_puRemainings = m_tim_remainingTime + m_tim_timCntInc;
 
         if( m_tim_timCntInc < MAX_UINT32VAL )
         {
@@ -466,7 +466,7 @@ bool_t eFSP_MSGRXTST_timGetRemainingCorr ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_
     return result;
 }
 
-bool_t eFSP_MSGRXTST_timStartErr ( t_eFSP_MSGRX_TimCtx* p_ptCtx, const uint32_t timeoutVal )
+bool_t eFSP_MSGRXTST_timStartErr ( t_eFSP_MSGRX_TimCtx* p_ptCtx, const uint32_t p_uTimeoutVal )
 {
     bool_t result;
     t_eFSP_MSGRX_TimCtx* ctxCur;
@@ -478,29 +478,29 @@ bool_t eFSP_MSGRXTST_timStartErr ( t_eFSP_MSGRX_TimCtx* p_ptCtx, const uint32_t 
     else
     {
         ctxCur = (t_eFSP_MSGRX_TimCtx*)p_ptCtx;
-        ctxCur->sendIsError = true;
+        ctxCur->bTxIsError = true;
         m_tim_timCnt = 0u;
 
-        m_tim_remainingTime = timeoutVal;
+        m_tim_remainingTime = p_uTimeoutVal;
         result = false;
     }
 
     return result;
 }
 
-bool_t eFSP_MSGRXTST_timGetRemainingErr ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* const remainings )
+bool_t eFSP_MSGRXTST_timGetRemainingErr ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* const p_puRemainings )
 {
     bool_t result;
     t_eFSP_MSGRX_TimCtx* ctxCur;
 
-    if( ( NULL == p_ptCtx ) || ( NULL == remainings) )
+    if( ( NULL == p_ptCtx ) || ( NULL == p_puRemainings) )
     {
         result = false;
     }
     else
     {
         ctxCur = (t_eFSP_MSGRX_TimCtx*)p_ptCtx;
-        ctxCur->sendIsError = true;
+        ctxCur->bTxIsError = true;
         if( m_tim_timCnt < MAX_UINT32VAL )
         {
             m_tim_timCnt++;
@@ -510,26 +510,26 @@ bool_t eFSP_MSGRXTST_timGetRemainingErr ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t
             m_tim_remainingTime--;
         }
 
-        *remainings = m_tim_remainingTime;
+        *p_puRemainings = m_tim_remainingTime;
         result = false;
     }
 
     return result;
 }
 
-bool_t eFSP_MSGRXTST_timGetRemainingErrCntrl ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* const remainings )
+bool_t eFSP_MSGRXTST_timGetRemainingErrCntrl ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* const p_puRemainings )
 {
     bool_t result;
     t_eFSP_MSGRX_TimCtx* ctxCur;
 
-    if( ( NULL == p_ptCtx ) || ( NULL == remainings) )
+    if( ( NULL == p_ptCtx ) || ( NULL == p_puRemainings) )
     {
         result = false;
     }
     else
     {
         ctxCur = (t_eFSP_MSGRX_TimCtx*)p_ptCtx;
-        ctxCur->sendIsError = true;
+        ctxCur->bTxIsError = true;
         if( m_tim_timCnt < MAX_UINT32VAL )
         {
             m_tim_timCnt++;
@@ -539,7 +539,7 @@ bool_t eFSP_MSGRXTST_timGetRemainingErrCntrl ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uin
             m_tim_remainingTime--;
         }
 
-        *remainings = m_tim_remainingTime;
+        *p_puRemainings = m_tim_remainingTime;
 
         if( m_tim_timCnt < 2u )
         {
@@ -560,8 +560,8 @@ bool_t eFSP_MSGRXTST_timGetRemainingErrCntrl ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uin
 void eFSP_MSGRXTST_BadPointer(void)
 {
     /* Static var init */
-    m_read_jump = 0u;
-	m_read_jumpLong = 0u;
+    m_uReadJump = 0u;
+	m_uReadJumpLong = 0u;
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
@@ -896,8 +896,8 @@ void eFSP_MSGRXTST_BadPointer(void)
 void eFSP_MSGRXTST_BadInit(void)
 {
     /* Static var init */
-    m_read_jump = 0u;
-	m_read_jumpLong = 0u;
+    m_uReadJump = 0u;
+	m_uReadJumpLong = 0u;
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
@@ -998,8 +998,8 @@ void eFSP_MSGRXTST_BadInit(void)
 void eFSP_MSGRXTST_BadParamEntr(void)
 {
     /* Static var init */
-    m_read_jump = 0u;
-	m_read_jumpLong = 0u;
+    m_uReadJump = 0u;
+	m_uReadJumpLong = 0u;
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
@@ -1176,8 +1176,8 @@ void eFSP_MSGRXTST_BadParamEntr(void)
 void eFSP_MSGRXTST_CorruptContext(void)
 {
     /* Static var init */
-    m_read_jump = 0u;
-	m_read_jumpLong = 0u;
+    m_uReadJump = 0u;
+	m_uReadJumpLong = 0u;
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
@@ -1860,8 +1860,8 @@ void eFSP_MSGRXTST_CorruptContext(void)
 void eFSP_MSGRXTST_BadClBckCrc(void)
 {
     /* Static var init */
-    m_read_jump = 0u;
-	m_read_jumpLong = 0u;
+    m_uReadJump = 0u;
+	m_uReadJumpLong = 0u;
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
@@ -1908,20 +1908,20 @@ void eFSP_MSGRXTST_BadClBckCrc(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 12u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = 0x00u;
-    m_rxPayload[2u] = 0x00u;
-    m_rxPayload[3u] = 0x00u;
-    m_rxPayload[4u] = 0x00u;
-    m_rxPayload[5u] = 0x02u;
-    m_rxPayload[6u] = 0x00u;
-    m_rxPayload[7u] = 0x00u;
-    m_rxPayload[8u] = 0x00u;
-    m_rxPayload[9u] = 0xCCu;
-    m_rxPayload[10u] = 0xCCu;
-    m_rxPayload[11u] = ECU_EOF;
+    m_uPayloadSize = 12u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] = 0x00u;
+    m_auRxPayload[2u] = 0x00u;
+    m_auRxPayload[3u] = 0x00u;
+    m_auRxPayload[4u] = 0x00u;
+    m_auRxPayload[5u] = 0x02u;
+    m_auRxPayload[6u] = 0x00u;
+    m_auRxPayload[7u] = 0x00u;
+    m_auRxPayload[8u] = 0x00u;
+    m_auRxPayload[9u] = 0xCCu;
+    m_auRxPayload[10u] = 0xCCu;
+    m_auRxPayload[11u] = ECU_EOF;
     if( e_eFSP_MSGRX_RES_CRCCLBKERROR == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_BadClBckCrc 3  -- OK \n");
@@ -1935,7 +1935,7 @@ void eFSP_MSGRXTST_BadClBckCrc(void)
 void eFSP_MSGRXTST_BadClBckReceive(void)
 {
     /* Static var init */
-    m_read_jump = 0u;
+    m_uReadJump = 0u;
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
@@ -1992,20 +1992,20 @@ void eFSP_MSGRXTST_BadClBckReceive(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 12u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = 0x00u;
-    m_rxPayload[2u] = 0x00u;
-    m_rxPayload[3u] = 0x00u;
-    m_rxPayload[4u] = 0x00u;
-    m_rxPayload[5u] = 0x02u;
-    m_rxPayload[6u] = 0x00u;
-    m_rxPayload[7u] = 0x00u;
-    m_rxPayload[8u] = 0x00u;
-    m_rxPayload[9u] = 0xCCu;
-    m_rxPayload[10u] = 0xCCu;
-    m_rxPayload[11u] = ECU_EOF;
+    m_uPayloadSize = 12u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] = 0x00u;
+    m_auRxPayload[2u] = 0x00u;
+    m_auRxPayload[3u] = 0x00u;
+    m_auRxPayload[4u] = 0x00u;
+    m_auRxPayload[5u] = 0x02u;
+    m_auRxPayload[6u] = 0x00u;
+    m_auRxPayload[7u] = 0x00u;
+    m_auRxPayload[8u] = 0x00u;
+    m_auRxPayload[9u] = 0xCCu;
+    m_auRxPayload[10u] = 0xCCu;
+    m_auRxPayload[11u] = ECU_EOF;
     if( e_eFSP_MSGRX_RES_RXCLBKERROR == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_BadClBckReceive 4  -- OK \n");
@@ -2019,8 +2019,8 @@ void eFSP_MSGRXTST_BadClBckReceive(void)
 void eFSP_MSGRXTST_BadClBckTim(void)
 {
     /* Static var init */
-    m_read_jump = 0u;
-	m_read_jumpLong = 0u;
+    m_uReadJump = 0u;
+	m_uReadJumpLong = 0u;
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
@@ -2077,20 +2077,20 @@ void eFSP_MSGRXTST_BadClBckTim(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 12u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = 0x00u;
-    m_rxPayload[2u] = 0x00u;
-    m_rxPayload[3u] = 0x00u;
-    m_rxPayload[4u] = 0x00u;
-    m_rxPayload[5u] = 0x02u;
-    m_rxPayload[6u] = 0x00u;
-    m_rxPayload[7u] = 0x00u;
-    m_rxPayload[8u] = 0x00u;
-    m_rxPayload[9u] = 0xCCu;
-    m_rxPayload[10u] = 0xCCu;
-    m_rxPayload[11u] = ECU_EOF;
+    m_uPayloadSize = 12u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] = 0x00u;
+    m_auRxPayload[2u] = 0x00u;
+    m_auRxPayload[3u] = 0x00u;
+    m_auRxPayload[4u] = 0x00u;
+    m_auRxPayload[5u] = 0x02u;
+    m_auRxPayload[6u] = 0x00u;
+    m_auRxPayload[7u] = 0x00u;
+    m_auRxPayload[8u] = 0x00u;
+    m_auRxPayload[9u] = 0xCCu;
+    m_auRxPayload[10u] = 0xCCu;
+    m_auRxPayload[11u] = ECU_EOF;
     if( e_eFSP_MSGRX_RES_TIMCLBKERROR == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_BadClBckTim 4  -- OK \n");
@@ -2145,20 +2145,20 @@ void eFSP_MSGRXTST_BadClBckTim(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 12u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = 0x00u;
-    m_rxPayload[2u] = 0x00u;
-    m_rxPayload[3u] = 0x00u;
-    m_rxPayload[4u] = 0x00u;
-    m_rxPayload[5u] = 0x02u;
-    m_rxPayload[6u] = 0x00u;
-    m_rxPayload[7u] = 0x00u;
-    m_rxPayload[8u] = 0x00u;
-    m_rxPayload[9u] = 0xCCu;
-    m_rxPayload[10u] = 0xCCu;
-    m_rxPayload[11u] = ECU_EOF;
+    m_uPayloadSize = 12u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] = 0x00u;
+    m_auRxPayload[2u] = 0x00u;
+    m_auRxPayload[3u] = 0x00u;
+    m_auRxPayload[4u] = 0x00u;
+    m_auRxPayload[5u] = 0x02u;
+    m_auRxPayload[6u] = 0x00u;
+    m_auRxPayload[7u] = 0x00u;
+    m_auRxPayload[8u] = 0x00u;
+    m_auRxPayload[9u] = 0xCCu;
+    m_auRxPayload[10u] = 0xCCu;
+    m_auRxPayload[11u] = ECU_EOF;
     if( e_eFSP_MSGRX_RES_TIMCLBKERROR == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_BadClBckTim 8  -- OK \n");
@@ -2203,20 +2203,20 @@ void eFSP_MSGRXTST_BadClBckTim(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 12u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = 0x00u;
-    m_rxPayload[2u] = 0x00u;
-    m_rxPayload[3u] = 0x00u;
-    m_rxPayload[4u] = 0x00u;
-    m_rxPayload[5u] = 0x02u;
-    m_rxPayload[6u] = 0x00u;
-    m_rxPayload[7u] = 0x00u;
-    m_rxPayload[8u] = 0x00u;
-    m_rxPayload[9u] = 0xCCu;
-    m_rxPayload[10u] = 0xCCu;
-    m_rxPayload[11u] = ECU_EOF;
+    m_uPayloadSize = 12u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] = 0x00u;
+    m_auRxPayload[2u] = 0x00u;
+    m_auRxPayload[3u] = 0x00u;
+    m_auRxPayload[4u] = 0x00u;
+    m_auRxPayload[5u] = 0x02u;
+    m_auRxPayload[6u] = 0x00u;
+    m_auRxPayload[7u] = 0x00u;
+    m_auRxPayload[8u] = 0x00u;
+    m_auRxPayload[9u] = 0xCCu;
+    m_auRxPayload[10u] = 0xCCu;
+    m_auRxPayload[11u] = ECU_EOF;
     if( e_eFSP_MSGRX_RES_TIMCLBKERROR == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_BadClBckTim 11 -- OK \n");
@@ -2230,8 +2230,8 @@ void eFSP_MSGRXTST_BadClBckTim(void)
 void eFSP_MSGRXTST_BadFrame(void)
 {
     /* Static var init */
-    m_read_jump = 0u;
-	m_read_jumpLong = 0u;
+    m_uReadJump = 0u;
+	m_uReadJumpLong = 0u;
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
@@ -2278,20 +2278,20 @@ void eFSP_MSGRXTST_BadFrame(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 12u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = 0x00u;
-    m_rxPayload[2u] = 0x00u;
-    m_rxPayload[3u] = 0x00u;
-    m_rxPayload[4u] = 0x00u;
-    m_rxPayload[5u] = 0x02u;
-    m_rxPayload[6u] = 0x00u;
-    m_rxPayload[7u] = 0x00u;
-    m_rxPayload[8u] = 0x00u;
-    m_rxPayload[9u] = 0xCCu;
-    m_rxPayload[10u] = 0xCCu;
-    m_rxPayload[11u] = ECU_EOF;
+    m_uPayloadSize = 12u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] = 0x00u;
+    m_auRxPayload[2u] = 0x00u;
+    m_auRxPayload[3u] = 0x00u;
+    m_auRxPayload[4u] = 0x00u;
+    m_auRxPayload[5u] = 0x02u;
+    m_auRxPayload[6u] = 0x00u;
+    m_auRxPayload[7u] = 0x00u;
+    m_auRxPayload[8u] = 0x00u;
+    m_auRxPayload[9u] = 0xCCu;
+    m_auRxPayload[10u] = 0xCCu;
+    m_auRxPayload[11u] = ECU_EOF;
     if( e_eFSP_MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_BadFrame 3  -- OK \n");
@@ -2336,21 +2336,21 @@ void eFSP_MSGRXTST_BadFrame(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 13u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] = 0x50u;
-    m_rxPayload[3u] = 0x7Bu;
-    m_rxPayload[4u] = 0x0Au;
-    m_rxPayload[5u] = 0x68u;
-    m_rxPayload[6u] = 0x02u;
-    m_rxPayload[7u] = 0x00u;
-    m_rxPayload[8u] = 0x00u;
-    m_rxPayload[9u] = 0x00u;
-    m_rxPayload[10u] = 0xCCu;
-    m_rxPayload[11u] = 0xCCu;
-    m_rxPayload[12u] = ECU_EOF;
+    m_uPayloadSize = 13u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] = ECU_SOF;
+    m_auRxPayload[2u] = 0x50u;
+    m_auRxPayload[3u] = 0x7Bu;
+    m_auRxPayload[4u] = 0x0Au;
+    m_auRxPayload[5u] = 0x68u;
+    m_auRxPayload[6u] = 0x02u;
+    m_auRxPayload[7u] = 0x00u;
+    m_auRxPayload[8u] = 0x00u;
+    m_auRxPayload[9u] = 0x00u;
+    m_auRxPayload[10u] = 0xCCu;
+    m_auRxPayload[11u] = 0xCCu;
+    m_auRxPayload[12u] = ECU_EOF;
     if( e_eFSP_MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_BadFrame 6  -- OK \n");
@@ -2404,21 +2404,21 @@ void eFSP_MSGRXTST_BadFrame(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 13u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = 0x00u;
-    m_rxPayload[2u] = 0x00u;
-    m_rxPayload[3u] = 0x00u;
-    m_rxPayload[4u] = 0x00u;
-    m_rxPayload[5u] = 0x03u;
-    m_rxPayload[6u] = 0x00u;
-    m_rxPayload[7u] = 0x00u;
-    m_rxPayload[8u] = 0x00u;
-    m_rxPayload[9u] = 0xCCu;
-    m_rxPayload[10u] = 0xCCu;
-    m_rxPayload[11u] = 0xCCu;
-    m_rxPayload[12u] = ECU_EOF;
+    m_uPayloadSize = 13u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] = 0x00u;
+    m_auRxPayload[2u] = 0x00u;
+    m_auRxPayload[3u] = 0x00u;
+    m_auRxPayload[4u] = 0x00u;
+    m_auRxPayload[5u] = 0x03u;
+    m_auRxPayload[6u] = 0x00u;
+    m_auRxPayload[7u] = 0x00u;
+    m_auRxPayload[8u] = 0x00u;
+    m_auRxPayload[9u] = 0xCCu;
+    m_auRxPayload[10u] = 0xCCu;
+    m_auRxPayload[11u] = 0xCCu;
+    m_auRxPayload[12u] = ECU_EOF;
     if( e_eFSP_MSGRX_RES_OUTOFMEM == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_BadFrame 9  -- OK \n");
@@ -2463,20 +2463,20 @@ void eFSP_MSGRXTST_BadFrame(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 12u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = 0x50u;
-    m_rxPayload[2u] = 0x7Bu;
-    m_rxPayload[3u] = 0x0Au;
-    m_rxPayload[4u] = 0x68u;
-    m_rxPayload[5u] = 0x01u;
-    m_rxPayload[6u] = 0x00u;
-    m_rxPayload[7u] = 0x00u;
-    m_rxPayload[8u] = 0x00u;
-    m_rxPayload[9u] = 0xCCu;
-    m_rxPayload[10u] = 0xCCu;
-    m_rxPayload[11u] = ECU_EOF;
+    m_uPayloadSize = 12u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] = 0x50u;
+    m_auRxPayload[2u] = 0x7Bu;
+    m_auRxPayload[3u] = 0x0Au;
+    m_auRxPayload[4u] = 0x68u;
+    m_auRxPayload[5u] = 0x01u;
+    m_auRxPayload[6u] = 0x00u;
+    m_auRxPayload[7u] = 0x00u;
+    m_auRxPayload[8u] = 0x00u;
+    m_auRxPayload[9u] = 0xCCu;
+    m_auRxPayload[10u] = 0xCCu;
+    m_auRxPayload[11u] = ECU_EOF;
 
     if( e_eFSP_MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
@@ -2507,18 +2507,18 @@ void eFSP_MSGRXTST_BadFrame(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 12u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = 0x50u;
-    m_rxPayload[2u] = 0x7Bu;
-    m_rxPayload[3u] = 0x0Au;
-    m_rxPayload[4u] = 0x68u;
-    m_rxPayload[5u] = 0x01u;
-    m_rxPayload[6u] = 0x00u;
-    m_rxPayload[7u] = 0x00u;
-    m_rxPayload[8u] = 0x00u;
-    m_rxPayload[9u] = ECU_EOF;
+    m_uPayloadSize = 12u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] = 0x50u;
+    m_auRxPayload[2u] = 0x7Bu;
+    m_auRxPayload[3u] = 0x0Au;
+    m_auRxPayload[4u] = 0x68u;
+    m_auRxPayload[5u] = 0x01u;
+    m_auRxPayload[6u] = 0x00u;
+    m_auRxPayload[7u] = 0x00u;
+    m_auRxPayload[8u] = 0x00u;
+    m_auRxPayload[9u] = ECU_EOF;
 
     if( e_eFSP_MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
@@ -2564,21 +2564,21 @@ void eFSP_MSGRXTST_BadFrame(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 13u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] = 0x50u;
-    m_rxPayload[3u] = 0x7Bu;
-    m_rxPayload[4u] = 0x0Au;
-    m_rxPayload[5u] = 0x68u;
-    m_rxPayload[6u] = 0x02u;
-    m_rxPayload[7u] = 0x00u;
-    m_rxPayload[8u] = 0x00u;
-    m_rxPayload[9u] = 0x00u;
-    m_rxPayload[10u] = 0xCCu;
-    m_rxPayload[11u] = 0xCCu;
-    m_rxPayload[12u] = ECU_EOF;
+    m_uPayloadSize = 13u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] = ECU_SOF;
+    m_auRxPayload[2u] = 0x50u;
+    m_auRxPayload[3u] = 0x7Bu;
+    m_auRxPayload[4u] = 0x0Au;
+    m_auRxPayload[5u] = 0x68u;
+    m_auRxPayload[6u] = 0x02u;
+    m_auRxPayload[7u] = 0x00u;
+    m_auRxPayload[8u] = 0x00u;
+    m_auRxPayload[9u] = 0x00u;
+    m_auRxPayload[10u] = 0xCCu;
+    m_auRxPayload[11u] = 0xCCu;
+    m_auRxPayload[12u] = ECU_EOF;
     if( e_eFSP_MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_BadFrame 18 -- OK \n");
@@ -2592,8 +2592,8 @@ void eFSP_MSGRXTST_BadFrame(void)
 void eFSP_MSGRXTST_CornerCase(void)
 {
     /* Static var init */
-    m_read_jump = 0u;
-	m_read_jumpLong = 0u;
+    m_uReadJump = 0u;
+	m_uReadJumpLong = 0u;
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
@@ -2640,21 +2640,21 @@ void eFSP_MSGRXTST_CornerCase(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 13u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] = 0x50u;
-    m_rxPayload[3u] = 0x7Bu;
-    m_rxPayload[4u] = 0x0Au;
-    m_rxPayload[5u] = 0x68u;
-    m_rxPayload[6u] = 0x02u;
-    m_rxPayload[7u] = 0x00u;
-    m_rxPayload[8u] = 0x00u;
-    m_rxPayload[9u] = 0x00u;
-    m_rxPayload[10u] = 0xCCu;
-    m_rxPayload[11u] = 0xCCu;
-    m_rxPayload[12u] = ECU_EOF;
+    m_uPayloadSize = 13u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] = ECU_SOF;
+    m_auRxPayload[2u] = 0x50u;
+    m_auRxPayload[3u] = 0x7Bu;
+    m_auRxPayload[4u] = 0x0Au;
+    m_auRxPayload[5u] = 0x68u;
+    m_auRxPayload[6u] = 0x02u;
+    m_auRxPayload[7u] = 0x00u;
+    m_auRxPayload[8u] = 0x00u;
+    m_auRxPayload[9u] = 0x00u;
+    m_auRxPayload[10u] = 0xCCu;
+    m_auRxPayload[11u] = 0xCCu;
+    m_auRxPayload[12u] = ECU_EOF;
     if( e_eFSP_MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase 3  -- OK \n");
@@ -2726,21 +2726,21 @@ void eFSP_MSGRXTST_CornerCase(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 13u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] = 0x50u;
-    m_rxPayload[3u] = 0x7Bu;
-    m_rxPayload[4u] = 0x0Au;
-    m_rxPayload[5u] = 0x68u;
-    m_rxPayload[6u] = 0x02u;
-    m_rxPayload[7u] = 0x00u;
-    m_rxPayload[8u] = 0x00u;
-    m_rxPayload[9u] = 0x00u;
-    m_rxPayload[10u] = 0xCCu;
-    m_rxPayload[11u] = 0xCCu;
-    m_rxPayload[12u] = ECU_EOF;
+    m_uPayloadSize = 13u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] = ECU_SOF;
+    m_auRxPayload[2u] = 0x50u;
+    m_auRxPayload[3u] = 0x7Bu;
+    m_auRxPayload[4u] = 0x0Au;
+    m_auRxPayload[5u] = 0x68u;
+    m_auRxPayload[6u] = 0x02u;
+    m_auRxPayload[7u] = 0x00u;
+    m_auRxPayload[8u] = 0x00u;
+    m_auRxPayload[9u] = 0x00u;
+    m_auRxPayload[10u] = 0xCCu;
+    m_auRxPayload[11u] = 0xCCu;
+    m_auRxPayload[12u] = ECU_EOF;
     if( e_eFSP_MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase 9  -- OK \n");
@@ -2812,21 +2812,21 @@ void eFSP_MSGRXTST_CornerCase(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 13u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] = 0x50u;
-    m_rxPayload[3u] = 0x7Bu;
-    m_rxPayload[4u] = 0x0Au;
-    m_rxPayload[5u] = 0x68u;
-    m_rxPayload[6u] = 0x02u;
-    m_rxPayload[7u] = 0x00u;
-    m_rxPayload[8u] = 0x00u;
-    m_rxPayload[9u] = 0x00u;
-    m_rxPayload[10u] = 0xCCu;
-    m_rxPayload[11u] = 0xCCu;
-    m_rxPayload[12u] = ECU_EOF;
+    m_uPayloadSize = 13u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] = ECU_SOF;
+    m_auRxPayload[2u] = 0x50u;
+    m_auRxPayload[3u] = 0x7Bu;
+    m_auRxPayload[4u] = 0x0Au;
+    m_auRxPayload[5u] = 0x68u;
+    m_auRxPayload[6u] = 0x02u;
+    m_auRxPayload[7u] = 0x00u;
+    m_auRxPayload[8u] = 0x00u;
+    m_auRxPayload[9u] = 0x00u;
+    m_auRxPayload[10u] = 0xCCu;
+    m_auRxPayload[11u] = 0xCCu;
+    m_auRxPayload[12u] = ECU_EOF;
     if( e_eFSP_MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase 15 -- OK \n");
@@ -2898,21 +2898,21 @@ void eFSP_MSGRXTST_CornerCase(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 13u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] = 0x50u;
-    m_rxPayload[3u] = 0x7Bu;
-    m_rxPayload[4u] = 0x0Au;
-    m_rxPayload[5u] = 0x68u;
-    m_rxPayload[6u] = 0x02u;
-    m_rxPayload[7u] = 0x00u;
-    m_rxPayload[8u] = 0x00u;
-    m_rxPayload[9u] = 0x00u;
-    m_rxPayload[10u] = 0xCCu;
-    m_rxPayload[11u] = 0xCCu;
-    m_rxPayload[12u] = ECU_EOF;
+    m_uPayloadSize = 13u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] = ECU_SOF;
+    m_auRxPayload[2u] = 0x50u;
+    m_auRxPayload[3u] = 0x7Bu;
+    m_auRxPayload[4u] = 0x0Au;
+    m_auRxPayload[5u] = 0x68u;
+    m_auRxPayload[6u] = 0x02u;
+    m_auRxPayload[7u] = 0x00u;
+    m_auRxPayload[8u] = 0x00u;
+    m_auRxPayload[9u] = 0x00u;
+    m_auRxPayload[10u] = 0xCCu;
+    m_auRxPayload[11u] = 0xCCu;
+    m_auRxPayload[12u] = ECU_EOF;
     if( e_eFSP_MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase 21 -- OK \n");
@@ -2975,21 +2975,21 @@ void eFSP_MSGRXTST_CornerCase(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 13u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] = 0x50u;
-    m_rxPayload[3u] = 0x7Bu;
-    m_rxPayload[4u] = 0x0Au;
-    m_rxPayload[5u] = 0x68u;
-    m_rxPayload[6u] = 0x02u;
-    m_rxPayload[7u] = 0x00u;
-    m_rxPayload[8u] = 0x00u;
-    m_rxPayload[9u] = 0x00u;
-    m_rxPayload[10u] = 0xCCu;
-    m_rxPayload[11u] = ECU_ESC;
-    m_rxPayload[12u] = ECU_EOF;
+    m_uPayloadSize = 13u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] = ECU_SOF;
+    m_auRxPayload[2u] = 0x50u;
+    m_auRxPayload[3u] = 0x7Bu;
+    m_auRxPayload[4u] = 0x0Au;
+    m_auRxPayload[5u] = 0x68u;
+    m_auRxPayload[6u] = 0x02u;
+    m_auRxPayload[7u] = 0x00u;
+    m_auRxPayload[8u] = 0x00u;
+    m_auRxPayload[9u] = 0x00u;
+    m_auRxPayload[10u] = 0xCCu;
+    m_auRxPayload[11u] = ECU_ESC;
+    m_auRxPayload[12u] = ECU_EOF;
     if( e_eFSP_MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase 26 -- OK \n");
@@ -3021,8 +3021,8 @@ void eFSP_MSGRXTST_CornerCase(void)
 void eFSP_MSGRXTST_CornerCase2(void)
 {
     /* Static var init */
-    m_read_jump = 0u;
-	m_read_jumpLong = 0u;
+    m_uReadJump = 0u;
+	m_uReadJumpLong = 0u;
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
@@ -3072,21 +3072,21 @@ void eFSP_MSGRXTST_CornerCase2(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 13u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] = 0x50u;
-    m_rxPayload[3u] = 0x7Bu;
-    m_rxPayload[4u] = 0x0Au;
-    m_rxPayload[5u] = 0x68u;
-    m_rxPayload[6u] = 0x02u;
-    m_rxPayload[7u] = 0x00u;
-    m_rxPayload[8u] = 0x00u;
-    m_rxPayload[9u] = 0x00u;
-    m_rxPayload[10u] = 0xCCu;
-    m_rxPayload[11u] = 0xCCu;
-    m_rxPayload[12u] = ECU_EOF;
+    m_uPayloadSize = 13u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] = ECU_SOF;
+    m_auRxPayload[2u] = 0x50u;
+    m_auRxPayload[3u] = 0x7Bu;
+    m_auRxPayload[4u] = 0x0Au;
+    m_auRxPayload[5u] = 0x68u;
+    m_auRxPayload[6u] = 0x02u;
+    m_auRxPayload[7u] = 0x00u;
+    m_auRxPayload[8u] = 0x00u;
+    m_auRxPayload[9u] = 0x00u;
+    m_auRxPayload[10u] = 0xCCu;
+    m_auRxPayload[11u] = 0xCCu;
+    m_auRxPayload[12u] = ECU_EOF;
     if( e_eFSP_MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase2 3  -- OK \n");
@@ -3149,21 +3149,21 @@ void eFSP_MSGRXTST_CornerCase2(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 13u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] = 0x50u;
-    m_rxPayload[3u] = 0x7Bu;
-    m_rxPayload[4u] = 0x0Au;
-    m_rxPayload[5u] = 0x68u;
-    m_rxPayload[6u] = 0x02u;
-    m_rxPayload[7u] = 0x00u;
-    m_rxPayload[8u] = 0x00u;
-    m_rxPayload[9u] = 0x00u;
-    m_rxPayload[10u] = 0xCCu;
-    m_rxPayload[11u] = 0xCCu;
-    m_rxPayload[12u] = ECU_EOF;
+    m_uPayloadSize = 13u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] = ECU_SOF;
+    m_auRxPayload[2u] = 0x50u;
+    m_auRxPayload[3u] = 0x7Bu;
+    m_auRxPayload[4u] = 0x0Au;
+    m_auRxPayload[5u] = 0x68u;
+    m_auRxPayload[6u] = 0x02u;
+    m_auRxPayload[7u] = 0x00u;
+    m_auRxPayload[8u] = 0x00u;
+    m_auRxPayload[9u] = 0x00u;
+    m_auRxPayload[10u] = 0xCCu;
+    m_auRxPayload[11u] = 0xCCu;
+    m_auRxPayload[12u] = ECU_EOF;
     if( e_eFSP_MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase2 8  -- OK \n");
@@ -3226,21 +3226,21 @@ void eFSP_MSGRXTST_CornerCase2(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 13u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] =  0x83u;
-    m_rxPayload[3u] =  0xFDu;
-    m_rxPayload[4u] =  0xC7u;
-    m_rxPayload[5u] =  0x59u;
-    m_rxPayload[6u] =  0x02u;
-    m_rxPayload[7u] =  0x00u;
-    m_rxPayload[8u] =  0x00u;
-    m_rxPayload[9u] =  0x00u;
-    m_rxPayload[10u] = 0xCCu;
-    m_rxPayload[11u] = 0xC1u;
-    m_rxPayload[12u] = ECU_EOF;
+    m_uPayloadSize = 13u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] = ECU_SOF;
+    m_auRxPayload[2u] =  0x83u;
+    m_auRxPayload[3u] =  0xFDu;
+    m_auRxPayload[4u] =  0xC7u;
+    m_auRxPayload[5u] =  0x59u;
+    m_auRxPayload[6u] =  0x02u;
+    m_auRxPayload[7u] =  0x00u;
+    m_auRxPayload[8u] =  0x00u;
+    m_auRxPayload[9u] =  0x00u;
+    m_auRxPayload[10u] = 0xCCu;
+    m_auRxPayload[11u] = 0xC1u;
+    m_auRxPayload[12u] = ECU_EOF;
     if( e_eFSP_MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase2 13 -- OK \n");
@@ -3335,21 +3335,21 @@ void eFSP_MSGRXTST_CornerCase2(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 13u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] = 0x50u;
-    m_rxPayload[3u] = 0x7Bu;
-    m_rxPayload[4u] = 0x0Au;
-    m_rxPayload[5u] = 0x68u;
-    m_rxPayload[6u] = 0x02u;
-    m_rxPayload[7u] = 0x00u;
-    m_rxPayload[8u] = 0x00u;
-    m_rxPayload[9u] = 0x00u;
-    m_rxPayload[10u] = 0xCCu;
-    m_rxPayload[11u] = 0xCCu;
-    m_rxPayload[12u] = ECU_EOF;
+    m_uPayloadSize = 13u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] = ECU_SOF;
+    m_auRxPayload[2u] = 0x50u;
+    m_auRxPayload[3u] = 0x7Bu;
+    m_auRxPayload[4u] = 0x0Au;
+    m_auRxPayload[5u] = 0x68u;
+    m_auRxPayload[6u] = 0x02u;
+    m_auRxPayload[7u] = 0x00u;
+    m_auRxPayload[8u] = 0x00u;
+    m_auRxPayload[9u] = 0x00u;
+    m_auRxPayload[10u] = 0xCCu;
+    m_auRxPayload[11u] = 0xCCu;
+    m_auRxPayload[12u] = ECU_EOF;
     if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase2 20 -- OK \n");
@@ -3411,21 +3411,21 @@ void eFSP_MSGRXTST_CornerCase2(void)
 
 
     /* Fucntion */
-    m_payloadSize = 13u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] = 0x50u;
-    m_rxPayload[3u] = 0x7Bu;
-    m_rxPayload[4u] = 0x0Au;
-    m_rxPayload[5u] = 0x68u;
-    m_rxPayload[6u] = 0x02u;
-    m_rxPayload[7u] = 0x00u;
-    m_rxPayload[8u] = 0x00u;
-    m_rxPayload[9u] = 0x00u;
-    m_rxPayload[10u] = 0xCCu;
-    m_rxPayload[11u] = 0xCCu;
-    m_rxPayload[12u] = ECU_EOF;
+    m_uPayloadSize = 13u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] = ECU_SOF;
+    m_auRxPayload[2u] = 0x50u;
+    m_auRxPayload[3u] = 0x7Bu;
+    m_auRxPayload[4u] = 0x0Au;
+    m_auRxPayload[5u] = 0x68u;
+    m_auRxPayload[6u] = 0x02u;
+    m_auRxPayload[7u] = 0x00u;
+    m_auRxPayload[8u] = 0x00u;
+    m_auRxPayload[9u] = 0x00u;
+    m_auRxPayload[10u] = 0xCCu;
+    m_auRxPayload[11u] = 0xCCu;
+    m_auRxPayload[12u] = ECU_EOF;
     if( e_eFSP_MSGRX_RES_CORRUPTCTX == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase2 24 -- OK \n");
@@ -3439,8 +3439,8 @@ void eFSP_MSGRXTST_CornerCase2(void)
 void eFSP_MSGRXTST_CornerCase3(void)
 {
     /* Static var init */
-    m_read_jump = 0u;
-	m_read_jumpLong = 0u;
+    m_uReadJump = 0u;
+	m_uReadJumpLong = 0u;
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
@@ -3489,29 +3489,29 @@ void eFSP_MSGRXTST_CornerCase3(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 21u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_EOF;
-    m_rxPayload[1u] = 0xFFu;
-    m_rxPayload[2u] = 0x50u;
-    m_rxPayload[3u] = 0x7Bu;
-    m_rxPayload[4u] = 0x0Au;
-    m_rxPayload[5u] = 0x68u;
-    m_rxPayload[6u] = 0x02u;
-    m_rxPayload[7u] = 0x00u;
-    m_rxPayload[8u] = 0x00u;
-    m_rxPayload[9u] = ECU_SOF;
-    m_rxPayload[10u] = 0x83u;
-    m_rxPayload[11u] = 0xFDu;
-    m_rxPayload[12u] = 0xC7u;
-    m_rxPayload[13u] = 0x59u;
-    m_rxPayload[14u] = 0x02u;
-    m_rxPayload[15u] = 0x00u;
-    m_rxPayload[16u] = 0x00u;
-    m_rxPayload[17u] = 0x00u;
-    m_rxPayload[18u] = 0xCCu;
-    m_rxPayload[19u] = 0xC1u;
-    m_rxPayload[20u] = ECU_EOF;
+    m_uPayloadSize = 21u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_EOF;
+    m_auRxPayload[1u] = 0xFFu;
+    m_auRxPayload[2u] = 0x50u;
+    m_auRxPayload[3u] = 0x7Bu;
+    m_auRxPayload[4u] = 0x0Au;
+    m_auRxPayload[5u] = 0x68u;
+    m_auRxPayload[6u] = 0x02u;
+    m_auRxPayload[7u] = 0x00u;
+    m_auRxPayload[8u] = 0x00u;
+    m_auRxPayload[9u] = ECU_SOF;
+    m_auRxPayload[10u] = 0x83u;
+    m_auRxPayload[11u] = 0xFDu;
+    m_auRxPayload[12u] = 0xC7u;
+    m_auRxPayload[13u] = 0x59u;
+    m_auRxPayload[14u] = 0x02u;
+    m_auRxPayload[15u] = 0x00u;
+    m_auRxPayload[16u] = 0x00u;
+    m_auRxPayload[17u] = 0x00u;
+    m_auRxPayload[18u] = 0xCCu;
+    m_auRxPayload[19u] = 0xC1u;
+    m_auRxPayload[20u] = ECU_EOF;
     if( e_eFSP_MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase3 3  -- OK \n");
@@ -3773,29 +3773,29 @@ void eFSP_MSGRXTST_CornerCase3(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 21u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_EOF;
-    m_rxPayload[1u] = 0xFFu;
-    m_rxPayload[2u] = 0x50u;
-    m_rxPayload[3u] = 0x7Bu;
-    m_rxPayload[4u] = 0x0Au;
-    m_rxPayload[5u] = 0x68u;
-    m_rxPayload[6u] = 0x02u;
-    m_rxPayload[7u] = 0x00u;
-    m_rxPayload[8u] = 0x00u;
-    m_rxPayload[9u] = ECU_SOF;
-    m_rxPayload[10u] = 0x83u;
-    m_rxPayload[11u] = 0xFDu;
-    m_rxPayload[12u] = 0xC7u;
-    m_rxPayload[13u] = 0x59u;
-    m_rxPayload[14u] = 0x02u;
-    m_rxPayload[15u] = 0x00u;
-    m_rxPayload[16u] = 0x00u;
-    m_rxPayload[17u] = 0x00u;
-    m_rxPayload[18u] = 0xCCu;
-    m_rxPayload[19u] = 0xC1u;
-    m_rxPayload[20u] = ECU_EOF;
+    m_uPayloadSize = 21u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_EOF;
+    m_auRxPayload[1u] = 0xFFu;
+    m_auRxPayload[2u] = 0x50u;
+    m_auRxPayload[3u] = 0x7Bu;
+    m_auRxPayload[4u] = 0x0Au;
+    m_auRxPayload[5u] = 0x68u;
+    m_auRxPayload[6u] = 0x02u;
+    m_auRxPayload[7u] = 0x00u;
+    m_auRxPayload[8u] = 0x00u;
+    m_auRxPayload[9u] = ECU_SOF;
+    m_auRxPayload[10u] = 0x83u;
+    m_auRxPayload[11u] = 0xFDu;
+    m_auRxPayload[12u] = 0xC7u;
+    m_auRxPayload[13u] = 0x59u;
+    m_auRxPayload[14u] = 0x02u;
+    m_auRxPayload[15u] = 0x00u;
+    m_auRxPayload[16u] = 0x00u;
+    m_auRxPayload[17u] = 0x00u;
+    m_auRxPayload[18u] = 0xCCu;
+    m_auRxPayload[19u] = 0xC1u;
+    m_auRxPayload[20u] = ECU_EOF;
     if( e_eFSP_MSGRX_RES_BADFRAME == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase3 24 -- OK \n");
@@ -3882,8 +3882,8 @@ void eFSP_MSGRXTST_CornerCase3(void)
 void eFSP_MSGRXTST_CornerCase4(void)
 {
     /* Static var init */
-    m_read_jump = 0u;
-	m_read_jumpLong = 0u;
+    m_uReadJump = 0u;
+	m_uReadJumpLong = 0u;
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
@@ -3930,21 +3930,21 @@ void eFSP_MSGRXTST_CornerCase4(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 13u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] =  0x83u;
-    m_rxPayload[3u] =  0xFDu;
-    m_rxPayload[4u] =  0xC7u;
-    m_rxPayload[5u] =  0x59u;
-    m_rxPayload[6u] =  0x02u;
-    m_rxPayload[7u] =  0x00u;
-    m_rxPayload[8u] =  0x00u;
-    m_rxPayload[9u] =  0x00u;
-    m_rxPayload[10u] = 0xCCu;
-    m_rxPayload[11u] = 0xC1u;
-    m_rxPayload[12u] = ECU_EOF;
+    m_uPayloadSize = 13u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] = ECU_SOF;
+    m_auRxPayload[2u] =  0x83u;
+    m_auRxPayload[3u] =  0xFDu;
+    m_auRxPayload[4u] =  0xC7u;
+    m_auRxPayload[5u] =  0x59u;
+    m_auRxPayload[6u] =  0x02u;
+    m_auRxPayload[7u] =  0x00u;
+    m_auRxPayload[8u] =  0x00u;
+    m_auRxPayload[9u] =  0x00u;
+    m_auRxPayload[10u] = 0xCCu;
+    m_auRxPayload[11u] = 0xC1u;
+    m_auRxPayload[12u] = ECU_EOF;
     if( e_eFSP_MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase4 3  -- OK \n");
@@ -4025,21 +4025,21 @@ void eFSP_MSGRXTST_CornerCase4(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 13u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] = ECU_SOF;
-    m_rxPayload[2u] =  0x83u;
-    m_rxPayload[3u] =  0xFDu;
-    m_rxPayload[4u] =  0xC7u;
-    m_rxPayload[5u] =  0x59u;
-    m_rxPayload[6u] =  0x02u;
-    m_rxPayload[7u] =  0x00u;
-    m_rxPayload[8u] =  0x00u;
-    m_rxPayload[9u] =  0x00u;
-    m_rxPayload[10u] = 0xCCu;
-    m_rxPayload[11u] = 0xC1u;
-    m_rxPayload[12u] = ECU_EOF;
+    m_uPayloadSize = 13u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] = ECU_SOF;
+    m_auRxPayload[2u] =  0x83u;
+    m_auRxPayload[3u] =  0xFDu;
+    m_auRxPayload[4u] =  0xC7u;
+    m_auRxPayload[5u] =  0x59u;
+    m_auRxPayload[6u] =  0x02u;
+    m_auRxPayload[7u] =  0x00u;
+    m_auRxPayload[8u] =  0x00u;
+    m_auRxPayload[9u] =  0x00u;
+    m_auRxPayload[10u] = 0xCCu;
+    m_auRxPayload[11u] = 0xC1u;
+    m_auRxPayload[12u] = ECU_EOF;
     if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase4 10 -- OK \n");
@@ -4161,8 +4161,8 @@ void eFSP_MSGRXTST_CornerCase4(void)
 void eFSP_MSGRXTST_CornerCase5(void)
 {
     /* Static var init */
-    m_read_jump = 0u;
-	m_read_jumpLong = 0u;
+    m_uReadJump = 0u;
+	m_uReadJumpLong = 0u;
 
     /* Local variable */
     t_eFSP_MSGRX_Ctx ctx;
@@ -4211,20 +4211,20 @@ void eFSP_MSGRXTST_CornerCase5(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 12u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] =  0x83u;
-    m_rxPayload[2u] =  0xFDu;
-    m_rxPayload[3u] =  0xC7u;
-    m_rxPayload[4u] =  0x59u;
-    m_rxPayload[5u] =  0x02u;
-    m_rxPayload[6u] =  0x00u;
-    m_rxPayload[7u] =  0x00u;
-    m_rxPayload[8u] =  0x00u;
-    m_rxPayload[9u]  = 0xCCu;
-    m_rxPayload[10u] = 0xC1u;
-    m_rxPayload[11u] = ECU_EOF;
+    m_uPayloadSize = 12u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] =  0x83u;
+    m_auRxPayload[2u] =  0xFDu;
+    m_auRxPayload[3u] =  0xC7u;
+    m_auRxPayload[4u] =  0x59u;
+    m_auRxPayload[5u] =  0x02u;
+    m_auRxPayload[6u] =  0x00u;
+    m_auRxPayload[7u] =  0x00u;
+    m_auRxPayload[8u] =  0x00u;
+    m_auRxPayload[9u]  = 0xCCu;
+    m_auRxPayload[10u] = 0xC1u;
+    m_auRxPayload[11u] = ECU_EOF;
     if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase5 3  -- OK \n");
@@ -4234,7 +4234,7 @@ void eFSP_MSGRXTST_CornerCase5(void)
         (void)printf("eFSP_MSGRXTST_CornerCase5 3  -- FAIL \n");
     }
 
-    m_read_jumpLong = 0u;
+    m_uReadJumpLong = 0u;
     if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase5 4  -- OK \n");
@@ -4314,21 +4314,21 @@ void eFSP_MSGRXTST_CornerCase5(void)
     }
 
     /* Fucntion */
-    m_payloadSize = 12u;
-    m_payloadCounter = 0u;
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] =  0x83u;
-    m_rxPayload[2u] =  0xFDu;
-    m_rxPayload[3u] =  0xC7u;
-    m_rxPayload[4u] =  0x59u;
-    m_rxPayload[5u] =  0x02u;
-    m_rxPayload[6u] =  0x00u;
-    m_rxPayload[7u] =  0x00u;
-    m_rxPayload[8u] =  0x00u;
-    m_rxPayload[9u]  = 0xCCu;
-    m_rxPayload[10u] = 0xC1u;
-    m_rxPayload[11u] = ECU_EOF;
-    m_read_jumpLong = 0u;
+    m_uPayloadSize = 12u;
+    m_uPayloadCounter = 0u;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] =  0x83u;
+    m_auRxPayload[2u] =  0xFDu;
+    m_auRxPayload[3u] =  0xC7u;
+    m_auRxPayload[4u] =  0x59u;
+    m_auRxPayload[5u] =  0x02u;
+    m_auRxPayload[6u] =  0x00u;
+    m_auRxPayload[7u] =  0x00u;
+    m_auRxPayload[8u] =  0x00u;
+    m_auRxPayload[9u]  = 0xCCu;
+    m_auRxPayload[10u] = 0xC1u;
+    m_auRxPayload[11u] = ECU_EOF;
+    m_uReadJumpLong = 0u;
     if( e_eFSP_MSGRX_RES_MESSAGETIMEOUT == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {
         (void)printf("eFSP_MSGRXTST_CornerCase5 9  -- OK \n");
@@ -4342,8 +4342,8 @@ void eFSP_MSGRXTST_CornerCase5(void)
 void eFSP_MSGRXTST_CornerCase6(void)
 {
     /* Static var init */
-    m_read_jump = 0u;
-	m_read_jumpLong = 0u;
+    m_uReadJump = 0u;
+	m_uReadJumpLong = 0u;
     uint32_t temp;
 
     /* Local variable */
@@ -4392,33 +4392,33 @@ void eFSP_MSGRXTST_CornerCase6(void)
     }
 
     /* Fucntion */
-    m_payloadSize = sizeof(m_rxPayload);
-    m_payloadCounter = 0u;
-    for( temp = 0u; temp < sizeof(m_rxPayload) ; temp++ )
+    m_uPayloadSize = sizeof(m_auRxPayload);
+    m_uPayloadCounter = 0u;
+    for( temp = 0u; temp < sizeof(m_auRxPayload) ; temp++ )
     {
-        m_rxPayload[temp] = ECU_SOF;
+        m_auRxPayload[temp] = ECU_SOF;
     }
-    m_rxPayload[0u] = ECU_SOF;
-    m_rxPayload[1u] =  0x83u;
-    m_rxPayload[2u] =  0xFDu;
-    m_rxPayload[3u] =  0xC7u;
-    m_rxPayload[4u] =  0x59u;
-    m_rxPayload[5u] =  0x50u;
-    m_rxPayload[6u] =  0x00u;
-    m_rxPayload[7u] =  0x00u;
-    m_rxPayload[8u] =  0x00u;
-    m_rxPayload[9u] =  ECU_SOF;
-    m_rxPayload[10u] = 0x83u;
-    m_rxPayload[11u] = 0xFDu;
-    m_rxPayload[12u] = 0xC7u;
-    m_rxPayload[13u] = 0x59u;
-    m_rxPayload[14u] = 0x02u;
-    m_rxPayload[15u] = 0x00u;
-    m_rxPayload[16u] = 0x00u;
-    m_rxPayload[17u] = 0x00u;
-    m_rxPayload[18u] = 0xCCu;
-    m_rxPayload[19u] = 0xC1u;
-    m_rxPayload[20u] = ECU_EOF;
+    m_auRxPayload[0u] = ECU_SOF;
+    m_auRxPayload[1u] =  0x83u;
+    m_auRxPayload[2u] =  0xFDu;
+    m_auRxPayload[3u] =  0xC7u;
+    m_auRxPayload[4u] =  0x59u;
+    m_auRxPayload[5u] =  0x50u;
+    m_auRxPayload[6u] =  0x00u;
+    m_auRxPayload[7u] =  0x00u;
+    m_auRxPayload[8u] =  0x00u;
+    m_auRxPayload[9u] =  ECU_SOF;
+    m_auRxPayload[10u] = 0x83u;
+    m_auRxPayload[11u] = 0xFDu;
+    m_auRxPayload[12u] = 0xC7u;
+    m_auRxPayload[13u] = 0x59u;
+    m_auRxPayload[14u] = 0x02u;
+    m_auRxPayload[15u] = 0x00u;
+    m_auRxPayload[16u] = 0x00u;
+    m_auRxPayload[17u] = 0x00u;
+    m_auRxPayload[18u] = 0xCCu;
+    m_auRxPayload[19u] = 0xC1u;
+    m_auRxPayload[20u] = ECU_EOF;
 
     if( e_eFSP_MSGRX_RES_FRAMERESTART == eFSP_MSGRX_ReceiveChunk(&ctx) )
     {

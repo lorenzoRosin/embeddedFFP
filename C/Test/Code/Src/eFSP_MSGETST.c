@@ -36,7 +36,7 @@
  **********************************************************************************************************************/
 struct t_eFSP_MSGE_CrcCtxUser
 {
-    e_eCU_CRC_RES lastError;
+    e_eCU_CRC_RES eLastEr;
 };
 
 static bool_t eFSP_MSGETST_c32SAdapt(t_eFSP_MSGE_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val);
@@ -97,8 +97,8 @@ bool_t eFSP_MSGETST_c32SAdapt(t_eFSP_MSGE_CrcCtx* p_ptCtx, const uint32_t p_uS, 
     {
         ctxCur = (t_eFSP_MSGE_CrcCtx*)p_ptCtx;
 
-        ctxCur->lastError = eCU_CRC_32Seed(p_uS, (const uint8_t*)p_puD, p_uDLen, p_puC32Val);
-        if( e_eCU_CRC_RES_OK == ctxCur->lastError )
+        ctxCur->eLastEr = eCU_CRC_32Seed(p_uS, (const uint8_t*)p_puD, p_uDLen, p_puC32Val);
+        if( e_eCU_CRC_RES_OK == ctxCur->eLastEr )
         {
             result = true;
         }
@@ -128,7 +128,7 @@ bool_t eFSP_MSGETST_c32SAdaptEr(t_eFSP_MSGE_CrcCtx* p_ptCtx, const uint32_t p_uS
     {
         ctxCur = (t_eFSP_MSGE_CrcCtx*)p_ptCtx;
 
-        ctxCur->lastError = e_eCU_CRC_RES_BADPOINTER;
+        ctxCur->eLastEr = e_eCU_CRC_RES_BADPOINTER;
         result = false;
         *p_puC32Val = 0u;
     }
@@ -822,7 +822,7 @@ void eFSP_MSGETST_BadClBck(void)
 
     if( e_eFSP_MSGE_RES_CRCCLBKERROR == eFSP_MSGE_NewMessage(&ctx, 2u) )
     {
-        if( e_eCU_CRC_RES_BADPOINTER == ctxAdapterCrc.lastError )
+        if( e_eCU_CRC_RES_BADPOINTER == ctxAdapterCrc.eLastEr )
         {
             (void)printf("eFSP_MSGETST_BadClBck 2  -- OK \n");
         }

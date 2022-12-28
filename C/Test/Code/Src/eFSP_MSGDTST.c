@@ -37,7 +37,7 @@
  **********************************************************************************************************************/
 struct t_eFSP_MSGD_CrcCtxUser
 {
-    e_eCU_CRC_RES lastError;
+    e_eCU_CRC_RES eLastEr;
 };
 
 static bool_t eFSP_MSGDTST_c32SAdapt(t_eFSP_MSGD_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val);
@@ -112,8 +112,8 @@ bool_t eFSP_MSGDTST_c32SAdapt(t_eFSP_MSGD_CrcCtx* p_ptCtx, const uint32_t p_uS, 
     {
         ctxCur = (t_eFSP_MSGD_CrcCtx*)p_ptCtx;
 
-        ctxCur->lastError = eCU_CRC_32Seed(p_uS, (const uint8_t*)p_puD, p_uDLen, p_puC32Val);
-        if( e_eCU_CRC_RES_OK == ctxCur->lastError )
+        ctxCur->eLastEr = eCU_CRC_32Seed(p_uS, (const uint8_t*)p_puD, p_uDLen, p_puC32Val);
+        if( e_eCU_CRC_RES_OK == ctxCur->eLastEr )
         {
             result = true;
         }
@@ -143,7 +143,7 @@ bool_t eFSP_MSGDTST_c32SAdaptEr(t_eFSP_MSGD_CrcCtx* p_ptCtx, const uint32_t p_uS
     {
         ctxCur = (t_eFSP_MSGD_CrcCtx*)p_ptCtx;
 
-        ctxCur->lastError = e_eCU_CRC_RES_BADPOINTER;
+        ctxCur->eLastEr = e_eCU_CRC_RES_BADPOINTER;
         result = false;
         *p_puC32Val = 0u;
     }
@@ -405,7 +405,7 @@ void eFSP_MSGDTST_BadInit(void)
     bool_t isMsgDec;
     f_eFSP_MSGD_CrcCb cbCrcPTest = &eFSP_MSGDTST_c32SAdapt;
     t_eFSP_MSGD_CrcCtx ctxAdapterCrc;
-    ctxAdapterCrc.lastError = e_eCU_CRC_RES_OK;
+    ctxAdapterCrc.eLastEr = e_eCU_CRC_RES_OK;
     bool_t isInit;
 
     /* Function */
@@ -465,7 +465,7 @@ void eFSP_MSGDTST_BadInit(void)
     /* Function */
     if( e_eFSP_MSGD_RES_NOINITLIB == eFSP_MSGD_IsFrameBad(&ctx, &isMsgDec) )
     {
-        if( e_eCU_CRC_RES_OK == ctxAdapterCrc.lastError )
+        if( e_eCU_CRC_RES_OK == ctxAdapterCrc.eLastEr )
         {
             (void)printf("eFSP_MSGDTST_BadInit 6  -- OK \n");
         }
@@ -959,7 +959,7 @@ void eFSP_MSGDTST_BadClBck(void)
 
     if( e_eFSP_MSGD_RES_CRCCLBKERROR == eFSP_MSGD_InsEncChunk(&ctx, testData, sizeof(testData), &var32) )
     {
-        if( e_eCU_CRC_RES_BADPOINTER == ctxAdapterCrc.lastError )
+        if( e_eCU_CRC_RES_BADPOINTER == ctxAdapterCrc.eLastEr )
         {
             (void)printf("eFSP_MSGDTST_BadClBck 3  -- OK \n");
         }
