@@ -144,11 +144,11 @@ bool_t eFSP_MSGETST_c32SAdaptEr(t_eFSP_MSGE_CrcCtx* p_ptCtx, const uint32_t p_uS
 void eFSP_MSGETST_BadPointer(void)
 {
     /* Local variable */
-    t_eFSP_MSGE_Ctx ctx;
+    t_eFSP_MSGE_Ctx l_tCtx;
     uint8_t  memArea[5u];
     f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGETST_c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    uint32_t var32;
+    uint32_t l_uVar32;
     uint8_t* dataP;
     bool_t isInit;
 
@@ -163,7 +163,7 @@ void eFSP_MSGETST_BadPointer(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_BADPOINTER == eFSP_MSGE_InitCtx(&ctx, NULL, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( e_eFSP_MSGE_RES_BADPOINTER == eFSP_MSGE_InitCtx(&l_tCtx, NULL, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("eFSP_MSGETST_BadPointer 2  -- OK \n");
     }
@@ -173,7 +173,7 @@ void eFSP_MSGETST_BadPointer(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_BADPOINTER == eFSP_MSGE_InitCtx(&ctx, memArea, sizeof(memArea), NULL, &ctxAdapterCrc) )
+    if( e_eFSP_MSGE_RES_BADPOINTER == eFSP_MSGE_InitCtx(&l_tCtx, memArea, sizeof(memArea), NULL, &ctxAdapterCrc) )
     {
         (void)printf("eFSP_MSGETST_BadPointer 3  -- OK \n");
     }
@@ -183,7 +183,7 @@ void eFSP_MSGETST_BadPointer(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_BADPOINTER == eFSP_MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, NULL) )
+    if( e_eFSP_MSGE_RES_BADPOINTER == eFSP_MSGE_InitCtx(&l_tCtx, memArea, sizeof(memArea), cbCrcPTest, NULL) )
     {
         (void)printf("eFSP_MSGETST_BadPointer 4  -- OK \n");
     }
@@ -203,7 +203,7 @@ void eFSP_MSGETST_BadPointer(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_BADPOINTER == eFSP_MSGE_GetWherePutData(NULL, &dataP, &var32) )
+    if( e_eFSP_MSGE_RES_BADPOINTER == eFSP_MSGE_GetWherePutData(NULL, &dataP, &l_uVar32) )
     {
         (void)printf("eFSP_MSGETST_BadPointer 6  -- OK \n");
     }
@@ -213,7 +213,7 @@ void eFSP_MSGETST_BadPointer(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_BADPOINTER == eFSP_MSGE_GetWherePutData(&ctx, NULL, &var32) )
+    if( e_eFSP_MSGE_RES_BADPOINTER == eFSP_MSGE_GetWherePutData(&l_tCtx, NULL, &l_uVar32) )
     {
         (void)printf("eFSP_MSGETST_BadPointer 7  -- OK \n");
     }
@@ -223,7 +223,7 @@ void eFSP_MSGETST_BadPointer(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_BADPOINTER == eFSP_MSGE_GetWherePutData(&ctx, &dataP, NULL) )
+    if( e_eFSP_MSGE_RES_BADPOINTER == eFSP_MSGE_GetWherePutData(&l_tCtx, &dataP, NULL) )
     {
         (void)printf("eFSP_MSGETST_BadPointer 8  -- OK \n");
     }
@@ -243,7 +243,7 @@ void eFSP_MSGETST_BadPointer(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_BADPOINTER == eFSP_MSGE_GetRemByteToGet(NULL, &var32) )
+    if( e_eFSP_MSGE_RES_BADPOINTER == eFSP_MSGE_GetRemByteToGet(NULL, &l_uVar32) )
     {
         (void)printf("eFSP_MSGETST_BadPointer 10 -- OK \n");
     }
@@ -253,7 +253,7 @@ void eFSP_MSGETST_BadPointer(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_BADPOINTER == eFSP_MSGE_GetRemByteToGet(&ctx, NULL) )
+    if( e_eFSP_MSGE_RES_BADPOINTER == eFSP_MSGE_GetRemByteToGet(&l_tCtx, NULL) )
     {
         (void)printf("eFSP_MSGETST_BadPointer 11 -- OK \n");
     }
@@ -263,7 +263,7 @@ void eFSP_MSGETST_BadPointer(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_BADPOINTER == eFSP_MSGE_GetEncChunk(NULL, memArea, sizeof(memArea), &var32) )
+    if( e_eFSP_MSGE_RES_BADPOINTER == eFSP_MSGE_GetEncChunk(NULL, memArea, sizeof(memArea), &l_uVar32) )
     {
         (void)printf("eFSP_MSGETST_BadPointer 12 -- OK \n");
     }
@@ -273,7 +273,7 @@ void eFSP_MSGETST_BadPointer(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_BADPOINTER == eFSP_MSGE_GetEncChunk(&ctx, NULL, sizeof(memArea), &var32) )
+    if( e_eFSP_MSGE_RES_BADPOINTER == eFSP_MSGE_GetEncChunk(&l_tCtx, NULL, sizeof(memArea), &l_uVar32) )
     {
         (void)printf("eFSP_MSGETST_BadPointer 13 -- OK \n");
     }
@@ -283,7 +283,7 @@ void eFSP_MSGETST_BadPointer(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_BADPOINTER == eFSP_MSGE_GetEncChunk(&ctx, memArea, sizeof(memArea), NULL) )
+    if( e_eFSP_MSGE_RES_BADPOINTER == eFSP_MSGE_GetEncChunk(&l_tCtx, memArea, sizeof(memArea), NULL) )
     {
         (void)printf("eFSP_MSGETST_BadPointer 14 -- OK \n");
     }
@@ -301,7 +301,7 @@ void eFSP_MSGETST_BadPointer(void)
         (void)printf("eFSP_MSGETST_BadPointer 15 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_BADPOINTER == eFSP_MSGE_IsInit( &ctx, NULL ) )
+    if( e_eFSP_MSGE_RES_BADPOINTER == eFSP_MSGE_IsInit( &l_tCtx, NULL ) )
     {
         (void)printf("eFSP_MSGETST_BadPointer 16 -- OK \n");
     }
@@ -314,21 +314,21 @@ void eFSP_MSGETST_BadPointer(void)
 void eFSP_MSGETST_BadInit(void)
 {
     /* Local variable */
-    t_eFSP_MSGE_Ctx ctx;
+    t_eFSP_MSGE_Ctx l_tCtx;
     uint8_t  memArea[5u];
-    uint32_t var32;
+    uint32_t l_uVar32;
     uint8_t* dataP;
     bool_t isInit;
     f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGETST_c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
 
     /* Set value */
-    ctx.tBSTFCtx.bIsInit = false;
-    ctx.ptCrcCtx = &ctxAdapterCrc;
-    ctx.fCrc = cbCrcPTest;
+    l_tCtx.tBSTFCtx.bIsInit = false;
+    l_tCtx.ptCrcCtx = &ctxAdapterCrc;
+    l_tCtx.fCrc = cbCrcPTest;
 
     /* Function */
-    if( e_eFSP_MSGE_RES_NOINITLIB == eFSP_MSGE_NewMessage(&ctx, 1u) )
+    if( e_eFSP_MSGE_RES_NOINITLIB == eFSP_MSGE_NewMessage(&l_tCtx, 1u) )
     {
         (void)printf("eFSP_MSGETST_BadInit 1  -- OK \n");
     }
@@ -338,7 +338,7 @@ void eFSP_MSGETST_BadInit(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_NOINITLIB == eFSP_MSGE_GetWherePutData(&ctx, &dataP, &var32) )
+    if( e_eFSP_MSGE_RES_NOINITLIB == eFSP_MSGE_GetWherePutData(&l_tCtx, &dataP, &l_uVar32) )
     {
         (void)printf("eFSP_MSGETST_BadInit 2  -- OK \n");
     }
@@ -348,7 +348,7 @@ void eFSP_MSGETST_BadInit(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_NOINITLIB == eFSP_MSGE_RestartMessage(&ctx) )
+    if( e_eFSP_MSGE_RES_NOINITLIB == eFSP_MSGE_RestartMessage(&l_tCtx) )
     {
         (void)printf("eFSP_MSGETST_BadInit 3  -- OK \n");
     }
@@ -358,7 +358,7 @@ void eFSP_MSGETST_BadInit(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_NOINITLIB == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
+    if( e_eFSP_MSGE_RES_NOINITLIB == eFSP_MSGE_GetRemByteToGet(&l_tCtx, &l_uVar32) )
     {
         (void)printf("eFSP_MSGETST_BadInit 4  -- OK \n");
     }
@@ -368,7 +368,7 @@ void eFSP_MSGETST_BadInit(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_NOINITLIB == eFSP_MSGE_GetEncChunk(&ctx, memArea, sizeof(memArea), &var32) )
+    if( e_eFSP_MSGE_RES_NOINITLIB == eFSP_MSGE_GetEncChunk(&l_tCtx, memArea, sizeof(memArea), &l_uVar32) )
     {
         (void)printf("eFSP_MSGETST_BadInit 5  -- OK \n");
     }
@@ -377,7 +377,7 @@ void eFSP_MSGETST_BadInit(void)
         (void)printf("eFSP_MSGETST_BadInit 5  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_IsInit( &ctx, &isInit ) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_IsInit( &l_tCtx, &isInit ) )
     {
         if( false == isInit )
         {
@@ -397,18 +397,18 @@ void eFSP_MSGETST_BadInit(void)
 void eFSP_MSGETST_BadInitMsg(void)
 {
     /* Local variable */
-    t_eFSP_MSGE_Ctx ctx;
+    t_eFSP_MSGE_Ctx l_tCtx;
     uint8_t  memArea[10u];
     f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGETST_c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    uint32_t var32;
+    uint32_t l_uVar32;
     bool_t isInit;
 
     /* Set value */
     (void)memset(memArea, 0, sizeof(memArea));
 
     /* Function */
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&l_tCtx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("eFSP_MSGETST_BadInitMsg 1  -- OK \n");
     }
@@ -417,7 +417,7 @@ void eFSP_MSGETST_BadInitMsg(void)
         (void)printf("eFSP_MSGETST_BadInitMsg 1  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_NOINITMESSAGE == eFSP_MSGE_RestartMessage(&ctx) )
+    if( e_eFSP_MSGE_RES_NOINITMESSAGE == eFSP_MSGE_RestartMessage(&l_tCtx) )
     {
         (void)printf("eFSP_MSGETST_BadInitMsg 2  -- OK \n");
     }
@@ -426,7 +426,7 @@ void eFSP_MSGETST_BadInitMsg(void)
         (void)printf("eFSP_MSGETST_BadInitMsg 2  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_NOINITMESSAGE == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
+    if( e_eFSP_MSGE_RES_NOINITMESSAGE == eFSP_MSGE_GetRemByteToGet(&l_tCtx, &l_uVar32) )
     {
         (void)printf("eFSP_MSGETST_BadInitMsg 3  -- OK \n");
     }
@@ -435,7 +435,7 @@ void eFSP_MSGETST_BadInitMsg(void)
         (void)printf("eFSP_MSGETST_BadInitMsg 3  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_NOINITMESSAGE == eFSP_MSGE_GetEncChunk(&ctx, memArea, sizeof(memArea), &var32) )
+    if( e_eFSP_MSGE_RES_NOINITMESSAGE == eFSP_MSGE_GetEncChunk(&l_tCtx, memArea, sizeof(memArea), &l_uVar32) )
     {
         (void)printf("eFSP_MSGETST_BadInitMsg 4  -- OK \n");
     }
@@ -444,7 +444,7 @@ void eFSP_MSGETST_BadInitMsg(void)
         (void)printf("eFSP_MSGETST_BadInitMsg 4  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_IsInit( &ctx, &isInit ) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_IsInit( &l_tCtx, &isInit ) )
     {
         if( true == isInit )
         {
@@ -464,17 +464,17 @@ void eFSP_MSGETST_BadInitMsg(void)
 void eFSP_MSGETST_BadParamEntr(void)
 {
     /* Local variable */
-    t_eFSP_MSGE_Ctx ctx;
+    t_eFSP_MSGE_Ctx l_tCtx;
     uint8_t  memArea[10u];
     f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGETST_c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    uint32_t var32;
+    uint32_t l_uVar32;
 
     /* Set value */
     (void)memset(memArea, 0, sizeof(memArea));
 
     /* Function */
-    if( e_eFSP_MSGE_RES_BADPARAM == eFSP_MSGE_InitCtx(&ctx, memArea, EFSP_MIN_MSGEN_BUFFLEN - 1u, cbCrcPTest, &ctxAdapterCrc) )
+    if( e_eFSP_MSGE_RES_BADPARAM == eFSP_MSGE_InitCtx(&l_tCtx, memArea, EFSP_MIN_MSGEN_BUFFLEN - 1u, cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("eFSP_MSGETST_BadParamEntr 1  -- OK \n");
     }
@@ -483,7 +483,7 @@ void eFSP_MSGETST_BadParamEntr(void)
         (void)printf("eFSP_MSGETST_BadParamEntr 1  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&l_tCtx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("eFSP_MSGETST_BadParamEntr 2  -- OK \n");
     }
@@ -492,7 +492,7 @@ void eFSP_MSGETST_BadParamEntr(void)
         (void)printf("eFSP_MSGETST_BadParamEntr 2  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_BADPARAM == eFSP_MSGE_NewMessage(&ctx, 0u) )
+    if( e_eFSP_MSGE_RES_BADPARAM == eFSP_MSGE_NewMessage(&l_tCtx, 0u) )
     {
         (void)printf("eFSP_MSGETST_BadParamEntr 3  -- OK \n");
     }
@@ -501,7 +501,7 @@ void eFSP_MSGETST_BadParamEntr(void)
         (void)printf("eFSP_MSGETST_BadParamEntr 3  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_BADPARAM == eFSP_MSGE_NewMessage(&ctx, (MAX_UINT32VAL - EFSP_MIN_MSGEN_PAYLOAD + 1u) ) )
+    if( e_eFSP_MSGE_RES_BADPARAM == eFSP_MSGE_NewMessage(&l_tCtx, (MAX_UINT32VAL - EFSP_MIN_MSGEN_PAYLOAD + 1u) ) )
     {
         (void)printf("eFSP_MSGETST_BadParamEntr 4  -- OK \n");
     }
@@ -510,7 +510,7 @@ void eFSP_MSGETST_BadParamEntr(void)
         (void)printf("eFSP_MSGETST_BadParamEntr 4  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_BADPARAM == eFSP_MSGE_NewMessage(&ctx, (3u) ) )
+    if( e_eFSP_MSGE_RES_BADPARAM == eFSP_MSGE_NewMessage(&l_tCtx, (3u) ) )
     {
         (void)printf("eFSP_MSGETST_BadParamEntr 5  -- OK \n");
     }
@@ -519,7 +519,7 @@ void eFSP_MSGETST_BadParamEntr(void)
         (void)printf("eFSP_MSGETST_BadParamEntr 5  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_NewMessage(&ctx, (2u) ) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_NewMessage(&l_tCtx, (2u) ) )
     {
         (void)printf("eFSP_MSGETST_BadParamEntr 6  -- OK \n");
     }
@@ -528,7 +528,7 @@ void eFSP_MSGETST_BadParamEntr(void)
         (void)printf("eFSP_MSGETST_BadParamEntr 6  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_BADPARAM == eFSP_MSGE_GetEncChunk(&ctx, memArea, 0u, &var32) )
+    if( e_eFSP_MSGE_RES_BADPARAM == eFSP_MSGE_GetEncChunk(&l_tCtx, memArea, 0u, &l_uVar32) )
     {
         (void)printf("eFSP_MSGETST_BadParamEntr 7  -- OK \n");
     }
@@ -541,18 +541,18 @@ void eFSP_MSGETST_BadParamEntr(void)
 void eFSP_MSGETST_CorruptContext(void)
 {
     /* Local variable */
-    t_eFSP_MSGE_Ctx ctx;
+    t_eFSP_MSGE_Ctx l_tCtx;
     uint8_t  memArea[10u];
     f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGETST_c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    uint32_t var32;
+    uint32_t l_uVar32;
     uint8_t* dataP;
 
     /* Set value */
     (void)memset(memArea, 0, sizeof(memArea));
 
     /* Function */
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&l_tCtx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("eFSP_MSGETST_CorruptContext 1  -- OK \n");
     }
@@ -561,8 +561,8 @@ void eFSP_MSGETST_CorruptContext(void)
         (void)printf("eFSP_MSGETST_CorruptContext 1  -- FAIL \n");
     }
 
-    ctx.ptCrcCtx = NULL;
-    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_NewMessage(&ctx, 2u) )
+    l_tCtx.ptCrcCtx = NULL;
+    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGETST_CorruptContext 2  -- OK \n");
     }
@@ -572,7 +572,7 @@ void eFSP_MSGETST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&l_tCtx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("eFSP_MSGETST_CorruptContext 3  -- OK \n");
     }
@@ -581,8 +581,8 @@ void eFSP_MSGETST_CorruptContext(void)
         (void)printf("eFSP_MSGETST_CorruptContext 3  -- FAIL \n");
     }
 
-    ctx.fCrc = NULL;
-    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_NewMessage(&ctx, 2u) )
+    l_tCtx.fCrc = NULL;
+    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGETST_CorruptContext 4  -- OK \n");
     }
@@ -592,7 +592,7 @@ void eFSP_MSGETST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&l_tCtx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("eFSP_MSGETST_CorruptContext 5  -- OK \n");
     }
@@ -601,8 +601,8 @@ void eFSP_MSGETST_CorruptContext(void)
         (void)printf("eFSP_MSGETST_CorruptContext 5  -- FAIL \n");
     }
 
-    ctx.fCrc = NULL;
-    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetWherePutData(&ctx, &dataP, &var32) )
+    l_tCtx.fCrc = NULL;
+    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetWherePutData(&l_tCtx, &dataP, &l_uVar32) )
     {
         (void)printf("eFSP_MSGETST_CorruptContext 6  -- OK \n");
     }
@@ -612,7 +612,7 @@ void eFSP_MSGETST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&l_tCtx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("eFSP_MSGETST_CorruptContext 7  -- OK \n");
     }
@@ -621,8 +621,8 @@ void eFSP_MSGETST_CorruptContext(void)
         (void)printf("eFSP_MSGETST_CorruptContext 7  -- FAIL \n");
     }
 
-    ctx.fCrc = NULL;
-    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_RestartMessage(&ctx) )
+    l_tCtx.fCrc = NULL;
+    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_RestartMessage(&l_tCtx) )
     {
         (void)printf("eFSP_MSGETST_CorruptContext 8  -- OK \n");
     }
@@ -632,7 +632,7 @@ void eFSP_MSGETST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&l_tCtx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("eFSP_MSGETST_CorruptContext 9  -- OK \n");
     }
@@ -641,8 +641,8 @@ void eFSP_MSGETST_CorruptContext(void)
         (void)printf("eFSP_MSGETST_CorruptContext 9  -- FAIL \n");
     }
 
-    ctx.fCrc = NULL;
-    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
+    l_tCtx.fCrc = NULL;
+    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetRemByteToGet(&l_tCtx, &l_uVar32) )
     {
         (void)printf("eFSP_MSGETST_CorruptContext 10 -- OK \n");
     }
@@ -652,7 +652,7 @@ void eFSP_MSGETST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&l_tCtx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("eFSP_MSGETST_CorruptContext 11 -- OK \n");
     }
@@ -661,8 +661,8 @@ void eFSP_MSGETST_CorruptContext(void)
         (void)printf("eFSP_MSGETST_CorruptContext 11 -- FAIL \n");
     }
 
-    ctx.fCrc = NULL;
-    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetEncChunk(&ctx, memArea, 2u, &var32) )
+    l_tCtx.fCrc = NULL;
+    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetEncChunk(&l_tCtx, memArea, 2u, &l_uVar32) )
     {
         (void)printf("eFSP_MSGETST_CorruptContext 12 -- OK \n");
     }
@@ -672,7 +672,7 @@ void eFSP_MSGETST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&l_tCtx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("eFSP_MSGETST_CorruptContext 13 -- OK \n");
     }
@@ -681,8 +681,8 @@ void eFSP_MSGETST_CorruptContext(void)
         (void)printf("eFSP_MSGETST_CorruptContext 13 -- FAIL \n");
     }
 
-    ctx.tBSTFCtx.puBuff = NULL;
-    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_NewMessage(&ctx, 2u) )
+    l_tCtx.tBSTFCtx.puBuff = NULL;
+    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGETST_CorruptContext 14 -- OK \n");
     }
@@ -692,7 +692,7 @@ void eFSP_MSGETST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&l_tCtx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("eFSP_MSGETST_CorruptContext 15 -- OK \n");
     }
@@ -701,8 +701,8 @@ void eFSP_MSGETST_CorruptContext(void)
         (void)printf("eFSP_MSGETST_CorruptContext 15 -- FAIL \n");
     }
 
-    ctx.tBSTFCtx.puBuff = NULL;
-    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetWherePutData(&ctx, &dataP, &var32) )
+    l_tCtx.tBSTFCtx.puBuff = NULL;
+    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetWherePutData(&l_tCtx, &dataP, &l_uVar32) )
     {
         (void)printf("eFSP_MSGETST_CorruptContext 16 -- OK \n");
     }
@@ -712,7 +712,7 @@ void eFSP_MSGETST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&l_tCtx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("eFSP_MSGETST_CorruptContext 17 -- OK \n");
     }
@@ -721,7 +721,7 @@ void eFSP_MSGETST_CorruptContext(void)
         (void)printf("eFSP_MSGETST_CorruptContext 17 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_NewMessage(&ctx, 2u) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGETST_CorruptContext 18 -- OK \n");
     }
@@ -730,8 +730,8 @@ void eFSP_MSGETST_CorruptContext(void)
         (void)printf("eFSP_MSGETST_CorruptContext 18 -- FAIL \n");
     }
 
-    ctx.tBSTFCtx.puBuff = NULL;
-    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_RestartMessage(&ctx) )
+    l_tCtx.tBSTFCtx.puBuff = NULL;
+    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_RestartMessage(&l_tCtx) )
     {
         (void)printf("eFSP_MSGETST_CorruptContext 19 -- OK \n");
     }
@@ -741,7 +741,7 @@ void eFSP_MSGETST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&l_tCtx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("eFSP_MSGETST_CorruptContext 20 -- OK \n");
     }
@@ -750,7 +750,7 @@ void eFSP_MSGETST_CorruptContext(void)
         (void)printf("eFSP_MSGETST_CorruptContext 20 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_NewMessage(&ctx, 2u) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGETST_CorruptContext 21 -- OK \n");
     }
@@ -759,8 +759,8 @@ void eFSP_MSGETST_CorruptContext(void)
         (void)printf("eFSP_MSGETST_CorruptContext 21 -- FAIL \n");
     }
 
-    ctx.tBSTFCtx.puBuff = NULL;
-    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
+    l_tCtx.tBSTFCtx.puBuff = NULL;
+    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetRemByteToGet(&l_tCtx, &l_uVar32) )
     {
         (void)printf("eFSP_MSGETST_CorruptContext 22 -- OK \n");
     }
@@ -770,7 +770,7 @@ void eFSP_MSGETST_CorruptContext(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&l_tCtx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("eFSP_MSGETST_CorruptContext 23 -- OK \n");
     }
@@ -779,7 +779,7 @@ void eFSP_MSGETST_CorruptContext(void)
         (void)printf("eFSP_MSGETST_CorruptContext 23 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_NewMessage(&ctx, 2u) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_NewMessage(&l_tCtx, 2u) )
     {
         (void)printf("eFSP_MSGETST_CorruptContext 24 -- OK \n");
     }
@@ -788,8 +788,8 @@ void eFSP_MSGETST_CorruptContext(void)
         (void)printf("eFSP_MSGETST_CorruptContext 24 -- FAIL \n");
     }
 
-    ctx.tBSTFCtx.puBuff = NULL;
-    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetEncChunk(&ctx, memArea, 2u, &var32) )
+    l_tCtx.tBSTFCtx.puBuff = NULL;
+    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetEncChunk(&l_tCtx, memArea, 2u, &l_uVar32) )
     {
         (void)printf("eFSP_MSGETST_CorruptContext 25 -- OK \n");
     }
@@ -802,7 +802,7 @@ void eFSP_MSGETST_CorruptContext(void)
 void eFSP_MSGETST_BadClBck(void)
 {
     /* Local variable */
-    t_eFSP_MSGE_Ctx ctx;
+    t_eFSP_MSGE_Ctx l_tCtx;
     uint8_t  memArea[10u];
     f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGETST_c32SAdaptEr;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
@@ -811,7 +811,7 @@ void eFSP_MSGETST_BadClBck(void)
     (void)memset(memArea, 0, sizeof(memArea));
 
     /* Function */
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&l_tCtx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("eFSP_MSGETST_BadClBck 1  -- OK \n");
     }
@@ -820,7 +820,7 @@ void eFSP_MSGETST_BadClBck(void)
         (void)printf("eFSP_MSGETST_BadClBck 1  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_CRCCLBKERROR == eFSP_MSGE_NewMessage(&ctx, 2u) )
+    if( e_eFSP_MSGE_RES_CRCCLBKERROR == eFSP_MSGE_NewMessage(&l_tCtx, 2u) )
     {
         if( e_eCU_CRC_RES_BADPOINTER == ctxAdapterCrc.eLastEr )
         {
@@ -840,19 +840,19 @@ void eFSP_MSGETST_BadClBck(void)
 void eFSP_MSGETST_MsgEnd(void)
 {
     /* Local variable */
-    t_eFSP_MSGE_Ctx ctx;
+    t_eFSP_MSGE_Ctx l_tCtx;
     uint8_t  memArea[12u] = {0u};
     uint8_t  msgA[24u] = {0u};
     f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGETST_c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    uint32_t var32;
+    uint32_t l_uVar32;
     uint8_t* dataP;
 
     /* Set value */
     (void)memset(memArea, 0, sizeof(memArea));
 
     /* Function */
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&l_tCtx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("eFSP_MSGETST_MsgEnd 1  -- OK \n");
     }
@@ -861,9 +861,9 @@ void eFSP_MSGETST_MsgEnd(void)
         (void)printf("eFSP_MSGETST_MsgEnd 1  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetWherePutData(&ctx, &dataP, &var32) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetWherePutData(&l_tCtx, &dataP, &l_uVar32) )
     {
-        if( 4u == var32 )
+        if( 4u == l_uVar32 )
         {
             (void)printf("eFSP_MSGETST_MsgEnd 2  -- OK \n");
         }
@@ -882,7 +882,7 @@ void eFSP_MSGETST_MsgEnd(void)
     dataP[2u] = 3u;
     dataP[3u] = 4u;
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_NewMessage(&ctx, 4u) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_NewMessage(&l_tCtx, 4u) )
     {
         (void)printf("eFSP_MSGETST_MsgEnd 3  -- OK \n");
     }
@@ -892,9 +892,9 @@ void eFSP_MSGETST_MsgEnd(void)
     }
 
     /* Parse all the message */
-    if( e_eFSP_MSGE_RES_MESSAGEENDED == eFSP_MSGE_GetEncChunk(&ctx, msgA, sizeof(msgA), &var32) )
+    if( e_eFSP_MSGE_RES_MESSAGEENDED == eFSP_MSGE_GetEncChunk(&l_tCtx, msgA, sizeof(msgA), &l_uVar32) )
     {
-        if( 14u == var32 )
+        if( 14u == l_uVar32 )
         {
             if( (0x70u == msgA[1u]) && (0x3Fu == msgA[2u]) && (0x71u == msgA[3u]) && (0xBDu == msgA[4u]) )
             {
@@ -933,19 +933,19 @@ void eFSP_MSGETST_MsgEnd(void)
 void eFSP_MSGETST_General(void)
 {
     /* Local variable */
-    t_eFSP_MSGE_Ctx ctx;
+    t_eFSP_MSGE_Ctx l_tCtx;
     uint8_t  memArea[12u] = {0u};
     uint8_t  msgA[24u] = {0u};
     f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGETST_c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    uint32_t var32;
+    uint32_t l_uVar32;
     uint8_t* dataP;
 
     /* Set value */
     (void)memset(memArea, 0, sizeof(memArea));
 
     /* Function */
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&l_tCtx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("eFSP_MSGETST_General 1  -- OK \n");
     }
@@ -954,8 +954,8 @@ void eFSP_MSGETST_General(void)
         (void)printf("eFSP_MSGETST_General 1  -- FAIL \n");
     }
 
-    ctx.tBSTFCtx.uBuffL = 3u;
-    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_NewMessage(&ctx, sizeof(memArea)) )
+    l_tCtx.tBSTFCtx.uBuffL = 3u;
+    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_NewMessage(&l_tCtx, sizeof(memArea)) )
     {
         (void)printf("eFSP_MSGETST_General 2  -- OK \n");
     }
@@ -965,7 +965,7 @@ void eFSP_MSGETST_General(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&l_tCtx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("eFSP_MSGETST_General 3  -- OK \n");
     }
@@ -974,9 +974,9 @@ void eFSP_MSGETST_General(void)
         (void)printf("eFSP_MSGETST_General 3  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetWherePutData(&ctx, &dataP, &var32) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetWherePutData(&l_tCtx, &dataP, &l_uVar32) )
     {
-        if( 4u == var32 )
+        if( 4u == l_uVar32 )
         {
             (void)printf("eFSP_MSGETST_General 4  -- OK \n");
         }
@@ -994,7 +994,7 @@ void eFSP_MSGETST_General(void)
     dataP[1u] = 2u;
     dataP[2u] = 3u;
     dataP[3u] = ECU_ESC;
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_NewMessage(&ctx, var32) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_NewMessage(&l_tCtx, l_uVar32) )
     {
         (void)printf("eFSP_MSGETST_General 5  -- OK \n");
     }
@@ -1003,9 +1003,9 @@ void eFSP_MSGETST_General(void)
         (void)printf("eFSP_MSGETST_General 5  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&l_tCtx, &l_uVar32) )
     {
-        if( 15u == var32)
+        if( 15u == l_uVar32)
         {
             (void)printf("eFSP_MSGETST_General 6  -- OK \n");
         }
@@ -1019,9 +1019,9 @@ void eFSP_MSGETST_General(void)
         (void)printf("eFSP_MSGETST_General 6  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetEncChunk(&ctx, msgA, 5u, &var32) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetEncChunk(&l_tCtx, msgA, 5u, &l_uVar32) )
     {
-        if( 5u == var32 )
+        if( 5u == l_uVar32 )
         {
             if( (ECU_SOF == msgA[0u]) && (0x7Bu == msgA[1u]) && (0x39u == msgA[2u]) && (0x19u == msgA[3u]) &&
                 (0x52u == msgA[4u]) )
@@ -1043,7 +1043,7 @@ void eFSP_MSGETST_General(void)
         (void)printf("eFSP_MSGETST_General 7  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_RestartMessage(&ctx) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_RestartMessage(&l_tCtx) )
     {
         (void)printf("eFSP_MSGETST_General 8  -- OK \n");
     }
@@ -1052,9 +1052,9 @@ void eFSP_MSGETST_General(void)
         (void)printf("eFSP_MSGETST_General 8  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&l_tCtx, &l_uVar32) )
     {
-        if( 15u == var32)
+        if( 15u == l_uVar32)
         {
             (void)printf("eFSP_MSGETST_General 9  -- OK \n");
         }
@@ -1068,9 +1068,9 @@ void eFSP_MSGETST_General(void)
         (void)printf("eFSP_MSGETST_General 9  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetEncChunk(&ctx, msgA, 5u, &var32) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetEncChunk(&l_tCtx, msgA, 5u, &l_uVar32) )
     {
-        if( 5u == var32 )
+        if( 5u == l_uVar32 )
         {
             if( (ECU_SOF == msgA[0u]) && (0x7Bu == msgA[1u]) && (0x39u == msgA[2u]) && (0x19u == msgA[3u]) &&
                 (0x52u == msgA[4u]) )
@@ -1092,9 +1092,9 @@ void eFSP_MSGETST_General(void)
         (void)printf("eFSP_MSGETST_General 10 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&l_tCtx, &l_uVar32) )
     {
-        if( 10u == var32)
+        if( 10u == l_uVar32)
         {
             (void)printf("eFSP_MSGETST_General 11 -- OK \n");
         }
@@ -1108,9 +1108,9 @@ void eFSP_MSGETST_General(void)
         (void)printf("eFSP_MSGETST_General 11 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetEncChunk(&ctx, msgA, 4u, &var32) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetEncChunk(&l_tCtx, msgA, 4u, &l_uVar32) )
     {
-        if( 4u == var32 )
+        if( 4u == l_uVar32 )
         {
             if( (0x04u == msgA[0u]) && (0x00u == msgA[1u]) && (0x00u == msgA[2u]) && (0x00u == msgA[3u]) )
             {
@@ -1131,9 +1131,9 @@ void eFSP_MSGETST_General(void)
         (void)printf("eFSP_MSGETST_General 12 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&l_tCtx, &l_uVar32) )
     {
-        if( 6u == var32)
+        if( 6u == l_uVar32)
         {
             (void)printf("eFSP_MSGETST_General 13 -- OK \n");
         }
@@ -1147,9 +1147,9 @@ void eFSP_MSGETST_General(void)
         (void)printf("eFSP_MSGETST_General 13 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_MESSAGEENDED == eFSP_MSGE_GetEncChunk(&ctx, msgA, 10u, &var32) )
+    if( e_eFSP_MSGE_RES_MESSAGEENDED == eFSP_MSGE_GetEncChunk(&l_tCtx, msgA, 10u, &l_uVar32) )
     {
-        if( 6u == var32 )
+        if( 6u == l_uVar32 )
         {
             if( (0x01u == msgA[0u]) && (0x02u == msgA[1u]) && (0x03u == msgA[2u]) && (ECU_ESC == msgA[3u]) &&
                 ( ((uint8_t)~ECU_ESC) == msgA[4u]) && (ECU_EOF == msgA[5u]) )
@@ -1171,9 +1171,9 @@ void eFSP_MSGETST_General(void)
         (void)printf("eFSP_MSGETST_General 14 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&l_tCtx, &l_uVar32) )
     {
-        if( 0u == var32)
+        if( 0u == l_uVar32)
         {
             (void)printf("eFSP_MSGETST_General 15 -- OK \n");
         }
@@ -1188,7 +1188,7 @@ void eFSP_MSGETST_General(void)
     }
 
     /* Function */
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&l_tCtx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("eFSP_MSGETST_General 16 -- OK \n");
     }
@@ -1197,8 +1197,8 @@ void eFSP_MSGETST_General(void)
         (void)printf("eFSP_MSGETST_General 16 -- FAIL \n");
     }
 
-    ctx.tBSTFCtx.uBuffL = 3u;
-    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetWherePutData(&ctx, &dataP, &var32) )
+    l_tCtx.tBSTFCtx.uBuffL = 3u;
+    if( e_eFSP_MSGE_RES_CORRUPTCTX == eFSP_MSGE_GetWherePutData(&l_tCtx, &dataP, &l_uVar32) )
     {
         (void)printf("eFSP_MSGETST_General 17 -- OK \n");
     }
@@ -1212,19 +1212,19 @@ void eFSP_MSGETST_General(void)
 void eFSP_MSGETST_General2(void)
 {
     /* Local variable */
-    t_eFSP_MSGE_Ctx ctx;
+    t_eFSP_MSGE_Ctx l_tCtx;
     uint8_t  memArea[12u] = {0u};
     uint8_t  msgA[24u] = {0u};
     f_eFSP_MSGE_CrcCb cbCrcPTest = &eFSP_MSGETST_c32SAdapt;
     t_eFSP_MSGE_CrcCtx ctxAdapterCrc;
-    uint32_t var32;
+    uint32_t l_uVar32;
     uint8_t* dataP;
 
     /* Set value */
     (void)memset(memArea, 0, sizeof(memArea));
 
     /* Function */
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&ctx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&l_tCtx, memArea, sizeof(memArea), cbCrcPTest, &ctxAdapterCrc) )
     {
         (void)printf("eFSP_MSGETST_General2 1  -- OK \n");
     }
@@ -1233,9 +1233,9 @@ void eFSP_MSGETST_General2(void)
         (void)printf("eFSP_MSGETST_General2 1  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetWherePutData(&ctx, &dataP, &var32) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetWherePutData(&l_tCtx, &dataP, &l_uVar32) )
     {
-        if( 4u == var32 )
+        if( 4u == l_uVar32 )
         {
             (void)printf("eFSP_MSGETST_General2 2  -- OK \n");
         }
@@ -1253,7 +1253,7 @@ void eFSP_MSGETST_General2(void)
     dataP[1u] = 2u;
     dataP[2u] = 3u;
     dataP[3u] = 0x53u;
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_NewMessage(&ctx, var32) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_NewMessage(&l_tCtx, l_uVar32) )
     {
         (void)printf("eFSP_MSGETST_General2 3  -- OK \n");
     }
@@ -1262,9 +1262,9 @@ void eFSP_MSGETST_General2(void)
         (void)printf("eFSP_MSGETST_General2 3  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&l_tCtx, &l_uVar32) )
     {
-        if( 15u == var32)
+        if( 15u == l_uVar32)
         {
             (void)printf("eFSP_MSGETST_General2 4  -- OK \n");
         }
@@ -1278,9 +1278,9 @@ void eFSP_MSGETST_General2(void)
         (void)printf("eFSP_MSGETST_General2 4  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetEncChunk(&ctx, msgA, 6u, &var32) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetEncChunk(&l_tCtx, msgA, 6u, &l_uVar32) )
     {
-        if( 6u == var32 )
+        if( 6u == l_uVar32 )
         {
             if( (ECU_SOF == msgA[0u]) && (0x72u == msgA[1u]) && (0xC4u == msgA[2u]) && (ECU_ESC == msgA[3u]) &&
                 ( ((uint8_t)(~0xA1u)) == msgA[4u] ) && (0xDBu == msgA[5u]) )
@@ -1302,9 +1302,9 @@ void eFSP_MSGETST_General2(void)
         (void)printf("eFSP_MSGETST_General2 5  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&l_tCtx, &l_uVar32) )
     {
-        if( 9u == var32)
+        if( 9u == l_uVar32)
         {
             (void)printf("eFSP_MSGETST_General2 6  -- OK \n");
         }
@@ -1318,9 +1318,9 @@ void eFSP_MSGETST_General2(void)
         (void)printf("eFSP_MSGETST_General2 6  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetEncChunk(&ctx, msgA, 4u, &var32) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetEncChunk(&l_tCtx, msgA, 4u, &l_uVar32) )
     {
-        if( 4u == var32 )
+        if( 4u == l_uVar32 )
         {
             if( (0x04u == msgA[0u]) && (0x00u == msgA[1u]) && (0x00u == msgA[2u]) && (0x00u == msgA[3u]) )
             {
@@ -1341,9 +1341,9 @@ void eFSP_MSGETST_General2(void)
         (void)printf("eFSP_MSGETST_General2 7  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&l_tCtx, &l_uVar32) )
     {
-        if( 5u == var32)
+        if( 5u == l_uVar32)
         {
             (void)printf("eFSP_MSGETST_General2 8  -- OK \n");
         }
@@ -1357,9 +1357,9 @@ void eFSP_MSGETST_General2(void)
         (void)printf("eFSP_MSGETST_General2 8  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_MESSAGEENDED == eFSP_MSGE_GetEncChunk(&ctx, msgA, 10u, &var32) )
+    if( e_eFSP_MSGE_RES_MESSAGEENDED == eFSP_MSGE_GetEncChunk(&l_tCtx, msgA, 10u, &l_uVar32) )
     {
-        if( 5u == var32 )
+        if( 5u == l_uVar32 )
         {
             if( (0x01u == msgA[0u]) && (0x02u == msgA[1u]) && (0x03u == msgA[2u]) && (0x53u == msgA[3u]) &&
                 ( ECU_EOF == msgA[4u])  )
@@ -1381,9 +1381,9 @@ void eFSP_MSGETST_General2(void)
         (void)printf("eFSP_MSGETST_General2 9  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&ctx, &var32) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetRemByteToGet(&l_tCtx, &l_uVar32) )
     {
-        if( 0u == var32)
+        if( 0u == l_uVar32)
         {
             (void)printf("eFSP_MSGETST_General2 10 -- OK \n");
         }

@@ -77,56 +77,56 @@ void eFSP_MSGDMSGETST_ExeTest(void)
  **********************************************************************************************************************/
 bool_t eFSP_MSGDMSGETST_c32SAdapt(t_eFSP_MSGD_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val)
 {
-    bool_t result;
-    t_eFSP_MSGD_CrcCtx* ctxCur;
+    bool_t l_bRes;
+    t_eFSP_MSGD_CrcCtx* l_ptCtx;
 
     if( ( NULL == p_ptCtx ) || ( NULL == p_puC32Val ) )
     {
-        result = false;
+        l_bRes = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGD_CrcCtx*)p_ptCtx;
+        l_ptCtx = (t_eFSP_MSGD_CrcCtx*)p_ptCtx;
 
-        ctxCur->eLastEr = eCU_CRC_32Seed(p_uS, (const uint8_t*)p_puD, p_uDLen, p_puC32Val);
-        if( e_eCU_CRC_RES_OK == ctxCur->eLastEr )
+        l_ptCtx->eLastEr = eCU_CRC_32Seed(p_uS, (const uint8_t*)p_puD, p_uDLen, p_puC32Val);
+        if( e_eCU_CRC_RES_OK == l_ptCtx->eLastEr )
         {
-            result = true;
+            l_bRes = true;
         }
         else
         {
-            result = false;
+            l_bRes = false;
         }
     }
 
-    return result;
+    return l_bRes;
 }
 
 bool_t eFSP_MSGDMSGETST_c32SAdaptE(t_eFSP_MSGE_CrcCtx* p_ptCtx, const uint32_t p_uS, const uint8_t* p_puD, const uint32_t p_uDLen, uint32_t* const p_puC32Val)
 {
-    bool_t result;
-    t_eFSP_MSGE_CrcCtx* ctxCur;
+    bool_t l_bRes;
+    t_eFSP_MSGE_CrcCtx* l_ptCtx;
 
     if( ( NULL == p_ptCtx ) || ( NULL == p_puC32Val ) )
     {
-        result = false;
+        l_bRes = false;
     }
     else
     {
-        ctxCur = (t_eFSP_MSGE_CrcCtx*)p_ptCtx;
+        l_ptCtx = (t_eFSP_MSGE_CrcCtx*)p_ptCtx;
 
-        ctxCur->eLastEr = eCU_CRC_32Seed(p_uS, (const uint8_t*)p_puD, p_uDLen, p_puC32Val);
-        if( e_eCU_CRC_RES_OK == ctxCur->eLastEr )
+        l_ptCtx->eLastEr = eCU_CRC_32Seed(p_uS, (const uint8_t*)p_puD, p_uDLen, p_puC32Val);
+        if( e_eCU_CRC_RES_OK == l_ptCtx->eLastEr )
         {
-            result = true;
+            l_bRes = true;
         }
         else
         {
-            result = false;
+            l_bRes = false;
         }
     }
 
-    return result;
+    return l_bRes;
 }
 
 /***********************************************************************************************************************
@@ -135,28 +135,28 @@ bool_t eFSP_MSGDMSGETST_c32SAdaptE(t_eFSP_MSGE_CrcCtx* p_ptCtx, const uint32_t p
 void eFSP_MSGDMSGETST_Common(void)
 {
     /* Local variable for message ENCODER */
-    t_eFSP_MSGE_Ctx ctxEnc;
-    t_eFSP_MSGE_CrcCtx  ctxCrcEnc;
-    f_eFSP_MSGE_CrcCb cbCrcPEnc = &eFSP_MSGDMSGETST_c32SAdaptE;
-    uint8_t  memEncoderArea[100u] = {0u};
-    uint32_t encMaxPaySize;
+    t_eFSP_MSGE_Ctx l_tCtxEnc;
+    t_eFSP_MSGE_CrcCtx  l_tCtxCrcEnc;
+    f_eFSP_MSGE_CrcCb l_fCrcEnc = &eFSP_MSGDMSGETST_c32SAdaptE;
+    uint8_t  l_auEemEncoderArea[100u] = {0u};
+    uint32_t l_uEncMaxPaySize;
     uint8_t* encPayLoc;
     uint8_t encDataSend[200u];
-    uint32_t encToSendSize;
-    e_eFSP_MSGE_RES encoderRet;
-    uint32_t encCounter;
+    uint32_t l_uEncToSendSize;
+    e_eFSP_MSGE_RES l_eRncoderRet;
+    uint32_t l_uEncCounter;
 
     /* Local variable for message ENCODER */
-    t_eFSP_MSGD_Ctx ctxDec;
-    t_eFSP_MSGD_CrcCtx  ctxCrcDec;
-    f_eFSP_MSGD_CrcCb cbCrcPDec = &eFSP_MSGDMSGETST_c32SAdapt;
+    t_eFSP_MSGD_Ctx l_tCtxDec;
+    t_eFSP_MSGD_CrcCtx  l_tCtxCrcDec;
+    f_eFSP_MSGD_CrcCb l_fCrcPDec = &eFSP_MSGDMSGETST_c32SAdapt;
     uint8_t  memDecoderArea[100u] = {0u};
-    uint32_t decTotCounter;
-    uint32_t decCurCounter;
-    uint32_t mostEfficientDataExtr;
+    uint32_t l_uDecTotCounter;
+    uint32_t l_uDecCurCounter;
+    uint32_t l_uMostEfficientDataExtr;
 
     /* INIT MESSAGE ENCODER */
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&ctxEnc, memEncoderArea, sizeof(memEncoderArea), cbCrcPEnc, &ctxCrcEnc) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_InitCtx(&l_tCtxEnc, l_auEemEncoderArea, sizeof(l_auEemEncoderArea), l_fCrcEnc, &l_tCtxCrcEnc) )
     {
         (void)printf("eFSP_MSGDMSGETST_Common 1  -- OK \n");
     }
@@ -166,7 +166,7 @@ void eFSP_MSGDMSGETST_Common(void)
     }
 
     /* INIT MESSAGE DECODER */
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_InitCtx(&ctxDec, memDecoderArea, sizeof(memDecoderArea), cbCrcPDec, &ctxCrcDec) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_InitCtx(&l_tCtxDec, memDecoderArea, sizeof(memDecoderArea), l_fCrcPDec, &l_tCtxCrcDec) )
     {
         (void)printf("eFSP_MSGDMSGETST_Common 2  -- OK \n");
     }
@@ -176,9 +176,9 @@ void eFSP_MSGDMSGETST_Common(void)
     }
 
     /* LOAD A MESSAGE IN THE ENCODER */
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetWherePutData(&ctxEnc, &encPayLoc, &encMaxPaySize) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_GetWherePutData(&l_tCtxEnc, &encPayLoc, &l_uEncMaxPaySize) )
     {
-        if( ( sizeof(memEncoderArea) - EFSP_MSGEN_HEADERSIZE ) == encMaxPaySize )
+        if( ( sizeof(l_auEemEncoderArea) - EFSP_MSGEN_HEADERSIZE ) == l_uEncMaxPaySize )
         {
             (void)printf("eFSP_MSGDMSGETST_Common 3  -- OK \n");
         }
@@ -202,7 +202,7 @@ void eFSP_MSGDMSGETST_Common(void)
     encPayLoc[6u] = ECU_SOF;
 
     /* Start encoding a new message */
-    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_NewMessage(&ctxEnc, 0x07u) )
+    if( e_eFSP_MSGE_RES_OK == eFSP_MSGE_NewMessage(&l_tCtxEnc, 0x07u) )
     {
         (void)printf("eFSP_MSGDMSGETST_Common 4  -- OK \n");
     }
@@ -212,7 +212,7 @@ void eFSP_MSGDMSGETST_Common(void)
     }
 
     /* Start deconding a new message */
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_NewMsg(&ctxDec) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_NewMsg(&l_tCtxDec) )
     {
         (void)printf("eFSP_MSGDMSGETST_Common 5  -- OK \n");
     }
@@ -222,22 +222,22 @@ void eFSP_MSGDMSGETST_Common(void)
     }
 
     /* RETRIVE ENCODED DATA */
-    encoderRet = e_eFSP_MSGE_RES_OK;
-    encCounter = 0u;
+    l_eRncoderRet = e_eFSP_MSGE_RES_OK;
+    l_uEncCounter = 0u;
 
-    while( e_eFSP_MSGE_RES_OK == encoderRet )
+    while( e_eFSP_MSGE_RES_OK == l_eRncoderRet )
     {
-        encoderRet = eFSP_MSGE_GetEncChunk(&ctxEnc, &encDataSend[encCounter], 1u, &encToSendSize);
+        l_eRncoderRet = eFSP_MSGE_GetEncChunk(&l_tCtxEnc, &encDataSend[l_uEncCounter], 1u, &l_uEncToSendSize);
 
-        if( ( e_eFSP_MSGE_RES_OK == encoderRet ) || ( e_eFSP_MSGE_RES_MESSAGEENDED == encoderRet ) )
+        if( ( e_eFSP_MSGE_RES_OK == l_eRncoderRet ) || ( e_eFSP_MSGE_RES_MESSAGEENDED == l_eRncoderRet ) )
         {
-            encCounter += encToSendSize;
+            l_uEncCounter += l_uEncToSendSize;
         }
     }
 
-    if( e_eFSP_MSGE_RES_MESSAGEENDED == encoderRet )
+    if( e_eFSP_MSGE_RES_MESSAGEENDED == l_eRncoderRet )
     {
-        if( 22u == encCounter )
+        if( 22u == l_uEncCounter )
         {
             (void)printf("eFSP_MSGDMSGETST_Common 6  -- OK \n");
         }
@@ -252,12 +252,12 @@ void eFSP_MSGDMSGETST_Common(void)
     }
 
     /* DECODER DATA */
-    decTotCounter = 0u;
-    decCurCounter = 0u;
+    l_uDecTotCounter = 0u;
+    l_uDecCurCounter = 0u;
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctxDec, &mostEfficientDataExtr) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&l_tCtxDec, &l_uMostEfficientDataExtr) )
     {
-        if( 9u == mostEfficientDataExtr )
+        if( 9u == l_uMostEfficientDataExtr )
         {
             (void)printf("eFSP_MSGDMSGETST_Common 7  -- OK \n");
         }
@@ -271,7 +271,7 @@ void eFSP_MSGDMSGETST_Common(void)
         (void)printf("eFSP_MSGDMSGETST_Common 7  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&ctxDec, encDataSend, 8u, &decCurCounter) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&l_tCtxDec, encDataSend, 8u, &l_uDecCurCounter) )
     {
         (void)printf("eFSP_MSGDMSGETST_Common 8  -- OK \n");
     }
@@ -279,11 +279,11 @@ void eFSP_MSGDMSGETST_Common(void)
     {
         (void)printf("eFSP_MSGDMSGETST_Common 8  -- FAIL \n");
     }
-    decTotCounter += decCurCounter;
+    l_uDecTotCounter += l_uDecCurCounter;
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctxDec, &mostEfficientDataExtr) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&l_tCtxDec, &l_uMostEfficientDataExtr) )
     {
-        if( 1u == mostEfficientDataExtr )
+        if( 1u == l_uMostEfficientDataExtr )
         {
             (void)printf("eFSP_MSGDMSGETST_Common 9  -- OK \n");
         }
@@ -297,7 +297,7 @@ void eFSP_MSGDMSGETST_Common(void)
         (void)printf("eFSP_MSGDMSGETST_Common 9  -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&ctxDec, &encDataSend[decTotCounter], mostEfficientDataExtr, &decCurCounter) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_InsEncChunk(&l_tCtxDec, &encDataSend[l_uDecTotCounter], l_uMostEfficientDataExtr, &l_uDecCurCounter) )
     {
         (void)printf("eFSP_MSGDMSGETST_Common 10 -- OK \n");
     }
@@ -305,11 +305,11 @@ void eFSP_MSGDMSGETST_Common(void)
     {
         (void)printf("eFSP_MSGDMSGETST_Common 10 -- FAIL \n");
     }
-    decTotCounter += decCurCounter;
+    l_uDecTotCounter += l_uDecCurCounter;
 
-    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&ctxDec, &mostEfficientDataExtr) )
+    if( e_eFSP_MSGD_RES_OK == eFSP_MSGD_GetMostEffDatLen(&l_tCtxDec, &l_uMostEfficientDataExtr) )
     {
-        if( 8u == mostEfficientDataExtr )
+        if( 8u == l_uMostEfficientDataExtr )
         {
             (void)printf("eFSP_MSGDMSGETST_Common 11 -- OK \n");
         }
@@ -323,9 +323,9 @@ void eFSP_MSGDMSGETST_Common(void)
         (void)printf("eFSP_MSGDMSGETST_Common 11 -- FAIL \n");
     }
 
-    if( e_eFSP_MSGD_RES_MESSAGEENDED == eFSP_MSGD_InsEncChunk(&ctxDec, &encDataSend[decTotCounter], 30u, &decCurCounter) )
+    if( e_eFSP_MSGD_RES_MESSAGEENDED == eFSP_MSGD_InsEncChunk(&l_tCtxDec, &encDataSend[l_uDecTotCounter], 30u, &l_uDecCurCounter) )
     {
-        if( 13u == decCurCounter )
+        if( 13u == l_uDecCurCounter )
         {
             (void)printf("eFSP_MSGDMSGETST_Common 12 -- OK \n");
         }
