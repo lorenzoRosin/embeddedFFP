@@ -67,7 +67,7 @@ static bool_t eFSP_MSGRXTST_receiveMsgJump( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t
                        const uint32_t p_uTimeToTx );
 static bool_t eFSP_MSGRXTST_receiveMsgJumpLong( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puDataToRx, uint32_t* const p_puDataRxedL, const uint32_t p_uDataRxMax,
                        const uint32_t p_uTimeToTx );
-static bool_t eFSP_MSGRXTST_receiveMsgErr( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puDataToRx, uint32_t* const p_puDataRxedL, const uint32_t p_uDataRxMax,
+static bool_t eFSP_MSGRXTST_receiveMsgErr( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* const p_puDataToRx, uint32_t* const p_puDataRxedL, const uint32_t p_uDataRxMax,
                           const uint32_t p_uTimeToTx );
 static bool_t eFSP_MSGRXTST_timStart ( t_eFSP_MSGRX_TimCtx* p_ptCtx, const uint32_t p_uTimeoutVal );
 static bool_t eFSP_MSGRXTST_timGetRemaining ( t_eFSP_MSGRX_TimCtx* p_ptCtx, uint32_t* const p_puRemainings );
@@ -361,8 +361,8 @@ bool_t eFSP_MSGRXTST_receiveMsgJumpLong( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p
     return l_bResult;
 }
 
-bool_t eFSP_MSGRXTST_receiveMsgErr( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puDataToRx, uint32_t* const p_puDataRxedL, const uint32_t p_uDataRxMax,
-                const uint32_t p_uTimeToTx )
+bool_t eFSP_MSGRXTST_receiveMsgErr( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* const p_puDataToRx, uint32_t* const p_puDataRxedL, const uint32_t p_uDataRxMax,
+                                    const uint32_t p_uTimeToTx )
 {
     bool_t l_bResult;
     t_eFSP_MSGRX_RxCtx* l_ptCtxCur;
@@ -375,6 +375,7 @@ bool_t eFSP_MSGRXTST_receiveMsgErr( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* p_puDa
     }
     else
     {
+        (void)p_puDataToRx;
         l_ptCtxCur = (t_eFSP_MSGRX_RxCtx*)p_ptCtx;
         l_ptCtxCur->bTxIsError = true;
         l_bResult = false;
@@ -891,6 +892,10 @@ void eFSP_MSGRXTST_BadPointer(void)
     {
         (void)printf("eFSP_MSGRXTST_BadPointer 19 -- FAIL \n");
     }
+
+    (void)l_tCtxAdapterCrc.eLastEr;
+    (void)l_tCtxAdapterRx.bTxIsError;
+    (void)l_tCtxAdapterTim.bTxIsError;
 }
 
 void eFSP_MSGRXTST_BadInit(void)
@@ -993,6 +998,10 @@ void eFSP_MSGRXTST_BadInit(void)
     {
         (void)printf("eFSP_MSGRXTST_BadInit 6  -- FAIL \n");
     }
+
+    (void)l_tCtxAdapterCrc.eLastEr;
+    (void)l_tCtxAdapterRx.bTxIsError;
+    (void)l_tCtxAdapterTim.bTxIsError;
 }
 
 void eFSP_MSGRXTST_BadParamEntr(void)
@@ -1171,6 +1180,10 @@ void eFSP_MSGRXTST_BadParamEntr(void)
     {
         (void)printf("eFSP_MSGRXTST_BadParamEntr 7  -- FAIL \n");
     }
+
+    (void)l_tCtxAdapterCrc.eLastEr;
+    (void)l_tCtxAdapterRx.bTxIsError;
+    (void)l_tCtxAdapterTim.bTxIsError;
 }
 
 void eFSP_MSGRXTST_CorruptContext(void)
@@ -1855,6 +1868,10 @@ void eFSP_MSGRXTST_CorruptContext(void)
     {
         (void)printf("eFSP_MSGRXTST_CorruptContext 38 -- FAIL \n");
     }
+
+    (void)l_tCtxAdapterCrc.eLastEr;
+    (void)l_tCtxAdapterRx.bTxIsError;
+    (void)l_tCtxAdapterTim.bTxIsError;
 }
 
 void eFSP_MSGRXTST_BadClBckCrc(void)
@@ -1930,6 +1947,10 @@ void eFSP_MSGRXTST_BadClBckCrc(void)
     {
         (void)printf("eFSP_MSGRXTST_BadClBckCrc 3  -- FAIL \n");
     }
+
+    (void)l_tCtxAdapterCrc.eLastEr;
+    (void)l_tCtxAdapterRx.bTxIsError;
+    (void)l_tCtxAdapterTim.bTxIsError;
 }
 
 void eFSP_MSGRXTST_BadClBckReceive(void)
@@ -2014,6 +2035,10 @@ void eFSP_MSGRXTST_BadClBckReceive(void)
     {
         (void)printf("eFSP_MSGRXTST_BadClBckReceive 4  -- FAIL \n");
     }
+
+    (void)l_tCtxAdapterCrc.eLastEr;
+    (void)l_tCtxAdapterRx.bTxIsError;
+    (void)l_tCtxAdapterTim.bTxIsError;
 }
 
 void eFSP_MSGRXTST_BadClBckTim(void)
@@ -2225,6 +2250,10 @@ void eFSP_MSGRXTST_BadClBckTim(void)
     {
         (void)printf("eFSP_MSGRXTST_BadClBckTim 11 -- FAIL \n");
     }
+
+    (void)l_tCtxAdapterCrc.eLastEr;
+    (void)l_tCtxAdapterRx.bTxIsError;
+    (void)l_tCtxAdapterTim.bTxIsError;
 }
 
 void eFSP_MSGRXTST_BadFrame(void)
@@ -2587,6 +2616,10 @@ void eFSP_MSGRXTST_BadFrame(void)
     {
         (void)printf("eFSP_MSGRXTST_BadFrame 18 -- FAIL \n");
     }
+
+    (void)l_tCtxAdapterCrc.eLastEr;
+    (void)l_tCtxAdapterRx.bTxIsError;
+    (void)l_tCtxAdapterTim.bTxIsError;
 }
 
 void eFSP_MSGRXTST_CornerCase(void)
@@ -3016,6 +3049,10 @@ void eFSP_MSGRXTST_CornerCase(void)
     {
         (void)printf("eFSP_MSGRXTST_CornerCase 28 -- FAIL \n");
     }
+
+    (void)l_tCtxAdapterCrc.eLastEr;
+    (void)l_tCtxAdapterRx.bTxIsError;
+    (void)l_tCtxAdapterTim.bTxIsError;
 }
 
 void eFSP_MSGRXTST_CornerCase2(void)
@@ -3434,6 +3471,10 @@ void eFSP_MSGRXTST_CornerCase2(void)
     {
         (void)printf("eFSP_MSGRXTST_CornerCase2 24 -- FAIL \n");
     }
+
+    (void)l_tCtxAdapterCrc.eLastEr;
+    (void)l_tCtxAdapterRx.bTxIsError;
+    (void)l_tCtxAdapterTim.bTxIsError;
 }
 
 void eFSP_MSGRXTST_CornerCase3(void)
@@ -3877,6 +3918,10 @@ void eFSP_MSGRXTST_CornerCase3(void)
     {
         (void)printf("eFSP_MSGRXTST_CornerCase3 29 -- FAIL \n");
     }
+
+    (void)l_tCtxAdapterCrc.eLastEr;
+    (void)l_tCtxAdapterRx.bTxIsError;
+    (void)l_tCtxAdapterTim.bTxIsError;
 }
 
 void eFSP_MSGRXTST_CornerCase4(void)
@@ -4156,6 +4201,10 @@ void eFSP_MSGRXTST_CornerCase4(void)
     {
         (void)printf("eFSP_MSGRXTST_CornerCase4 22 -- FAIL \n");
     }
+
+    (void)l_tCtxAdapterCrc.eLastEr;
+    (void)l_tCtxAdapterRx.bTxIsError;
+    (void)l_tCtxAdapterTim.bTxIsError;
 }
 
 void eFSP_MSGRXTST_CornerCase5(void)
@@ -4337,6 +4386,10 @@ void eFSP_MSGRXTST_CornerCase5(void)
     {
         (void)printf("eFSP_MSGRXTST_CornerCase5 9  -- FAIL \n");
     }
+
+    (void)l_tCtxAdapterCrc.eLastEr;
+    (void)l_tCtxAdapterRx.bTxIsError;
+    (void)l_tCtxAdapterTim.bTxIsError;
 }
 
 void eFSP_MSGRXTST_CornerCase6(void)
@@ -4455,6 +4508,11 @@ void eFSP_MSGRXTST_CornerCase6(void)
     {
         (void)printf("eFSP_MSGRXTST_CornerCase6 6  -- FAIL \n");
     }
+
+
+    (void)l_tCtxAdapterCrc.eLastEr;
+    (void)l_tCtxAdapterRx.bTxIsError;
+    (void)l_tCtxAdapterTim.bTxIsError;
 }
 
 
