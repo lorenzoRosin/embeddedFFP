@@ -17,10 +17,7 @@
 #include "eCU_CRC.h"
 #include <stdio.h>
 
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_disable = "MISRAC2012-Rule-8.13"
-    /* Suppressed for code clarity in test execution*/
-#endif
+
 
 /***********************************************************************************************************************
  *   PRIVATE TEST VARIABLE DECLARATION
@@ -286,6 +283,7 @@ bool_t eFSP_MSGTXTST_sendMsgErr( t_eFSP_MSGTX_TxCtx* p_ptCtx, const uint8_t* p_p
     }
     else
     {
+        *p_uDataTxed = 0u;
         p_ptCtx->bTxIsError = true;
         l_bResult = false;
     }
@@ -428,6 +426,11 @@ void eFSP_MSGTXTST_BadPointer(void)
     uint8_t* l_puData;
     uint32_t l_uDataL;
     bool_t l_bIsInit;
+
+    /* Clear */
+    (void)memset(&l_auMemArea, 0, sizeof(l_auMemArea));
+    (void)memset(&l_auSendBuff, 0, sizeof(l_auSendBuff));
+
 
     /* Function */
     if( e_eFSP_MSGTX_RES_BADPOINTER == eFSP_MSGTX_InitCtx(NULL, &l_tInitData) )
@@ -825,6 +828,8 @@ void eFSP_MSGTXTST_BadInit(void)
 
     /* Function */
     (void)memset(&l_tCtx, 0, sizeof(t_eFSP_MSGTX_Ctx));
+    (void)memset(&l_auSendBuff, 0, sizeof(l_auSendBuff));
+
     l_tCtx.tMsgeCtx.tBSTFCtx.bIsInit = false;
     l_tCtx.tMsgeCtx.ptCrcCtx = &l_tCtxAdapterCrc;
     l_tCtx.tMsgeCtx.fCrc = l_fCrcPTest;
@@ -917,6 +922,8 @@ void eFSP_MSGTXTST_BadIniMsg(void)
     /* Clear */
     (void)memset(&l_tCtx, 0, sizeof(t_eFSP_MSGTX_Ctx));
     (void)memset(&l_tInitData, 0, sizeof(t_eFSP_MSGTX_InitData));
+    (void)memset(&l_auMemArea, 0, sizeof(l_auMemArea));
+    (void)memset(&l_auSendBuff, 0, sizeof(l_auSendBuff));
 
     /* Init */
     l_tInitData.puIMemArea = l_auMemArea;
@@ -997,6 +1004,8 @@ void eFSP_MSGTXTST_BadParamEntr(void)
     /* Clear */
     (void)memset(&l_tCtx, 0, sizeof(t_eFSP_MSGTX_Ctx));
     (void)memset(&l_tInitData, 0, sizeof(t_eFSP_MSGTX_InitData));
+    (void)memset(&l_auMemArea, 0, sizeof(l_auMemArea));
+    (void)memset(&l_auSendBuff, 0, sizeof(l_auSendBuff));
 
     /* Init */
     l_tInitData.puIMemArea = l_auMemArea;
@@ -1168,6 +1177,8 @@ void eFSP_MSGTXTST_CorruptContext(void)
     /* Clear */
     (void)memset(&l_tCtx, 0, sizeof(t_eFSP_MSGTX_Ctx));
     (void)memset(&l_tInitData, 0, sizeof(t_eFSP_MSGTX_InitData));
+    (void)memset(&l_auMemArea, 0, sizeof(l_auMemArea));
+    (void)memset(&l_auSendBuff, 0, sizeof(l_auSendBuff));
 
     /* Init */
     l_tInitData.puIMemArea = l_auMemArea;
@@ -1592,6 +1603,8 @@ void eFSP_MSGTXTST_BadClBckCrc(void)
     /* Clear */
     (void)memset(&l_tCtx, 0, sizeof(t_eFSP_MSGTX_Ctx));
     (void)memset(&l_tInitData, 0, sizeof(t_eFSP_MSGTX_InitData));
+    (void)memset(&l_auMemArea, 0, sizeof(l_auMemArea));
+    (void)memset(&l_auSendBuff, 0, sizeof(l_auSendBuff));
 
     /* Init */
     l_tInitData.puIMemArea = l_auMemArea;
@@ -1654,6 +1667,8 @@ void eFSP_MSGTXTST_BadClBckSend(void)
     /* Clear */
     (void)memset(&l_tCtx, 0, sizeof(t_eFSP_MSGTX_Ctx));
     (void)memset(&l_tInitData, 0, sizeof(t_eFSP_MSGTX_InitData));
+    (void)memset(&l_auMemArea, 0, sizeof(l_auMemArea));
+    (void)memset(&l_auSendBuff, 0, sizeof(l_auSendBuff));
 
     /* Init */
     l_tInitData.puIMemArea = l_auMemArea;
@@ -1735,6 +1750,8 @@ void eFSP_MSGTXTST_BadClBckTim(void)
     /* Clear */
     (void)memset(&l_tCtx, 0, sizeof(t_eFSP_MSGTX_Ctx));
     (void)memset(&l_tInitData, 0, sizeof(t_eFSP_MSGTX_InitData));
+    (void)memset(&l_auMemArea, 0, sizeof(l_auMemArea));
+    (void)memset(&l_auSendBuff, 0, sizeof(l_auSendBuff));
 
     /* Init */
     l_tInitData.puIMemArea = l_auMemArea;
@@ -1887,6 +1904,8 @@ void eFSP_MSGTXTST_CornerCase(void)
     /* Clear */
     (void)memset(&l_tCtx, 0, sizeof(t_eFSP_MSGTX_Ctx));
     (void)memset(&l_tInitData, 0, sizeof(t_eFSP_MSGTX_InitData));
+    (void)memset(&l_auMemArea, 0, sizeof(l_auMemArea));
+    (void)memset(&l_auSendBuff, 0, sizeof(l_auSendBuff));
 
     /* Init */
     l_tInitData.puIMemArea = l_auMemArea;
@@ -2291,6 +2310,8 @@ void eFSP_MSGTXTST_CornerCase2(void)
     /* Clear */
     (void)memset(&l_tCtx, 0, sizeof(t_eFSP_MSGTX_Ctx));
     (void)memset(&l_tInitData, 0, sizeof(t_eFSP_MSGTX_InitData));
+    (void)memset(&l_auMemArea, 0, sizeof(l_auMemArea));
+    (void)memset(&l_auSendBuff, 0, sizeof(l_auSendBuff));
 
     /* Init */
     l_tInitData.puIMemArea = l_auMemArea;
@@ -2489,8 +2510,10 @@ void eFSP_MSGTXTST_CornerCase3()
     uint32_t l_uDataL;
 
     /* Clear */
-    (void)memset(&l_tCtx, 0, sizeof(t_eFSP_MSGTX_Ctx));
-    (void)memset(&l_tInitData, 0, sizeof(t_eFSP_MSGTX_InitData));
+    (void)memset(&l_tCtx, 0, sizeof(l_tCtx));
+    (void)memset(&l_tInitData, 0, sizeof(l_tInitData));
+    (void)memset(&l_auMemArea, 0, sizeof(l_auMemArea));
+    (void)memset(&l_auSendBuff, 0, sizeof(l_auSendBuff));
 
     /* Init */
     l_tInitData.puIMemArea = l_auMemArea;
@@ -2621,7 +2644,3 @@ void eFSP_MSGTXTST_CornerCase3()
     }
 
 }
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MISRAC2012-Rule-8.13"
-#endif

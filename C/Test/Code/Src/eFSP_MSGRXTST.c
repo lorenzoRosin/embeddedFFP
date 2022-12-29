@@ -15,10 +15,7 @@
 #include "eCU_CRC.h"
 #include <stdio.h>
 
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_disable = "MISRAC2012-Rule-8.13"
-    /* Suppressed for code clarity in test execution*/
-#endif
+
 
 /***********************************************************************************************************************
  *   PRIVATE TEST VARIABLE DECLARATION
@@ -375,7 +372,8 @@ bool_t eFSP_MSGRXTST_receiveMsgErr( t_eFSP_MSGRX_RxCtx* p_ptCtx, uint8_t* const 
     }
     else
     {
-        (void)p_puDataToRx;
+        p_puDataToRx[0u] = 0u;
+        *p_puDataRxedL = 0u;
         l_ptCtxCur = (t_eFSP_MSGRX_RxCtx*)p_ptCtx;
         l_ptCtxCur->bTxIsError = true;
         l_bResult = false;
@@ -576,6 +574,10 @@ void eFSP_MSGRXTST_BadPointer(void)
     uint8_t* l_puData;
     uint32_t l_uDataL;
     bool_t l_bIsInit;
+
+    /* Clear */
+    (void)memset(&l_auMemArea, 0, sizeof(l_auMemArea));
+    (void)memset(&l_auRecBuff, 0, sizeof(l_auRecBuff));
 
     /* Function */
     if( e_eFSP_MSGRX_RES_BADPOINTER == eFSP_MSGRX_InitCtx(NULL, &l_tInitData) )
@@ -917,6 +919,10 @@ void eFSP_MSGRXTST_BadInit(void)
     uint32_t l_uDataL;
     bool_t l_bIsInit;
 
+    /* Clear */
+    (void)memset(&l_auMemArea, 0, sizeof(l_auMemArea));
+    (void)memset(&l_auRecBuff, 0, sizeof(l_auRecBuff));
+
     /* Function */
     l_tInitData.puIMemArea = l_auMemArea;
     l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
@@ -1020,6 +1026,10 @@ void eFSP_MSGRXTST_BadParamEntr(void)
     uint8_t  l_auMemArea[10u];
     uint8_t  l_auRecBuff[10u];
     bool_t l_bIsInit;
+
+    /* Clear */
+    (void)memset(&l_auMemArea, 0, sizeof(l_auMemArea));
+    (void)memset(&l_auRecBuff, 0, sizeof(l_auRecBuff));
 
     /* Function */
     l_tInitData.puIMemArea = l_auMemArea;
@@ -1203,6 +1213,10 @@ void eFSP_MSGRXTST_CorruptContext(void)
     uint8_t  l_auRecBuff[10u];
     uint8_t* l_puData;
     uint32_t l_uDataL;
+
+    /* Clear */
+    (void)memset(&l_auMemArea, 0, sizeof(l_auMemArea));
+    (void)memset(&l_auRecBuff, 0, sizeof(l_auRecBuff));
 
     /* Function */
     l_tInitData.puIMemArea = l_auMemArea;
@@ -1890,6 +1904,10 @@ void eFSP_MSGRXTST_BadClBckCrc(void)
     uint8_t  l_auMemArea[10u];
     uint8_t  l_auRecBuff[10u];
 
+    /* Clear */
+    (void)memset(&l_auMemArea, 0, sizeof(l_auMemArea));
+    (void)memset(&l_auRecBuff, 0, sizeof(l_auRecBuff));
+
     /* Function */
     l_tInitData.puIMemArea = l_auMemArea;
     l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
@@ -1967,6 +1985,10 @@ void eFSP_MSGRXTST_BadClBckReceive(void)
     t_eFSP_MSGRX_TimCtx l_tCtxAdapterTim;
     uint8_t  l_auMemArea[10u];
     uint8_t  l_auRecBuff[10u];
+
+    /* Clear */
+    (void)memset(&l_auMemArea, 0, sizeof(l_auMemArea));
+    (void)memset(&l_auRecBuff, 0, sizeof(l_auRecBuff));
 
     /* Function */
     l_tInitData.puIMemArea = l_auMemArea;
@@ -2056,6 +2078,10 @@ void eFSP_MSGRXTST_BadClBckTim(void)
     t_eFSP_MSGRX_TimCtx l_tCtxAdapterTim;
     uint8_t  l_auMemArea[10u];
     uint8_t  l_auRecBuff[10u];
+
+    /* Clear */
+    (void)memset(&l_auMemArea, 0, sizeof(l_auMemArea));
+    (void)memset(&l_auRecBuff, 0, sizeof(l_auRecBuff));
 
     /* Function */
     l_tInitData.puIMemArea = l_auMemArea;
@@ -2271,6 +2297,10 @@ void eFSP_MSGRXTST_BadFrame(void)
     t_eFSP_MSGRX_TimCtx l_tCtxAdapterTim;
     uint8_t  l_auMemArea[10u];
     uint8_t  l_auRecBuff[10u];
+
+    /* Clear */
+    (void)memset(&l_auMemArea, 0, sizeof(l_auMemArea));
+    (void)memset(&l_auRecBuff, 0, sizeof(l_auRecBuff));
 
     /* Function */
     l_tInitData.puIMemArea = l_auMemArea;
@@ -2637,6 +2667,10 @@ void eFSP_MSGRXTST_CornerCase(void)
     t_eFSP_MSGRX_TimCtx l_tCtxAdapterTim;
     uint8_t  l_auMemArea[10u];
     uint8_t  l_auRecBuff[10u];
+
+    /* Clear */
+    (void)memset(&l_auMemArea, 0, sizeof(l_auMemArea));
+    (void)memset(&l_auRecBuff, 0, sizeof(l_auRecBuff));
 
     /* Function */
     l_tInitData.puIMemArea = l_auMemArea;
@@ -3073,6 +3107,9 @@ void eFSP_MSGRXTST_CornerCase2(void)
     uint8_t* l_puData;
     uint32_t l_uDataL;
 
+    /* Clear */
+    (void)memset(&l_auMemArea, 0, sizeof(l_auMemArea));
+    (void)memset(&l_auRecBuff, 0, sizeof(l_auRecBuff));
 
     /* Function */
     l_tInitData.puIMemArea = l_auMemArea;
@@ -3494,6 +3531,10 @@ void eFSP_MSGRXTST_CornerCase3(void)
     uint8_t  l_auRecBuff[10u];
     uint8_t* l_puData;
     uint32_t l_uDataL;
+
+    /* Clear */
+    (void)memset(&l_auMemArea, 0, sizeof(l_auMemArea));
+    (void)memset(&l_auRecBuff, 0, sizeof(l_auRecBuff));
 
     /* Function */
     l_tInitData.puIMemArea = l_auMemArea;
@@ -3940,6 +3981,10 @@ void eFSP_MSGRXTST_CornerCase4(void)
     uint8_t  l_auMemArea[10u];
     uint8_t  l_auRecBuff[5u];
 
+    /* Clear */
+    (void)memset(&l_auMemArea, 0, sizeof(l_auMemArea));
+    (void)memset(&l_auRecBuff, 0, sizeof(l_auRecBuff));
+
     /* Function */
     l_tInitData.puIMemArea = l_auMemArea;
     l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
@@ -4225,6 +4270,10 @@ void eFSP_MSGRXTST_CornerCase5(void)
     uint8_t* l_puData;
     uint32_t l_uDataL;
 
+    /* Clear */
+    (void)memset(&l_auMemArea, 0, sizeof(l_auMemArea));
+    (void)memset(&l_auRecBuff, 0, sizeof(l_auRecBuff));
+
     /* Function */
     l_tInitData.puIMemArea = l_auMemArea;
     l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
@@ -4409,6 +4458,10 @@ void eFSP_MSGRXTST_CornerCase6(void)
     uint8_t  l_auMemArea[100u];
     uint8_t  l_auRecBuff[100u];
 
+    /* Clear */
+    (void)memset(&l_auMemArea, 0, sizeof(l_auMemArea));
+    (void)memset(&l_auRecBuff, 0, sizeof(l_auRecBuff));
+
     /* Function */
     l_tInitData.puIMemArea = l_auMemArea;
     l_tInitData.uIMemAreaL = sizeof(l_auMemArea);
@@ -4514,8 +4567,3 @@ void eFSP_MSGRXTST_CornerCase6(void)
     (void)l_tCtxAdapterRx.bTxIsError;
     (void)l_tCtxAdapterTim.bTxIsError;
 }
-
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MISRAC2012-Rule-8.13"
-#endif

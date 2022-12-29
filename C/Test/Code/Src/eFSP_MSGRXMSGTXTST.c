@@ -18,10 +18,7 @@
 #include "eCU_CRC.h"
 #include <stdio.h>
 
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_disable = "MISRAC2012-Rule-8.13"
-    /* Suppressed for code clarity in test execution*/
-#endif
+
 
 /***********************************************************************************************************************
  *   PRIVATE TEST VARIABLE DECLARATION
@@ -379,6 +376,10 @@ void eFSP_MSGRXMSGTXTST_Common(void)
     (void)memset(&l_tInitDataTx, 0, sizeof(t_eFSP_MSGTX_InitData));
     (void)memset(&l_tCtxRX, 0, sizeof(t_eFSP_MSGRX_Ctx));
     (void)memset(&l_tInitDataRX, 0, sizeof(t_eFSP_MSGRX_InitData));
+    (void)memset(&l_auMemAreaRX, 0, sizeof(l_auMemAreaRX));
+    (void)memset(&l_auRecBuff, 0, sizeof(l_auRecBuff));
+    (void)memset(&l_auMemAreaTx, 0, sizeof(l_auMemAreaTx));
+    (void)memset(&l_auSendBuff, 0, sizeof(l_auSendBuff));
 
     /* Init */
     l_tInitDataTx.puIMemArea = l_auMemAreaTx;
@@ -518,9 +519,3 @@ void eFSP_MSGRXMSGTXTST_Common(void)
         (void)printf("eFSP_MSGTXTST_CornerCase 8  -- FAIL \n");
     }
 }
-
-
-
-#ifdef __IAR_SYSTEMS_ICC__
-    #pragma cstat_restore = "MISRAC2012-Rule-8.13"
-#endif
