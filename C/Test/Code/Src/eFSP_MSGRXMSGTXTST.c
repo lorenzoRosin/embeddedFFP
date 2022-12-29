@@ -456,41 +456,41 @@ void eFSP_MSGRXMSGTXTST_Common(void)
     /* Start TX message */
     if( e_eFSP_MSGTX_RES_OK == eFSP_MSGTX_NewMessage(&l_tCtxTx, 7u) )
     {
-        (void)printf("eFSP_MSGTXTST_CornerCase 4  -- OK \n");
+        (void)printf("eFSP_MSGRXMSGTXTST_Common 4  -- OK \n");
     }
     else
     {
-        (void)printf("eFSP_MSGTXTST_CornerCase 4  -- FAIL \n");
+        (void)printf("eFSP_MSGRXMSGTXTST_Common 4  -- FAIL \n");
     }
 
     /* Start RX message */
     if( e_eFSP_MSGRX_RES_OK == eFSP_MSGRX_NewMsg(&l_tCtxRX) )
     {
-        (void)printf("eFSP_MSGTXTST_CornerCase 5  -- OK \n");
+        (void)printf("eFSP_MSGRXMSGTXTST_Common 5  -- OK \n");
     }
     else
     {
-        (void)printf("eFSP_MSGTXTST_CornerCase 5  -- FAIL \n");
+        (void)printf("eFSP_MSGRXMSGTXTST_Common 5  -- FAIL \n");
     }
 
     /* Send data  */
     if( e_eFSP_MSGTX_RES_MESSAGESENDED == eFSP_MSGTX_SendChunk(&l_tCtxTx) )
     {
-        (void)printf("eFSP_MSGTXTST_CornerCase 6  -- OK \n");
+        (void)printf("eFSP_MSGRXMSGTXTST_Common 6  -- OK \n");
     }
     else
     {
-        (void)printf("eFSP_MSGTXTST_CornerCase 6  -- FAIL \n");
+        (void)printf("eFSP_MSGRXMSGTXTST_Common 6  -- FAIL \n");
     }
 
     /* Receive data */
     if( e_eFSP_MSGRX_RES_MESSAGERECEIVED == eFSP_MSGRX_ReceiveChunk(&l_tCtxRX) )
     {
-        (void)printf("eFSP_MSGTXTST_CornerCase 7  -- OK \n");
+        (void)printf("eFSP_MSGRXMSGTXTST_Common 7  -- OK \n");
     }
     else
     {
-        (void)printf("eFSP_MSGTXTST_CornerCase 7  -- FAIL \n");
+        (void)printf("eFSP_MSGRXMSGTXTST_Common 7  -- FAIL \n");
     }
 
     /* Get RX data */
@@ -502,20 +502,20 @@ void eFSP_MSGRXMSGTXTST_Common(void)
                 (  ECU_EOF == l_puData[3u] ) || (  0xFFu == l_puData[4u] ) || (  0xCCu == l_puData[5u] ) ||
                 (  ECU_SOF == l_puData[6u] ) )
             {
-                (void)printf("eFSP_MSGTXTST_CornerCase 8  -- OK \n");
+                (void)printf("eFSP_MSGRXMSGTXTST_Common 8  -- OK \n");
             }
             else
             {
-                (void)printf("eFSP_MSGTXTST_CornerCase 8  -- FAIL \n");
+                (void)printf("eFSP_MSGRXMSGTXTST_Common 8  -- FAIL \n");
             }
         }
         else
         {
-            (void)printf("eFSP_MSGTXTST_CornerCase 8  -- FAIL \n");
+            (void)printf("eFSP_MSGRXMSGTXTST_Common 8  -- FAIL \n");
         }
     }
     else
     {
-        (void)printf("eFSP_MSGTXTST_CornerCase 8  -- FAIL \n");
+        (void)printf("eFSP_MSGRXMSGTXTST_Common 8  -- FAIL \n");
     }
 }
