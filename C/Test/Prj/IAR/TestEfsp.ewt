@@ -1426,43 +1426,43 @@
     <group>
         <name>Inc</name>
         <file>
-            <name>$PROJ_DIR$\..\..\Code\Inc\eFSP_MSGDTST.h</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgEncoding\Inc\eFSP_MSGDTST.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Code\Inc\eFSP_MSGDMSGETST.h</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgEncoding\Inc\eFSP_MSGDMSGETST.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Code\Inc\eFSP_MSGETST.h</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgEncoding\Inc\eFSP_MSGETST.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Code\Inc\eFSP_MSGRXTST.h</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgTxRx\Inc\eFSP_MSGRXTST.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Code\Inc\eFSP_MSGRXMSGTXTST.h</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgTxRx\Inc\eFSP_MSGRXMSGTXTST.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Code\Inc\eFSP_MSGTXTST.h</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgTxRx\Inc\eFSP_MSGTXTST.h</name>
         </file>
     </group>
     <group>
         <name>Src</name>
         <file>
-            <name>$PROJ_DIR$\..\..\Code\Src\eFSP_MSGDTST.c</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgEncoding\Src\eFSP_MSGDTST.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Code\Src\eFSP_MSGDMSGETST.c</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgEncoding\Src\eFSP_MSGDMSGETST.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Code\Src\eFSP_MSGETST.c</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgEncoding\Src\eFSP_MSGETST.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Code\Src\eFSP_MSGRXTST.c</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgTxRx\Src\eFSP_MSGRXTST.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Code\Src\eFSP_MSGRXMSGTXTST.c</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgTxRx\Src\eFSP_MSGRXMSGTXTST.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Code\Src\eFSP_MSGTXTST.c</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgTxRx\Src\eFSP_MSGTXTST.c</name>
         </file>
     </group>
     <file>
