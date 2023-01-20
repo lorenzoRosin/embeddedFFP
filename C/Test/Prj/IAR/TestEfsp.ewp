@@ -648,7 +648,7 @@
                 </option>
                 <option>
                     <name>OOCOutputFile</name>
-                    <state>TestFsp.srec</state>
+                    <state>TestEfsp.srec</state>
                 </option>
                 <option>
                     <name>OOCCommandLineProducer</name>
@@ -807,7 +807,7 @@
                 </option>
                 <option>
                     <name>IlinkAdditionalLibs</name>
-                    <state>$PROJ_DIR$\..\LibFsp\Library\Exe\LibFsp.a</state>
+                    <state>$PROJ_DIR$\..\LibEfsp\Library\Exe\LibEfsp.a</state>
                     <state>$PROJ_DIR$\..\LibEcu\Library\Exe\LibEcu.a</state>
                 </option>
                 <option>
@@ -993,7 +993,7 @@
                 </option>
                 <option>
                     <name>IlinkTrustzoneImportLibraryOut</name>
-                    <state>TestFsp_import_lib.o</state>
+                    <state>TestEfsp_import_lib.o</state>
                 </option>
                 <option>
                     <name>OILinkExtraOption</name>

@@ -4,10 +4,10 @@
         <path>$WS_DIR$\..\LibEcu\LibEcu.ewp</path>
     </project>
     <project>
-        <path>$WS_DIR$\..\LibFsp\LibFsp.ewp</path>
+        <path>$WS_DIR$\..\LibEfsp\LibEfsp.ewp</path>
     </project>
     <project>
-        <path>$WS_DIR$\TestFsp.ewp</path>
+        <path>$WS_DIR$\TestEfsp.ewp</path>
     </project>
     <batchBuild>
         <batchDefinition>
@@ -17,11 +17,11 @@
                 <configuration>Library</configuration>
             </member>
             <member>
-                <project>LibFsp</project>
+                <project>LibEfsp</project>
                 <configuration>Library</configuration>
             </member>
             <member>
-                <project>TestFsp</project>
+                <project>TestEfsp</project>
                 <configuration>Release</configuration>
             </member>
         </batchDefinition>

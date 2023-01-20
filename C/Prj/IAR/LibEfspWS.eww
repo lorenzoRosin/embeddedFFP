@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workspace>
     <project>
-        <path>$WS_DIR$\LibFsp.ewp</path>
+        <path>$WS_DIR$\LibEfsp.ewp</path>
     </project>
     <batchBuild>
         <batchDefinition>
             <name>LIBRARY</name>
             <member>
-                <project>LibFsp</project>
+                <project>LibEfsp</project>
                 <configuration>Library</configuration>
             </member>
         </batchDefinition>
