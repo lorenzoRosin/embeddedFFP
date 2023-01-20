@@ -347,9 +347,16 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
-                    <state>$PROJ_DIR$\..\..\..\Code\Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\Code\Src</state>
-                    <state>$PROJ_DIR$\..\..\..\ExtLib\embeddedCU\C\Code\Inc</state>
+					<state>$PROJ_DIR$\..\..\Src</state>
+                    <state>$PROJ_DIR$\..\..\Src\MsgEncoding\Inc</state>
+                    <state>$PROJ_DIR$\..\..\Src\MsgEncoding\Src</state>
+                    <state>$PROJ_DIR$\..\..\Src\MsgTxRx\Inc</state>
+                    <state>$PROJ_DIR$\..\..\Src\MsgTxRx\Src</state>
+                    <state>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Src</state>
+					<state>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Src\ByteStuffing\Inc</state>
+					<state>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Src\Crc\Inc</state>
+					<state>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Src\DataPacking\Inc</state>
+					<state>$PROJ_DIR$\..\..\ExtLib\embeddedCU\C\Src\Queue\Inc</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -1081,46 +1088,46 @@
     <group>
         <name>Inc</name>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSP_MSGD.h</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgEncoding\Inc\eFSP_MSGD.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSP_MSGDPRV.h</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgEncoding\Inc\eFSP_MSGDPRV.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSP_MSGE.h</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgEncoding\Inc\eFSP_MSGE.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSP_MSGRX.h</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgTxRx\Inc\eFSP_MSGRX.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSP_MSGRXPRV.h</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgTxRx\Inc\eFSP_MSGRXPRV.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSP_MSGTX.h</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgTxRx\Inc\eFSP_MSGTX.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSP_MSGTXPRV.h</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgTxRx\Inc\eFSP_MSGTXPRV.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSP_STANDARDTYPE.h</name>
+            <name>$PROJ_DIR$\..\..\..\Src\eFSP_STANDARDTYPE.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Inc\eFSP_TYPE.h</name>
+            <name>$PROJ_DIR$\..\..\..\Src\eFSP_TYPE.h</name>
         </file>
     </group>
     <group>
         <name>Src</name>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Src\eFSP_MSGD.c</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgEncoding\Src\eFSP_MSGD.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Src\eFSP_MSGE.c</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgEncoding\Src\eFSP_MSGE.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Src\eFSP_MSGRX.c</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgTxRx\eFSP_MSGRX.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Code\Src\eFSP_MSGTX.c</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgTxRx\eFSP_MSGTX.c</name>
         </file>
     </group>
 </project>
