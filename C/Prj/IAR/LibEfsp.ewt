@@ -1447,10 +1447,10 @@
             <name>$PROJ_DIR$\..\..\Src\MsgTxRx\Inc\eFSP_MSGTXPRV.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Src\eFSP_STANDARDTYPE.h</name>
+            <name>$PROJ_DIR$\..\..\Src\eFSP_STANDARDTYPE.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Src\eFSP_TYPE.h</name>
+            <name>$PROJ_DIR$\..\..\Src\eFSP_TYPE.h</name>
         </file>
     </group>
     <group>
