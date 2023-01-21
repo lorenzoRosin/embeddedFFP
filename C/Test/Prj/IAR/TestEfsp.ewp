@@ -347,11 +347,12 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
-					<state>$PROJ_DIR$\..\..\Src</state>
+                    <state>$PROJ_DIR$\..\..\Src</state>
                     <state>$PROJ_DIR$\..\..\Src\MsgEncoding\Inc</state>
                     <state>$PROJ_DIR$\..\..\Src\MsgEncoding\Src</state>
                     <state>$PROJ_DIR$\..\..\Src\MsgTxRx\Inc</state>
-                    <state>$PROJ_DIR$\..\..\Src\MsgTxRx\Src</state>                    
+                    <state>$PROJ_DIR$\..\..\Src\MsgTxRx\Src</state>
+                    <state>$PROJ_DIR$\..\..\..\Src</state>
                     <state>$PROJ_DIR$\..\..\..\Src\MsgEncoding\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\Src\MsgEncoding\Src</state>
                     <state>$PROJ_DIR$\..\..\..\Src\MsgTxRx\Inc</state>
@@ -817,8 +818,8 @@
                 </option>
                 <option>
                     <name>IlinkAdditionalLibs</name>
-                    <state>$PROJ_DIR$\..\LibEfsp\Library\Exe\LibEfsp.a</state>
-                    <state>$PROJ_DIR$\..\LibEcu\Library\Exe\LibEcu.a</state>
+                    <state>$PROJ_DIR$\..\..\..\Prj\IAR\Library\Exe\LibEfsp.a</state>
+                    <state>$PROJ_DIR$\..\..\..\ExtLib\embeddedCU\C\Prj\IAR\Library\Exe\LibEcu.a</state>
                 </option>
                 <option>
                     <name>IlinkOverrideProgramEntryLabel</name>
@@ -1093,19 +1094,19 @@
     <group>
         <name>Inc</name>
         <file>
-            <name>$PROJ_DIR$\..\..\Src\MsgEncoding\Inc\eFSP_MSGDTST.h</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgEncoding\Inc\eFSP_MSGDMSGETST.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Src\MsgEncoding\Inc\eFSP_MSGDMSGETST.h</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgEncoding\Inc\eFSP_MSGDTST.h</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Src\MsgEncoding\Inc\eFSP_MSGETST.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Src\MsgTxRx\Inc\eFSP_MSGRXTST.h</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgTxRx\Inc\eFSP_MSGRXMSGTXTST.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Src\MsgTxRx\Inc\eFSP_MSGRXMSGTXTST.h</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgTxRx\Inc\eFSP_MSGRXTST.h</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Src\MsgTxRx\Inc\eFSP_MSGTXTST.h</name>
@@ -1114,19 +1115,19 @@
     <group>
         <name>Src</name>
         <file>
-            <name>$PROJ_DIR$\..\..\Src\MsgEncoding\Src\eFSP_MSGDTST.c</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgEncoding\Src\eFSP_MSGDMSGETST.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Src\MsgEncoding\Src\eFSP_MSGDMSGETST.c</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgEncoding\Src\eFSP_MSGDTST.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Src\MsgEncoding\Src\eFSP_MSGETST.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Src\MsgTxRx\Src\eFSP_MSGRXTST.c</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgTxRx\Src\eFSP_MSGRXMSGTXTST.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\Src\MsgTxRx\Src\eFSP_MSGRXMSGTXTST.c</name>
+            <name>$PROJ_DIR$\..\..\Src\MsgTxRx\Src\eFSP_MSGRXTST.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Src\MsgTxRx\Src\eFSP_MSGTXTST.c</name>
@@ -1136,9 +1137,3 @@
         <name>$PROJ_DIR$\main.c</name>
     </file>
 </project>
-
-
-                    
-                    
-                    
-                        
